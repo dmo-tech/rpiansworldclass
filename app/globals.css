@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Premium moving black and gold background */
+
+.luxury-background {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 20% 25%,
+      rgba(212, 164, 65, 0.14),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(212, 164, 65, 0.1),
+      transparent 30%
+    ),
+    linear-gradient(135deg, #020202, #090909 50%, #020202);
+}
+
+.luxury-background::before {
+  content: "";
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  top: -250px;
+  left: -250px;
+  border-radius: 50%;
+  background: rgba(212, 164, 65, 0.08);
+  filter: blur(100px);
+  animation: luxuryMoveOne 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.luxury-background::after {
+  content: "";
+  position: absolute;
+  width: 650px;
+  height: 650px;
+  right: -250px;
+  bottom: -250px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  filter: blur(110px);
+  animation: luxuryMoveTwo 14s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes luxuryMoveOne {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(220px, 130px) scale(1.2);
+  }
+}
+
+@keyframes luxuryMoveTwo {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(-220px, -130px) scale(1.18);
+  }
+}
+
+.gold-shine-text {
+  background: linear-gradient(
+    90deg,
+    #b7791f,
+    #f6d979,
+    #d6a33f,
+    #fff0a8,
+    #b7791f
+  );
+  background-size: 250% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: goldShine 5s linear infinite;
+}
+
+@keyframes goldShine {
+  to {
+    background-position: 250% center;
+  }
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+section {
+  scroll-margin-top: 90px;
+}
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #d9a441;
+  color: #000000;
+}
+
+body {
+  background: #000000;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    #8c5a17,
+    #e7b952,
+    #8c5a17
+  );
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d9a441;
+}
