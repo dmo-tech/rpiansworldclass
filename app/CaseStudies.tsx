@@ -43,12 +43,12 @@ const caseStudies: CaseStudy[] = [
       "Distributor of EBCO Hardware for Madhya Pradesh and Chhattisgarh",
     headline: "From ₹35 Cr Inventory to Debt-Free & Scalable Business",
     bullets: [
-      "₹35 Cr की Inventory में से approx 30% यानी करीब ₹10 Cr का stock clear हुआ.",
-      "इससे working capital unlock हुई और company Debt-Free हो गई.",
-      "Business में new product categories add की और 150 new dealers appoint किये.",
-      "Team accountability और ownership improve हुई, जिससे owner का daily follow-up significantly reduce हुआ.",
-      "Business Once-a-Week Leadership Mode की तरफ shift हुआ और owner का role Operator से CEO Mode में आया.",
-      "Business more Stable, Scalable, Profitable and System-Driven बना.",
+      "Cleared approx 30% of the ₹35 Cr inventory — around ₹10 Cr of stock.",
+      "This unlocked working capital and made the company debt-free.",
+      "Added new product categories and appointed 150 new dealers.",
+      "Team accountability and ownership improved, significantly reducing the owner's daily follow-up.",
+      "The business shifted to a once-a-week leadership mode, and the owner's role moved from Operator to CEO Mode.",
+      "The business became more stable, scalable, profitable, and system-driven.",
     ],
     tagline:
       "Inventory Control • Debt-Free • More Dealers • Scalable Growth • System-Driven Business",
@@ -61,11 +61,11 @@ const caseStudies: CaseStudy[] = [
       "Owners of Khandelwal General Stores and Splash Box | Retailer and Wholesaler of Books, Stationery & Gift Items",
     headline: "From 3,000 Non-Performing Products to 2X Profit & System-Driven Growth",
     bullets: [
-      "3,000 non-performing products ki selling close ki, jisse inventory around 40% reduce hui aur blocked working capital release hua.",
-      "Low-GP products hata kar High-GP & Fast-Moving Products par focus kiya, aur Profit 2X ho gaya!",
-      "₹60 Lakh ki Bank CC Limit completely close ho gayi.",
-      "Owner Daily Firefighting se CEO Mode mein shift hue, jisse Time, Freedom aur Mental Peace mila.",
-      "Business more Stable, Scalable & System-Driven bana.",
+      "Closed out 3,000 non-performing products, reducing inventory by around 40% and releasing blocked working capital.",
+      "Removed low-GP products and focused on high-GP & fast-moving products, doubling profit!",
+      "Completely closed a ₹60 Lakh bank CC limit.",
+      "The owner shifted from daily firefighting to CEO Mode, gaining time, freedom, and mental peace.",
+      "The business became more stable, scalable, and system-driven.",
     ],
     tagline:
       "Inventory Optimization • 2X Profit • CC Limit Closed • CEO Mode • System-Driven Business",
@@ -77,17 +77,17 @@ const caseStudies: CaseStudy[] = [
     business: "Gold and Diamond Jewellery Business",
     headline: "₹40 Cr Inventory Unlocked with a Data-Driven Approach",
     bullets: [
-      "32 kg non-moving gold jewellery identify hua, approx ₹40 Cr inventory value unlocked hui.",
-      "Inventory visibility aur control improve hua.",
-      "Daily GP tracking start hui.",
-      "Product-wise contribution ratio track hua.",
-      "MoM & YoY comparison start hua jisse decisions data-based hone lage.",
-      "Customer objection handling SOP se conversion ratio badh gaya.",
-      "Hiring + onboarding + training system implement hone se HOD ka blackmailing khatam ho gaya.",
-      "Performance standards set hue saath hi Inventory, sales, margin & productivity dashboards live hue.",
-      "Team accountability improve hui.",
-      "Chennai mein new branch expansion planning start hui.",
-      "Ab unka business systems, data, SOPs and dashboards par run hone laga.",
+      "Identified 32 kg of non-moving gold jewellery, unlocking approx ₹40 Cr in inventory value.",
+      "Improved inventory visibility and control.",
+      "Started daily GP tracking.",
+      "Tracked product-wise contribution ratio.",
+      "Started MoM & YoY comparisons, making decisions data-based.",
+      "A customer objection-handling SOP increased the conversion ratio.",
+      "A hiring + onboarding + training system ended individual HODs' leverage over the business.",
+      "Set performance standards, and inventory, sales, margin & productivity dashboards went live.",
+      "Improved team accountability.",
+      "Started planning a new branch expansion in Chennai.",
+      "The business now runs on systems, data, SOPs, and dashboards.",
     ],
     tagline:
       "Inventory Control • Higher Conversion • Data-Driven Decisions • Team Accountability • Expansion",
@@ -100,15 +100,15 @@ const caseStudies: CaseStudy[] = [
       "Wholesaler of plywood, laminates, charcoal sheet, and all types of interior items",
     headline: "From Product-Wise GP Tracking to 2X Profit & Branch Expansion",
     bullets: [
-      "Product-wise Gross Profit tracking start ki aur Inventory Turnover Analysis kiya.",
-      "Low GP + low rotation products close kiye aur focus High GP + High Rotation Products par shift hua.",
-      "Isse profit 2X ho gaya.",
-      "Laminates aur Plywood ke saath new categories add ki.",
-      "Inventory discipline se working capital control strong hua.",
-      "Current year mein 2X Profit Growth achieve hui.",
-      "Next branch expansion Indore mein plan hui aur open bhi ho gayi.",
-      "Ganpati Laminates ab systems, high margins aur data par run karta hai.",
-      "Competitors ke comparison mein strong market position create hui.",
+      "Started product-wise Gross Profit tracking and Inventory Turnover Analysis.",
+      "Closed out low-GP, low-rotation products and shifted focus to high-GP, high-rotation products.",
+      "This doubled profit.",
+      "Added new categories alongside laminates and plywood.",
+      "Inventory discipline strengthened working capital control.",
+      "Achieved 2X profit growth in the current year.",
+      "Planned and opened the next branch expansion in Indore.",
+      "Ganpati Laminates now runs on systems, high margins, and data.",
+      "Created a strong market position compared to competitors.",
     ],
     tagline:
       "GP Tracking • 2X Profit • Working Capital Control • Branch Expansion • System-Driven Business",
@@ -135,32 +135,32 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
       }
     >
       <div className="grid gap-0 lg:grid-cols-2">
-        <div className="relative h-72 lg:h-full lg:min-h-[420px]">
+        <div className="relative h-56 w-full bg-black sm:h-64 lg:h-72">
           <Image
             src={study.image}
             alt={`${study.who} — ${study.business}`}
             fill
-            className="object-cover"
+            className="object-contain"
           />
         </div>
 
-        <div className="p-8 md:p-10">
-          <p className="text-sm text-gray-400">
+        <div className="p-6 md:p-8">
+          <p className="text-xs text-gray-400">
             Who — {study.who}, {study.business}
           </p>
 
-          <h3 className="mt-3 font-serif text-2xl leading-tight text-[#edc66d] md:text-3xl">
+          <h3 className="mt-2 font-serif text-lg leading-tight text-[#edc66d] md:text-xl">
             {study.headline}
           </h3>
 
-          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-white">
+          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-white">
             After implementing the strategy
           </p>
 
-          <ul className="mt-4 space-y-3">
+          <ul className="mt-3 space-y-2">
             {study.bullets.map((bullet) => (
-              <li key={bullet} className="flex gap-3 leading-7 text-gray-300">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d9a441]" />
+              <li key={bullet} className="flex gap-2.5 text-sm leading-6 text-gray-300">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d9a441]" />
                 <span>{bullet}</span>
               </li>
             ))}
@@ -168,8 +168,8 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-8 py-4 text-center">
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-black">
+      <div className="bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-6 py-3 text-center">
+        <p className="text-xs font-bold uppercase tracking-[0.15em] text-black">
           {study.tagline}
         </p>
       </div>
