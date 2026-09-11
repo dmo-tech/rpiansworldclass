@@ -81,7 +81,13 @@ export default function CaseStudies() {
                   </ul>
                 </div>
 
-                <div className="grid grid-rows-2 gap-[1px] bg-white/10">
+                <div
+                  className={
+                    study.showroomPhoto
+                      ? "grid grid-rows-2 gap-[1px] bg-white/10"
+                      : ""
+                  }
+                >
                   <div className="relative h-64 lg:h-full">
                     <Image
                       src={study.peoplePhoto}
@@ -91,22 +97,16 @@ export default function CaseStudies() {
                     />
                   </div>
 
-                  <div className="relative h-64 lg:h-full">
-                    {study.showroomPhoto ? (
+                  {study.showroomPhoto && (
+                    <div className="relative h-64 lg:h-full">
                       <Image
                         src={study.showroomPhoto}
                         alt={`${study.business} showroom`}
                         fill
                         className="object-cover"
                       />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-neutral-900 p-6 text-center">
-                        <p className="text-sm text-gray-500">
-                          Showroom photo coming soon
-                        </p>
-                      </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
