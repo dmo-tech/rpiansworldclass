@@ -61,8 +61,9 @@ export default function MasterclassPage() {
               </h2>
 
               <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-gray-300">
-                Learn how to reduce owner dependency, improve team accountability
-                and multiply business profit through proven systems.
+                And one more thing: you become part of a world-class business
+                community where business owners from across the globe are
+                ready to help you.
               </p>
             </Reveal>
 
