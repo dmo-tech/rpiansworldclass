@@ -60,16 +60,20 @@ export default function AboutPage() {
                 </p>
 
                 <p className="mt-7 leading-8 text-gray-300">
-                  Founder of RPIANS World Class Business Coaching LLP, Rajesh
-                  Kumar Kare helps entrepreneurs run their businesses on
-                  autopilot mode and multiply profit every year through
-                  implementation-focused systems.
+                  I am Rajesh Kumar Kare, India&rsquo;s first Business
+                  Automation and Profit Coach. I have been running my own
+                  business for the past 21 years. I built my business from
+                  scratch, and over the last five years, I have helped
+                  hundreds of business owners transition their operations to
+                  &ldquo;autopilot mode&rdquo; and multiply their profits.
                 </p>
 
                 <p className="mt-5 leading-8 text-gray-300">
-                  His approach combines Inventory Management, HRMS, KRA, KPI,
-                  working-capital control, cash-flow management, SOPs, dashboards
-                  and AI-driven automation.
+                  I have personally experienced the challenges of cash flow
+                  pressure, blocked inventory, over-reliance on the team, the
+                  daily grind of &ldquo;firefighting,&rdquo; and the stress
+                  that comes with being an owner. That is why I have
+                  dedicated my life to helping business owners.
                 </p>
 
                 <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-9 py-4 font-bold text-black transition hover:scale-105">
