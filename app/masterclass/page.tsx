@@ -6,6 +6,7 @@ import Reveal from "../Reveal";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import TiltCard from "../TiltCard";
+import VideoTestimonials from "../VideoTestimonials";
 
 export const metadata: Metadata = {
   title: "Masterclass",
@@ -129,6 +130,8 @@ export default function MasterclassPage() {
           </div>
         </section>
       </div>
+
+      <VideoTestimonials />
 
       <SiteFooter />
     </main>
