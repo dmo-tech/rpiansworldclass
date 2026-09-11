@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import AnimatedWords from "../AnimatedWords";
+import CaseStudies from "../CaseStudies";
 import Reveal from "../Reveal";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
@@ -125,6 +126,8 @@ export default function ResultsPage() {
           </div>
         </section>
       </div>
+
+      <CaseStudies />
 
       <SiteFooter />
     </main>
