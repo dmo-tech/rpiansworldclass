@@ -42,13 +42,13 @@ function VideoCard({ video }: { video: VideoTestimonial }) {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-white/10 bg-black transition hover:border-[#d9a441]/50">
-      <div className="relative aspect-[9/16] bg-neutral-900">
+      <div className="relative aspect-video bg-neutral-900">
         <video
           ref={videoRef}
           src={video.src}
           controls={isPlaying}
           playsInline
-          className="h-full w-full object-cover"
+          className="h-full w-full object-contain"
         />
 
         {!isPlaying && (
@@ -86,7 +86,7 @@ export default function VideoTestimonials() {
           </p>
 
           <h2 className="mt-5 font-serif text-4xl md:text-6xl">
-            Hear From Our Clients
+            Our Happy Business Owners Sharing
           </h2>
         </div>
 
