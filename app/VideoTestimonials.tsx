@@ -17,17 +17,17 @@ const videoTestimonials: VideoTestimonial[] = [
   {
     src: "/videos/jeetu-hardware.mp4",
     name: "Jeetu Ji",
-    title: "Hardware Merchant",
+    title: "Founder, Hardware Merchant",
   },
   {
     src: "/videos/mitesh-lalwani.mp4",
     name: "Mitesh Lalwani",
-    title: "Distributor of Plywood",
+    title: "Founder, Distributor of Plywood",
   },
   {
     src: "/videos/vinay-pamnani.mp4",
     name: "Vinay Pamnani",
-    title: "Distributor of Hardware",
+    title: "Founder, Distributor of Hardware",
   },
 ];
 
