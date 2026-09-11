@@ -29,6 +29,8 @@ export default function MasterclassPage() {
       <SiteHeader />
 
       <div className="pt-20">
+        <VideoTestimonials />
+
         {/* MASTERCLASS */}
 
         <section
@@ -130,8 +132,6 @@ export default function MasterclassPage() {
           </div>
         </section>
       </div>
-
-      <VideoTestimonials />
 
       <SiteFooter />
     </main>
