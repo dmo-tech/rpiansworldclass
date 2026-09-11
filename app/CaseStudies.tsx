@@ -1,19 +1,25 @@
+"use client";
+
+import { useRef } from "react";
+
 import Image from "next/image";
+import { useInView, useReducedMotion } from "motion/react";
 
 import Reveal from "./Reveal";
 
 type CaseStudy = {
+  id: string;
   who: string;
   business: string;
   headline: string;
   bullets: string[];
   tagline: string;
-  peoplePhoto: string;
-  showroomPhoto: string | null;
+  image: string;
 };
 
 const caseStudies: CaseStudy[] = [
   {
+    id: "mamaji-jewellers",
     who: "Mr. Abhishek Tated and Abhinay Tated",
     business: "Mamaji Jewellers, (M.P.)",
     headline: "2 Showrooms Successfully Running with the Same Inventory",
@@ -28,10 +34,88 @@ const caseStudies: CaseStudy[] = [
       "Both business owners are focused on business growth and expansion",
     ],
     tagline: "System-Driven Business • Growth • Expansion",
-    peoplePhoto: "/case-studies/mamaji-jewellers-owners.jpg",
-    showroomPhoto: null,
+    image: "/case-studies/mamaji-jewellers-owners.jpg",
+  },
+  {
+    id: "shree-jee-hardware",
+    who: "Mr. Ajay Laddha (Shree Jee Hardware)",
+    business:
+      "Distributor of EBCO Hardware for Madhya Pradesh and Chhattisgarh",
+    headline: "From ₹35 Cr Inventory to Debt-Free & Scalable Business",
+    bullets: [
+      "₹35 Cr की Inventory में से approx 30% यानी करीब ₹10 Cr का stock clear हुआ.",
+      "इससे working capital unlock हुई और company Debt-Free हो गई.",
+      "Business में new product categories add की और 150 new dealers appoint किये.",
+      "Team accountability और ownership improve हुई, जिससे owner का daily follow-up significantly reduce हुआ.",
+      "Business Once-a-Week Leadership Mode की तरफ shift हुआ और owner का role Operator से CEO Mode में आया.",
+      "Business more Stable, Scalable, Profitable and System-Driven बना.",
+    ],
+    tagline:
+      "Inventory Control • Debt-Free • More Dealers • Scalable Growth • System-Driven Business",
+    image: "/case-studies/ajay-laddha-shree-jee-hardware.jpg",
   },
 ];
+
+function CaseStudyRow({ study }: { study: CaseStudy }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const isActive = useInView(ref, { margin: "-35% 0px -35% 0px" });
+
+  return (
+    <div
+      ref={ref}
+      className="overflow-hidden rounded-3xl border border-[#d9a441]/25 bg-white/[0.02] transition-[opacity,filter] duration-500 ease-out"
+      style={
+        reduceMotion
+          ? undefined
+          : {
+              opacity: isActive ? 1 : 0.18,
+              filter: isActive ? "brightness(1)" : "brightness(0.35)",
+            }
+      }
+    >
+      <div className="grid gap-0 lg:grid-cols-2">
+        <div className="relative h-72 lg:h-full lg:min-h-[420px]">
+          <Image
+            src={study.image}
+            alt={`${study.who} — ${study.business}`}
+            fill
+            className="object-cover"
+          />
+        </div>
+
+        <div className="p-8 md:p-10">
+          <p className="text-sm text-gray-400">
+            Who — {study.who}, {study.business}
+          </p>
+
+          <h3 className="mt-3 font-serif text-2xl leading-tight text-[#edc66d] md:text-3xl">
+            {study.headline}
+          </h3>
+
+          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-white">
+            After implementing the strategy
+          </p>
+
+          <ul className="mt-4 space-y-3">
+            {study.bullets.map((bullet) => (
+              <li key={bullet} className="flex gap-3 leading-7 text-gray-300">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d9a441]" />
+                <span>{bullet}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-8 py-4 text-center">
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-black">
+          {study.tagline}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function CaseStudies() {
   return (
@@ -49,73 +133,7 @@ export default function CaseStudies() {
 
         <div className="mt-16 space-y-16">
           {caseStudies.map((study) => (
-            <Reveal
-              key={study.business}
-              direction="up"
-              className="overflow-hidden rounded-3xl border border-[#d9a441]/25 bg-white/[0.02]"
-            >
-              <div className="grid gap-0 lg:grid-cols-2">
-                <div className="p-8 md:p-10">
-                  <p className="text-sm text-gray-400">
-                    Who — {study.who}, {study.business}
-                  </p>
-
-                  <h3 className="mt-3 font-serif text-2xl leading-tight text-[#edc66d] md:text-3xl">
-                    {study.headline}
-                  </h3>
-
-                  <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-white">
-                    After implementing the strategy
-                  </p>
-
-                  <ul className="mt-4 space-y-3">
-                    {study.bullets.map((bullet) => (
-                      <li
-                        key={bullet}
-                        className="flex gap-3 leading-7 text-gray-300"
-                      >
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d9a441]" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div
-                  className={
-                    study.showroomPhoto
-                      ? "grid grid-rows-2 gap-[1px] bg-white/10"
-                      : ""
-                  }
-                >
-                  <div className="relative h-64 lg:h-full">
-                    <Image
-                      src={study.peoplePhoto}
-                      alt={`${study.who} — ${study.business}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-
-                  {study.showroomPhoto && (
-                    <div className="relative h-64 lg:h-full">
-                      <Image
-                        src={study.showroomPhoto}
-                        alt={`${study.business} showroom`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-8 py-4 text-center">
-                <p className="text-sm font-bold uppercase tracking-[0.2em] text-black">
-                  {study.tagline}
-                </p>
-              </div>
-            </Reveal>
+            <CaseStudyRow key={study.id} study={study} />
           ))}
         </div>
       </div>
