@@ -71,6 +71,28 @@ const caseStudies: CaseStudy[] = [
       "Inventory Optimization • 2X Profit • CC Limit Closed • CEO Mode • System-Driven Business",
     image: "/case-studies/saransh-khandelwal.jpg",
   },
+  {
+    id: "kishore-katariya",
+    who: "Mr. Kishore Katariya & Karan Katariya (Chennai)",
+    business: "Gold and Diamond Jewellery Business",
+    headline: "₹40 Cr Inventory Unlocked with a Data-Driven Approach",
+    bullets: [
+      "32 kg non-moving gold jewellery identify hua, approx ₹40 Cr inventory value unlocked hui.",
+      "Inventory visibility aur control improve hua.",
+      "Daily GP tracking start hui.",
+      "Product-wise contribution ratio track hua.",
+      "MoM & YoY comparison start hua jisse decisions data-based hone lage.",
+      "Customer objection handling SOP se conversion ratio badh gaya.",
+      "Hiring + onboarding + training system implement hone se HOD ka blackmailing khatam ho gaya.",
+      "Performance standards set hue saath hi Inventory, sales, margin & productivity dashboards live hue.",
+      "Team accountability improve hui.",
+      "Chennai mein new branch expansion planning start hui.",
+      "Ab unka business systems, data, SOPs and dashboards par run hone laga.",
+    ],
+    tagline:
+      "Inventory Control • Higher Conversion • Data-Driven Decisions • Team Accountability • Expansion",
+    image: "/case-studies/kishore-katariya.jpg",
+  },
 ];
 
 function CaseStudyRow({ study }: { study: CaseStudy }) {
