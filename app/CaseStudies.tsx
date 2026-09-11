@@ -140,7 +140,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
             src={study.image}
             alt={`${study.who} — ${study.business}`}
             fill
-            className="object-contain"
+            className="object-cover"
           />
         </div>
 
