@@ -134,8 +134,8 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
             }
       }
     >
-      <div className="grid gap-0 lg:grid-cols-2">
-        <div className="relative h-56 w-full bg-black sm:h-64 lg:h-72">
+      <div className="grid gap-0 lg:grid-cols-2 lg:items-stretch">
+        <div className="relative h-56 w-full bg-black sm:h-64 lg:h-auto">
           <Image
             src={study.image}
             alt={`${study.who} — ${study.business}`}
