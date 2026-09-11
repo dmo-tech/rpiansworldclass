@@ -54,6 +54,23 @@ const caseStudies: CaseStudy[] = [
       "Inventory Control • Debt-Free • More Dealers • Scalable Growth • System-Driven Business",
     image: "/case-studies/ajay-laddha-shree-jee-hardware.jpg",
   },
+  {
+    id: "khandelwal-general-stores",
+    who: "Mr. Saransh Khandelwal and Pratibha Khandelwal",
+    business:
+      "Owners of Khandelwal General Stores and Splash Box | Retailer and Wholesaler of Books, Stationery & Gift Items",
+    headline: "From 3,000 Non-Performing Products to 2X Profit & System-Driven Growth",
+    bullets: [
+      "3,000 non-performing products ki selling close ki, jisse inventory around 40% reduce hui aur blocked working capital release hua.",
+      "Low-GP products hata kar High-GP & Fast-Moving Products par focus kiya, aur Profit 2X ho gaya!",
+      "₹60 Lakh ki Bank CC Limit completely close ho gayi.",
+      "Owner Daily Firefighting se CEO Mode mein shift hue, jisse Time, Freedom aur Mental Peace mila.",
+      "Business more Stable, Scalable & System-Driven bana.",
+    ],
+    tagline:
+      "Inventory Optimization • 2X Profit • CC Limit Closed • CEO Mode • System-Driven Business",
+    image: "/case-studies/saransh-khandelwal.jpg",
+  },
 ];
 
 function CaseStudyRow({ study }: { study: CaseStudy }) {
