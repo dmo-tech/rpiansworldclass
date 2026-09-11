@@ -93,6 +93,27 @@ const caseStudies: CaseStudy[] = [
       "Inventory Control • Higher Conversion • Data-Driven Decisions • Team Accountability • Expansion",
     image: "/case-studies/kishore-katariya.jpg",
   },
+  {
+    id: "pushpendra-jaiswal",
+    who: "Mr. Pushpendra Jaiswal (Ganpati Laminates, Bhopal)",
+    business:
+      "Wholesaler of plywood, laminates, charcoal sheet, and all types of interior items",
+    headline: "From Product-Wise GP Tracking to 2X Profit & Branch Expansion",
+    bullets: [
+      "Product-wise Gross Profit tracking start ki aur Inventory Turnover Analysis kiya.",
+      "Low GP + low rotation products close kiye aur focus High GP + High Rotation Products par shift hua.",
+      "Isse profit 2X ho gaya.",
+      "Laminates aur Plywood ke saath new categories add ki.",
+      "Inventory discipline se working capital control strong hua.",
+      "Current year mein 2X Profit Growth achieve hui.",
+      "Next branch expansion Indore mein plan hui aur open bhi ho gayi.",
+      "Ganpati Laminates ab systems, high margins aur data par run karta hai.",
+      "Competitors ke comparison mein strong market position create hui.",
+    ],
+    tagline:
+      "GP Tracking • 2X Profit • Working Capital Control • Branch Expansion • System-Driven Business",
+    image: "/case-studies/pushpendra-jaiswal.jpg",
+  },
 ];
 
 function CaseStudyRow({ study }: { study: CaseStudy }) {
