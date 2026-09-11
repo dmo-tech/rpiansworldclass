@@ -83,14 +83,14 @@ export default function Home() {
 
           <h1 className="font-serif text-4xl font-semibold leading-tight sm:text-5xl md:text-7xl">
             <AnimatedWords
-              text="Build an Unshakeable,"
+              text="Business Automation And"
               stagger={0.12}
               className="justify-center"
             />
 
             <span className="mt-3 block">
               <AnimatedWords
-                text="Profitable Business"
+                text="Profit Mastery Strategy"
                 delay={0.35}
                 stagger={0.14}
                 className="gold-shine-text justify-center"
