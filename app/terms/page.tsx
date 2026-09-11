@@ -1,3 +1,5 @@
+import Reveal from "../Reveal";
+
 export default function TermsPage() {
   return (
     <main className="min-h-screen bg-black px-6 py-20 text-white">
@@ -39,6 +41,7 @@ export default function TermsPage() {
         </div>
 
         <div className="mt-12 space-y-10 leading-8 text-gray-300">
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               1. Binding Effect
@@ -69,7 +72,9 @@ export default function TermsPage() {
               Agreement.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               2. Services Offered
@@ -109,7 +114,9 @@ export default function TermsPage() {
               contractors, agencies, consultants, and entrepreneurs.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               3. Refund Policy / Cancellation
@@ -155,7 +162,9 @@ export default function TermsPage() {
 
             <p className="mt-2 text-[#d9a441]">info@worldclassbc.com</p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               4. Privacy Policy
@@ -185,7 +194,9 @@ export default function TermsPage() {
               communication of the information you submit.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               5. Payment, Subscription and Access
@@ -216,7 +227,9 @@ export default function TermsPage() {
               successful payment confirmation.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">6. License</h2>
 
@@ -248,7 +261,9 @@ export default function TermsPage() {
               without refund.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               7. Confidentiality
@@ -289,7 +304,9 @@ export default function TermsPage() {
               upon request.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               8. Use of Website, Content and Services
@@ -321,7 +338,9 @@ export default function TermsPage() {
               product or service is also limited by this Agreement.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               9. Password-Protected Areas and Account Security
@@ -353,7 +372,9 @@ export default function TermsPage() {
               termination of access without refund.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               10. Communication, VIP Alerts and Notifications
@@ -394,7 +415,9 @@ export default function TermsPage() {
               provider.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               11. User Content
@@ -428,7 +451,9 @@ export default function TermsPage() {
               discretion.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               12. Compliance with Intellectual Property Laws
@@ -455,7 +480,9 @@ export default function TermsPage() {
               owners.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               13. Inappropriate Content and Conduct
@@ -499,7 +526,9 @@ export default function TermsPage() {
               when required.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               14. Copyright Infringement
@@ -534,7 +563,9 @@ export default function TermsPage() {
               appropriate action.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               15. Alleged Violations
@@ -560,7 +591,9 @@ export default function TermsPage() {
               notice and without liability to you.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               16. Full Power and Authority
@@ -581,7 +614,9 @@ export default function TermsPage() {
               <li>You are capable of assuming risks related to the use of our services</li>
             </ul>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               17. Disclaimer of Warranties
@@ -627,7 +662,9 @@ export default function TermsPage() {
               where required.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               18. Limited Liability
@@ -662,7 +699,9 @@ export default function TermsPage() {
               rise to the claim.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               19. Income and Result Disclosure
@@ -692,7 +731,9 @@ export default function TermsPage() {
               discipline, decision-making, and execution.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               20. Additional Restrictions
@@ -723,7 +764,9 @@ export default function TermsPage() {
               <li>You are responsible for implementing decisions in your business.</li>
             </ul>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               21. Third-Party Sites and Links
@@ -749,7 +792,9 @@ export default function TermsPage() {
               third-party sites is between you and that third party.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               22. Termination
@@ -777,7 +822,9 @@ export default function TermsPage() {
               liability, and governing law shall survive termination.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               23. Indemnity
@@ -802,7 +849,9 @@ export default function TermsPage() {
               <li>Your failure to comply with applicable laws</li>
             </ul>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               24. Governing Law
@@ -825,7 +874,9 @@ export default function TermsPage() {
               agreement signed between the parties.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               25. Severability and Waiver
@@ -847,7 +898,9 @@ export default function TermsPage() {
               waiver of rights.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               26. Modifications
@@ -870,7 +923,9 @@ export default function TermsPage() {
               Conditions.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               27. Miscellaneous
@@ -897,7 +952,9 @@ export default function TermsPage() {
               Class Business Coaching.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               28. Refund Policy
@@ -932,7 +989,9 @@ export default function TermsPage() {
 
             <p className="mt-2 text-[#d9a441]">info@worldclassbc.com</p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               29. Contact Information
@@ -959,7 +1018,9 @@ export default function TermsPage() {
               </a>
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">
               Final Agreement Statement
@@ -974,7 +1035,9 @@ export default function TermsPage() {
               time.
             </p>
           </section>
+          </Reveal>
 
+          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-white">Disclaimer</h2>
 
@@ -986,6 +1049,7 @@ export default function TermsPage() {
               interpreted as promised, assured, or expected outcomes.
             </p>
           </section>
+          </Reveal>
 
           <p className="text-sm text-gray-500">
             © 2026 RPIANS World Class Business Coaching. All Rights
