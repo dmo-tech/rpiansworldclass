@@ -11,7 +11,7 @@ import VideoTestimonials from "../VideoTestimonials";
 export const metadata: Metadata = {
   title: "Masterclass",
   description:
-    "Business Automation and Profit Masterclass — exclusive for serious business owners.",
+    "World Class Business Community Masterclass — exclusive for serious business owners.",
 };
 
 const masterclassTopics = [
@@ -45,14 +45,14 @@ export default function MasterclassPage() {
 
               <h2 className="mt-5 font-serif text-4xl md:text-6xl">
                 <AnimatedWords
-                  text="Business Automation"
+                  text="World Class Business"
                   stagger={0.1}
                   className="justify-center"
                 />
 
                 <span className="mt-2 block">
                   <AnimatedWords
-                    text="and Profit Masterclass"
+                    text="Community Masterclass"
                     delay={0.25}
                     stagger={0.1}
                     className="justify-center"
