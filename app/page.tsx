@@ -93,7 +93,7 @@ export default function Home() {
                 text="Profit Mastery Strategy"
                 delay={0.35}
                 stagger={0.14}
-                className="gold-shine-text justify-center"
+                className="text-black justify-center"
               />
             </span>
           </h1>
@@ -108,7 +108,7 @@ export default function Home() {
 
           <Reveal direction="up" delay={0.65}>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#86efac] to-[#16a34a] px-9 py-4 text-base font-bold text-white transition hover:scale-105 sm:w-auto">
+              <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#15803d] to-[#14532d] px-9 py-4 text-base font-bold text-white transition hover:scale-105 sm:w-auto">
                 Apply to Work With Us
               </ApplyButton>
 
@@ -189,7 +189,7 @@ export default function Home() {
             <div className="mt-12 overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900">
               <div className="flex aspect-video items-center justify-center">
                 <div className="text-center">
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-[#86efac] to-[#16a34a] text-3xl text-white">
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-[#15803d] to-[#14532d] text-3xl text-white">
                     ▶
                   </div>
 
@@ -239,7 +239,7 @@ export default function Home() {
             strengthen leadership and multiply business profit.
           </p>
 
-          <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#86efac] to-[#16a34a] px-10 py-4 font-bold text-white transition hover:scale-105">
+          <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#15803d] to-[#14532d] px-10 py-4 font-bold text-white transition hover:scale-105">
             Apply to Work With Us
           </ApplyButton>
         </Reveal>
@@ -307,7 +307,7 @@ export default function Home() {
               and sustainable profit growth.
             </p>
 
-            <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#86efac] to-[#16a34a] px-10 py-4 font-bold text-white transition hover:scale-105">
+            <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#15803d] to-[#14532d] px-10 py-4 font-bold text-white transition hover:scale-105">
               Apply Now
             </ApplyButton>
           </div>

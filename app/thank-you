@@ -40,7 +40,7 @@ export default function ThankYouPage() {
             href="https://wa.me/917389638105?text=Namaste%20RPIANS%20Team,%20maine%20website%20par%20apni%20business%20application%20submit%20kar%20di%20hai."
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg bg-gradient-to-r from-[#86efac] to-[#16a34a] px-8 py-4 font-bold text-white transition hover:scale-105"
+            className="rounded-lg bg-gradient-to-r from-[#15803d] to-[#14532d] px-8 py-4 font-bold text-white transition hover:scale-105"
           >
             Confirm on WhatsApp
           </a>

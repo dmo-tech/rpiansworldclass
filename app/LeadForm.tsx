@@ -308,7 +308,7 @@ export default function LeadForm() {
                 scale: 0.98,
               }
         }
-        className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#86efac] to-[#16a34a] px-7 py-4 text-base font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)] transition disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#15803d] to-[#14532d] px-7 py-4 text-base font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)] transition disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSubmitting
           ? "Opening Payment Details..."
