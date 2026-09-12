@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#0a0e1a] text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
       <SiteHeader />
 
       <div className="pt-20">
@@ -32,7 +32,7 @@ export default function AboutPage() {
                 />
 
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[#0a0e1a] via-[#0a0e1a]/80 to-transparent p-8 pt-28">
-                  <h3 className="text-2xl font-bold">Rajesh Kumar Kare</h3>
+                  <h3 className="text-2xl font-bold text-white">Rajesh Kumar Kare</h3>
 
                   <p className="mt-2 text-[#3b82f6]">
                     TEDx Speaker | Business Automation & Profit Coach
@@ -47,7 +47,7 @@ export default function AboutPage() {
                   Your Business Growth Advisor
                 </p>
 
-                <h2 className="mt-5 font-serif text-4xl text-[#60a5fa] md:text-5xl">
+                <h2 className="mt-5 font-serif text-4xl text-[#1d4ed8] md:text-5xl">
                   <AnimatedWords
                     text="Rajesh Kumar Kare"
                     stagger={0.12}
@@ -55,11 +55,11 @@ export default function AboutPage() {
                   />
                 </h2>
 
-                <p className="mt-3 text-lg text-gray-200">
+                <p className="mt-3 text-lg text-gray-600">
                   TEDx Speaker | Business Automation & Profit Coach
                 </p>
 
-                <p className="mt-7 leading-8 text-gray-300">
+                <p className="mt-7 leading-8 text-gray-600">
                   I am Rajesh Kumar Kare, India&rsquo;s first Business
                   Automation and Profit Coach. I have been running my own
                   business for the past 21 years. I built my business from
@@ -68,7 +68,7 @@ export default function AboutPage() {
                   &ldquo;autopilot mode&rdquo; and multiply their profits.
                 </p>
 
-                <p className="mt-5 leading-8 text-gray-300">
+                <p className="mt-5 leading-8 text-gray-600">
                   I have personally experienced the challenges of cash flow
                   pressure, blocked inventory, over-reliance on the team, the
                   daily grind of &ldquo;firefighting,&rdquo; and the stress

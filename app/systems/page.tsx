@@ -53,7 +53,7 @@ const systems = [
 
 export default function SystemsPage() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#0a0e1a] text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
       <SiteHeader />
 
       <div className="pt-20">
@@ -61,7 +61,7 @@ export default function SystemsPage() {
 
         <section
           id="systems"
-          className="border-y border-white/10 bg-white/[0.02] px-6 py-28"
+          className="border-y border-black/10 bg-black/[0.02] px-6 py-28"
         >
           <div className="mx-auto max-w-7xl">
             <Reveal direction="up" className="mx-auto max-w-4xl text-center">
@@ -86,7 +86,7 @@ export default function SystemsPage() {
                 </span>
               </h2>
 
-              <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-400">
+              <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600">
                 Implement practical systems that improve team accountability,
                 inventory control, working capital and business profitability.
               </p>
@@ -100,11 +100,11 @@ export default function SystemsPage() {
                   delay={(index % 3) * 0.12}
                   className="h-full"
                 >
-                  <TiltCard className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-[#0a0e1a] p-7 transition-colors duration-300 hover:border-[#3b82f6]/60">
+                  <TiltCard className="group relative h-full overflow-hidden rounded-2xl border border-black/10 bg-white p-7 transition-colors duration-300 hover:border-[#3b82f6]/60">
                     <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#3b82f6]/0 blur-3xl transition duration-500 group-hover:bg-[#3b82f6]/15" />
 
                     <div
-                      className="relative z-10 flex h-14 w-14 items-center justify-center rounded-xl border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-sm font-bold text-[#93c5fd]"
+                      className="relative z-10 flex h-14 w-14 items-center justify-center rounded-xl border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-sm font-bold text-[#1d4ed8]"
                       style={{
                         transform: "translateZ(45px)",
                       }}
@@ -113,7 +113,7 @@ export default function SystemsPage() {
                     </div>
 
                     <h3
-                      className="relative z-10 mt-6 text-xl font-semibold transition group-hover:text-[#93c5fd]"
+                      className="relative z-10 mt-6 text-xl font-semibold transition group-hover:text-[#1d4ed8]"
                       style={{
                         transform: "translateZ(35px)",
                       }}
@@ -122,7 +122,7 @@ export default function SystemsPage() {
                     </h3>
 
                     <p
-                      className="relative z-10 mt-4 leading-7 text-gray-400"
+                      className="relative z-10 mt-4 leading-7 text-gray-600"
                       style={{
                         transform: "translateZ(25px)",
                       }}

@@ -4,7 +4,7 @@ import Reveal from "../Reveal";
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-screen bg-[#0a0e1a] px-6 py-20 text-white">
+    <main className="min-h-screen bg-white px-6 py-20 text-[#0f172a]">
       <div className="mx-auto max-w-4xl">
         <a href="/" className="inline-flex items-center gap-2">
           <Image
@@ -25,14 +25,14 @@ export default function PrivacyPolicyPage() {
           Privacy Policy
         </h1>
 
-        <p className="mt-5 text-gray-400">
+        <p className="mt-5 text-gray-600">
           Last Updated: 22 July 2026
         </p>
 
-        <div className="mt-12 space-y-10 leading-8 text-gray-300">
+        <div className="mt-12 space-y-10 leading-8 text-gray-600">
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               1. Personally Identifiable Information
             </h2>
 
@@ -71,7 +71,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               2. When Do We Collect Information?
             </h2>
 
@@ -96,7 +96,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               3. How Do We Use Your Information?
             </h2>
 
@@ -130,7 +130,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               4. Confidentiality of Your Data
             </h2>
 
@@ -156,7 +156,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               5. Non-Personal Information
             </h2>
 
@@ -194,7 +194,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               6. Cookies and Tracking Technologies
             </h2>
 
@@ -235,7 +235,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               7. Third-Party Disclosure
             </h2>
 
@@ -284,7 +284,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               8. Payment Information
             </h2>
 
@@ -308,7 +308,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               9. Video Sales Letter and Lead Registration
             </h2>
 
@@ -343,7 +343,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               10. Google, Meta, and Advertising Platforms
             </h2>
 
@@ -379,7 +379,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               11. Third-Party Links
             </h2>
 
@@ -405,7 +405,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               12. How Do We Protect Your Information?
             </h2>
 
@@ -432,7 +432,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               13. Data Retention
             </h2>
 
@@ -459,7 +459,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               14. Children&rsquo;s Privacy
             </h2>
 
@@ -479,7 +479,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               15. Your Rights
             </h2>
 
@@ -504,7 +504,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               16. Email Communication and Unsubscribe
             </h2>
 
@@ -530,7 +530,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               17. Data Breach Notification
             </h2>
 
@@ -546,7 +546,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               18. Testimonials and Case Studies
             </h2>
 
@@ -566,7 +566,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               19. Changes to This Privacy Policy
             </h2>
 
@@ -587,7 +587,7 @@ export default function PrivacyPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               20. Contact Information
             </h2>
 

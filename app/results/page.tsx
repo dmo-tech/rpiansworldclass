@@ -26,7 +26,7 @@ const masterclassTopics = [
 
 export default function ResultsPage() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#0a0e1a] text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
       <SiteHeader />
 
       <div className="pt-20">
@@ -38,7 +38,7 @@ export default function ResultsPage() {
 
         <section
           id="masterclass"
-          className="relative overflow-hidden border-y border-white/10 px-6 py-28"
+          className="relative overflow-hidden border-y border-black/10 px-6 py-28"
         >
           <div className="relative mx-auto max-w-5xl">
             <Reveal direction="up" className="text-center">
@@ -63,7 +63,7 @@ export default function ResultsPage() {
                 </span>
               </h2>
 
-              <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-gray-300">
+              <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-gray-600">
                 And one more thing: you become part of a world-class business
                 community where business owners from across the globe are
                 ready to help you.
@@ -72,7 +72,7 @@ export default function ResultsPage() {
 
             <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
               <Reveal direction="left" className="h-full">
-                <TiltCard className="h-full rounded-3xl border border-white/10 bg-[#0a0e1a]/70 p-8">
+                <TiltCard className="h-full rounded-3xl border border-black/10 bg-white/70 p-8">
                   <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                     What You Will Learn
                   </p>
@@ -80,7 +80,7 @@ export default function ResultsPage() {
                   <div className="mt-7 grid gap-4 sm:grid-cols-2">
                     {masterclassTopics.map((item, index) => (
                       <Reveal key={item} direction="up" delay={index * 0.08}>
-                        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#3b82f6]/50">
+                        <div className="rounded-xl border border-black/10 bg-black/[0.03] p-5 transition hover:border-[#3b82f6]/50">
                           <p className="font-semibold">{item}</p>
                         </div>
                       </Reveal>
@@ -90,25 +90,25 @@ export default function ResultsPage() {
               </Reveal>
 
               <Reveal direction="right" delay={0.15} className="h-full">
-                <TiltCard className="h-full rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-[#0a0e1a] p-8">
+                <TiltCard className="h-full rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-white p-8">
                   <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                     Masterclass Details
                   </p>
 
                   <div className="mt-7 space-y-5">
-                    <div className="border-b border-white/10 pb-5">
+                    <div className="border-b border-black/10 pb-5">
                       <p className="text-sm text-gray-500">Day</p>
                       <p className="mt-1 text-xl font-bold">Every Sunday</p>
                     </div>
 
-                    <div className="border-b border-white/10 pb-5">
+                    <div className="border-b border-black/10 pb-5">
                       <p className="text-sm text-gray-500">Time</p>
                       <p className="mt-1 text-xl font-bold">
                         10:00 AM to 12:00 PM
                       </p>
                     </div>
 
-                    <div className="border-b border-white/10 pb-5">
+                    <div className="border-b border-black/10 pb-5">
                       <p className="text-sm text-gray-500">Mode</p>
                       <p className="mt-1 text-xl font-bold">
                         Live Online Session

@@ -56,7 +56,7 @@ export default function BeforeAfter() {
           >
             Before RPIANS
             <span className="mx-3 text-gray-600">vs</span>
-            <span className="text-[#60a5fa]">After RPIANS</span>
+            <span className="text-[#1d4ed8]">After RPIANS</span>
           </motion.h2>
 
           <motion.p
@@ -64,7 +64,7 @@ export default function BeforeAfter() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.7 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-400"
+            className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600"
           >
             See how an owner-dependent business transforms into a structured,
             automated and profitable organisation.
@@ -88,12 +88,12 @@ export default function BeforeAfter() {
               duration: 0.9,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="relative overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-b from-red-500/10 to-[#0a0e1a] p-8 md:p-10"
+            className="relative overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-b from-red-500/10 to-white p-8 md:p-10"
           >
             <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-red-500/10 blur-3xl" />
 
             <div className="relative">
-              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-red-400">
+              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-red-600">
                 Before Systems
               </p>
 
@@ -114,11 +114,11 @@ export default function BeforeAfter() {
                     }}
                     className="flex items-start gap-4"
                   >
-                    <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-red-400/40 bg-red-500/10 text-sm text-red-400">
+                    <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-red-400/40 bg-red-500/10 text-sm text-red-600">
                       ×
                     </span>
 
-                    <p className="leading-7 text-gray-300">{point}</p>
+                    <p className="leading-7 text-gray-600">{point}</p>
                   </motion.div>
                 ))}
               </div>
@@ -142,7 +142,7 @@ export default function BeforeAfter() {
               delay: 0.1,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-[#0a0e1a] p-8 md:p-10"
+            className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-white p-8 md:p-10"
           >
             <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#3b82f6]/15 blur-3xl" />
 
@@ -151,7 +151,7 @@ export default function BeforeAfter() {
                 After Implementation
               </p>
 
-              <h3 className="mt-4 font-serif text-3xl text-[#93c5fd] md:text-4xl">
+              <h3 className="mt-4 font-serif text-3xl text-[#1d4ed8] md:text-4xl">
                 System-Driven Growth
               </h3>
 
@@ -172,7 +172,7 @@ export default function BeforeAfter() {
                       ✓
                     </span>
 
-                    <p className="leading-7 text-gray-300">{point}</p>
+                    <p className="leading-7 text-gray-600">{point}</p>
                   </motion.div>
                 ))}
               </div>
@@ -188,16 +188,16 @@ export default function BeforeAfter() {
             duration: 0.8,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-7 text-center"
+          className="mt-10 rounded-2xl border border-black/10 bg-black/[0.03] p-7 text-center"
         >
-          <p className="text-lg leading-8 text-gray-300">
+          <p className="text-lg leading-8 text-gray-600">
             RPIANS helps business owners move from
-            <span className="font-semibold text-red-400">
+            <span className="font-semibold text-red-600">
               {" "}
               daily chaos{" "}
             </span>
             to
-            <span className="font-semibold text-[#93c5fd]">
+            <span className="font-semibold text-[#1d4ed8]">
               {" "}
               systems, automation, owner freedom and profit growth.
             </span>

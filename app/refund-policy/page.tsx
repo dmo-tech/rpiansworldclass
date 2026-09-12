@@ -4,7 +4,7 @@ import Reveal from "../Reveal";
 
 export default function RefundPolicyPage() {
   return (
-    <main className="min-h-screen bg-[#0a0e1a] px-6 py-20 text-white">
+    <main className="min-h-screen bg-white px-6 py-20 text-[#0f172a]">
       <div className="mx-auto max-w-4xl">
         <a href="/" className="inline-flex items-center gap-2">
           <Image
@@ -25,14 +25,14 @@ export default function RefundPolicyPage() {
           Refund Policy
         </h1>
 
-        <p className="mt-5 text-gray-400">
+        <p className="mt-5 text-gray-600">
           Last Updated: 22 July 2026
         </p>
 
-        <div className="mt-12 space-y-10 leading-8 text-gray-300">
+        <div className="mt-12 space-y-10 leading-8 text-gray-600">
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">1. Introduction</h2>
+            <h2 className="text-2xl font-bold text-[#0f172a]">1. Introduction</h2>
 
             <p className="mt-4">
               RPIANS World Class Business Coaching, led by Rajesh Kumar Kare,
@@ -72,7 +72,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               2. Purpose of ₹999 Application / Strategy Call Fee
             </h2>
 
@@ -107,7 +107,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               3. Payment Process
             </h2>
 
@@ -144,7 +144,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               4. Failed Transaction or Payment Deduction
             </h2>
 
@@ -200,7 +200,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               5. Registration Procedure and Call Booking Process
             </h2>
 
@@ -258,7 +258,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               6. Refund for ₹999 Strategy Call / VSL Application Fee
             </h2>
 
@@ -295,7 +295,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               7. Non-Refundable Conditions for ₹999 Strategy Call Fee
             </h2>
 
@@ -340,7 +340,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               8. Refund for Coaching / Consulting / Mentorship Programs
             </h2>
 
@@ -384,7 +384,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               9. Standard Operating Procedure
             </h2>
 
@@ -437,7 +437,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               10. Terms of SOP
             </h2>
 
@@ -489,7 +489,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               11. Refund Eligibility for Programs
             </h2>
 
@@ -543,7 +543,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               12. Non-Refundable Conditions for Programs
             </h2>
 
@@ -594,7 +594,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               13. Limited Refund Window
             </h2>
 
@@ -633,7 +633,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               14. Communication and Support
             </h2>
 
@@ -668,7 +668,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               15. Disclosure
             </h2>
 
@@ -719,7 +719,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               16. Advisory Nature of Strategy Call
             </h2>
 
@@ -748,7 +748,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               17. Program Enrollment
             </h2>
 
@@ -775,7 +775,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               18. Client Responsibility
             </h2>
 
@@ -809,7 +809,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               19. Information Shared by Client
             </h2>
 
@@ -844,7 +844,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               20. Intellectual Property
             </h2>
 
@@ -874,7 +874,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               21. Defamation and Reputational Harm
             </h2>
 
@@ -903,7 +903,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               22. Termination and Refund Impact
             </h2>
 
@@ -932,7 +932,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               23. Limitation of Liability
             </h2>
 
@@ -954,7 +954,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               24. Right to Modify Policy
             </h2>
 
@@ -974,7 +974,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               25. Disclaimer
             </h2>
 
@@ -1012,7 +1012,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               26. Contact Information
             </h2>
 
@@ -1043,7 +1043,7 @@ export default function RefundPolicyPage() {
 
           <Reveal direction="up">
           <section>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-[#0f172a]">
               27. Final Agreement
             </h2>
 

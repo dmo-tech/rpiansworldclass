@@ -59,7 +59,7 @@ const faqs = [
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#0a0e1a] text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
       <ScrollProgress />
       <MouseGlow />
 
@@ -99,7 +99,7 @@ export default function Home() {
           </h1>
 
           <Reveal direction="up" delay={0.5}>
-            <p className="mx-auto mt-7 max-w-3xl text-base leading-8 text-gray-300 md:text-lg">
+            <p className="mx-auto mt-7 max-w-3xl text-base leading-8 text-gray-600 md:text-lg">
               Run your business on autopilot mode, build an accountable team,
               control inventory and cash flow, and multiply your profit every
               year with proven business systems.
@@ -114,7 +114,7 @@ export default function Home() {
 
               <a
                 href="#video"
-                className="w-full rounded-lg border border-[#3b82f6]/60 px-9 py-4 text-center text-base font-semibold text-[#93c5fd] transition hover:bg-[#3b82f6]/10 sm:w-auto"
+                className="w-full rounded-lg border border-[#3b82f6]/60 px-9 py-4 text-center text-base font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10 sm:w-auto"
               >
                 Watch the Transformation
               </a>
@@ -129,7 +129,7 @@ export default function Home() {
                 delay={index * 0.15}
                 className="h-full"
               >
-                <TiltCard className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur transition-colors duration-300 hover:border-[#3b82f6]/50">
+                <TiltCard className="group relative h-full overflow-hidden rounded-2xl border border-black/10 bg-black/[0.03] p-7 backdrop-blur transition-colors duration-300 hover:border-[#3b82f6]/50">
                   <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-[#3b82f6]/0 blur-3xl transition duration-500 group-hover:bg-[#3b82f6]/15" />
 
                   <AnimatedCounter
@@ -142,7 +142,7 @@ export default function Home() {
                     {item.title}
                   </h2>
 
-                  <p className="relative z-10 mt-3 text-sm leading-6 text-gray-400">
+                  <p className="relative z-10 mt-3 text-sm leading-6 text-gray-600">
                     {item.text}
                   </p>
 
@@ -179,7 +179,7 @@ export default function Home() {
             </span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-400">
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600">
             Learn how systems, dashboards, accountability and implementation
             can convert an owner-dependent business into a system-driven
             organisation.
@@ -193,7 +193,7 @@ export default function Home() {
                     ▶
                   </div>
 
-                  <p className="mt-5 text-sm text-gray-400">
+                  <p className="mt-5 text-sm text-gray-600">
                     RPIANS transformation video will be added here.
                   </p>
                 </div>
@@ -217,7 +217,7 @@ export default function Home() {
 
       {/* MOVEMENT */}
 
-      <section className="relative overflow-hidden border-y border-white/10 px-6 py-28">
+      <section className="relative overflow-hidden border-y border-black/10 px-6 py-28">
         <Reveal
           direction="scale"
           className="relative mx-auto max-w-4xl text-center"
@@ -234,7 +234,7 @@ export default function Home() {
             />
           </h2>
 
-          <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-gray-300">
+          <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-gray-600">
             Move from daily firefighting to structured growth. Build systems,
             strengthen leadership and multiply business profit.
           </p>
@@ -247,7 +247,7 @@ export default function Home() {
 
       {/* FAQ */}
 
-      <section className="border-y border-white/10 bg-white/[0.02] px-6 py-28">
+      <section className="border-y border-black/10 bg-black/[0.02] px-6 py-28">
         <div className="mx-auto max-w-4xl">
           <Reveal direction="up" className="text-center">
             <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
@@ -270,7 +270,7 @@ export default function Home() {
                 direction="up"
                 delay={index * 0.1}
               >
-                <details className="group rounded-xl border border-white/10 bg-[#0a0e1a] p-6 open:border-[#3b82f6]/40">
+                <details className="group rounded-xl border border-black/10 bg-white p-6 open:border-[#3b82f6]/40">
                   <summary className="cursor-pointer list-none text-lg font-semibold">
                     <span className="flex items-center justify-between gap-4">
                       {faq.question}
@@ -281,7 +281,7 @@ export default function Home() {
                     </span>
                   </summary>
 
-                  <p className="mt-5 leading-7 text-gray-400">{faq.answer}</p>
+                  <p className="mt-5 leading-7 text-gray-600">{faq.answer}</p>
                 </details>
               </Reveal>
             ))}
@@ -293,7 +293,7 @@ export default function Home() {
 
       <section className="px-6 py-28">
         <Reveal direction="scale" className="mx-auto max-w-5xl">
-          <div className="rounded-3xl border border-white/10 px-7 py-20 text-center">
+          <div className="rounded-3xl border border-black/10 px-7 py-20 text-center">
             <h2 className="font-serif text-4xl md:text-6xl">
               <AnimatedWords
                 text="Ready to Build a System-Driven Business?"
@@ -302,7 +302,7 @@ export default function Home() {
               />
             </h2>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-300">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
               Move from daily chaos to structure, automation, accountability
               and sustainable profit growth.
             </p>

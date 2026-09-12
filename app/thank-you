@@ -1,6 +1,6 @@
 export default function ThankYouPage() {
   return (
-    <main className="luxury-background flex min-h-screen items-center justify-center bg-[#0a0e1a] px-6 py-20 text-white">
+    <main className="luxury-background flex min-h-screen items-center justify-center bg-white px-6 py-20 text-[#0f172a]">
       <div className="relative z-10 mx-auto max-w-3xl text-center">
         <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-4xl text-[#3b82f6]">
           ✓
@@ -16,17 +16,17 @@ export default function ThankYouPage() {
           to Work With RPIANS
         </h1>
 
-        <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-gray-300">
+        <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-gray-600">
           आपकी application receive हो गई है। हमारी RPIANS team आपके business
           की details review करके आपसे contact करेगी।
         </p>
 
-        <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.04] p-7 text-left">
-          <h2 className="text-xl font-bold text-[#93c5fd]">
+        <div className="mt-10 rounded-2xl border border-black/10 bg-black/[0.04] p-7 text-left">
+          <h2 className="text-xl font-bold text-[#1d4ed8]">
             Strategy Call से पहले तैयार रखें:
           </h2>
 
-          <div className="mt-5 space-y-4 text-gray-300">
+          <div className="mt-5 space-y-4 text-gray-600">
             <p>1. पिछले 12 महीनों की approximate sales और profit details</p>
             <p>2. Current inventory और working capital की स्थिति</p>
             <p>3. Number of employees और team structure</p>
@@ -47,7 +47,7 @@ export default function ThankYouPage() {
 
           <a
             href="/"
-            className="rounded-lg border border-[#3b82f6]/50 px-8 py-4 font-semibold text-[#93c5fd] transition hover:bg-[#3b82f6]/10"
+            className="rounded-lg border border-[#3b82f6]/50 px-8 py-4 font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10"
           >
             Return to Home Page
           </a>

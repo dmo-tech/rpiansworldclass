@@ -28,7 +28,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="border-y border-white/10 bg-white/[0.02] px-6 py-28"
+      className="border-y border-black/10 bg-black/[0.02] px-6 py-28"
     >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-4xl text-center">
@@ -42,7 +42,7 @@ export default function Testimonials() {
             About RPIANS
           </h2>
 
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-400">
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600">
             Real business owners sharing the results achieved through
             structured systems, implementation and full hand-holding.
           </p>
@@ -52,16 +52,16 @@ export default function Testimonials() {
           {testimonials.map((testimonial) => (
             <article
               key={testimonial.name}
-              className="rounded-2xl border border-white/10 bg-[#0a0e1a] p-8 transition hover:-translate-y-1 hover:border-[#3b82f6]/50"
+              className="rounded-2xl border border-black/10 bg-white p-8 transition hover:-translate-y-1 hover:border-[#3b82f6]/50"
             >
               <div className="text-4xl text-[#3b82f6]">“</div>
 
-              <p className="mt-4 leading-8 text-gray-300">
+              <p className="mt-4 leading-8 text-gray-600">
                 {testimonial.review}
               </p>
 
-              <div className="mt-7 border-t border-white/10 pt-6">
-                <h3 className="text-lg font-bold text-white">
+              <div className="mt-7 border-t border-black/10 pt-6">
+                <h3 className="text-lg font-bold text-[#0f172a]">
                   {testimonial.name}
                 </h3>
 
@@ -69,7 +69,7 @@ export default function Testimonials() {
                   {testimonial.location}
                 </p>
 
-                <p className="mt-4 text-sm font-semibold text-[#93c5fd]">
+                <p className="mt-4 text-sm font-semibold text-[#1d4ed8]">
                   {testimonial.result}
                 </p>
               </div>

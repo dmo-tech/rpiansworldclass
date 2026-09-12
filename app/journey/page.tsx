@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function JourneyPage() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#0a0e1a] text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
       <SiteHeader />
 
       <div className="pt-20">

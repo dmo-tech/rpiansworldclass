@@ -75,9 +75,9 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
 
   if (isLoading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#0a0e1a] text-white">
+      <main className="flex min-h-screen items-center justify-center bg-white text-[#0f172a]">
         <div className="text-center">
-          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-white/10 border-t-[#3b82f6]" />
+          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-black/10 border-t-[#3b82f6]" />
 
           <p className="mt-5 text-sm text-gray-500">
             Loading payment details...
@@ -234,7 +234,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
           {applicationData ? (
             <div className="mt-7 space-y-5">
               <div>
-                <p className="text-xs uppercase tracking-[0.15em] text-gray-400">
+                <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
                   Full Name
                 </p>
 
@@ -244,7 +244,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
               </div>
 
               <div>
-                <p className="text-xs uppercase tracking-[0.15em] text-gray-400">
+                <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
                   Email
                 </p>
 
@@ -254,7 +254,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
               </div>
 
               <div>
-                <p className="text-xs uppercase tracking-[0.15em] text-gray-400">
+                <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
                   Phone
                 </p>
 
@@ -264,7 +264,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
               </div>
 
               <div>
-                <p className="text-xs uppercase tracking-[0.15em] text-gray-400">
+                <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
                   Company
                 </p>
 
@@ -285,7 +285,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
               <div>
                 <p className="text-sm text-gray-500">Booking Amount</p>
 
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="mt-1 text-xs text-gray-600">
                   Inclusive of applicable taxes
                 </p>
               </div>
@@ -314,7 +314,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
             Contact Team on WhatsApp
           </a>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-400">
+          <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-600">
             <span>Secure Payment</span>
             <span>•</span>
             <span>Razorpay / UPI</span>

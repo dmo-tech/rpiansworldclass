@@ -133,7 +133,7 @@ I would like to discuss my business diagnostic.`,
   return (
     <section
       id="business-health-quiz"
-      className="relative overflow-hidden border-y border-white/10 bg-white/[0.02] px-6 py-28"
+      className="relative overflow-hidden border-y border-black/10 bg-black/[0.02] px-6 py-28"
     >
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#3b82f6]/5 blur-[150px]" />
 
@@ -183,7 +183,7 @@ I would like to discuss my business diagnostic.`,
             className="mt-5 font-serif text-4xl md:text-6xl"
           >
             How System-Driven Is
-            <span className="mt-2 block text-[#60a5fa]">
+            <span className="mt-2 block text-[#1d4ed8]">
               Your Business Today?
             </span>
           </motion.h2>
@@ -205,7 +205,7 @@ I would like to discuss my business diagnostic.`,
               duration: 0.8,
               delay: 0.2,
             }}
-            className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-400"
+            className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600"
           >
             Answer eight practical questions and discover your current business
             health score.
@@ -226,7 +226,7 @@ I would like to discuss my business diagnostic.`,
               </span>
             </div>
 
-            <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+            <div className="mt-3 h-2 overflow-hidden rounded-full bg-black/10">
               <motion.div
                 animate={{
                   width: `${progress}%`,
@@ -267,7 +267,7 @@ I would like to discuss my business diagnostic.`,
                     duration: 0.55,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="rounded-3xl border border-[#3b82f6]/25 bg-gradient-to-b from-[#3b82f6]/10 to-[#0a0e1a] p-7 md:p-10"
+                  className="rounded-3xl border border-[#3b82f6]/25 bg-gradient-to-b from-[#3b82f6]/10 to-white p-7 md:p-10"
                 >
                   <div className="flex items-start justify-between gap-6">
                     <div>
@@ -310,7 +310,7 @@ I would like to discuss my business diagnostic.`,
                         whileTap={{
                           scale: 0.97,
                         }}
-                        className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 text-left transition hover:border-[#3b82f6]/60 hover:bg-[#3b82f6]/10 sm:px-6 sm:py-5"
+                        className="rounded-xl border border-black/10 bg-black/[0.03] px-4 py-4 text-left transition hover:border-[#3b82f6]/60 hover:bg-[#3b82f6]/10 sm:px-6 sm:py-5"
                       >
                         <span className="text-base font-semibold sm:text-lg">
                           {option.label}
@@ -345,7 +345,7 @@ I would like to discuss my business diagnostic.`,
                     duration: 0.8,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-[#0a0e1a] p-7 text-center md:p-10"
+                  className="rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-white p-7 text-center md:p-10"
                 >
                   <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                     Your Business Health Result
@@ -385,7 +385,7 @@ I would like to discuss my business diagnostic.`,
                     {result.title}
                   </h3>
 
-                  <p className="mx-auto mt-5 max-w-2xl leading-8 text-gray-400">
+                  <p className="mx-auto mt-5 max-w-2xl leading-8 text-gray-600">
                     {result.description}
                   </p>
 
@@ -402,7 +402,7 @@ I would like to discuss my business diagnostic.`,
                     <button
                       type="button"
                       onClick={restartQuiz}
-                      className="rounded-lg border border-[#3b82f6]/50 px-8 py-4 font-semibold text-[#93c5fd] transition hover:bg-[#3b82f6]/10"
+                      className="rounded-lg border border-[#3b82f6]/50 px-8 py-4 font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10"
                     >
                       Retake Quiz
                     </button>

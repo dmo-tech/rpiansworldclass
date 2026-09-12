@@ -7,7 +7,7 @@ import MobileMenu from "./MobileMenu";
 
 export default function SiteHeader() {
   return (
-    <header className="fixed left-0 top-0 z-50 w-full border-b border-white/10 bg-[#0a0e1a]/90 backdrop-blur-xl">
+    <header className="fixed left-0 top-0 z-50 w-full border-b border-black/10 bg-white/90 backdrop-blur-xl">
       <div className="relative mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-3">
           <Image
@@ -24,7 +24,7 @@ export default function SiteHeader() {
               RPIANS
             </p>
 
-            <p className="text-[9px] uppercase tracking-[0.18em] text-gray-400 sm:text-[10px]">
+            <p className="text-[9px] uppercase tracking-[0.18em] text-gray-600 sm:text-[10px]">
               World Class Business Coaching
             </p>
           </div>

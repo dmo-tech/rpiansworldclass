@@ -114,7 +114,7 @@ export default function LeadForm() {
         <div>
           <label
             htmlFor="fullName"
-            className="mb-2 block text-sm font-medium text-gray-300"
+            className="mb-2 block text-sm font-medium text-gray-600"
           >
             Full Name *
           </label>
@@ -128,14 +128,14 @@ export default function LeadForm() {
             }
             placeholder="Enter your full name"
             autoComplete="name"
-            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 text-[#0f172a] outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
           />
         </div>
 
         <div>
           <label
             htmlFor="phone"
-            className="mb-2 block text-sm font-medium text-gray-300"
+            className="mb-2 block text-sm font-medium text-gray-600"
           >
             WhatsApp Number *
           </label>
@@ -149,14 +149,14 @@ export default function LeadForm() {
             }
             placeholder="+91 98765 43210"
             autoComplete="tel"
-            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 text-[#0f172a] outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
           />
         </div>
 
         <div>
           <label
             htmlFor="email"
-            className="mb-2 block text-sm font-medium text-gray-300"
+            className="mb-2 block text-sm font-medium text-gray-600"
           >
             Email Address *
           </label>
@@ -170,14 +170,14 @@ export default function LeadForm() {
             }
             placeholder="name@company.com"
             autoComplete="email"
-            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 text-[#0f172a] outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
           />
         </div>
 
         <div>
           <label
             htmlFor="companyName"
-            className="mb-2 block text-sm font-medium text-gray-300"
+            className="mb-2 block text-sm font-medium text-gray-600"
           >
             Company Name *
           </label>
@@ -191,14 +191,14 @@ export default function LeadForm() {
             }
             placeholder="Enter your company name"
             autoComplete="organization"
-            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 text-[#0f172a] outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
           />
         </div>
 
         <div>
           <label
             htmlFor="businessCategory"
-            className="mb-2 block text-sm font-medium text-gray-300"
+            className="mb-2 block text-sm font-medium text-gray-600"
           >
             Business Category *
           </label>
@@ -209,7 +209,7 @@ export default function LeadForm() {
             onChange={(event) =>
               updateField("businessCategory", event.target.value)
             }
-            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 text-[#0f172a] outline-none transition focus:border-[#3b82f6]"
           >
             <option value="">Select business category</option>
             <option value="Retail">Retail</option>
@@ -225,7 +225,7 @@ export default function LeadForm() {
         <div>
           <label
             htmlFor="annualTurnover"
-            className="mb-2 block text-sm font-medium text-gray-300"
+            className="mb-2 block text-sm font-medium text-gray-600"
           >
             Annual Turnover *
           </label>
@@ -236,7 +236,7 @@ export default function LeadForm() {
             onChange={(event) =>
               updateField("annualTurnover", event.target.value)
             }
-            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 text-[#0f172a] outline-none transition focus:border-[#3b82f6]"
           >
             <option value="">Select annual turnover</option>
             <option value="Below ₹1 Crore">Below ₹1 Crore</option>
@@ -252,7 +252,7 @@ export default function LeadForm() {
       <div className="mt-5">
         <label
           htmlFor="biggestChallenge"
-          className="mb-2 block text-sm font-medium text-gray-300"
+          className="mb-2 block text-sm font-medium text-gray-600"
         >
           Biggest Business Challenge *
         </label>
@@ -265,7 +265,7 @@ export default function LeadForm() {
           }
           placeholder="For example: team accountability, inventory, cash flow, owner dependency..."
           rows={4}
-          className="w-full resize-none rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+          className="w-full resize-none rounded-xl border border-black/10 bg-white px-4 py-4 text-[#0f172a] outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
         />
       </div>
 
@@ -284,7 +284,7 @@ export default function LeadForm() {
               opacity: 0,
               y: -8,
             }}
-            className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300"
+            className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
           >
             {errorMessage}
           </motion.div>

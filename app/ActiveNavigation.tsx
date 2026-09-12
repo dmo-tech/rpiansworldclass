@@ -30,7 +30,7 @@ export default function ActiveNavigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="hidden items-center gap-4 text-sm text-gray-300 lg:flex xl:gap-6">
+    <nav className="hidden items-center gap-4 text-sm text-gray-600 lg:flex xl:gap-6">
       {navigationItems.map((item) => {
         const isActive =
           item.href === "/"
@@ -44,7 +44,7 @@ export default function ActiveNavigation() {
             className={`relative whitespace-nowrap py-2 transition duration-300 ${
               isActive
                 ? "text-[#22c55e]"
-                : "text-gray-300 hover:text-[#3b82f6]"
+                : "text-gray-600 hover:text-[#3b82f6]"
             }`}
           >
             {item.label}

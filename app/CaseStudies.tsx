@@ -126,7 +126,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
   return (
     <div
       ref={ref}
-      className="overflow-hidden rounded-3xl border border-[#3b82f6]/25 bg-white/[0.02] transition-[opacity,filter] duration-500 ease-out"
+      className="overflow-hidden rounded-3xl border border-[#3b82f6]/25 bg-black/[0.02] transition-[opacity,filter] duration-500 ease-out"
       style={
         reduceMotion
           ? undefined
@@ -137,7 +137,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
       }
     >
       <div className="grid gap-0 lg:grid-cols-2 lg:items-stretch">
-        <div className="relative h-56 w-full bg-[#0a0e1a] sm:h-64 lg:h-auto">
+        <div className="relative h-56 w-full bg-white sm:h-64 lg:h-auto">
           <Image
             src={study.image}
             alt={`${study.who} — ${study.business}`}
@@ -147,21 +147,21 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
         </div>
 
         <div className="p-6 md:p-8">
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-gray-600">
             Who — {study.who}, {study.business}
           </p>
 
-          <h3 className="mt-2 font-serif text-lg leading-tight text-[#93c5fd] md:text-xl">
+          <h3 className="mt-2 font-serif text-lg leading-tight text-[#1d4ed8] md:text-xl">
             {study.headline}
           </h3>
 
-          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-white">
+          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#0f172a]">
             After implementing the strategy
           </p>
 
           <ul className="mt-3 space-y-2">
             {study.bullets.map((bullet) => (
-              <li key={bullet} className="flex gap-2.5 text-sm leading-6 text-gray-300">
+              <li key={bullet} className="flex gap-2.5 text-sm leading-6 text-gray-600">
                 <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#3b82f6]" />
                 <span>{bullet}</span>
               </li>
@@ -181,7 +181,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
 
 export default function CaseStudies() {
   return (
-    <section id="case-studies" className="border-t border-white/10 px-6 py-28">
+    <section id="case-studies" className="border-t border-black/10 px-6 py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal direction="up" className="mx-auto max-w-4xl text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">

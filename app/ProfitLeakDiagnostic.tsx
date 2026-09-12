@@ -115,14 +115,14 @@ function AnimatedMetric({
   return (
     <div>
       <div className="flex items-center justify-between gap-4">
-        <p className="text-sm text-gray-300">{label}</p>
+        <p className="text-sm text-gray-600">{label}</p>
 
-        <p className="text-sm font-bold text-[#93c5fd]">
+        <p className="text-sm font-bold text-[#1d4ed8]">
           {displayValue}%
         </p>
       </div>
 
-      <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+      <div className="mt-3 h-2 overflow-hidden rounded-full bg-black/10">
         <motion.div
           style={{
             width: animatedWidth,
@@ -152,7 +152,7 @@ function HealthScore({ progress }: HealthScoreProps) {
   });
 
   return (
-    <div className="mt-8 rounded-2xl border border-white/10 bg-[#0a0e1a]/70 p-6 text-center">
+    <div className="mt-8 rounded-2xl border border-black/10 bg-white/70 p-6 text-center">
       <p className="text-sm uppercase tracking-[0.2em] text-gray-500">
         Current Health Score
       </p>
@@ -190,7 +190,7 @@ export default function ProfitLeakDiagnostic() {
     <section
       ref={sectionRef}
       id="profit-leak"
-      className="relative overflow-visible border-y border-white/10 bg-[#0a0e1a] px-6 py-28"
+      className="relative overflow-visible border-y border-black/10 bg-white px-6 py-28"
     >
       <div className="pointer-events-none absolute left-1/2 top-1/3 h-[550px] w-[550px] -translate-x-1/2 rounded-full bg-[#3b82f6]/5 blur-[160px]" />
 
@@ -241,7 +241,7 @@ export default function ProfitLeakDiagnostic() {
           >
             Where Is Your Business
 
-            <span className="mt-2 block text-[#60a5fa]">
+            <span className="mt-2 block text-[#1d4ed8]">
               Losing Profit Every Day?
             </span>
           </motion.h2>
@@ -263,7 +263,7 @@ export default function ProfitLeakDiagnostic() {
               duration: 0.8,
               delay: 0.2,
             }}
-            className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-400"
+            className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600"
           >
             Scroll through the five major profit leaks that silently reduce
             cash flow, team productivity and business profitability.
@@ -298,7 +298,7 @@ export default function ProfitLeakDiagnostic() {
                   delay: index * 0.04,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="group relative min-h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-8 transition-colors duration-300 hover:border-[#3b82f6]/50 md:p-10"
+                className="group relative min-h-[260px] overflow-hidden rounded-3xl border border-black/10 bg-black/[0.03] p-8 transition-colors duration-300 hover:border-[#3b82f6]/50 md:p-10"
               >
                 <div className="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-[#3b82f6]/0 blur-3xl transition duration-500 group-hover:bg-[#3b82f6]/12" />
 
@@ -319,7 +319,7 @@ export default function ProfitLeakDiagnostic() {
                     </div>
                   </div>
 
-                  <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-400">
+                  <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
                     {stage.description}
                   </p>
 
@@ -329,12 +329,12 @@ export default function ProfitLeakDiagnostic() {
                         {stage.metric}
                       </span>
 
-                      <span className="font-bold text-red-400">
+                      <span className="font-bold text-red-600">
                         {stage.value}%
                       </span>
                     </div>
 
-                    <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+                    <div className="mt-3 h-2 overflow-hidden rounded-full bg-black/10">
                       <motion.div
                         initial={{
                           width: 0,
@@ -385,7 +385,7 @@ export default function ProfitLeakDiagnostic() {
                   duration: 0.9,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-[#0a0e1a] p-7 shadow-[0_30px_80px_rgba(0,0,0,0.45)] md:p-9"
+                className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-white p-7 shadow-[0_30px_80px_rgba(0,0,0,0.45)] md:p-9"
               >
                 <div className="pointer-events-none absolute left-1/2 top-0 h-48 w-80 -translate-x-1/2 bg-[#3b82f6]/10 blur-3xl" />
 
@@ -425,7 +425,7 @@ export default function ProfitLeakDiagnostic() {
                       After RPIANS Implementation
                     </p>
 
-                    <div className="mt-5 grid gap-3 text-sm text-gray-300 sm:grid-cols-2">
+                    <div className="mt-5 grid gap-3 text-sm text-gray-600 sm:grid-cols-2">
                       {[
                         "Inventory Controlled",
                         "Team Accountable",
