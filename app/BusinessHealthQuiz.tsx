@@ -240,7 +240,7 @@ I would like to discuss my business diagnostic.`,
             </div>
           </div>
 
-          <div className="relative min-h-[440px]">
+          <div className="relative">
             <AnimatePresence mode="wait">
               {!isCompleted ? (
                 <motion.div
@@ -267,7 +267,7 @@ I would like to discuss my business diagnostic.`,
                     duration: 0.55,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="absolute inset-0 rounded-3xl border border-[#d9a441]/25 bg-gradient-to-b from-[#d9a441]/10 to-black p-7 md:p-10"
+                  className="rounded-3xl border border-[#d9a441]/25 bg-gradient-to-b from-[#d9a441]/10 to-black p-7 md:p-10"
                 >
                   <div className="flex items-start justify-between gap-6">
                     <div>
@@ -275,7 +275,7 @@ I would like to discuss my business diagnostic.`,
                         Business Health Question
                       </p>
 
-                      <h3 className="mt-5 font-serif text-3xl leading-tight md:text-4xl">
+                      <h3 className="mt-5 font-serif text-2xl leading-tight sm:text-3xl md:text-4xl">
                         {questions[currentQuestion].question}
                       </h3>
                     </div>
@@ -285,7 +285,7 @@ I would like to discuss my business diagnostic.`,
                     </div>
                   </div>
 
-                  <div className="mt-10 grid gap-4 sm:grid-cols-2">
+                  <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4">
                     {answerOptions.map((option, index) => (
                       <motion.button
                         key={option.label}
@@ -310,13 +310,13 @@ I would like to discuss my business diagnostic.`,
                         whileTap={{
                           scale: 0.97,
                         }}
-                        className="rounded-xl border border-white/10 bg-white/[0.03] px-6 py-5 text-left transition hover:border-[#d9a441]/60 hover:bg-[#d9a441]/10"
+                        className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 text-left transition hover:border-[#d9a441]/60 hover:bg-[#d9a441]/10 sm:px-6 sm:py-5"
                       >
-                        <span className="text-lg font-semibold">
+                        <span className="text-base font-semibold sm:text-lg">
                           {option.label}
                         </span>
 
-                        <span className="mt-1 block text-sm text-gray-500">
+                        <span className="mt-1 block text-xs text-gray-500 sm:text-sm">
                           {option.score === 0 && "Not implemented"}
                           {option.score === 1 && "Partially implemented"}
                           {option.score === 2 && "Mostly implemented"}
@@ -345,7 +345,7 @@ I would like to discuss my business diagnostic.`,
                     duration: 0.8,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="absolute inset-0 rounded-3xl border border-[#d9a441]/30 bg-gradient-to-b from-[#d9a441]/12 to-black p-7 text-center md:p-10"
+                  className="rounded-3xl border border-[#d9a441]/30 bg-gradient-to-b from-[#d9a441]/12 to-black p-7 text-center md:p-10"
                 >
                   <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#d9a441]">
                     Your Business Health Result
