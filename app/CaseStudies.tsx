@@ -15,6 +15,7 @@ type CaseStudy = {
   bullets: string[];
   tagline: string;
   image: string;
+  imagePosition?: string;
 };
 
 const caseStudies: CaseStudy[] = [
@@ -53,6 +54,7 @@ const caseStudies: CaseStudy[] = [
     tagline:
       "Inventory Control • Debt-Free • More Dealers • Scalable Growth • System-Driven Business",
     image: "/case-studies/ajay-laddha-shree-jee-hardware.jpg",
+    imagePosition: "object-top",
   },
   {
     id: "khandelwal-general-stores",
@@ -140,7 +142,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
             src={study.image}
             alt={`${study.who} — ${study.business}`}
             fill
-            className="object-cover"
+            className={`object-cover ${study.imagePosition ?? "object-center"}`}
           />
         </div>
 
