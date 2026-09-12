@@ -215,7 +215,7 @@ export default function TransformationJourney() {
 
           <Link
             href="/register"
-            className="mt-8 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-9 py-4 font-bold text-white transition hover:scale-105"
+            className="mt-8 inline-block rounded-lg bg-gradient-to-r from-[#86efac] to-[#16a34a] px-9 py-4 font-bold text-white transition hover:scale-105"
           >
             Start Your Transformation
           </Link>

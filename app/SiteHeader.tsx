@@ -33,7 +33,7 @@ export default function SiteHeader() {
         <ActiveNavigation />
 
         <div className="flex shrink-0 items-center gap-3">
-          <ApplyButton className="hidden whitespace-nowrap rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-6 py-3 text-sm font-bold text-white transition hover:scale-105 sm:block">
+          <ApplyButton className="hidden whitespace-nowrap rounded-lg bg-gradient-to-r from-[#86efac] to-[#16a34a] px-6 py-3 text-sm font-bold text-white transition hover:scale-105 sm:block">
             Apply Now
           </ApplyButton>
 

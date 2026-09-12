@@ -310,7 +310,7 @@ export default function ApplyPopup({
                     ? undefined
                     : { scale: 0.98 }
                 }
-                className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-7 py-4 font-bold text-white disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#86efac] to-[#16a34a] px-7 py-4 font-bold text-white disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting
                   ? "Opening Payment Details..."

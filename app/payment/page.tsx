@@ -300,7 +300,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
             type="button"
             onClick={handlePayment}
             disabled={!applicationData}
-            className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#86efac] to-[#16a34a] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
           >
             Pay ₹{PAYMENT_AMOUNT}
           </button>

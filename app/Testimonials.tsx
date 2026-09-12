@@ -80,7 +80,7 @@ export default function Testimonials() {
         <div className="mt-12 text-center">
           <Link
             href="/register"
-            className="inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-10 py-4 font-bold text-white transition hover:scale-105"
+            className="inline-block rounded-lg bg-gradient-to-r from-[#86efac] to-[#16a34a] px-10 py-4 font-bold text-white transition hover:scale-105"
           >
             Start Your Business Transformation
           </Link>

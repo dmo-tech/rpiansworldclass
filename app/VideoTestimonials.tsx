@@ -58,7 +58,7 @@ function VideoCard({ video }: { video: VideoTestimonial }) {
             aria-label={`Play testimonial video from ${video.name}`}
             className="absolute inset-0 flex items-center justify-center bg-black/20 transition hover:bg-black/10"
           >
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] text-2xl text-white shadow-lg">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-[#86efac] to-[#16a34a] text-2xl text-white shadow-lg">
               ▶
             </span>
           </button>

@@ -76,7 +76,7 @@ export default function AboutPage() {
                   dedicated my life to helping business owners.
                 </p>
 
-                <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-9 py-4 font-bold text-white transition hover:scale-105">
+                <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#86efac] to-[#16a34a] px-9 py-4 font-bold text-white transition hover:scale-105">
                   Work With Rajesh Kumar Kare
                 </ApplyButton>
               </div>

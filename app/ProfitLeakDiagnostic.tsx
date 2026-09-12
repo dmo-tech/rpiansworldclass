@@ -450,7 +450,7 @@ export default function ProfitLeakDiagnostic() {
 
                   <Link
                     href="/register"
-                    className="mt-8 block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
+                    className="mt-8 block rounded-lg bg-gradient-to-r from-[#86efac] to-[#16a34a] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
                   >
                     Get Your Business Diagnostic
                   </Link>
