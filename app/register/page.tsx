@@ -606,7 +606,7 @@ export default function RegisterPage() {
                         scale: 0.98,
                       }
                 }
-                className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#15803d] to-[#14532d] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)] disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting
                   ? "Saving Your Application..."

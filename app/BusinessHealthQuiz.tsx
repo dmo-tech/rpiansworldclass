@@ -394,7 +394,7 @@ I would like to discuss my business diagnostic.`,
                       href={`https://wa.me/917389638105?text=${whatsappMessage}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-lg bg-gradient-to-r from-[#15803d] to-[#14532d] px-8 py-4 font-bold text-white transition hover:scale-105"
+                      className="rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-8 py-4 font-bold text-white transition hover:scale-105"
                     >
                       Get Your Free Diagnostic
                     </a>

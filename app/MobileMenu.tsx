@@ -62,7 +62,7 @@ export default function MobileMenu() {
             <Link
               href="/register"
               onClick={closeMenu}
-              className="rounded-lg bg-gradient-to-r from-[#15803d] to-[#14532d] px-5 py-3 text-center font-bold text-white"
+              className="rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-5 py-3 text-center font-bold text-white"
             >
               Apply Now
             </Link>
