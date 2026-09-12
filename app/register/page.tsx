@@ -252,7 +252,7 @@ export default function RegisterPage() {
                   }}
                   className="flex items-start gap-4"
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 font-bold text-[#facc15]">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 font-bold text-[#ec4899]">
                     {index + 1}
                   </span>
 

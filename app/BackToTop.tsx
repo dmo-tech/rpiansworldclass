@@ -58,7 +58,7 @@ export default function BackToTop() {
           transition={{
             duration: 0.3,
           }}
-          className="fixed bottom-24 right-7 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-[#facc15]/50 bg-black/90 text-xl text-[#facc15] shadow-[0_10px_30px_rgba(250,204,21,0.25)] backdrop-blur transition hover:border-[#facc15]"
+          className="fixed bottom-24 right-7 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-[#ec4899]/50 bg-black/90 text-xl text-[#ec4899] shadow-[0_10px_30px_rgba(236, 72, 153, 0.25)] backdrop-blur transition hover:border-[#ec4899]"
         >
           ↑
         </motion.button>

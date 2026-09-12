@@ -168,7 +168,7 @@ export default function BeforeAfter() {
                     }}
                     className="flex items-start gap-4"
                   >
-                    <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/50 bg-[#3b82f6]/10 text-sm text-[#facc15]">
+                    <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/50 bg-[#3b82f6]/10 text-sm text-[#ec4899]">
                       ✓
                     </span>
 

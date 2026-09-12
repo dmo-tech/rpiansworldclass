@@ -43,7 +43,7 @@ export default function ActiveNavigation() {
             href={item.href}
             className={`relative whitespace-nowrap py-2 transition duration-300 ${
               isActive
-                ? "text-[#facc15]"
+                ? "text-[#ec4899]"
                 : "text-gray-300 hover:text-[#3b82f6]"
             }`}
           >

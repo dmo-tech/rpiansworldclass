@@ -158,7 +158,7 @@ function HealthScore({ progress }: HealthScoreProps) {
       </p>
 
       <div className="mt-4 flex items-end justify-center gap-2">
-        <span className="font-serif text-6xl font-bold text-[#facc15]">
+        <span className="font-serif text-6xl font-bold text-[#ec4899]">
           {score}
         </span>
 
@@ -314,7 +314,7 @@ export default function ProfitLeakDiagnostic() {
                       </h3>
                     </div>
 
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-lg font-bold text-[#facc15]">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-lg font-bold text-[#ec4899]">
                       {stage.number}
                     </div>
                   </div>
@@ -401,7 +401,7 @@ export default function ProfitLeakDiagnostic() {
                       </h3>
                     </div>
 
-                    <div className="rounded-full border border-[#3b82f6]/30 bg-[#3b82f6]/10 px-4 py-2 text-xs font-semibold text-[#facc15]">
+                    <div className="rounded-full border border-[#3b82f6]/30 bg-[#3b82f6]/10 px-4 py-2 text-xs font-semibold text-[#ec4899]">
                       RPIANS Diagnostic
                     </div>
                   </div>
@@ -438,7 +438,7 @@ export default function ProfitLeakDiagnostic() {
                           key={point}
                           className="flex items-center gap-3"
                         >
-                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-xs text-[#facc15]">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-xs text-[#ec4899]">
                             ✓
                           </span>
 

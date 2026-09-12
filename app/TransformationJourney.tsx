@@ -153,7 +153,7 @@ export default function TransformationJourney() {
                       <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#3b82f6]/0 blur-3xl transition duration-500 group-hover:bg-[#3b82f6]/15" />
 
                       <div className="relative z-10 flex items-start gap-5">
-                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/50 bg-[#3b82f6]/10 text-sm font-bold text-[#facc15]">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/50 bg-[#3b82f6]/10 text-sm font-bold text-[#ec4899]">
                           {step.number}
                         </div>
 
@@ -182,7 +182,7 @@ export default function TransformationJourney() {
                       duration: 0.45,
                       delay: 0.2,
                     }}
-                    className="absolute left-1/2 top-1/2 z-10 hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-black bg-[#facc15] shadow-[0_0_30px_rgba(250,204,21,0.7)] md:block"
+                    className="absolute left-1/2 top-1/2 z-10 hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-black bg-[#ec4899] shadow-[0_0_30px_rgba(236, 72, 153, 0.7)] md:block"
                   />
                 </motion.div>
               );

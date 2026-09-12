@@ -280,7 +280,7 @@ I would like to discuss my business diagnostic.`,
                       </h3>
                     </div>
 
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 font-bold text-[#facc15]">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 font-bold text-[#ec4899]">
                       {String(currentQuestion + 1).padStart(2, "0")}
                     </div>
                   </div>
@@ -367,7 +367,7 @@ I would like to discuss my business diagnostic.`,
                     className="mx-auto mt-7 flex h-40 w-40 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 shadow-[0_0_50px_rgba(59,130,246,0.2)]"
                   >
                     <div>
-                      <p className="font-serif text-5xl font-bold text-[#facc15]">
+                      <p className="font-serif text-5xl font-bold text-[#ec4899]">
                         {percentageScore}%
                       </p>
 
