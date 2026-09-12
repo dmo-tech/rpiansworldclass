@@ -28,10 +28,6 @@ const navigationItems = [
     href: "/masterclass",
     label: "Masterclass",
   },
-  {
-    href: "/contact",
-    label: "Contact",
-  },
 ];
 
 export default function ActiveNavigation() {
