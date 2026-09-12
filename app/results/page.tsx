@@ -26,7 +26,7 @@ const masterclassTopics = [
 
 export default function ResultsPage() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-black text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-[#0a0e1a] text-white">
       <SiteHeader />
 
       <div className="pt-20">
@@ -72,7 +72,7 @@ export default function ResultsPage() {
 
             <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
               <Reveal direction="left" className="h-full">
-                <TiltCard className="h-full rounded-3xl border border-white/10 bg-black/70 p-8">
+                <TiltCard className="h-full rounded-3xl border border-white/10 bg-[#0a0e1a]/70 p-8">
                   <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                     What You Will Learn
                   </p>
@@ -90,7 +90,7 @@ export default function ResultsPage() {
               </Reveal>
 
               <Reveal direction="right" delay={0.15} className="h-full">
-                <TiltCard className="h-full rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-black p-8">
+                <TiltCard className="h-full rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-[#0a0e1a] p-8">
                   <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                     Masterclass Details
                   </p>
@@ -123,7 +123,7 @@ export default function ResultsPage() {
                     </div>
                   </div>
 
-                  <ApplyButton className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-8 py-4 text-center font-bold text-black transition hover:scale-[1.02]">
+                  <ApplyButton className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]">
                     Register for the Masterclass
                   </ApplyButton>
                 </TiltCard>

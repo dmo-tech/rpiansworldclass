@@ -128,7 +128,7 @@ export default function LeadForm() {
             }
             placeholder="Enter your full name"
             autoComplete="name"
-            className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
           />
         </div>
 
@@ -149,7 +149,7 @@ export default function LeadForm() {
             }
             placeholder="+91 98765 43210"
             autoComplete="tel"
-            className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
           />
         </div>
 
@@ -170,7 +170,7 @@ export default function LeadForm() {
             }
             placeholder="name@company.com"
             autoComplete="email"
-            className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
           />
         </div>
 
@@ -191,7 +191,7 @@ export default function LeadForm() {
             }
             placeholder="Enter your company name"
             autoComplete="organization"
-            className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
           />
         </div>
 
@@ -209,7 +209,7 @@ export default function LeadForm() {
             onChange={(event) =>
               updateField("businessCategory", event.target.value)
             }
-            className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-white outline-none transition focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition focus:border-[#3b82f6]"
           >
             <option value="">Select business category</option>
             <option value="Retail">Retail</option>
@@ -236,7 +236,7 @@ export default function LeadForm() {
             onChange={(event) =>
               updateField("annualTurnover", event.target.value)
             }
-            className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-white outline-none transition focus:border-[#3b82f6]"
+            className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition focus:border-[#3b82f6]"
           >
             <option value="">Select annual turnover</option>
             <option value="Below ₹1 Crore">Below ₹1 Crore</option>
@@ -265,7 +265,7 @@ export default function LeadForm() {
           }
           placeholder="For example: team accountability, inventory, cash flow, owner dependency..."
           rows={4}
-          className="w-full resize-none rounded-xl border border-white/10 bg-black px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+          className="w-full resize-none rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 text-white outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
         />
       </div>
 
@@ -308,7 +308,7 @@ export default function LeadForm() {
                 scale: 0.98,
               }
         }
-        className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-7 py-4 text-base font-bold text-black shadow-[0_15px_50px_rgba(236,72,153,0.22)] transition disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-7 py-4 text-base font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)] transition disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSubmitting
           ? "Opening Payment Details..."

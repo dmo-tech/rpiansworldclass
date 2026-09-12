@@ -118,7 +118,7 @@ export default function ApplyPopup({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onMouseDown={onClose}
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/85 px-4 py-8 backdrop-blur-md"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-[#0a0e1a]/85 px-4 py-8 backdrop-blur-md"
         >
           <motion.div
             initial={{
@@ -310,7 +310,7 @@ export default function ApplyPopup({
                     ? undefined
                     : { scale: 0.98 }
                 }
-                className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-7 py-4 font-bold text-black disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-7 py-4 font-bold text-white disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting
                   ? "Opening Payment Details..."

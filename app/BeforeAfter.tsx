@@ -88,7 +88,7 @@ export default function BeforeAfter() {
               duration: 0.9,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="relative overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-b from-red-500/10 to-black p-8 md:p-10"
+            className="relative overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-b from-red-500/10 to-[#0a0e1a] p-8 md:p-10"
           >
             <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-red-500/10 blur-3xl" />
 
@@ -142,7 +142,7 @@ export default function BeforeAfter() {
               delay: 0.1,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-black p-8 md:p-10"
+            className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-[#0a0e1a] p-8 md:p-10"
           >
             <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#3b82f6]/15 blur-3xl" />
 
@@ -168,7 +168,7 @@ export default function BeforeAfter() {
                     }}
                     className="flex items-start gap-4"
                   >
-                    <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/50 bg-[#3b82f6]/10 text-sm text-[#ec4899]">
+                    <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/50 bg-[#3b82f6]/10 text-sm text-[#22c55e]">
                       ✓
                     </span>
 

@@ -59,7 +59,7 @@ const faqs = [
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-black text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-[#0a0e1a] text-white">
       <ScrollProgress />
       <MouseGlow />
 
@@ -108,7 +108,7 @@ export default function Home() {
 
           <Reveal direction="up" delay={0.65}>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-9 py-4 text-base font-bold text-black transition hover:scale-105 sm:w-auto">
+              <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-9 py-4 text-base font-bold text-white transition hover:scale-105 sm:w-auto">
                 Apply to Work With Us
               </ApplyButton>
 
@@ -146,7 +146,7 @@ export default function Home() {
                     {item.text}
                   </p>
 
-                  <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#ec4899] via-[#facc15] to-[#3b82f6] transition-all duration-500 group-hover:w-full" />
+                  <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] transition-all duration-500 group-hover:w-full" />
                 </TiltCard>
               </Reveal>
             ))}
@@ -189,7 +189,7 @@ export default function Home() {
             <div className="mt-12 overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900">
               <div className="flex aspect-video items-center justify-center">
                 <div className="text-center">
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-[#ef4444] to-[#facc15] text-3xl text-black">
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-[#ef4444] to-[#22c55e] text-3xl text-white">
                     ▶
                   </div>
 
@@ -239,7 +239,7 @@ export default function Home() {
             strengthen leadership and multiply business profit.
           </p>
 
-          <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-10 py-4 font-bold text-black transition hover:scale-105">
+          <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-10 py-4 font-bold text-white transition hover:scale-105">
             Apply to Work With Us
           </ApplyButton>
         </Reveal>
@@ -270,7 +270,7 @@ export default function Home() {
                 direction="up"
                 delay={index * 0.1}
               >
-                <details className="group rounded-xl border border-white/10 bg-black p-6 open:border-[#3b82f6]/40">
+                <details className="group rounded-xl border border-white/10 bg-[#0a0e1a] p-6 open:border-[#3b82f6]/40">
                   <summary className="cursor-pointer list-none text-lg font-semibold">
                     <span className="flex items-center justify-between gap-4">
                       {faq.question}
@@ -307,7 +307,7 @@ export default function Home() {
               and sustainable profit growth.
             </p>
 
-            <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-10 py-4 font-bold text-black transition hover:scale-105">
+            <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-10 py-4 font-bold text-white transition hover:scale-105">
               Apply Now
             </ApplyButton>
           </div>

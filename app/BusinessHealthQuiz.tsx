@@ -235,7 +235,7 @@ I would like to discuss my business diagnostic.`,
                   duration: 0.5,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="h-full rounded-full bg-gradient-to-r from-[#ec4899] via-[#facc15] to-[#3b82f6]"
+                className="h-full rounded-full bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6]"
               />
             </div>
           </div>
@@ -267,7 +267,7 @@ I would like to discuss my business diagnostic.`,
                     duration: 0.55,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="rounded-3xl border border-[#3b82f6]/25 bg-gradient-to-b from-[#3b82f6]/10 to-black p-7 md:p-10"
+                  className="rounded-3xl border border-[#3b82f6]/25 bg-gradient-to-b from-[#3b82f6]/10 to-[#0a0e1a] p-7 md:p-10"
                 >
                   <div className="flex items-start justify-between gap-6">
                     <div>
@@ -280,7 +280,7 @@ I would like to discuss my business diagnostic.`,
                       </h3>
                     </div>
 
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 font-bold text-[#ec4899]">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 font-bold text-[#22c55e]">
                       {String(currentQuestion + 1).padStart(2, "0")}
                     </div>
                   </div>
@@ -345,7 +345,7 @@ I would like to discuss my business diagnostic.`,
                     duration: 0.8,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-black p-7 text-center md:p-10"
+                  className="rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-[#0a0e1a] p-7 text-center md:p-10"
                 >
                   <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                     Your Business Health Result
@@ -367,7 +367,7 @@ I would like to discuss my business diagnostic.`,
                     className="mx-auto mt-7 flex h-40 w-40 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 shadow-[0_0_50px_rgba(59,130,246,0.2)]"
                   >
                     <div>
-                      <p className="font-serif text-5xl font-bold text-[#ec4899]">
+                      <p className="font-serif text-5xl font-bold text-[#22c55e]">
                         {percentageScore}%
                       </p>
 
@@ -394,7 +394,7 @@ I would like to discuss my business diagnostic.`,
                       href={`https://wa.me/917389638105?text=${whatsappMessage}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-8 py-4 font-bold text-black transition hover:scale-105"
+                      className="rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-8 py-4 font-bold text-white transition hover:scale-105"
                     >
                       Get Your Free Diagnostic
                     </a>

@@ -157,7 +157,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-black px-5 py-12 text-white md:px-8">
+    <main className="relative min-h-screen overflow-hidden bg-[#0a0e1a] px-5 py-12 text-white md:px-8">
       {/* BACKGROUND EFFECT */}
 
       <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#3b82f6]/10 blur-[170px]" />
@@ -252,7 +252,7 @@ export default function RegisterPage() {
                   }}
                   className="flex items-start gap-4"
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 font-bold text-[#ec4899]">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 font-bold text-[#22c55e]">
                     {index + 1}
                   </span>
 
@@ -341,7 +341,7 @@ export default function RegisterPage() {
                     }
                     placeholder="Enter your full name"
                     autoComplete="name"
-                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                    className="w-full rounded-xl border border-white/10 bg-[#0a0e1a]/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
 
@@ -365,7 +365,7 @@ export default function RegisterPage() {
                     }
                     placeholder="+91 98765 43210"
                     autoComplete="tel"
-                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                    className="w-full rounded-xl border border-white/10 bg-[#0a0e1a]/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
 
@@ -389,7 +389,7 @@ export default function RegisterPage() {
                     }
                     placeholder="name@company.com"
                     autoComplete="email"
-                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                    className="w-full rounded-xl border border-white/10 bg-[#0a0e1a]/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
 
@@ -413,7 +413,7 @@ export default function RegisterPage() {
                     }
                     placeholder="Enter company name"
                     autoComplete="organization"
-                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                    className="w-full rounded-xl border border-white/10 bg-[#0a0e1a]/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
 
@@ -434,7 +434,7 @@ export default function RegisterPage() {
                         event.target.value,
                       )
                     }
-                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 outline-none transition focus:border-[#3b82f6]"
+                    className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 outline-none transition focus:border-[#3b82f6]"
                   >
                     <option value="">
                       Select category
@@ -487,7 +487,7 @@ export default function RegisterPage() {
                         event.target.value,
                       )
                     }
-                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 outline-none transition focus:border-[#3b82f6]"
+                    className="w-full rounded-xl border border-white/10 bg-[#0a0e1a] px-4 py-4 outline-none transition focus:border-[#3b82f6]"
                   >
                     <option value="">
                       Select turnover
@@ -539,7 +539,7 @@ export default function RegisterPage() {
                       )
                     }
                     placeholder="Enter number of employees"
-                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                    className="w-full rounded-xl border border-white/10 bg-[#0a0e1a]/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
 
@@ -562,7 +562,7 @@ export default function RegisterPage() {
                     }
                     rows={4}
                     placeholder="Team accountability, inventory, cash flow, owner dependency..."
-                    className="w-full resize-none rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                    className="w-full resize-none rounded-xl border border-white/10 bg-[#0a0e1a]/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
               </div>
@@ -606,7 +606,7 @@ export default function RegisterPage() {
                         scale: 0.98,
                       }
                 }
-                className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-7 py-4 font-bold text-black shadow-[0_15px_50px_rgba(236,72,153,0.22)] disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting
                   ? "Saving Your Application..."

@@ -127,7 +127,7 @@ function AnimatedMetric({
           style={{
             width: animatedWidth,
           }}
-          className="h-full rounded-full bg-gradient-to-r from-[#ec4899] via-[#facc15] to-[#3b82f6]"
+          className="h-full rounded-full bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6]"
         />
       </div>
 
@@ -152,13 +152,13 @@ function HealthScore({ progress }: HealthScoreProps) {
   });
 
   return (
-    <div className="mt-8 rounded-2xl border border-white/10 bg-black/70 p-6 text-center">
+    <div className="mt-8 rounded-2xl border border-white/10 bg-[#0a0e1a]/70 p-6 text-center">
       <p className="text-sm uppercase tracking-[0.2em] text-gray-500">
         Current Health Score
       </p>
 
       <div className="mt-4 flex items-end justify-center gap-2">
-        <span className="font-serif text-6xl font-bold text-[#ec4899]">
+        <span className="font-serif text-6xl font-bold text-[#22c55e]">
           {score}
         </span>
 
@@ -190,7 +190,7 @@ export default function ProfitLeakDiagnostic() {
     <section
       ref={sectionRef}
       id="profit-leak"
-      className="relative overflow-visible border-y border-white/10 bg-black px-6 py-28"
+      className="relative overflow-visible border-y border-white/10 bg-[#0a0e1a] px-6 py-28"
     >
       <div className="pointer-events-none absolute left-1/2 top-1/3 h-[550px] w-[550px] -translate-x-1/2 rounded-full bg-[#3b82f6]/5 blur-[160px]" />
 
@@ -314,7 +314,7 @@ export default function ProfitLeakDiagnostic() {
                       </h3>
                     </div>
 
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-lg font-bold text-[#ec4899]">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-lg font-bold text-[#22c55e]">
                       {stage.number}
                     </div>
                   </div>
@@ -357,7 +357,7 @@ export default function ProfitLeakDiagnostic() {
                   </div>
                 </div>
 
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#ec4899] via-[#facc15] to-[#3b82f6] transition-all duration-500 group-hover:w-full" />
+                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] transition-all duration-500 group-hover:w-full" />
               </motion.article>
             ))}
           </div>
@@ -385,7 +385,7 @@ export default function ProfitLeakDiagnostic() {
                   duration: 0.9,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-black p-7 shadow-[0_30px_80px_rgba(0,0,0,0.45)] md:p-9"
+                className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-[#0a0e1a] p-7 shadow-[0_30px_80px_rgba(0,0,0,0.45)] md:p-9"
               >
                 <div className="pointer-events-none absolute left-1/2 top-0 h-48 w-80 -translate-x-1/2 bg-[#3b82f6]/10 blur-3xl" />
 
@@ -401,7 +401,7 @@ export default function ProfitLeakDiagnostic() {
                       </h3>
                     </div>
 
-                    <div className="rounded-full border border-[#3b82f6]/30 bg-[#3b82f6]/10 px-4 py-2 text-xs font-semibold text-[#ec4899]">
+                    <div className="rounded-full border border-[#3b82f6]/30 bg-[#3b82f6]/10 px-4 py-2 text-xs font-semibold text-[#22c55e]">
                       RPIANS Diagnostic
                     </div>
                   </div>
@@ -438,7 +438,7 @@ export default function ProfitLeakDiagnostic() {
                           key={point}
                           className="flex items-center gap-3"
                         >
-                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-xs text-[#ec4899]">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-xs text-[#22c55e]">
                             ✓
                           </span>
 
@@ -450,7 +450,7 @@ export default function ProfitLeakDiagnostic() {
 
                   <Link
                     href="/register"
-                    className="mt-8 block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-8 py-4 text-center font-bold text-black transition hover:scale-[1.02]"
+                    className="mt-8 block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
                   >
                     Get Your Business Diagnostic
                   </Link>

@@ -41,7 +41,7 @@ function VideoCard({ video }: { video: VideoTestimonial }) {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-black transition hover:border-[#3b82f6]/50">
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0a0e1a] transition hover:border-[#3b82f6]/50">
       <div className="relative aspect-video bg-neutral-900">
         <video
           ref={videoRef}
@@ -56,9 +56,9 @@ function VideoCard({ video }: { video: VideoTestimonial }) {
             type="button"
             onClick={handlePlay}
             aria-label={`Play testimonial video from ${video.name}`}
-            className="absolute inset-0 flex items-center justify-center bg-black/20 transition hover:bg-black/10"
+            className="absolute inset-0 flex items-center justify-center bg-[#0a0e1a]/20 transition hover:bg-[#0a0e1a]/10"
           >
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] text-2xl text-black shadow-lg">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] text-2xl text-white shadow-lg">
               ▶
             </span>
           </button>

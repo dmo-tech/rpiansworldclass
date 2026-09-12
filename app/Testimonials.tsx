@@ -52,7 +52,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial) => (
             <article
               key={testimonial.name}
-              className="rounded-2xl border border-white/10 bg-black p-8 transition hover:-translate-y-1 hover:border-[#3b82f6]/50"
+              className="rounded-2xl border border-white/10 bg-[#0a0e1a] p-8 transition hover:-translate-y-1 hover:border-[#3b82f6]/50"
             >
               <div className="text-4xl text-[#3b82f6]">“</div>
 
@@ -80,7 +80,7 @@ export default function Testimonials() {
         <div className="mt-12 text-center">
           <Link
             href="/register"
-            className="inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-10 py-4 font-bold text-black transition hover:scale-105"
+            className="inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-10 py-4 font-bold text-white transition hover:scale-105"
           >
             Start Your Business Transformation
           </Link>

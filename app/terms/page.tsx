@@ -4,7 +4,7 @@ import Reveal from "../Reveal";
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-black px-6 py-20 text-white">
+    <main className="min-h-screen bg-[#0a0e1a] px-6 py-20 text-white">
       <div className="mx-auto max-w-4xl">
         <a href="/" className="inline-flex items-center gap-2">
           <Image

@@ -53,7 +53,7 @@ const systems = [
 
 export default function SystemsPage() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-black text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-[#0a0e1a] text-white">
       <SiteHeader />
 
       <div className="pt-20">
@@ -100,7 +100,7 @@ export default function SystemsPage() {
                   delay={(index % 3) * 0.12}
                   className="h-full"
                 >
-                  <TiltCard className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-black p-7 transition-colors duration-300 hover:border-[#3b82f6]/60">
+                  <TiltCard className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-[#0a0e1a] p-7 transition-colors duration-300 hover:border-[#3b82f6]/60">
                     <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#3b82f6]/0 blur-3xl transition duration-500 group-hover:bg-[#3b82f6]/15" />
 
                     <div
@@ -130,7 +130,7 @@ export default function SystemsPage() {
                       {system.description}
                     </p>
 
-                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#ec4899] via-[#facc15] to-[#3b82f6] transition-all duration-500 group-hover:w-full" />
+                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] transition-all duration-500 group-hover:w-full" />
                   </TiltCard>
                 </Reveal>
               ))}

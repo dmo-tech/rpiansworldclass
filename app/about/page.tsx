@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-black text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-[#0a0e1a] text-white">
       <SiteHeader />
 
       <div className="pt-20">
@@ -31,7 +31,7 @@ export default function AboutPage() {
                   className="object-top"
                 />
 
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/80 to-transparent p-8 pt-28">
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[#0a0e1a] via-[#0a0e1a]/80 to-transparent p-8 pt-28">
                   <h3 className="text-2xl font-bold">Rajesh Kumar Kare</h3>
 
                   <p className="mt-2 text-[#3b82f6]">
@@ -76,7 +76,7 @@ export default function AboutPage() {
                   dedicated my life to helping business owners.
                 </p>
 
-                <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-9 py-4 font-bold text-black transition hover:scale-105">
+                <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-9 py-4 font-bold text-white transition hover:scale-105">
                   Work With Rajesh Kumar Kare
                 </ApplyButton>
               </div>

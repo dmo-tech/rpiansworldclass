@@ -137,7 +137,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
       }
     >
       <div className="grid gap-0 lg:grid-cols-2 lg:items-stretch">
-        <div className="relative h-56 w-full bg-black sm:h-64 lg:h-auto">
+        <div className="relative h-56 w-full bg-[#0a0e1a] sm:h-64 lg:h-auto">
           <Image
             src={study.image}
             alt={`${study.who} — ${study.business}`}
@@ -170,8 +170,8 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-6 py-3 text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.15em] text-black">
+      <div className="bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-6 py-3 text-center">
+        <p className="text-xs font-bold uppercase tracking-[0.15em] text-white">
           {study.tagline}
         </p>
       </div>

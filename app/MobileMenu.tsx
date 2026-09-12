@@ -46,7 +46,7 @@ export default function MobileMenu() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full w-full border-t border-white/10 bg-black px-6 py-6 shadow-2xl">
+        <div className="absolute left-0 top-full w-full border-t border-white/10 bg-[#0a0e1a] px-6 py-6 shadow-2xl">
           <nav className="flex flex-col gap-5 text-base text-gray-300">
             {links.map((link) => (
               <Link
@@ -62,7 +62,7 @@ export default function MobileMenu() {
             <Link
               href="/register"
               onClick={closeMenu}
-              className="rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-5 py-3 text-center font-bold text-black"
+              className="rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-5 py-3 text-center font-bold text-white"
             >
               Apply Now
             </Link>

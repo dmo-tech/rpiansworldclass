@@ -75,7 +75,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
 
   if (isLoading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-black text-white">
+      <main className="flex min-h-screen items-center justify-center bg-[#0a0e1a] text-white">
         <div className="text-center">
           <div className="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-white/10 border-t-[#3b82f6]" />
 
@@ -300,7 +300,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
             type="button"
             onClick={handlePayment}
             disabled={!applicationData}
-            className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-7 py-4 font-bold text-black shadow-[0_15px_40px_rgba(236,72,153,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
           >
             Pay ₹{PAYMENT_AMOUNT}
           </button>
