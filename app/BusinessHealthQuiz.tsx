@@ -135,7 +135,7 @@ I would like to discuss my business diagnostic.`,
       id="business-health-quiz"
       className="relative overflow-hidden border-y border-white/10 bg-white/[0.02] px-6 py-28"
     >
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#d9a441]/5 blur-[150px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#3b82f6]/5 blur-[150px]" />
 
       <div className="relative mx-auto max-w-5xl">
         <div className="mx-auto max-w-4xl text-center">
@@ -155,7 +155,7 @@ I would like to discuss my business diagnostic.`,
             transition={{
               duration: 0.7,
             }}
-            className="text-xs uppercase tracking-[0.35em] text-[#d9a441]"
+            className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
           >
             60-Second Business Health Quiz
           </motion.p>
@@ -183,7 +183,7 @@ I would like to discuss my business diagnostic.`,
             className="mt-5 font-serif text-4xl md:text-6xl"
           >
             How System-Driven Is
-            <span className="mt-2 block text-[#e0ad4d]">
+            <span className="mt-2 block text-[#60a5fa]">
               Your Business Today?
             </span>
           </motion.h2>
@@ -221,7 +221,7 @@ I would like to discuss my business diagnostic.`,
                   : `Question ${currentQuestion + 1} of ${totalQuestions}`}
               </span>
 
-              <span className="font-semibold text-[#d9a441]">
+              <span className="font-semibold text-[#3b82f6]">
                 {Math.round(progress)}%
               </span>
             </div>
@@ -235,7 +235,7 @@ I would like to discuss my business diagnostic.`,
                   duration: 0.5,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="h-full rounded-full bg-gradient-to-r from-[#8c5a17] via-[#f1c363] to-[#d9a441]"
+                className="h-full rounded-full bg-gradient-to-r from-[#ec4899] via-[#facc15] to-[#3b82f6]"
               />
             </div>
           </div>
@@ -267,11 +267,11 @@ I would like to discuss my business diagnostic.`,
                     duration: 0.55,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="rounded-3xl border border-[#d9a441]/25 bg-gradient-to-b from-[#d9a441]/10 to-black p-7 md:p-10"
+                  className="rounded-3xl border border-[#3b82f6]/25 bg-gradient-to-b from-[#3b82f6]/10 to-black p-7 md:p-10"
                 >
                   <div className="flex items-start justify-between gap-6">
                     <div>
-                      <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#d9a441]">
+                      <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                         Business Health Question
                       </p>
 
@@ -280,7 +280,7 @@ I would like to discuss my business diagnostic.`,
                       </h3>
                     </div>
 
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#d9a441]/40 bg-[#d9a441]/10 font-bold text-[#f1c363]">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 font-bold text-[#facc15]">
                       {String(currentQuestion + 1).padStart(2, "0")}
                     </div>
                   </div>
@@ -310,7 +310,7 @@ I would like to discuss my business diagnostic.`,
                         whileTap={{
                           scale: 0.97,
                         }}
-                        className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 text-left transition hover:border-[#d9a441]/60 hover:bg-[#d9a441]/10 sm:px-6 sm:py-5"
+                        className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 text-left transition hover:border-[#3b82f6]/60 hover:bg-[#3b82f6]/10 sm:px-6 sm:py-5"
                       >
                         <span className="text-base font-semibold sm:text-lg">
                           {option.label}
@@ -345,9 +345,9 @@ I would like to discuss my business diagnostic.`,
                     duration: 0.8,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="rounded-3xl border border-[#d9a441]/30 bg-gradient-to-b from-[#d9a441]/12 to-black p-7 text-center md:p-10"
+                  className="rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-black p-7 text-center md:p-10"
                 >
-                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#d9a441]">
+                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                     Your Business Health Result
                   </p>
 
@@ -364,10 +364,10 @@ I would like to discuss my business diagnostic.`,
                       delay: 0.2,
                       duration: 0.6,
                     }}
-                    className="mx-auto mt-7 flex h-40 w-40 items-center justify-center rounded-full border border-[#d9a441]/40 bg-[#d9a441]/10 shadow-[0_0_50px_rgba(217,164,65,0.2)]"
+                    className="mx-auto mt-7 flex h-40 w-40 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 shadow-[0_0_50px_rgba(59,130,246,0.2)]"
                   >
                     <div>
-                      <p className="font-serif text-5xl font-bold text-[#f1c363]">
+                      <p className="font-serif text-5xl font-bold text-[#facc15]">
                         {percentageScore}%
                       </p>
 
@@ -377,7 +377,7 @@ I would like to discuss my business diagnostic.`,
                     </div>
                   </motion.div>
 
-                  <p className="mt-7 text-sm font-semibold uppercase tracking-[0.2em] text-[#d9a441]">
+                  <p className="mt-7 text-sm font-semibold uppercase tracking-[0.2em] text-[#3b82f6]">
                     {result.level}
                   </p>
 
@@ -394,7 +394,7 @@ I would like to discuss my business diagnostic.`,
                       href={`https://wa.me/917389638105?text=${whatsappMessage}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-8 py-4 font-bold text-black transition hover:scale-105"
+                      className="rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-8 py-4 font-bold text-black transition hover:scale-105"
                     >
                       Get Your Free Diagnostic
                     </a>
@@ -402,7 +402,7 @@ I would like to discuss my business diagnostic.`,
                     <button
                       type="button"
                       onClick={restartQuiz}
-                      className="rounded-lg border border-[#d9a441]/50 px-8 py-4 font-semibold text-[#edc66d] transition hover:bg-[#d9a441]/10"
+                      className="rounded-lg border border-[#3b82f6]/50 px-8 py-4 font-semibold text-[#93c5fd] transition hover:bg-[#3b82f6]/10"
                     >
                       Retake Quiz
                     </button>

@@ -33,12 +33,12 @@ a {
   background:
     radial-gradient(
       circle at 20% 25%,
-      rgba(212, 164, 65, 0.14),
+      rgba(59, 130, 246, 0.14),
       transparent 32%
     ),
     radial-gradient(
       circle at 80% 70%,
-      rgba(212, 164, 65, 0.1),
+      rgba(236, 72, 153, 0.1),
       transparent 30%
     ),
     linear-gradient(135deg, #020202, #090909 50%, #020202);
@@ -52,7 +52,7 @@ a {
   top: -250px;
   left: -250px;
   border-radius: 50%;
-  background: rgba(212, 164, 65, 0.08);
+  background: rgba(59, 130, 246, 0.08);
   filter: blur(100px);
   animation: luxuryMoveOne 12s ease-in-out infinite alternate;
   pointer-events: none;
@@ -95,11 +95,11 @@ a {
 .gold-shine-text {
   background: linear-gradient(
     90deg,
-    #b7791f,
-    #f6d979,
-    #d6a33f,
-    #fff0a8,
-    #b7791f
+    #ef4444,
+    #facc15,
+    #ec4899,
+    #fef08a,
+    #ef4444
   );
   background-size: 250% auto;
   background-clip: text;
@@ -130,7 +130,7 @@ section {
 }
 
 ::selection {
-  background: #d9a441;
+  background: #3b82f6;
   color: #000000;
 }
 
@@ -151,13 +151,13 @@ body {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(
     to bottom,
-    #8c5a17,
-    #e7b952,
-    #8c5a17
+    #3b82f6,
+    #facc15,
+    #3b82f6
   );
   border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d9a441;
+  background: #3b82f6;
 }

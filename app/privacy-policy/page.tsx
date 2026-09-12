@@ -14,10 +14,10 @@ export default function PrivacyPolicyPage() {
             height={24}
             className="h-7 w-auto"
           />
-          <span className="text-[#d9a441]">← Return to Home</span>
+          <span className="text-[#3b82f6]">← Return to Home</span>
         </a>
 
-        <p className="mt-12 text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+        <p className="mt-12 text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
           Legal Information
         </p>
 
@@ -498,7 +498,7 @@ export default function PrivacyPolicyPage() {
 
             <p className="mt-4">To make such a request, email us at:</p>
 
-            <p className="mt-2 text-[#d9a441]">info@worldclassbusinesscoaching.in</p>
+            <p className="mt-2 text-[#3b82f6]">info@worldclassbusinesscoaching.in</p>
           </section>
           </Reveal>
 
@@ -519,7 +519,7 @@ export default function PrivacyPolicyPage() {
               emails or communication, you may email us at:
             </p>
 
-            <p className="mt-2 text-[#d9a441]">info@worldclassbc.com</p>
+            <p className="mt-2 text-[#3b82f6]">info@worldclassbc.com</p>
 
             <p className="mt-4">
               We will make reasonable efforts to remove you from our
@@ -600,13 +600,13 @@ export default function PrivacyPolicyPage() {
             <p>Founder: Rajesh Kumar Kare</p>
             <p>
               Website:{" "}
-              <a href="https://www.worldclassbc.com" className="text-[#d9a441]">
+              <a href="https://www.worldclassbc.com" className="text-[#3b82f6]">
                 www.worldclassbc.com
               </a>
             </p>
             <p>
               Email:{" "}
-              <a href="mailto:info@worldclassbc.com" className="text-[#d9a441]">
+              <a href="mailto:info@worldclassbc.com" className="text-[#3b82f6]">
                 info@worldclassbc.com
               </a>
             </p>

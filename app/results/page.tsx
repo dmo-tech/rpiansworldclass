@@ -42,7 +42,7 @@ export default function ResultsPage() {
         >
           <div className="relative mx-auto max-w-5xl">
             <Reveal direction="up" className="text-center">
-              <p className="text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+              <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
                 Exclusive for Serious Business Owners
               </p>
 
@@ -73,14 +73,14 @@ export default function ResultsPage() {
             <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
               <Reveal direction="left" className="h-full">
                 <TiltCard className="h-full rounded-3xl border border-white/10 bg-black/70 p-8">
-                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#d9a441]">
+                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                     What You Will Learn
                   </p>
 
                   <div className="mt-7 grid gap-4 sm:grid-cols-2">
                     {masterclassTopics.map((item, index) => (
                       <Reveal key={item} direction="up" delay={index * 0.08}>
-                        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#d9a441]/50">
+                        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#3b82f6]/50">
                           <p className="font-semibold">{item}</p>
                         </div>
                       </Reveal>
@@ -90,8 +90,8 @@ export default function ResultsPage() {
               </Reveal>
 
               <Reveal direction="right" delay={0.15} className="h-full">
-                <TiltCard className="h-full rounded-3xl border border-[#d9a441]/30 bg-gradient-to-b from-[#d9a441]/10 to-black p-8">
-                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#d9a441]">
+                <TiltCard className="h-full rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-black p-8">
+                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                     Masterclass Details
                   </p>
 
@@ -123,7 +123,7 @@ export default function ResultsPage() {
                     </div>
                   </div>
 
-                  <ApplyButton className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-8 py-4 text-center font-bold text-black transition hover:scale-[1.02]">
+                  <ApplyButton className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-8 py-4 text-center font-bold text-black transition hover:scale-[1.02]">
                     Register for the Masterclass
                   </ApplyButton>
                 </TiltCard>

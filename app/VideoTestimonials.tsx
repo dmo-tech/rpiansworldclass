@@ -41,7 +41,7 @@ function VideoCard({ video }: { video: VideoTestimonial }) {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-black transition hover:border-[#d9a441]/50">
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-black transition hover:border-[#3b82f6]/50">
       <div className="relative aspect-video bg-neutral-900">
         <video
           ref={videoRef}
@@ -58,7 +58,7 @@ function VideoCard({ video }: { video: VideoTestimonial }) {
             aria-label={`Play testimonial video from ${video.name}`}
             className="absolute inset-0 flex items-center justify-center bg-black/20 transition hover:bg-black/10"
           >
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] text-2xl text-black shadow-lg">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] text-2xl text-black shadow-lg">
               ▶
             </span>
           </button>
@@ -81,7 +81,7 @@ export default function VideoTestimonials() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+          <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
             Client Testimonials
           </p>
 

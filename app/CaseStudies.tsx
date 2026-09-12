@@ -126,7 +126,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
   return (
     <div
       ref={ref}
-      className="overflow-hidden rounded-3xl border border-[#d9a441]/25 bg-white/[0.02] transition-[opacity,filter] duration-500 ease-out"
+      className="overflow-hidden rounded-3xl border border-[#3b82f6]/25 bg-white/[0.02] transition-[opacity,filter] duration-500 ease-out"
       style={
         reduceMotion
           ? undefined
@@ -151,7 +151,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
             Who — {study.who}, {study.business}
           </p>
 
-          <h3 className="mt-2 font-serif text-lg leading-tight text-[#edc66d] md:text-xl">
+          <h3 className="mt-2 font-serif text-lg leading-tight text-[#93c5fd] md:text-xl">
             {study.headline}
           </h3>
 
@@ -162,7 +162,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
           <ul className="mt-3 space-y-2">
             {study.bullets.map((bullet) => (
               <li key={bullet} className="flex gap-2.5 text-sm leading-6 text-gray-300">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d9a441]" />
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#3b82f6]" />
                 <span>{bullet}</span>
               </li>
             ))}
@@ -170,7 +170,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-6 py-3 text-center">
+      <div className="bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-6 py-3 text-center">
         <p className="text-xs font-bold uppercase tracking-[0.15em] text-black">
           {study.tagline}
         </p>
@@ -184,7 +184,7 @@ export default function CaseStudies() {
     <section id="case-studies" className="border-t border-white/10 px-6 py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal direction="up" className="mx-auto max-w-4xl text-center">
-          <p className="text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+          <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
             Client Case Studies
           </p>
 

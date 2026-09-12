@@ -39,7 +39,7 @@ export default function MouseGlow() {
         x: smoothX,
         y: smoothY,
       }}
-      className="pointer-events-none fixed left-0 top-0 z-[1] hidden h-[440px] w-[440px] rounded-full bg-[#d9a441]/10 blur-[120px] lg:block"
+      className="pointer-events-none fixed left-0 top-0 z-[1] hidden h-[440px] w-[440px] rounded-full bg-[#3b82f6]/10 blur-[120px] lg:block"
     />
   );
 }

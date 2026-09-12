@@ -14,10 +14,10 @@ export default function RefundPolicyPage() {
             height={24}
             className="h-7 w-auto"
           />
-          <span className="text-[#d9a441]">← Return to Home</span>
+          <span className="text-[#3b82f6]">← Return to Home</span>
         </a>
 
-        <p className="mt-12 text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+        <p className="mt-12 text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
           Legal Information
         </p>
 
@@ -163,7 +163,7 @@ export default function RefundPolicyPage() {
               transaction details to:
             </p>
 
-            <p className="mt-2 text-[#d9a441]">info@worldclassbc.com</p>
+            <p className="mt-2 text-[#3b82f6]">info@worldclassbc.com</p>
 
             <p className="mt-4">The Client should include:</p>
 
@@ -642,7 +642,7 @@ export default function RefundPolicyPage() {
               strategy call, refund, or support shall be conducted through:
             </p>
 
-            <p className="mt-2 text-[#d9a441]">Email: info@worldclassbc.com</p>
+            <p className="mt-2 text-[#3b82f6]">Email: info@worldclassbc.com</p>
 
             <p className="mt-4">
               The Client may also receive communication through phone call,
@@ -1027,14 +1027,14 @@ export default function RefundPolicyPage() {
               Website:{" "}
               <a
                 href="https://www.worldclassbusinesscoaching.in"
-                className="text-[#d9a441]"
+                className="text-[#3b82f6]"
               >
                 www.worldclassbusinesscoaching.in
               </a>
             </p>
             <p>
               Email:{" "}
-              <a href="mailto:info@worldclassbc.com" className="text-[#d9a441]">
+              <a href="mailto:info@worldclassbc.com" className="text-[#3b82f6]">
                 info@worldclassbc.com
               </a>
             </p>

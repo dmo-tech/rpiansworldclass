@@ -24,7 +24,7 @@ export default function AboutPage() {
         <section id="about" className="px-6 py-28">
           <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-2">
             <Reveal direction="left">
-              <div className="relative h-[560px] overflow-hidden rounded-3xl border border-[#d9a441]/30 bg-neutral-900">
+              <div className="relative h-[560px] overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900">
                 <ParallaxImage
                   src="/rajesh-kumar-kare.jpg"
                   alt="Rajesh Kumar Kare"
@@ -34,7 +34,7 @@ export default function AboutPage() {
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/80 to-transparent p-8 pt-28">
                   <h3 className="text-2xl font-bold">Rajesh Kumar Kare</h3>
 
-                  <p className="mt-2 text-[#d9a441]">
+                  <p className="mt-2 text-[#3b82f6]">
                     TEDx Speaker | Business Automation & Profit Coach
                   </p>
                 </div>
@@ -43,11 +43,11 @@ export default function AboutPage() {
 
             <Reveal direction="right" delay={0.15}>
               <div>
-                <p className="text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+                <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
                   Your Business Growth Advisor
                 </p>
 
-                <h2 className="mt-5 font-serif text-4xl text-[#e0ad4d] md:text-5xl">
+                <h2 className="mt-5 font-serif text-4xl text-[#60a5fa] md:text-5xl">
                   <AnimatedWords
                     text="Rajesh Kumar Kare"
                     stagger={0.12}
@@ -76,7 +76,7 @@ export default function AboutPage() {
                   dedicated my life to helping business owners.
                 </p>
 
-                <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-9 py-4 font-bold text-black transition hover:scale-105">
+                <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-9 py-4 font-bold text-black transition hover:scale-105">
                   Work With Rajesh Kumar Kare
                 </ApplyButton>
               </div>

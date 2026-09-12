@@ -9,7 +9,7 @@ export default function SiteFooter() {
       <footer className="border-t border-white/10 px-6 py-10">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-6 text-sm text-gray-500 md:flex-row">
           <div>
-            <p className="font-semibold tracking-[0.2em] text-[#d9a441]">
+            <p className="font-semibold tracking-[0.2em] text-[#3b82f6]">
               RPIANS
             </p>
 
@@ -19,18 +19,18 @@ export default function SiteFooter() {
           <div className="flex flex-wrap gap-5">
             <a
               href="/privacy-policy"
-              className="transition hover:text-[#d9a441]"
+              className="transition hover:text-[#3b82f6]"
             >
               Privacy Policy
             </a>
 
-            <a href="/terms" className="transition hover:text-[#d9a441]">
+            <a href="/terms" className="transition hover:text-[#3b82f6]">
               Terms and Conditions
             </a>
 
             <a
               href="/refund-policy"
-              className="transition hover:text-[#d9a441]"
+              className="transition hover:text-[#3b82f6]"
             >
               Refund Policy
             </a>

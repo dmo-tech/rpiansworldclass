@@ -14,10 +14,10 @@ export default function TermsPage() {
             height={24}
             className="h-7 w-auto"
           />
-          <span className="text-[#d9a441]">← Return to Home</span>
+          <span className="text-[#3b82f6]">← Return to Home</span>
         </a>
 
-        <p className="mt-12 text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+        <p className="mt-12 text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
           Legal Information
         </p>
 
@@ -36,14 +36,14 @@ export default function TermsPage() {
             Website:{" "}
             <a
               href="https://www.worldclassbusinesscoaching.in"
-              className="text-[#d9a441]"
+              className="text-[#3b82f6]"
             >
               worldclassbusinesscoaching.in
             </a>
           </p>
           <p>
             Email:{" "}
-            <a href="mailto:info@worldclassbc.com" className="text-[#d9a441]">
+            <a href="mailto:info@worldclassbc.com" className="text-[#3b82f6]">
               info@worldclassbc.com
             </a>
           </p>
@@ -154,7 +154,7 @@ export default function TermsPage() {
               official email:
             </p>
 
-            <p className="mt-2 text-[#d9a441]">info@worldclassbc.com</p>
+            <p className="mt-2 text-[#3b82f6]">info@worldclassbc.com</p>
 
             <p className="mt-4">
               For strategy call booking, application fee, Video Sales
@@ -169,7 +169,7 @@ export default function TermsPage() {
               customer support at:
             </p>
 
-            <p className="mt-2 text-[#d9a441]">info@worldclassbc.com</p>
+            <p className="mt-2 text-[#3b82f6]">info@worldclassbc.com</p>
           </section>
           </Reveal>
 
@@ -417,7 +417,7 @@ export default function TermsPage() {
               You may unsubscribe from marketing communication by emailing:
             </p>
 
-            <p className="mt-2 text-[#d9a441]">info@worldclassbc.com</p>
+            <p className="mt-2 text-[#3b82f6]">info@worldclassbc.com</p>
 
             <p className="mt-4">
               Message and data charges may apply depending on your telecom
@@ -554,7 +554,7 @@ export default function TermsPage() {
               service, you may notify us by emailing:
             </p>
 
-            <p className="mt-2 text-[#d9a441]">info@worldclassbc.com</p>
+            <p className="mt-2 text-[#3b82f6]">info@worldclassbc.com</p>
 
             <p className="mt-4">Your notice should include:</p>
 
@@ -996,7 +996,7 @@ export default function TermsPage() {
 
             <p className="mt-4">Refund-related queries must be sent to:</p>
 
-            <p className="mt-2 text-[#d9a441]">info@worldclassbc.com</p>
+            <p className="mt-2 text-[#3b82f6]">info@worldclassbc.com</p>
           </section>
           </Reveal>
 
@@ -1016,13 +1016,13 @@ export default function TermsPage() {
             <p>Founder: Rajesh Kumar Kare</p>
             <p>
               Website:{" "}
-              <a href="https://www.worldclassbc.com" className="text-[#d9a441]">
+              <a href="https://www.worldclassbc.com" className="text-[#3b82f6]">
                 www.worldclassbc.com
               </a>
             </p>
             <p>
               Email:{" "}
-              <a href="mailto:info@worldclassbc.com" className="text-[#d9a441]">
+              <a href="mailto:info@worldclassbc.com" className="text-[#3b82f6]">
                 info@worldclassbc.com
               </a>
             </p>

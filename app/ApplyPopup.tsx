@@ -143,25 +143,25 @@ export default function ApplyPopup({
               ease: [0.22, 1, 0.36, 1],
             }}
             onMouseDown={(event) => event.stopPropagation()}
-            className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-3xl border border-[#d9a441]/35 bg-[#080808] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.8)] md:p-10"
+            className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-3xl border border-[#3b82f6]/35 bg-[#080808] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.8)] md:p-10"
           >
             <button
               type="button"
               onClick={onClose}
               aria-label="Close application form"
-              className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-xl text-gray-300 transition hover:border-[#d9a441]/50 hover:text-[#d9a441]"
+              className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-xl text-gray-300 transition hover:border-[#3b82f6]/50 hover:text-[#3b82f6]"
             >
               ×
             </button>
 
             <div className="text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#d9a441]">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#3b82f6]">
                 RPIANS Business Diagnostic
               </p>
 
               <h2 className="mt-4 font-serif text-3xl md:text-5xl">
                 Apply for Your
-                <span className="mt-2 block text-[#e0ad4d]">
+                <span className="mt-2 block text-[#60a5fa]">
                   Business Growth Session
                 </span>
               </h2>
@@ -184,7 +184,7 @@ export default function ApplyPopup({
                     )
                   }
                   placeholder="Full Name"
-                  className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#d9a441]"
+                  className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                 />
 
                 <input
@@ -197,7 +197,7 @@ export default function ApplyPopup({
                     )
                   }
                   placeholder="WhatsApp Number"
-                  className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#d9a441]"
+                  className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                 />
 
                 <input
@@ -210,7 +210,7 @@ export default function ApplyPopup({
                     )
                   }
                   placeholder="Email Address"
-                  className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#d9a441]"
+                  className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                 />
 
                 <input
@@ -223,7 +223,7 @@ export default function ApplyPopup({
                     )
                   }
                   placeholder="Company Name"
-                  className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#d9a441]"
+                  className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                 />
 
                 <select
@@ -234,7 +234,7 @@ export default function ApplyPopup({
                       event.target.value,
                     )
                   }
-                  className="rounded-xl border border-white/10 bg-[#080808] px-4 py-4 outline-none transition focus:border-[#d9a441]"
+                  className="rounded-xl border border-white/10 bg-[#080808] px-4 py-4 outline-none transition focus:border-[#3b82f6]"
                 >
                   <option value="">
                     Select Business Category
@@ -265,7 +265,7 @@ export default function ApplyPopup({
                       event.target.value,
                     )
                   }
-                  className="rounded-xl border border-white/10 bg-[#080808] px-4 py-4 outline-none transition focus:border-[#d9a441]"
+                  className="rounded-xl border border-white/10 bg-[#080808] px-4 py-4 outline-none transition focus:border-[#3b82f6]"
                 >
                   <option value="">
                     Select Annual Turnover
@@ -310,7 +310,7 @@ export default function ApplyPopup({
                     ? undefined
                     : { scale: 0.98 }
                 }
-                className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-7 py-4 font-bold text-black disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-7 py-4 font-bold text-black disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting
                   ? "Opening Payment Details..."

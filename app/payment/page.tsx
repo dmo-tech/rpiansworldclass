@@ -77,7 +77,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
     return (
       <main className="flex min-h-screen items-center justify-center bg-black text-white">
         <div className="text-center">
-          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-white/10 border-t-[#d9a441]" />
+          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-white/10 border-t-[#3b82f6]" />
 
           <p className="mt-5 text-sm text-gray-500">
             Loading payment details...
@@ -92,7 +92,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
       {/* Background pattern */}
 
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[34%] bg-[#1b1b1b] lg:block">
-        <div className="absolute inset-0 opacity-80 [background-image:linear-gradient(135deg,transparent_25%,rgba(217,164,65,0.08)_25%,rgba(217,164,65,0.08)_50%,transparent_50%,transparent_75%,rgba(217,164,65,0.08)_75%)] [background-size:180px_180px]" />
+        <div className="absolute inset-0 opacity-80 [background-image:linear-gradient(135deg,transparent_25%,rgba(59,130,246,0.08)_25%,rgba(59,130,246,0.08)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.08)_75%)] [background-size:180px_180px]" />
       </div>
 
       <div className="relative mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-[1fr_0.8fr] lg:px-10">
@@ -123,7 +123,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
             />
 
             <div>
-              <p className="text-2xl font-bold tracking-[0.28em] text-[#b67b20]">
+              <p className="text-2xl font-bold tracking-[0.28em] text-[#1d4ed8]">
                 RPIANS
               </p>
 
@@ -133,13 +133,13 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
             </div>
           </a>
 
-          <p className="mt-12 text-sm font-semibold uppercase tracking-[0.25em] text-[#b67b20]">
+          <p className="mt-12 text-sm font-semibold uppercase tracking-[0.25em] text-[#1d4ed8]">
             Strategic Business Diagnostic
           </p>
 
           <h1 className="mt-5 font-serif text-4xl leading-tight md:text-6xl">
             Complete Your Booking
-            <span className="mt-2 block text-[#b67b20]">
+            <span className="mt-2 block text-[#1d4ed8]">
               and Take the Next Step
             </span>
           </h1>
@@ -173,7 +173,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
                 }}
                 className="flex items-start gap-4"
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#b67b20] text-sm font-bold text-white">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1d4ed8] text-sm font-bold text-white">
                   {index + 1}
                 </span>
 
@@ -182,8 +182,8 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
             ))}
           </div>
 
-          <div className="mt-10 rounded-2xl border border-[#b67b20]/20 bg-white/70 p-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#b67b20]">
+          <div className="mt-10 rounded-2xl border border-[#1d4ed8]/20 bg-white/70 p-6">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1d4ed8]">
               Contact Support
             </p>
 
@@ -191,7 +191,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
               Call/WhatsApp:
               <a
                 href="tel:+917389638105"
-                className="ml-2 font-semibold text-[#9b6518]"
+                className="ml-2 font-semibold text-[#1e3a8a]"
               >
                 +91 73896 38105
               </a>
@@ -222,7 +222,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
           className="relative z-10 rounded-2xl border border-black/10 bg-white p-7 shadow-[0_30px_100px_rgba(0,0,0,0.2)] md:p-9"
         >
           <div className="border-b border-black/10 pb-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#b67b20]">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1d4ed8]">
               Payment Details
             </p>
 
@@ -290,7 +290,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
                 </p>
               </div>
 
-              <p className="font-serif text-4xl font-bold text-[#b67b20]">
+              <p className="font-serif text-4xl font-bold text-[#1d4ed8]">
                 ₹{PAYMENT_AMOUNT}
               </p>
             </div>
@@ -300,7 +300,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
             type="button"
             onClick={handlePayment}
             disabled={!applicationData}
-            className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-7 py-4 font-bold text-black shadow-[0_15px_40px_rgba(182,123,32,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-7 py-4 font-bold text-black shadow-[0_15px_40px_rgba(236,72,153,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
           >
             Pay ₹{PAYMENT_AMOUNT}
           </button>
@@ -309,7 +309,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
             href={`https://wa.me/917389638105?text=${whatsappMessage}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 block w-full rounded-lg border border-[#b67b20]/40 px-7 py-4 text-center font-semibold text-[#9b6518] transition hover:bg-[#b67b20]/5"
+            className="mt-4 block w-full rounded-lg border border-[#1d4ed8]/40 px-7 py-4 text-center font-semibold text-[#1e3a8a] transition hover:bg-[#1d4ed8]/5"
           >
             Contact Team on WhatsApp
           </a>
@@ -325,7 +325,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
           <div className="mt-6 border-t border-black/10 pt-5 text-center">
             <a
               href="/#apply"
-              className="text-sm font-medium text-gray-500 transition hover:text-[#b67b20]"
+              className="text-sm font-medium text-gray-500 transition hover:text-[#1d4ed8]"
             >
               ← Edit application details
             </a>

@@ -160,7 +160,7 @@ export default function RegisterPage() {
     <main className="relative min-h-screen overflow-hidden bg-black px-5 py-12 text-white md:px-8">
       {/* BACKGROUND EFFECT */}
 
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#d9a441]/10 blur-[170px]" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#3b82f6]/10 blur-[170px]" />
 
       <div className="relative mx-auto max-w-6xl">
         {/* HEADER */}
@@ -176,7 +176,7 @@ export default function RegisterPage() {
             />
 
             <div>
-              <p className="text-xl font-bold tracking-[0.28em] text-[#d9a441]">
+              <p className="text-xl font-bold tracking-[0.28em] text-[#3b82f6]">
                 RPIANS
               </p>
 
@@ -188,7 +188,7 @@ export default function RegisterPage() {
 
           <a
             href="/"
-            className="rounded-lg border border-[#d9a441]/35 px-5 py-3 text-sm font-semibold text-[#edc66d] transition hover:bg-[#d9a441]/10"
+            className="rounded-lg border border-[#3b82f6]/35 px-5 py-3 text-sm font-semibold text-[#93c5fd] transition hover:bg-[#3b82f6]/10"
           >
             Back to Website
           </a>
@@ -212,14 +212,14 @@ export default function RegisterPage() {
             }}
             className="lg:sticky lg:top-10"
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d9a441]">
+            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#3b82f6]">
               Business Diagnostic Application
             </p>
 
             <h1 className="mt-6 font-serif text-4xl leading-tight md:text-6xl">
               Apply to Work
 
-              <span className="mt-2 block text-[#e0ad4d]">
+              <span className="mt-2 block text-[#60a5fa]">
                 With RPIANS
               </span>
             </h1>
@@ -252,7 +252,7 @@ export default function RegisterPage() {
                   }}
                   className="flex items-start gap-4"
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9a441]/40 bg-[#d9a441]/10 font-bold text-[#f1c363]">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 font-bold text-[#facc15]">
                     {index + 1}
                   </span>
 
@@ -263,8 +263,8 @@ export default function RegisterPage() {
               ))}
             </div>
 
-            <div className="mt-10 rounded-2xl border border-[#d9a441]/20 bg-[#d9a441]/5 p-6">
-              <p className="text-sm font-semibold text-[#edc66d]">
+            <div className="mt-10 rounded-2xl border border-[#3b82f6]/20 bg-[#3b82f6]/5 p-6">
+              <p className="text-sm font-semibold text-[#93c5fd]">
                 Booking Amount
               </p>
 
@@ -300,10 +300,10 @@ export default function RegisterPage() {
               delay: 0.1,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="rounded-3xl border border-[#d9a441]/30 bg-white/[0.04] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.55)] backdrop-blur md:p-10"
+            className="rounded-3xl border border-[#3b82f6]/30 bg-white/[0.04] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.55)] backdrop-blur md:p-10"
           >
             <div className="border-b border-white/10 pb-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#d9a441]">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                 Step 1 of 2
               </p>
 
@@ -341,7 +341,7 @@ export default function RegisterPage() {
                     }
                     placeholder="Enter your full name"
                     autoComplete="name"
-                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#d9a441]"
+                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
 
@@ -365,7 +365,7 @@ export default function RegisterPage() {
                     }
                     placeholder="+91 98765 43210"
                     autoComplete="tel"
-                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#d9a441]"
+                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
 
@@ -389,7 +389,7 @@ export default function RegisterPage() {
                     }
                     placeholder="name@company.com"
                     autoComplete="email"
-                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#d9a441]"
+                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
 
@@ -413,7 +413,7 @@ export default function RegisterPage() {
                     }
                     placeholder="Enter company name"
                     autoComplete="organization"
-                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#d9a441]"
+                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
 
@@ -434,7 +434,7 @@ export default function RegisterPage() {
                         event.target.value,
                       )
                     }
-                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 outline-none transition focus:border-[#d9a441]"
+                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 outline-none transition focus:border-[#3b82f6]"
                   >
                     <option value="">
                       Select category
@@ -487,7 +487,7 @@ export default function RegisterPage() {
                         event.target.value,
                       )
                     }
-                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 outline-none transition focus:border-[#d9a441]"
+                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-4 outline-none transition focus:border-[#3b82f6]"
                   >
                     <option value="">
                       Select turnover
@@ -539,7 +539,7 @@ export default function RegisterPage() {
                       )
                     }
                     placeholder="Enter number of employees"
-                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#d9a441]"
+                    className="w-full rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
 
@@ -562,7 +562,7 @@ export default function RegisterPage() {
                     }
                     rows={4}
                     placeholder="Team accountability, inventory, cash flow, owner dependency..."
-                    className="w-full resize-none rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#d9a441]"
+                    className="w-full resize-none rounded-xl border border-white/10 bg-black/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
               </div>
@@ -606,7 +606,7 @@ export default function RegisterPage() {
                         scale: 0.98,
                       }
                 }
-                className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-7 py-4 font-bold text-black shadow-[0_15px_50px_rgba(217,164,65,0.22)] disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-7 py-4 font-bold text-black shadow-[0_15px_50px_rgba(236,72,153,0.22)] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting
                   ? "Saving Your Application..."

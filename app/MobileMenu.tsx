@@ -40,7 +40,7 @@ export default function MobileMenu() {
         onClick={() => setIsOpen((current) => !current)}
         aria-label={isOpen ? "Close mobile menu" : "Open mobile menu"}
         aria-expanded={isOpen}
-        className="flex h-11 w-11 items-center justify-center rounded-lg border border-[#d9a441]/40 text-2xl text-[#d9a441]"
+        className="flex h-11 w-11 items-center justify-center rounded-lg border border-[#3b82f6]/40 text-2xl text-[#3b82f6]"
       >
         {isOpen ? "×" : "☰"}
       </button>
@@ -53,7 +53,7 @@ export default function MobileMenu() {
                 key={link.href}
                 href={link.href}
                 onClick={closeMenu}
-                className="hover:text-[#d9a441]"
+                className="hover:text-[#3b82f6]"
               >
                 {link.label}
               </Link>
@@ -62,7 +62,7 @@ export default function MobileMenu() {
             <Link
               href="/register"
               onClick={closeMenu}
-              className="rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-5 py-3 text-center font-bold text-black"
+              className="rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-5 py-3 text-center font-bold text-black"
             >
               Apply Now
             </Link>

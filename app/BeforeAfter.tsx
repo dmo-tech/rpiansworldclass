@@ -30,7 +30,7 @@ export default function BeforeAfter() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.7 }}
             transition={{ duration: 0.7 }}
-            className="text-xs uppercase tracking-[0.35em] text-[#d9a441]"
+            className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
           >
             Business Transformation Comparison
           </motion.p>
@@ -56,7 +56,7 @@ export default function BeforeAfter() {
           >
             Before RPIANS
             <span className="mx-3 text-gray-600">vs</span>
-            <span className="text-[#e0ad4d]">After RPIANS</span>
+            <span className="text-[#60a5fa]">After RPIANS</span>
           </motion.h2>
 
           <motion.p
@@ -142,16 +142,16 @@ export default function BeforeAfter() {
               delay: 0.1,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="relative overflow-hidden rounded-3xl border border-[#d9a441]/30 bg-gradient-to-b from-[#d9a441]/12 to-black p-8 md:p-10"
+            className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-black p-8 md:p-10"
           >
-            <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#d9a441]/15 blur-3xl" />
+            <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#3b82f6]/15 blur-3xl" />
 
             <div className="relative">
-              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#d9a441]">
+              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                 After Implementation
               </p>
 
-              <h3 className="mt-4 font-serif text-3xl text-[#edc66d] md:text-4xl">
+              <h3 className="mt-4 font-serif text-3xl text-[#93c5fd] md:text-4xl">
                 System-Driven Growth
               </h3>
 
@@ -168,7 +168,7 @@ export default function BeforeAfter() {
                     }}
                     className="flex items-start gap-4"
                   >
-                    <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#d9a441]/50 bg-[#d9a441]/10 text-sm text-[#f1c363]">
+                    <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/50 bg-[#3b82f6]/10 text-sm text-[#facc15]">
                       ✓
                     </span>
 
@@ -197,7 +197,7 @@ export default function BeforeAfter() {
               daily chaos{" "}
             </span>
             to
-            <span className="font-semibold text-[#edc66d]">
+            <span className="font-semibold text-[#93c5fd]">
               {" "}
               systems, automation, owner freedom and profit growth.
             </span>

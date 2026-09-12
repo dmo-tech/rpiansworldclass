@@ -43,14 +43,14 @@ export default function ActiveNavigation() {
             href={item.href}
             className={`relative whitespace-nowrap py-2 transition duration-300 ${
               isActive
-                ? "text-[#f1c363]"
-                : "text-gray-300 hover:text-[#d9a441]"
+                ? "text-[#facc15]"
+                : "text-gray-300 hover:text-[#3b82f6]"
             }`}
           >
             {item.label}
 
             <span
-              className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#b67b20] to-[#f1c363] transition-all duration-300 ${
+              className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#ef4444] to-[#facc15] transition-all duration-300 ${
                 isActive ? "w-full" : "w-0"
               }`}
             />

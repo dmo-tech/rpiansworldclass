@@ -55,7 +55,7 @@ export default function TransformationJourney() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.7 }}
             transition={{ duration: 0.7 }}
-            className="text-xs uppercase tracking-[0.35em] text-[#d9a441]"
+            className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
           >
             The RPIANS Transformation Journey
           </motion.p>
@@ -72,7 +72,7 @@ export default function TransformationJourney() {
             className="mt-5 font-serif text-4xl md:text-6xl"
           >
             From Business Chaos
-            <span className="mt-2 block text-[#e0ad4d]">
+            <span className="mt-2 block text-[#60a5fa]">
               to Autopilot and Profit Growth
             </span>
           </motion.h2>
@@ -101,7 +101,7 @@ export default function TransformationJourney() {
                 duration: 2.2,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="w-full bg-gradient-to-b from-[#8c5a17] via-[#f1c363] to-[#8c5a17]"
+              className="w-full bg-gradient-to-b from-[#ec4899] via-[#facc15] to-[#ec4899]"
             />
           </div>
 
@@ -148,17 +148,17 @@ export default function TransformationJourney() {
                         scale: 1.015,
                       }}
                       transition={{ duration: 0.25 }}
-                      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black p-7 transition hover:border-[#d9a441]/60"
+                      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black p-7 transition hover:border-[#3b82f6]/60"
                     >
-                      <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#d9a441]/0 blur-3xl transition duration-500 group-hover:bg-[#d9a441]/15" />
+                      <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#3b82f6]/0 blur-3xl transition duration-500 group-hover:bg-[#3b82f6]/15" />
 
                       <div className="relative z-10 flex items-start gap-5">
-                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#d9a441]/50 bg-[#d9a441]/10 text-sm font-bold text-[#f1c363]">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/50 bg-[#3b82f6]/10 text-sm font-bold text-[#facc15]">
                           {step.number}
                         </div>
 
                         <div>
-                          <h3 className="text-2xl font-bold transition group-hover:text-[#edc66d]">
+                          <h3 className="text-2xl font-bold transition group-hover:text-[#93c5fd]">
                             {step.title}
                           </h3>
 
@@ -168,7 +168,7 @@ export default function TransformationJourney() {
                         </div>
                       </div>
 
-                      <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#8c5a17] via-[#f1c363] to-[#d9a441] transition-all duration-500 group-hover:w-full" />
+                      <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#ec4899] via-[#facc15] to-[#3b82f6] transition-all duration-500 group-hover:w-full" />
                     </motion.div>
                   </div>
 
@@ -182,7 +182,7 @@ export default function TransformationJourney() {
                       duration: 0.45,
                       delay: 0.2,
                     }}
-                    className="absolute left-1/2 top-1/2 z-10 hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-black bg-[#f1c363] shadow-[0_0_30px_rgba(241,195,99,0.7)] md:block"
+                    className="absolute left-1/2 top-1/2 z-10 hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-black bg-[#facc15] shadow-[0_0_30px_rgba(250,204,21,0.7)] md:block"
                   />
                 </motion.div>
               );
@@ -198,9 +198,9 @@ export default function TransformationJourney() {
             duration: 0.8,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="mx-auto mt-20 max-w-4xl rounded-3xl border border-[#d9a441]/30 bg-gradient-to-r from-[#d9a441]/10 via-black to-[#d9a441]/10 p-8 text-center md:p-12"
+          className="mx-auto mt-20 max-w-4xl rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-r from-[#3b82f6]/10 via-black to-[#3b82f6]/10 p-8 text-center md:p-12"
         >
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#d9a441]">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#3b82f6]">
             Final Transformation
           </p>
 
@@ -215,7 +215,7 @@ export default function TransformationJourney() {
 
           <Link
             href="/register"
-            className="mt-8 inline-block rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-9 py-4 font-bold text-black transition hover:scale-105"
+            className="mt-8 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-9 py-4 font-bold text-black transition hover:scale-105"
           >
             Start Your Transformation
           </Link>

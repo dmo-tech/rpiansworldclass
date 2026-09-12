@@ -65,7 +65,7 @@ export default function SystemsPage() {
         >
           <div className="mx-auto max-w-7xl">
             <Reveal direction="up" className="mx-auto max-w-4xl text-center">
-              <p className="text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+              <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
                 Our Proven Systems
               </p>
 
@@ -100,11 +100,11 @@ export default function SystemsPage() {
                   delay={(index % 3) * 0.12}
                   className="h-full"
                 >
-                  <TiltCard className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-black p-7 transition-colors duration-300 hover:border-[#d9a441]/60">
-                    <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#d9a441]/0 blur-3xl transition duration-500 group-hover:bg-[#d9a441]/15" />
+                  <TiltCard className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-black p-7 transition-colors duration-300 hover:border-[#3b82f6]/60">
+                    <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#3b82f6]/0 blur-3xl transition duration-500 group-hover:bg-[#3b82f6]/15" />
 
                     <div
-                      className="relative z-10 flex h-14 w-14 items-center justify-center rounded-xl border border-[#d9a441]/40 bg-[#d9a441]/10 text-sm font-bold text-[#edc66d]"
+                      className="relative z-10 flex h-14 w-14 items-center justify-center rounded-xl border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-sm font-bold text-[#93c5fd]"
                       style={{
                         transform: "translateZ(45px)",
                       }}
@@ -113,7 +113,7 @@ export default function SystemsPage() {
                     </div>
 
                     <h3
-                      className="relative z-10 mt-6 text-xl font-semibold transition group-hover:text-[#edc66d]"
+                      className="relative z-10 mt-6 text-xl font-semibold transition group-hover:text-[#93c5fd]"
                       style={{
                         transform: "translateZ(35px)",
                       }}
@@ -130,7 +130,7 @@ export default function SystemsPage() {
                       {system.description}
                     </p>
 
-                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#8c5a17] via-[#f1c363] to-[#d9a441] transition-all duration-500 group-hover:w-full" />
+                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#ec4899] via-[#facc15] to-[#3b82f6] transition-all duration-500 group-hover:w-full" />
                   </TiltCard>
                 </Reveal>
               ))}

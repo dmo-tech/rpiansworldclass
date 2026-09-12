@@ -2,11 +2,11 @@ export default function ThankYouPage() {
   return (
     <main className="luxury-background flex min-h-screen items-center justify-center bg-black px-6 py-20 text-white">
       <div className="relative z-10 mx-auto max-w-3xl text-center">
-        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[#d9a441]/40 bg-[#d9a441]/10 text-4xl text-[#d9a441]">
+        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-4xl text-[#3b82f6]">
           ✓
         </div>
 
-        <p className="mt-8 text-xs font-semibold uppercase tracking-[0.35em] text-[#d9a441]">
+        <p className="mt-8 text-xs font-semibold uppercase tracking-[0.35em] text-[#3b82f6]">
           Application Successfully Submitted
         </p>
 
@@ -22,7 +22,7 @@ export default function ThankYouPage() {
         </p>
 
         <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.04] p-7 text-left">
-          <h2 className="text-xl font-bold text-[#edc66d]">
+          <h2 className="text-xl font-bold text-[#93c5fd]">
             Strategy Call से पहले तैयार रखें:
           </h2>
 
@@ -40,14 +40,14 @@ export default function ThankYouPage() {
             href="https://wa.me/917389638105?text=Namaste%20RPIANS%20Team,%20maine%20website%20par%20apni%20business%20application%20submit%20kar%20di%20hai."
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-8 py-4 font-bold text-black transition hover:scale-105"
+            className="rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-8 py-4 font-bold text-black transition hover:scale-105"
           >
             Confirm on WhatsApp
           </a>
 
           <a
             href="/"
-            className="rounded-lg border border-[#d9a441]/50 px-8 py-4 font-semibold text-[#edc66d] transition hover:bg-[#d9a441]/10"
+            className="rounded-lg border border-[#3b82f6]/50 px-8 py-4 font-semibold text-[#93c5fd] transition hover:bg-[#3b82f6]/10"
           >
             Return to Home Page
           </a>

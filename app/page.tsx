@@ -77,7 +77,7 @@ export default function Home() {
           direction="up"
           className="relative z-10 mx-auto max-w-6xl text-center"
         >
-          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-[#d9a441] md:tracking-[0.4em]">
+          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6] md:tracking-[0.4em]">
             India’s Business Automation and Profit Coaching Movement
           </p>
 
@@ -108,13 +108,13 @@ export default function Home() {
 
           <Reveal direction="up" delay={0.65}>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-9 py-4 text-base font-bold text-black transition hover:scale-105 sm:w-auto">
+              <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-9 py-4 text-base font-bold text-black transition hover:scale-105 sm:w-auto">
                 Apply to Work With Us
               </ApplyButton>
 
               <a
                 href="#video"
-                className="w-full rounded-lg border border-[#d9a441]/60 px-9 py-4 text-center text-base font-semibold text-[#edc66d] transition hover:bg-[#d9a441]/10 sm:w-auto"
+                className="w-full rounded-lg border border-[#3b82f6]/60 px-9 py-4 text-center text-base font-semibold text-[#93c5fd] transition hover:bg-[#3b82f6]/10 sm:w-auto"
               >
                 Watch the Transformation
               </a>
@@ -129,13 +129,13 @@ export default function Home() {
                 delay={index * 0.15}
                 className="h-full"
               >
-                <TiltCard className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur transition-colors duration-300 hover:border-[#d9a441]/50">
-                  <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-[#d9a441]/0 blur-3xl transition duration-500 group-hover:bg-[#d9a441]/15" />
+                <TiltCard className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur transition-colors duration-300 hover:border-[#3b82f6]/50">
+                  <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-[#3b82f6]/0 blur-3xl transition duration-500 group-hover:bg-[#3b82f6]/15" />
 
                   <AnimatedCounter
                     value={item.number}
                     suffix={item.suffix}
-                    className="relative z-10 text-3xl font-bold text-[#d9a441]"
+                    className="relative z-10 text-3xl font-bold text-[#3b82f6]"
                   />
 
                   <h2 className="relative z-10 mt-3 text-lg font-semibold">
@@ -146,7 +146,7 @@ export default function Home() {
                     {item.text}
                   </p>
 
-                  <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#8c5a17] via-[#f1c363] to-[#d9a441] transition-all duration-500 group-hover:w-full" />
+                  <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#ec4899] via-[#facc15] to-[#3b82f6] transition-all duration-500 group-hover:w-full" />
                 </TiltCard>
               </Reveal>
             ))}
@@ -158,7 +158,7 @@ export default function Home() {
 
       <section id="video" className="px-6 py-24">
         <Reveal direction="up" className="mx-auto max-w-5xl text-center">
-          <p className="text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+          <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
             Discover the RPIANS System
           </p>
 
@@ -186,10 +186,10 @@ export default function Home() {
           </p>
 
           <Reveal direction="scale" delay={0.25}>
-            <div className="mt-12 overflow-hidden rounded-3xl border border-[#d9a441]/30 bg-neutral-900">
+            <div className="mt-12 overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900">
               <div className="flex aspect-video items-center justify-center">
                 <div className="text-center">
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-[#b67b20] to-[#f1c363] text-3xl text-black">
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-[#ef4444] to-[#facc15] text-3xl text-black">
                     ▶
                   </div>
 
@@ -222,7 +222,7 @@ export default function Home() {
           direction="scale"
           className="relative mx-auto max-w-4xl text-center"
         >
-          <p className="text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+          <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
             The RPIANS Movement
           </p>
 
@@ -239,7 +239,7 @@ export default function Home() {
             strengthen leadership and multiply business profit.
           </p>
 
-          <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-10 py-4 font-bold text-black transition hover:scale-105">
+          <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-10 py-4 font-bold text-black transition hover:scale-105">
             Apply to Work With Us
           </ApplyButton>
         </Reveal>
@@ -250,7 +250,7 @@ export default function Home() {
       <section className="border-y border-white/10 bg-white/[0.02] px-6 py-28">
         <div className="mx-auto max-w-4xl">
           <Reveal direction="up" className="text-center">
-            <p className="text-xs uppercase tracking-[0.35em] text-[#d9a441]">
+            <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
               Frequently Asked Questions
             </p>
 
@@ -270,12 +270,12 @@ export default function Home() {
                 direction="up"
                 delay={index * 0.1}
               >
-                <details className="group rounded-xl border border-white/10 bg-black p-6 open:border-[#d9a441]/40">
+                <details className="group rounded-xl border border-white/10 bg-black p-6 open:border-[#3b82f6]/40">
                   <summary className="cursor-pointer list-none text-lg font-semibold">
                     <span className="flex items-center justify-between gap-4">
                       {faq.question}
 
-                      <span className="text-2xl text-[#d9a441] transition group-open:rotate-45">
+                      <span className="text-2xl text-[#3b82f6] transition group-open:rotate-45">
                         +
                       </span>
                     </span>
@@ -307,7 +307,7 @@ export default function Home() {
               and sustainable profit growth.
             </p>
 
-            <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-10 py-4 font-bold text-black transition hover:scale-105">
+            <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-10 py-4 font-bold text-black transition hover:scale-105">
               Apply Now
             </ApplyButton>
           </div>

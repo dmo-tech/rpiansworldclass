@@ -20,7 +20,7 @@ export default function SiteHeader() {
           />
 
           <div>
-            <p className="text-xl font-bold tracking-[0.25em] text-[#d9a441]">
+            <p className="text-xl font-bold tracking-[0.25em] text-[#3b82f6]">
               RPIANS
             </p>
 
@@ -33,7 +33,7 @@ export default function SiteHeader() {
         <ActiveNavigation />
 
         <div className="flex shrink-0 items-center gap-3">
-          <ApplyButton className="hidden whitespace-nowrap rounded-lg bg-gradient-to-r from-[#b67b20] via-[#f1c363] to-[#bd8126] px-6 py-3 text-sm font-bold text-black transition hover:scale-105 sm:block">
+          <ApplyButton className="hidden whitespace-nowrap rounded-lg bg-gradient-to-r from-[#ef4444] via-[#facc15] to-[#ec4899] px-6 py-3 text-sm font-bold text-black transition hover:scale-105 sm:block">
             Apply Now
           </ApplyButton>
 
