@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { FormEvent, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type RegistrationData = {
@@ -165,14 +166,24 @@ export default function RegisterPage() {
         {/* HEADER */}
 
         <header className="flex items-center justify-between border-b border-white/10 pb-6">
-          <a href="/">
-            <p className="text-xl font-bold tracking-[0.28em] text-[#d9a441]">
-              RPIANS
-            </p>
+          <a href="/" className="flex items-center gap-3">
+            <Image
+              src="/rpians-logo.png"
+              alt="RPIANS logo"
+              width={44}
+              height={33}
+              className="h-9 w-auto"
+            />
 
-            <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-gray-500">
-              World Class Business Coaching
-            </p>
+            <div>
+              <p className="text-xl font-bold tracking-[0.28em] text-[#d9a441]">
+                RPIANS
+              </p>
+
+              <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                World Class Business Coaching
+              </p>
+            </div>
           </a>
 
           <a

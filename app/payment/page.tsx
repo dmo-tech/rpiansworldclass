@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 type ApplicationData = {
   fullName: string;
@@ -112,14 +113,24 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
           }}
           className="max-w-2xl"
         >
-          <a href="/" className="inline-block">
-            <p className="text-2xl font-bold tracking-[0.28em] text-[#b67b20]">
-              RPIANS
-            </p>
+          <a href="/" className="inline-flex items-center gap-3">
+            <Image
+              src="/rpians-logo.png"
+              alt="RPIANS logo"
+              width={44}
+              height={33}
+              className="h-9 w-auto"
+            />
 
-            <p className="mt-1 text-[10px] uppercase tracking-[0.22em] text-gray-500">
-              World Class Business Coaching
-            </p>
+            <div>
+              <p className="text-2xl font-bold tracking-[0.28em] text-[#b67b20]">
+                RPIANS
+              </p>
+
+              <p className="mt-1 text-[10px] uppercase tracking-[0.22em] text-gray-500">
+                World Class Business Coaching
+              </p>
+            </div>
           </a>
 
           <p className="mt-12 text-sm font-semibold uppercase tracking-[0.25em] text-[#b67b20]">

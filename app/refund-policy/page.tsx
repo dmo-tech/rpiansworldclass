@@ -1,11 +1,20 @@
+import Image from "next/image";
+
 import Reveal from "../Reveal";
 
 export default function RefundPolicyPage() {
   return (
     <main className="min-h-screen bg-black px-6 py-20 text-white">
       <div className="mx-auto max-w-4xl">
-        <a href="/" className="text-[#d9a441]">
-          ← Return to Home
+        <a href="/" className="inline-flex items-center gap-2">
+          <Image
+            src="/rpians-logo.png"
+            alt="RPIANS logo"
+            width={32}
+            height={24}
+            className="h-7 w-auto"
+          />
+          <span className="text-[#d9a441]">← Return to Home</span>
         </a>
 
         <p className="mt-12 text-xs uppercase tracking-[0.35em] text-[#d9a441]">
