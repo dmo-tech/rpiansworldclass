@@ -24,10 +24,6 @@ const navigationItems = [
     href: "/about",
     label: "About",
   },
-  {
-    href: "/masterclass",
-    label: "Masterclass",
-  },
 ];
 
 export default function ActiveNavigation() {

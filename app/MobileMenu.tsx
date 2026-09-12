@@ -24,10 +24,6 @@ const links = [
     href: "/about",
     label: "About",
   },
-  {
-    href: "/masterclass",
-    label: "Masterclass",
-  },
 ];
 
 export default function MobileMenu() {
