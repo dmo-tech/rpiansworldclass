@@ -78,8 +78,8 @@ export default function Home() {
         <div className="relative z-10 mx-auto max-w-6xl">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <Reveal
-              direction="left"
-              className="order-2 flex justify-center lg:order-1 lg:justify-start"
+              direction="right"
+              className="order-2 flex justify-center lg:order-2 lg:justify-end"
             >
               <div className="relative h-[360px] w-full max-w-sm sm:h-[440px] lg:h-[520px]">
                 <Image
@@ -87,14 +87,14 @@ export default function Home() {
                   alt="Rajesh Kumar Kare"
                   fill
                   priority
-                  className="object-contain object-bottom"
+                  className="object-contain object-top"
                 />
               </div>
             </Reveal>
 
             <Reveal
               direction="up"
-              className="order-1 text-center lg:order-2 lg:text-left"
+              className="order-1 text-center lg:order-1 lg:text-left"
             >
               <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6] md:tracking-[0.4em]">
                 India’s Business Automation and Profit Coaching Movement
