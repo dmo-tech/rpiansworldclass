@@ -26,6 +26,21 @@ const links = [
   },
 ];
 
+const programLinks = [
+  {
+    href: "/programs/1-day",
+    label: "1 Day Program",
+  },
+  {
+    href: "/programs/1-month",
+    label: "1 Month Program",
+  },
+  {
+    href: "/programs/10-month",
+    label: "10 Month Program",
+  },
+];
+
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -58,6 +73,25 @@ export default function MobileMenu() {
                 {link.label}
               </Link>
             ))}
+
+            <div className="border-t border-black/10 pt-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+                Our Programs
+              </p>
+
+              <div className="mt-3 flex flex-col gap-4">
+                {programLinks.map((program) => (
+                  <Link
+                    key={program.href}
+                    href={program.href}
+                    onClick={closeMenu}
+                    className="hover:text-[#3b82f6]"
+                  >
+                    {program.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
             <Link
               href="/register"

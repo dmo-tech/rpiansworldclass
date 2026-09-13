@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import ProgramsDropdown from "./ProgramsDropdown";
+
 const navigationItems = [
   {
     href: "/",
@@ -57,6 +59,8 @@ export default function ActiveNavigation() {
           </Link>
         );
       })}
+
+      <ProgramsDropdown />
     </nav>
   );
 }
