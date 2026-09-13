@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import Image from "next/image";
+
 import AnimatedWords from "./AnimatedWords";
 import ApplyButton from "./ApplyButton";
 import Reveal from "./Reveal";
@@ -17,6 +19,8 @@ type ProgramPageTemplateProps = {
   audience: string;
   topics: string[];
   ctaLabel: string;
+  photoSrc?: string;
+  photoAlt?: string;
 };
 
 export default function ProgramPageTemplate({
@@ -29,6 +33,8 @@ export default function ProgramPageTemplate({
   audience,
   topics,
   ctaLabel,
+  photoSrc,
+  photoAlt,
 }: ProgramPageTemplateProps): ReactNode {
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
@@ -39,32 +45,78 @@ export default function ProgramPageTemplate({
           className="relative overflow-hidden border-y border-black/10 px-6 py-28"
         >
           <div className="relative mx-auto max-w-5xl">
-            <Reveal direction="up" className="text-center">
-              <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
-                {eyebrow}
-              </p>
+            {photoSrc ? (
+              <div className="grid items-center gap-12 lg:grid-cols-2">
+                <Reveal direction="up" className="text-center lg:text-left">
+                  <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
+                    {eyebrow}
+                  </p>
 
-              <h1 className="mt-5 font-serif text-4xl md:text-6xl">
-                <AnimatedWords
-                  text={headingLine1}
-                  stagger={0.1}
-                  className="justify-center"
-                />
+                  <h1 className="mt-5 font-serif text-4xl md:text-5xl">
+                    <AnimatedWords
+                      text={headingLine1}
+                      stagger={0.1}
+                      className="justify-center lg:justify-start"
+                    />
 
-                <span className="mt-2 block">
+                    <span className="mt-2 block">
+                      <AnimatedWords
+                        text={headingLine2}
+                        delay={0.25}
+                        stagger={0.1}
+                        className="justify-center lg:justify-start"
+                      />
+                    </span>
+                  </h1>
+
+                  <p className="mx-auto mt-7 max-w-xl text-lg leading-8 text-gray-600 lg:mx-0">
+                    {description}
+                  </p>
+                </Reveal>
+
+                <Reveal
+                  direction="right"
+                  className="flex justify-center lg:justify-end"
+                >
+                  <div className="relative h-[360px] w-full max-w-sm sm:h-[440px] lg:h-[480px]">
+                    <Image
+                      src={photoSrc}
+                      alt={photoAlt ?? "RPIANS"}
+                      fill
+                      priority
+                      className="object-contain object-top"
+                    />
+                  </div>
+                </Reveal>
+              </div>
+            ) : (
+              <Reveal direction="up" className="text-center">
+                <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
+                  {eyebrow}
+                </p>
+
+                <h1 className="mt-5 font-serif text-4xl md:text-6xl">
                   <AnimatedWords
-                    text={headingLine2}
-                    delay={0.25}
+                    text={headingLine1}
                     stagger={0.1}
                     className="justify-center"
                   />
-                </span>
-              </h1>
 
-              <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-gray-600">
-                {description}
-              </p>
-            </Reveal>
+                  <span className="mt-2 block">
+                    <AnimatedWords
+                      text={headingLine2}
+                      delay={0.25}
+                      stagger={0.1}
+                      className="justify-center"
+                    />
+                  </span>
+                </h1>
+
+                <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-gray-600">
+                  {description}
+                </p>
+              </Reveal>
+            )}
 
             <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
               <Reveal direction="left" className="h-full">
