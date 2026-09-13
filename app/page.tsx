@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import AnimatedCounter from "./AnimatedCounter";
 import AnimatedWords from "./AnimatedWords";
 import ApplyButton from "./ApplyButton";
@@ -71,55 +73,74 @@ export default function Home() {
 
       <section
         id="home"
-        className="luxury-background relative flex min-h-screen items-center px-6 pb-20 pt-32"
+        className="luxury-background relative min-h-screen px-6 pb-20 pt-32"
       >
-        <Reveal
-          direction="up"
-          className="relative z-10 mx-auto max-w-6xl text-center"
-        >
-          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6] md:tracking-[0.4em]">
-            India’s Business Automation and Profit Coaching Movement
-          </p>
+        <div className="relative z-10 mx-auto max-w-6xl">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <Reveal
+              direction="left"
+              className="order-2 flex justify-center lg:order-1 lg:justify-start"
+            >
+              <div className="relative h-[360px] w-full max-w-sm sm:h-[440px] lg:h-[520px]">
+                <Image
+                  src="/rajesh-kumar-kare-hero.jpg"
+                  alt="Rajesh Kumar Kare"
+                  fill
+                  priority
+                  className="object-contain object-bottom"
+                />
+              </div>
+            </Reveal>
 
-          <h1 className="font-serif text-4xl font-semibold leading-tight sm:text-5xl md:text-7xl">
-            <AnimatedWords
-              text="Business Automation And"
-              stagger={0.12}
-              className="justify-center"
-            />
+            <Reveal
+              direction="up"
+              className="order-1 text-center lg:order-2 lg:text-left"
+            >
+              <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6] md:tracking-[0.4em]">
+                India’s Business Automation and Profit Coaching Movement
+              </p>
 
-            <span className="mt-3 block">
-              <AnimatedWords
-                text="Profit Mastery Strategy"
-                delay={0.35}
-                stagger={0.14}
-                className="text-black justify-center"
-              />
-            </span>
-          </h1>
+              <h1 className="font-serif text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
+                <AnimatedWords
+                  text="Business Automation And"
+                  stagger={0.12}
+                  className="justify-center lg:justify-start"
+                />
 
-          <Reveal direction="up" delay={0.5}>
-            <p className="mx-auto mt-7 max-w-3xl text-base leading-8 text-gray-600 md:text-lg">
-              Run your business on autopilot mode, build an accountable team,
-              control inventory and cash flow, and multiply your profit every
-              year with proven business systems.
-            </p>
-          </Reveal>
+                <span className="mt-3 block">
+                  <AnimatedWords
+                    text="Profit Mastery Strategy"
+                    delay={0.35}
+                    stagger={0.14}
+                    className="text-black justify-center lg:justify-start"
+                  />
+                </span>
+              </h1>
 
-          <Reveal direction="up" delay={0.65}>
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-9 py-4 text-base font-bold text-white transition hover:scale-105 sm:w-auto">
-                Apply to Work With Us
-              </ApplyButton>
+              <Reveal direction="up" delay={0.5}>
+                <p className="mx-auto mt-7 max-w-xl text-base leading-8 text-gray-600 md:text-lg lg:mx-0">
+                  Run your business on autopilot mode, build an accountable
+                  team, control inventory and cash flow, and multiply your
+                  profit every year with proven business systems.
+                </p>
+              </Reveal>
 
-              <a
-                href="#video"
-                className="w-full rounded-lg border border-[#3b82f6]/60 px-9 py-4 text-center text-base font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10 sm:w-auto"
-              >
-                Watch the Transformation
-              </a>
-            </div>
-          </Reveal>
+              <Reveal direction="up" delay={0.65}>
+                <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
+                  <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-9 py-4 text-base font-bold text-white transition hover:scale-105 sm:w-auto">
+                    Apply to Work With Us
+                  </ApplyButton>
+
+                  <a
+                    href="#video"
+                    className="w-full rounded-lg border border-[#3b82f6]/60 px-9 py-4 text-center text-base font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10 sm:w-auto"
+                  >
+                    Watch the Transformation
+                  </a>
+                </div>
+              </Reveal>
+            </Reveal>
+          </div>
 
           <div className="mt-16 grid gap-5 text-left md:grid-cols-3">
             {stats.map((item, index) => (
@@ -151,7 +172,7 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
-        </Reveal>
+        </div>
       </section>
 
       {/* VIDEO */}
