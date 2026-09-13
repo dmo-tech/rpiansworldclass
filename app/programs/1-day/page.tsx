@@ -27,7 +27,7 @@ export default function OneDayProgramPage() {
         "90-Day Action Plan",
       ]}
       ctaLabel="Register for the 1 Day Program"
-      photoSrc="/rajesh-kumar-kare-hero.png"
+      photoSrc="/rajesh-kumar-kare-1day.png"
       photoAlt="Rajesh Kumar Kare"
     />
   );
