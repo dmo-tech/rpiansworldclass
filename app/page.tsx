@@ -83,7 +83,7 @@ export default function Home() {
             >
               <div className="relative h-[360px] w-full max-w-sm sm:h-[440px] lg:h-[520px]">
                 <Image
-                  src="/rajesh-kumar-kare-hero.jpg"
+                  src="/rajesh-kumar-kare-hero.png"
                   alt="Rajesh Kumar Kare"
                   fill
                   priority
