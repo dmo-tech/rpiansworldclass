@@ -27,7 +27,7 @@ export default function OneMonthProgramPage() {
         "Weekly Implementation Reviews",
       ]}
       ctaLabel="Register for the 1 Month Program"
-      photoSrc="/rajesh-kumar-kare-1day.png"
+      photoSrc="/rajesh-kumar-kare-1month.png"
       photoAlt="Rajesh Kumar Kare"
     />
   );
