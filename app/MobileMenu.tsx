@@ -39,6 +39,10 @@ const programLinks = [
     href: "/programs/10-month",
     label: "10 Month Program",
   },
+  {
+    href: "/programs/personal-mentorship",
+    label: "Personal Mentorship",
+  },
 ];
 
 export default function MobileMenu() {

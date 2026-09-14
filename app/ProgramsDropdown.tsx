@@ -16,6 +16,10 @@ const programs = [
     href: "/programs/10-month",
     label: "10 Month Program",
   },
+  {
+    href: "/programs/personal-mentorship",
+    label: "Personal Mentorship",
+  },
 ];
 
 export default function ProgramsDropdown() {
@@ -55,7 +59,7 @@ export default function ProgramsDropdown() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-lg border border-black/10 bg-white shadow-xl">
+        <div className="absolute left-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-lg border border-black/10 bg-white shadow-xl">
           {programs.map((program) => (
             <Link
               key={program.href}

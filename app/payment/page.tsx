@@ -13,6 +13,7 @@ type ApplicationData = {
   annualTurnover: string;
   planSelected?: string;
   bookingAmount: number | null;
+  gstApplicable?: boolean;
 };
 
 const DEFAULT_PAYMENT_AMOUNT = 999;
@@ -31,6 +32,7 @@ const DEFAULT_PAYMENT_AMOUNT = 999;
 const PAYMENT_LINKS: Record<number, string> = {
   999: "https://rzp.io/l/your-payment-link",
   9999: "https://rzp.io/l/your-payment-link",
+  5000000: "https://rzp.io/l/your-payment-link",
 };
 
 export default function PaymentPage() {
@@ -57,6 +59,13 @@ export default function PaymentPage() {
   const paymentAmount = applicationData
     ? applicationData.bookingAmount
     : DEFAULT_PAYMENT_AMOUNT;
+
+  const formattedPaymentAmount =
+    paymentAmount != null
+      ? `₹${paymentAmount.toLocaleString("en-IN")}${
+          applicationData?.gstApplicable ? " + GST" : ""
+        }`
+      : null;
 
   const paymentLink =
     paymentAmount != null
@@ -90,7 +99,7 @@ Plan Selected: ${applicationData?.planSelected ?? ""}
 
 ${
   paymentAmount != null
-    ? `I am now on the ₹${paymentAmount} payment page.`
+    ? `I am now on the ${formattedPaymentAmount} payment page.`
     : "I have selected a custom-pricing plan and would like to discuss the details."
 }`,
   );
@@ -168,7 +177,7 @@ ${
 
           <p className="mt-7 max-w-xl text-lg leading-8 text-gray-600">
             {paymentAmount != null
-              ? `Your application has been received. Complete the ₹${paymentAmount} booking payment to confirm your Business Diagnostic session with the RPIANS team.`
+              ? `Your application has been received. Complete the ${formattedPaymentAmount} booking payment to confirm your Business Diagnostic session with the RPIANS team.`
               : "Your application has been received. Our team will contact you to discuss pricing and confirm your Business Diagnostic session."}
           </p>
 
@@ -323,7 +332,7 @@ ${
               </div>
 
               <p className="font-serif text-4xl font-bold text-[#1d4ed8]">
-                {paymentAmount != null ? `₹${paymentAmount}` : "Custom"}
+                {formattedPaymentAmount ?? "Custom"}
               </p>
             </div>
           </div>
@@ -336,7 +345,7 @@ ${
                 disabled={!applicationData}
                 className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Pay ₹{paymentAmount}
+                Pay {formattedPaymentAmount}
               </button>
 
               <a

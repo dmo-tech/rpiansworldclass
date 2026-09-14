@@ -3,6 +3,7 @@ export type Plan = {
   label: string;
   description: string;
   amount: number | null;
+  gstApplicable?: boolean;
 };
 
 export const plans: Plan[] = [
@@ -27,4 +28,22 @@ export const plans: Plan[] = [
       "A complete business transformation mentorship journey.",
     amount: null,
   },
+  {
+    id: "personal-mentorship",
+    label: "Personal Mentorship",
+    description:
+      "One-on-one mentorship with direct access to Rajesh Kumar Kare.",
+    amount: 5000000,
+    gstApplicable: true,
+  },
 ];
+
+export function formatPlanAmount(plan: Plan): string {
+  if (plan.amount == null) {
+    return "Custom";
+  }
+
+  const formatted = `₹${plan.amount.toLocaleString("en-IN")}`;
+
+  return plan.gstApplicable ? `${formatted} + GST` : formatted;
+}

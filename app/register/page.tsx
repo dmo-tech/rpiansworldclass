@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
-import { plans } from "../plans";
+import { formatPlanAmount, plans } from "../plans";
 
 type RegistrationData = {
   fullName: string;
@@ -202,6 +202,7 @@ function RegisterForm() {
       ...data,
       planSelected: selectedPlan?.label ?? "",
       bookingAmount: selectedPlan?.amount ?? null,
+      gstApplicable: selectedPlan?.gstApplicable ?? false,
       submittedAt: new Date().toISOString(),
       source: "RPIANS Website",
     };
@@ -295,10 +296,11 @@ function RegisterForm() {
     advanceField();
   };
 
-  const paymentStepLabel =
-    selectedPlan?.amount != null
-      ? `Complete ₹${selectedPlan.amount} booking payment`
-      : "Discuss custom pricing with our team";
+  const paymentStepLabel = selectedPlan
+    ? selectedPlan.amount != null
+      ? `Complete ${formatPlanAmount(selectedPlan)} booking payment`
+      : "Discuss custom pricing with our team"
+    : "Complete your booking payment";
 
   if (step === 2) {
     return (
@@ -548,9 +550,7 @@ function RegisterForm() {
 
               <p className="mt-2 font-serif text-4xl font-bold">
                 {selectedPlan
-                  ? selectedPlan.amount != null
-                    ? `₹${selectedPlan.amount}`
-                    : "Custom"
+                  ? formatPlanAmount(selectedPlan)
                   : "Select a plan"}
               </p>
             </div>
@@ -635,7 +635,7 @@ function RegisterForm() {
                           </div>
 
                           <p className="shrink-0 font-serif text-xl font-bold text-[#1d4ed8]">
-                            {plan.amount != null ? `₹${plan.amount}` : "Custom"}
+                            {formatPlanAmount(plan)}
                           </p>
                         </div>
                       </button>

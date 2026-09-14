@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import AnimatedWords from "./AnimatedWords";
 import ApplyButton from "./ApplyButton";
-import { plans } from "./plans";
+import { formatPlanAmount, plans } from "./plans";
 import Reveal from "./Reveal";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
@@ -183,7 +183,7 @@ export default function ProgramPageTemplate({
                       </p>
 
                       <p className="mt-2 font-serif text-4xl font-bold">
-                        {plan.amount != null ? `₹${plan.amount}` : "Custom"}
+                        {formatPlanAmount(plan)}
                       </p>
                     </div>
                   )}
