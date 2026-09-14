@@ -1,9 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { FormEvent, useState } from "react";
+import { FormEvent, Suspense, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type RegistrationData = {
   fullName: string;
@@ -28,7 +28,20 @@ const initialData: RegistrationData = {
 };
 
 export default function RegisterPage() {
+  return (
+    <Suspense fallback={null}>
+      <RegisterForm />
+    </Suspense>
+  );
+}
+
+function RegisterForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const parsedAmount = Number(searchParams.get("amount"));
+  const bookingAmount =
+    Number.isFinite(parsedAmount) && parsedAmount > 0 ? parsedAmount : 999;
 
   const [formData, setFormData] =
     useState<RegistrationData>(initialData);
@@ -103,7 +116,7 @@ export default function RegisterPage() {
 
     const applicationData = {
       ...formData,
-      bookingAmount: 999,
+      bookingAmount,
       submittedAt: new Date().toISOString(),
       source: "RPIANS Website",
     };
@@ -232,7 +245,7 @@ export default function RegisterPage() {
             <div className="mt-10 space-y-5">
               {[
                 "Share your business details",
-                "Complete ₹999 booking payment",
+                `Complete ₹${bookingAmount} booking payment`,
                 "Application reviewed by RPIANS team",
                 "Receive confirmation on WhatsApp",
               ].map((item, index) => (
@@ -269,7 +282,7 @@ export default function RegisterPage() {
               </p>
 
               <p className="mt-2 font-serif text-4xl font-bold">
-                ₹999
+                ₹{bookingAmount}
               </p>
 
               <p className="mt-3 text-sm leading-6 text-gray-500">

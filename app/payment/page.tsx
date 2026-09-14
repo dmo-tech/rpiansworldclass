@@ -15,17 +15,23 @@ type ApplicationData = {
   bookingAmount: number;
 };
 
-const PAYMENT_AMOUNT = 999;
+const DEFAULT_PAYMENT_AMOUNT = 999;
 
 /*
   IMPORTANT:
-  नीचे अपना वास्तविक Razorpay या Instamojo payment-page link लगाइए।
+  नीचे हर booking amount के लिए अपना वास्तविक Razorpay या Instamojo
+  payment-page link लगाइए। Razorpay Payment Links एक fixed amount के
+  लिए बनते हैं, इसलिए हर amount (₹999, ₹9999, आदि) का अलग link चाहिए।
 
   Example:
-  https://rzp.io/l/your-payment-link
+  999: "https://rzp.io/l/your-999-payment-link",
+  9999: "https://rzp.io/l/your-9999-payment-link",
 */
 
-const PAYMENT_LINK = "https://rzp.io/l/your-payment-link";
+const PAYMENT_LINKS: Record<number, string> = {
+  999: "https://rzp.io/l/your-payment-link",
+  9999: "https://rzp.io/l/your-payment-link",
+};
 
 export default function PaymentPage() {
   const [applicationData, setApplicationData] =
@@ -48,15 +54,21 @@ export default function PaymentPage() {
     setIsLoading(false);
   }, []);
 
+  const paymentAmount =
+    applicationData?.bookingAmount ?? DEFAULT_PAYMENT_AMOUNT;
+
+  const paymentLink =
+    PAYMENT_LINKS[paymentAmount] ?? PAYMENT_LINKS[DEFAULT_PAYMENT_AMOUNT];
+
   const handlePayment = () => {
-    if (PAYMENT_LINK.includes("PASTE_YOUR")) {
+    if (paymentLink.includes("PASTE_YOUR")) {
       alert(
         "Please add your real Razorpay or Instamojo payment link inside app/payment/page.tsx.",
       );
       return;
     }
 
-    window.location.href = PAYMENT_LINK;
+    window.location.href = paymentLink;
   };
 
   const whatsappMessage = encodeURIComponent(
@@ -70,7 +82,7 @@ Phone: ${applicationData?.phone ?? ""}
 Business: ${applicationData?.businessCategory ?? ""}
 Annual Turnover: ${applicationData?.annualTurnover ?? ""}
 
-I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
+I am now on the ₹${paymentAmount} payment page.`,
   );
 
   if (isLoading) {
@@ -145,9 +157,9 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
           </h1>
 
           <p className="mt-7 max-w-xl text-lg leading-8 text-gray-600">
-            Your application has been received. Complete the ₹999 booking
-            payment to confirm your Business Diagnostic session with the
-            RPIANS team.
+            Your application has been received. Complete the ₹{paymentAmount}{" "}
+            booking payment to confirm your Business Diagnostic session with
+            the RPIANS team.
           </p>
 
           <div className="mt-10 space-y-5">
@@ -291,7 +303,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
               </div>
 
               <p className="font-serif text-4xl font-bold text-[#1d4ed8]">
-                ₹{PAYMENT_AMOUNT}
+                ₹{paymentAmount}
               </p>
             </div>
           </div>
@@ -302,7 +314,7 @@ I am now on the ₹${PAYMENT_AMOUNT} payment page.`,
             disabled={!applicationData}
             className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Pay ₹{PAYMENT_AMOUNT}
+            Pay ₹{paymentAmount}
           </button>
 
           <a
