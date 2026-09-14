@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function TenMonthProgramPage() {
   return (
     <ProgramPageTemplate
-      eyebrow="10 Month Business Transformation Mastery"
+      eyebrow="Build a Fully System-Driven Business"
       headingLine1="10 Month Business Automation"
       headingLine2="Mastery Program"
       description="A complete 10-month mentorship journey that takes your business from daily firefighting to full automation, strong leadership and consistent profit growth."
