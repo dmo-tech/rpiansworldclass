@@ -56,6 +56,113 @@ const initialData: RegistrationData = {
   employeeCount: "",
 };
 
+type BusinessField =
+  | {
+      id: keyof RegistrationData;
+      label: string;
+      kind: "input";
+      type: "text" | "tel" | "email" | "number";
+      placeholder: string;
+      autoComplete?: string;
+    }
+  | {
+      id: keyof RegistrationData;
+      label: string;
+      kind: "select";
+      options: string[];
+    };
+
+const businessFields: BusinessField[] = [
+  {
+    id: "fullName",
+    label: "Full Name",
+    kind: "input",
+    type: "text",
+    placeholder: "Enter your full name",
+    autoComplete: "name",
+  },
+  {
+    id: "phone",
+    label: "WhatsApp Number",
+    kind: "input",
+    type: "tel",
+    placeholder: "+91 98765 43210",
+    autoComplete: "tel",
+  },
+  {
+    id: "email",
+    label: "Email Address",
+    kind: "input",
+    type: "email",
+    placeholder: "name@company.com",
+    autoComplete: "email",
+  },
+  {
+    id: "companyName",
+    label: "Company Name",
+    kind: "input",
+    type: "text",
+    placeholder: "Enter company name",
+    autoComplete: "organization",
+  },
+  {
+    id: "businessCategory",
+    label: "Business Category",
+    kind: "select",
+    options: [
+      "Retail",
+      "Wholesale",
+      "Distribution",
+      "Manufacturing",
+      "Service Business",
+      "Construction / Project",
+      "Other",
+    ],
+  },
+  {
+    id: "annualTurnover",
+    label: "Annual Turnover",
+    kind: "select",
+    options: [
+      "Below ₹1 Crore",
+      "₹1–5 Crore",
+      "₹5–10 Crore",
+      "₹10–25 Crore",
+      "₹25–50 Crore",
+      "₹50 Crore+",
+    ],
+  },
+  {
+    id: "employeeCount",
+    label: "Number of Employees",
+    kind: "input",
+    type: "number",
+    placeholder: "Enter number of employees",
+  },
+];
+
+function validateField(field: BusinessField, value: string): string {
+  if (field.id === "phone") {
+    const cleanPhone = value.replace(/\D/g, "");
+
+    if (cleanPhone.length < 10) {
+      return "Please enter a valid WhatsApp number.";
+    }
+
+    return "";
+  }
+
+  if (!value.trim()) {
+    return `Please enter your ${field.label.toLowerCase()}.`;
+  }
+
+  if (field.id === "email" && !value.includes("@")) {
+    return "Please enter a valid email address.";
+  }
+
+  return "";
+}
+
 export default function RegisterPage() {
   return (
     <Suspense fallback={null}>
@@ -84,8 +191,14 @@ function RegisterForm() {
   const [formData, setFormData] =
     useState<RegistrationData>(initialData);
 
+  const [fieldIndex, setFieldIndex] = useState(0);
+  const [fieldError, setFieldError] = useState("");
+
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const currentField = businessFields[fieldIndex];
+  const isLastField = fieldIndex === businessFields.length - 1;
 
   const updateField = (
     field: keyof RegistrationData,
@@ -96,7 +209,7 @@ function RegisterForm() {
       [field]: value,
     }));
 
-    setErrorMessage("");
+    setFieldError("");
   };
 
   const handleContinueFromPlan = () => {
@@ -109,57 +222,12 @@ function RegisterForm() {
     setStep(2);
   };
 
-  const validateForm = () => {
-    const cleanPhone = formData.phone.replace(/\D/g, "");
-
-    if (!formData.fullName.trim()) {
-      return "Please enter your full name.";
-    }
-
-    if (cleanPhone.length < 10) {
-      return "Please enter a valid WhatsApp number.";
-    }
-
-    if (!formData.email.trim()) {
-      return "Please enter your email address.";
-    }
-
-    if (!formData.companyName.trim()) {
-      return "Please enter your company name.";
-    }
-
-    if (!formData.businessCategory) {
-      return "Please select your business category.";
-    }
-
-    if (!formData.annualTurnover) {
-      return "Please select your annual turnover.";
-    }
-
-    if (!formData.employeeCount.trim()) {
-      return "Please enter the number of employees.";
-    }
-
-    return "";
-  };
-
-  const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>,
-  ) => {
-    event.preventDefault();
-
-    const validationError = validateForm();
-
-    if (validationError) {
-      setErrorMessage(validationError);
-      return;
-    }
-
+  const submitApplication = async (data: RegistrationData) => {
     setIsSubmitting(true);
     setErrorMessage("");
 
     const applicationData = {
-      ...formData,
+      ...data,
       planSelected: selectedPlan?.label ?? "",
       bookingAmount: selectedPlan?.amount ?? null,
       submittedAt: new Date().toISOString(),
@@ -209,9 +277,50 @@ function RegisterForm() {
           ? error.message
           : "Your form could not be submitted. Please try again.",
       );
-    } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const advanceField = (valueOverride?: string) => {
+    const value = valueOverride ?? formData[currentField.id];
+    const error = validateField(currentField, value);
+
+    if (error) {
+      setFieldError(error);
+      return;
+    }
+
+    setFieldError("");
+
+    const updatedData =
+      valueOverride !== undefined
+        ? { ...formData, [currentField.id]: valueOverride }
+        : formData;
+
+    if (valueOverride !== undefined) {
+      setFormData(updatedData);
+    }
+
+    if (isLastField) {
+      void submitApplication(updatedData);
+    } else {
+      setFieldIndex((current) => current + 1);
+    }
+  };
+
+  const goBackField = () => {
+    setFieldError("");
+
+    if (fieldIndex === 0) {
+      setStep(1);
+    } else {
+      setFieldIndex((current) => current - 1);
+    }
+  };
+
+  const handleFieldSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    advanceField();
   };
 
   const paymentStepLabel =
@@ -469,7 +578,11 @@ function RegisterForm() {
 
                     <button
                       type="button"
-                      onClick={() => setStep(1)}
+                      onClick={() => {
+                        setFieldIndex(0);
+                        setFieldError("");
+                        setStep(1);
+                      }}
                       className="text-xs font-semibold text-gray-500 transition hover:text-[#1d4ed8]"
                     >
                       ← Change plan
@@ -480,290 +593,154 @@ function RegisterForm() {
                     Enter Your Business Details
                   </h2>
 
-                  <p className="mt-3 text-gray-500">
-                    Fields marked with * are required.
-                  </p>
-                </div>
-
-                <form
-                  onSubmit={handleSubmit}
-                  className="mt-8"
-                >
-                  <div className="grid gap-5 md:grid-cols-2">
-                    <div>
-                      <label
-                        htmlFor="fullName"
-                        className="mb-2 block text-sm text-gray-600"
-                      >
-                        Full Name *
-                      </label>
-
-                      <input
-                        id="fullName"
-                        type="text"
-                        value={formData.fullName}
-                        onChange={(event) =>
-                          updateField(
-                            "fullName",
-                            event.target.value,
-                          )
-                        }
-                        placeholder="Enter your full name"
-                        autoComplete="name"
-                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="phone"
-                        className="mb-2 block text-sm text-gray-600"
-                      >
-                        WhatsApp Number *
-                      </label>
-
-                      <input
-                        id="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(event) =>
-                          updateField(
-                            "phone",
-                            event.target.value,
-                          )
-                        }
-                        placeholder="+91 98765 43210"
-                        autoComplete="tel"
-                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="mb-2 block text-sm text-gray-600"
-                      >
-                        Email Address *
-                      </label>
-
-                      <input
-                        id="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(event) =>
-                          updateField(
-                            "email",
-                            event.target.value,
-                          )
-                        }
-                        placeholder="name@company.com"
-                        autoComplete="email"
-                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="companyName"
-                        className="mb-2 block text-sm text-gray-600"
-                      >
-                        Company Name *
-                      </label>
-
-                      <input
-                        id="companyName"
-                        type="text"
-                        value={formData.companyName}
-                        onChange={(event) =>
-                          updateField(
-                            "companyName",
-                            event.target.value,
-                          )
-                        }
-                        placeholder="Enter company name"
-                        autoComplete="organization"
-                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="businessCategory"
-                        className="mb-2 block text-sm text-gray-600"
-                      >
-                        Business Category *
-                      </label>
-
-                      <select
-                        id="businessCategory"
-                        value={formData.businessCategory}
-                        onChange={(event) =>
-                          updateField(
-                            "businessCategory",
-                            event.target.value,
-                          )
-                        }
-                        className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 outline-none transition focus:border-[#3b82f6]"
-                      >
-                        <option value="">
-                          Select category
-                        </option>
-
-                        <option value="Retail">
-                          Retail
-                        </option>
-
-                        <option value="Wholesale">
-                          Wholesale
-                        </option>
-
-                        <option value="Distribution">
-                          Distribution
-                        </option>
-
-                        <option value="Manufacturing">
-                          Manufacturing
-                        </option>
-
-                        <option value="Service Business">
-                          Service Business
-                        </option>
-
-                        <option value="Construction / Project">
-                          Construction / Project
-                        </option>
-
-                        <option value="Other">
-                          Other
-                        </option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="annualTurnover"
-                        className="mb-2 block text-sm text-gray-600"
-                      >
-                        Annual Turnover *
-                      </label>
-
-                      <select
-                        id="annualTurnover"
-                        value={formData.annualTurnover}
-                        onChange={(event) =>
-                          updateField(
-                            "annualTurnover",
-                            event.target.value,
-                          )
-                        }
-                        className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 outline-none transition focus:border-[#3b82f6]"
-                      >
-                        <option value="">
-                          Select turnover
-                        </option>
-
-                        <option value="Below ₹1 Crore">
-                          Below ₹1 Crore
-                        </option>
-
-                        <option value="₹1–5 Crore">
-                          ₹1–5 Crore
-                        </option>
-
-                        <option value="₹5–10 Crore">
-                          ₹5–10 Crore
-                        </option>
-
-                        <option value="₹10–25 Crore">
-                          ₹10–25 Crore
-                        </option>
-
-                        <option value="₹25–50 Crore">
-                          ₹25–50 Crore
-                        </option>
-
-                        <option value="₹50 Crore+">
-                          ₹50 Crore+
-                        </option>
-                      </select>
-                    </div>
-
-                    <div className="md:col-span-2">
-                      <label
-                        htmlFor="employeeCount"
-                        className="mb-2 block text-sm text-gray-600"
-                      >
-                        Number of Employees *
-                      </label>
-
-                      <input
-                        id="employeeCount"
-                        type="number"
-                        min="0"
-                        value={formData.employeeCount}
-                        onChange={(event) =>
-                          updateField(
-                            "employeeCount",
-                            event.target.value,
-                          )
-                        }
-                        placeholder="Enter number of employees"
-                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                      />
-                    </div>
+                  <div className="mt-4 flex items-center justify-between text-sm">
+                    <span className="text-gray-500">
+                      Question {fieldIndex + 1} of {businessFields.length}
+                    </span>
                   </div>
 
-                  <AnimatePresence>
-                    {errorMessage && (
-                      <motion.div
-                        initial={{
-                          opacity: 0,
-                          y: -8,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                        }}
-                        exit={{
-                          opacity: 0,
-                          y: -8,
-                        }}
-                        className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+                  <div className="mt-3 h-2 overflow-hidden rounded-full bg-black/10">
+                    <motion.div
+                      animate={{
+                        width: `${((fieldIndex + 1) / businessFields.length) * 100}%`,
+                      }}
+                      transition={{
+                        duration: 0.4,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="h-full rounded-full bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6]"
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-8 min-h-[260px]">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentField.id}
+                      initial={{
+                        opacity: 0,
+                        x: 40,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        x: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        x: -40,
+                      }}
+                      transition={{
+                        duration: 0.35,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                    >
+                      <label
+                        htmlFor={currentField.id}
+                        className="block text-xl font-bold md:text-2xl"
                       >
-                        {errorMessage}
-                      </motion.div>
-                    )}
+                        {currentField.label} *
+                      </label>
+
+                      {currentField.kind === "input" ? (
+                        <form onSubmit={handleFieldSubmit} className="mt-6">
+                          <input
+                            key={currentField.id}
+                            id={currentField.id}
+                            type={currentField.type}
+                            min={
+                              currentField.type === "number" ? "0" : undefined
+                            }
+                            value={formData[currentField.id]}
+                            onChange={(event) =>
+                              updateField(currentField.id, event.target.value)
+                            }
+                            placeholder={currentField.placeholder}
+                            autoComplete={currentField.autoComplete}
+                            autoFocus
+                            className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 text-lg outline-none transition placeholder:text-gray-400 focus:border-[#3b82f6]"
+                          />
+
+                          <button
+                            type="submit"
+                            className="mt-5 rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-8 py-3 font-bold text-white transition hover:scale-105"
+                          >
+                            {isLastField ? "Continue to Payment Details" : "OK"}
+                          </button>
+                        </form>
+                      ) : (
+                        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                          {currentField.options.map((option) => {
+                            const isSelected =
+                              formData[currentField.id] === option;
+
+                            return (
+                              <button
+                                key={option}
+                                type="button"
+                                onClick={() => advanceField(option)}
+                                className={`rounded-xl border-2 px-4 py-4 text-left font-semibold transition ${
+                                  isSelected
+                                    ? "border-[#3b82f6] bg-[#3b82f6]/5"
+                                    : "border-black/10 bg-white/70 hover:border-[#3b82f6]/40"
+                                }`}
+                              >
+                                {option}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </motion.div>
                   </AnimatePresence>
+                </div>
 
-                  <motion.button
-                    type="submit"
+                <AnimatePresence>
+                  {fieldError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+                    >
+                      {fieldError}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <AnimatePresence>
+                  {errorMessage && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+                    >
+                      {errorMessage}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <div className="mt-6 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={goBackField}
                     disabled={isSubmitting}
-                    whileHover={
-                      isSubmitting
-                        ? undefined
-                        : {
-                            scale: 1.015,
-                          }
-                    }
-                    whileTap={
-                      isSubmitting
-                        ? undefined
-                        : {
-                            scale: 0.98,
-                          }
-                    }
-                    className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="text-sm font-semibold text-gray-500 transition hover:text-[#1d4ed8] disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {isSubmitting
-                      ? "Saving Your Application..."
-                      : "Continue to Payment Details"}
-                  </motion.button>
+                    ← Back
+                  </button>
 
-                  <p className="mt-4 text-center text-xs leading-6 text-gray-500">
-                    By continuing, you agree to our Terms and Conditions,
-                    Privacy Policy and Refund Policy.
-                  </p>
-                </form>
+                  {isSubmitting && (
+                    <p className="text-sm text-gray-500">
+                      Saving your application...
+                    </p>
+                  )}
+                </div>
+
+                <p className="mt-6 text-center text-xs leading-6 text-gray-500">
+                  By continuing, you agree to our Terms and Conditions,
+                  Privacy Policy and Refund Policy.
+                </p>
               </div>
             )}
           </motion.section>
