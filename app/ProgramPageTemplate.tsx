@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import AnimatedWords from "./AnimatedWords";
 import ApplyButton from "./ApplyButton";
+import { plans } from "./plans";
 import Reveal from "./Reveal";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
@@ -42,6 +43,8 @@ export default function ProgramPageTemplate({
   eyebrowClassName,
   planId,
 }: ProgramPageTemplateProps): ReactNode {
+  const plan = plans.find((item) => item.id === planId);
+
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
       <SiteHeader />
@@ -172,6 +175,18 @@ export default function ProgramPageTemplate({
                       <p className="mt-1 text-xl font-bold">{audience}</p>
                     </div>
                   </div>
+
+                  {plan && (
+                    <div className="mt-7 rounded-2xl border border-[#3b82f6]/20 bg-[#3b82f6]/5 p-6">
+                      <p className="text-sm font-semibold text-[#1d4ed8]">
+                        {plan.label} — Booking Amount
+                      </p>
+
+                      <p className="mt-2 font-serif text-4xl font-bold">
+                        {plan.amount != null ? `₹${plan.amount}` : "Custom"}
+                      </p>
+                    </div>
+                  )}
 
                   <ApplyButton
                     plan={planId}
