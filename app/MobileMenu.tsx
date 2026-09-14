@@ -76,7 +76,7 @@ export default function MobileMenu() {
 
             <div className="border-t border-black/10 pt-5">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
-                Our Workshops
+                Our Programs
               </p>
 
               <div className="mt-3 flex flex-col gap-4">

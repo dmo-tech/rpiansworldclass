@@ -21,6 +21,7 @@ type ProgramPageTemplateProps = {
   ctaLabel: string;
   photoSrc?: string;
   photoAlt?: string;
+  headingClassName?: string;
 };
 
 export default function ProgramPageTemplate({
@@ -35,6 +36,7 @@ export default function ProgramPageTemplate({
   ctaLabel,
   photoSrc,
   photoAlt,
+  headingClassName,
 }: ProgramPageTemplateProps): ReactNode {
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
@@ -52,7 +54,9 @@ export default function ProgramPageTemplate({
                     {eyebrow}
                   </p>
 
-                  <h1 className="mt-5 font-serif text-4xl md:text-5xl">
+                  <h1
+                    className={`mt-5 font-serif ${headingClassName ?? "text-4xl md:text-5xl"}`}
+                  >
                     <AnimatedWords
                       text={headingLine1}
                       stagger={0.1}

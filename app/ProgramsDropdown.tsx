@@ -46,7 +46,7 @@ export default function ProgramsDropdown() {
         onClick={() => setIsOpen((current) => !current)}
         className="flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-[#3b82f6] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1d4ed8]"
       >
-        Our Workshops
+        Our Programs
         <span
           className={`text-xs transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
         >
