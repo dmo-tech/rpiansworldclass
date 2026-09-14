@@ -12,8 +12,8 @@ export default function OneMonthProgramPage() {
   return (
     <ProgramPageTemplate
       eyebrow="1 Month Business Systems Implementation"
-      headingLine1="Set Up the Core Systems"
-      headingLine2="Your Business Runs On"
+      headingLine1="Business Automation and"
+      headingLine2="Profit Scaleup"
       description="A structured one-month program to implement inventory control, team accountability, cash-flow tracking and dashboards, with weekly reviews and hands-on support."
       duration="1 Month"
       mode="Live Online Sessions + Weekly Reviews"
