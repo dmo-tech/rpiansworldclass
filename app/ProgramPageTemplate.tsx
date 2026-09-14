@@ -22,6 +22,7 @@ type ProgramPageTemplateProps = {
   photoSrc?: string;
   photoAlt?: string;
   headingClassName?: string;
+  eyebrowClassName?: string;
 };
 
 export default function ProgramPageTemplate({
@@ -37,6 +38,7 @@ export default function ProgramPageTemplate({
   photoSrc,
   photoAlt,
   headingClassName,
+  eyebrowClassName,
 }: ProgramPageTemplateProps): ReactNode {
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
@@ -50,7 +52,12 @@ export default function ProgramPageTemplate({
             {photoSrc ? (
               <div className="grid items-center gap-12 lg:grid-cols-2">
                 <Reveal direction="up" className="text-center lg:text-left">
-                  <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
+                  <p
+                    className={
+                      eyebrowClassName ??
+                      "text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
+                    }
+                  >
                     {eyebrow}
                   </p>
 
