@@ -12,8 +12,8 @@ export default function TenMonthProgramPage() {
   return (
     <ProgramPageTemplate
       eyebrow="10 Month Business Transformation Mastery"
-      headingLine1="Build a Fully"
-      headingLine2="System-Driven Business"
+      headingLine1="10 Month Business Automation"
+      headingLine2="Mastery Program"
       description="A complete 10-month mentorship journey that takes your business from daily firefighting to full automation, strong leadership and consistent profit growth."
       duration="10 Months"
       mode="Live Online Mentorship + Monthly Reviews"
