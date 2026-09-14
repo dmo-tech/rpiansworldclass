@@ -53,7 +53,7 @@ export default function ResultsPage() {
                   className="justify-center"
                 />
 
-                <span className="mt-2 block">
+                <span className="mt-2 block text-[#1d4ed8]">
                   <AnimatedWords
                     text="Community Masterclass"
                     delay={0.25}

@@ -75,7 +75,7 @@ export default function ProgramPageTemplate({
                       className="justify-center lg:justify-start"
                     />
 
-                    <span className="mt-2 block">
+                    <span className="mt-2 block text-[#1d4ed8]">
                       <AnimatedWords
                         text={headingLine2}
                         delay={0.25}
@@ -118,7 +118,7 @@ export default function ProgramPageTemplate({
                     className="justify-center"
                   />
 
-                  <span className="mt-2 block">
+                  <span className="mt-2 block text-[#1d4ed8]">
                     <AnimatedWords
                       text={headingLine2}
                       delay={0.25}

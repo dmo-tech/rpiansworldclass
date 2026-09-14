@@ -76,7 +76,7 @@ export default function SystemsPage() {
                   className="justify-center"
                 />
 
-                <span className="mt-2 block">
+                <span className="mt-2 block text-[#1d4ed8]">
                   <AnimatedWords
                     text="Without Your Daily Involvement"
                     delay={0.25}

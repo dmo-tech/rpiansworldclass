@@ -112,7 +112,7 @@ export default function Home() {
                     text="Profit Mastery Strategy"
                     delay={0.35}
                     stagger={0.14}
-                    className="text-black justify-center lg:justify-start"
+                    className="text-[#1d4ed8] justify-center lg:justify-start"
                   />
                 </span>
               </h1>
@@ -190,7 +190,7 @@ export default function Home() {
               className="justify-center"
             />
 
-            <span className="mt-2 block">
+            <span className="mt-2 block text-[#1d4ed8]">
               <AnimatedWords
                 text="Transform Their Business"
                 delay={0.25}

@@ -39,7 +39,7 @@ export default function Testimonials() {
           <h2 className="mt-5 font-serif text-4xl md:text-6xl">
             What Business Owners Say
             <br />
-            About RPIANS
+            <span className="text-[#1d4ed8]">About RPIANS</span>
           </h2>
 
           <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600">
