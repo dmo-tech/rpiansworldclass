@@ -328,6 +328,164 @@ function RegisterForm() {
       ? `Complete ₹${selectedPlan.amount} booking payment`
       : "Discuss custom pricing with our team";
 
+  if (step === 2) {
+    return (
+      <main className="relative flex min-h-screen flex-col bg-white px-6 text-[#0f172a] md:px-16">
+        <div className="fixed left-0 top-0 z-20 h-1 w-full bg-black/10">
+          <motion.div
+            animate={{
+              width: `${((fieldIndex + 1) / businessFields.length) * 100}%`,
+            }}
+            transition={{
+              duration: 0.4,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="h-full bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6]"
+          />
+        </div>
+
+        <div className="flex flex-1 items-center justify-center py-20">
+          <div className="w-full max-w-2xl">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentField.id}
+                initial={{
+                  opacity: 0,
+                  y: 24,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                exit={{
+                  opacity: 0,
+                  y: -24,
+                }}
+                transition={{
+                  duration: 0.35,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <label
+                  htmlFor={currentField.id}
+                  className="flex items-start gap-3 text-2xl font-bold leading-snug md:text-3xl"
+                >
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded bg-[#3b82f6] text-sm font-bold text-white">
+                    {fieldIndex + 1}
+                  </span>
+
+                  <span>{currentField.label} *</span>
+                </label>
+
+                {currentField.kind === "input" ? (
+                  <form onSubmit={handleFieldSubmit} className="mt-8 pl-10">
+                    <input
+                      key={currentField.id}
+                      id={currentField.id}
+                      type={currentField.type}
+                      min={
+                        currentField.type === "number" ? "0" : undefined
+                      }
+                      value={formData[currentField.id]}
+                      onChange={(event) =>
+                        updateField(currentField.id, event.target.value)
+                      }
+                      placeholder="Type your answer here..."
+                      autoComplete={currentField.autoComplete}
+                      autoFocus
+                      className="w-full border-0 border-b-2 border-black/15 bg-transparent px-0 py-3 text-2xl outline-none transition placeholder:text-gray-300 focus:border-[#3b82f6]"
+                    />
+
+                    <button
+                      type="submit"
+                      className="mt-6 rounded-md bg-[#3b82f6] px-6 py-2.5 text-sm font-bold text-white transition hover:bg-[#1d4ed8]"
+                    >
+                      {isLastField ? "Continue to Payment Details" : "OK"}
+                    </button>
+                  </form>
+                ) : (
+                  <div className="mt-8 grid gap-3 pl-10 sm:grid-cols-2">
+                    {currentField.options.map((option) => {
+                      const isSelected =
+                        formData[currentField.id] === option;
+
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => advanceField(option)}
+                          className={`rounded-lg border-2 px-4 py-4 text-left font-semibold transition ${
+                            isSelected
+                              ? "border-[#3b82f6] bg-[#3b82f6]/5"
+                              : "border-black/10 bg-white hover:border-[#3b82f6]/40"
+                          }`}
+                        >
+                          {option}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
+                <AnimatePresence>
+                  {fieldError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      className="mt-5 ml-10 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+                    >
+                      {fieldError}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <AnimatePresence>
+                  {errorMessage && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      className="mt-5 ml-10 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+                    >
+                      {errorMessage}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {isSubmitting && (
+                  <p className="mt-5 ml-10 text-sm text-gray-500">
+                    Saving your application...
+                  </p>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div className="fixed bottom-6 right-6 z-20 flex flex-col gap-2">
+          <button
+            type="button"
+            onClick={goBackField}
+            aria-label="Previous question"
+            className="flex h-10 w-10 items-center justify-center rounded-md border border-black/10 bg-white text-lg text-gray-500 shadow-md transition hover:text-[#1d4ed8]"
+          >
+            ↑
+          </button>
+
+          <button
+            type="button"
+            onClick={() => advanceField()}
+            aria-label="Next question"
+            className="flex h-10 w-10 items-center justify-center rounded-md border border-black/10 bg-white text-lg text-gray-500 shadow-md transition hover:text-[#1d4ed8]"
+          >
+            ↓
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-white px-5 py-12 text-[#0f172a] md:px-8">
       {/* BACKGROUND EFFECT */}
@@ -479,8 +637,7 @@ function RegisterForm() {
             }}
             className="rounded-3xl border border-[#3b82f6]/30 bg-black/[0.04] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.55)] backdrop-blur md:p-10"
           >
-            {step === 1 ? (
-              <div>
+            <div>
                 <div className="border-b border-black/10 pb-7">
                   <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
                     Step 1 of 3
@@ -568,181 +725,6 @@ function RegisterForm() {
                   Continue
                 </motion.button>
               </div>
-            ) : (
-              <div>
-                <div className="border-b border-black/10 pb-7">
-                  <div className="flex items-center justify-between gap-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-                      Step 2 of 3
-                    </p>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setFieldIndex(0);
-                        setFieldError("");
-                        setStep(1);
-                      }}
-                      className="text-xs font-semibold text-gray-500 transition hover:text-[#1d4ed8]"
-                    >
-                      ← Change plan
-                    </button>
-                  </div>
-
-                  <h2 className="mt-3 text-2xl font-bold md:text-3xl">
-                    Enter Your Business Details
-                  </h2>
-
-                  <div className="mt-4 flex items-center justify-between text-sm">
-                    <span className="text-gray-500">
-                      Question {fieldIndex + 1} of {businessFields.length}
-                    </span>
-                  </div>
-
-                  <div className="mt-3 h-2 overflow-hidden rounded-full bg-black/10">
-                    <motion.div
-                      animate={{
-                        width: `${((fieldIndex + 1) / businessFields.length) * 100}%`,
-                      }}
-                      transition={{
-                        duration: 0.4,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                      className="h-full rounded-full bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6]"
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-8 min-h-[260px]">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={currentField.id}
-                      initial={{
-                        opacity: 0,
-                        x: 40,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                      }}
-                      exit={{
-                        opacity: 0,
-                        x: -40,
-                      }}
-                      transition={{
-                        duration: 0.35,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                    >
-                      <label
-                        htmlFor={currentField.id}
-                        className="block text-xl font-bold md:text-2xl"
-                      >
-                        {currentField.label} *
-                      </label>
-
-                      {currentField.kind === "input" ? (
-                        <form onSubmit={handleFieldSubmit} className="mt-6">
-                          <input
-                            key={currentField.id}
-                            id={currentField.id}
-                            type={currentField.type}
-                            min={
-                              currentField.type === "number" ? "0" : undefined
-                            }
-                            value={formData[currentField.id]}
-                            onChange={(event) =>
-                              updateField(currentField.id, event.target.value)
-                            }
-                            placeholder={currentField.placeholder}
-                            autoComplete={currentField.autoComplete}
-                            autoFocus
-                            className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 text-lg outline-none transition placeholder:text-gray-400 focus:border-[#3b82f6]"
-                          />
-
-                          <button
-                            type="submit"
-                            className="mt-5 rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-8 py-3 font-bold text-white transition hover:scale-105"
-                          >
-                            {isLastField ? "Continue to Payment Details" : "OK"}
-                          </button>
-                        </form>
-                      ) : (
-                        <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                          {currentField.options.map((option) => {
-                            const isSelected =
-                              formData[currentField.id] === option;
-
-                            return (
-                              <button
-                                key={option}
-                                type="button"
-                                onClick={() => advanceField(option)}
-                                className={`rounded-xl border-2 px-4 py-4 text-left font-semibold transition ${
-                                  isSelected
-                                    ? "border-[#3b82f6] bg-[#3b82f6]/5"
-                                    : "border-black/10 bg-white/70 hover:border-[#3b82f6]/40"
-                                }`}
-                              >
-                                {option}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                <AnimatePresence>
-                  {fieldError && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
-                    >
-                      {fieldError}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <AnimatePresence>
-                  {errorMessage && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
-                    >
-                      {errorMessage}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <div className="mt-6 flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={goBackField}
-                    disabled={isSubmitting}
-                    className="text-sm font-semibold text-gray-500 transition hover:text-[#1d4ed8] disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    ← Back
-                  </button>
-
-                  {isSubmitting && (
-                    <p className="text-sm text-gray-500">
-                      Saving your application...
-                    </p>
-                  )}
-                </div>
-
-                <p className="mt-6 text-center text-xs leading-6 text-gray-500">
-                  By continuing, you agree to our Terms and Conditions,
-                  Privacy Policy and Refund Policy.
-                </p>
-              </div>
-            )}
           </motion.section>
         </div>
       </div>
