@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { FormEvent, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import { plans } from "../plans";
 
@@ -455,6 +456,8 @@ function RegisterForm() {
             ↓
           </button>
         </div>
+
+        <SiteFooter />
       </main>
     );
   }
