@@ -83,7 +83,7 @@ export default function SiteFooter() {
                   rel="noopener noreferrer"
                   aria-label={social.label}
                   style={{ color: social.color }}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-black/10 transition hover:scale-110"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#3b82f6]/60 transition hover:scale-110"
                 >
                   {social.icon}
                 </a>
