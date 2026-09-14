@@ -31,6 +31,7 @@ export default function OneDayProgramPage() {
       ctaLabel="Register for the 1 Day Program"
       photoSrc="/rajesh-kumar-kare-1day.png"
       photoAlt="Rajesh Kumar Kare"
+      planId="day-1"
     />
   );
 }

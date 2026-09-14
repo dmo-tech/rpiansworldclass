@@ -5,6 +5,37 @@ import { FormEvent, Suspense, useState } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
+type Plan = {
+  id: string;
+  label: string;
+  description: string;
+  amount: number | null;
+};
+
+const plans: Plan[] = [
+  {
+    id: "day-1",
+    label: "Day 1",
+    description:
+      "A focused one-day session to fix your biggest business bottleneck.",
+    amount: 999,
+  },
+  {
+    id: "1-month",
+    label: "1 Month",
+    description:
+      "Implement core business systems in one month with weekly reviews.",
+    amount: 9999,
+  },
+  {
+    id: "10-month",
+    label: "10 Month",
+    description:
+      "A complete business transformation mentorship journey.",
+    amount: null,
+  },
+];
+
 type RegistrationData = {
   fullName: string;
   phone: string;
@@ -37,9 +68,18 @@ function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const parsedAmount = Number(searchParams.get("amount"));
-  const bookingAmount =
-    Number.isFinite(parsedAmount) && parsedAmount > 0 ? parsedAmount : 999;
+  const planFromQuery = plans.find(
+    (plan) => plan.id === searchParams.get("plan"),
+  );
+
+  const [step, setStep] = useState<1 | 2>(1);
+  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(
+    planFromQuery?.id ?? null,
+  );
+  const [planError, setPlanError] = useState("");
+
+  const selectedPlan =
+    plans.find((plan) => plan.id === selectedPlanId) ?? null;
 
   const [formData, setFormData] =
     useState<RegistrationData>(initialData);
@@ -57,6 +97,16 @@ function RegisterForm() {
     }));
 
     setErrorMessage("");
+  };
+
+  const handleContinueFromPlan = () => {
+    if (!selectedPlanId) {
+      setPlanError("Please select a plan to continue.");
+      return;
+    }
+
+    setPlanError("");
+    setStep(2);
   };
 
   const validateForm = () => {
@@ -110,7 +160,8 @@ function RegisterForm() {
 
     const applicationData = {
       ...formData,
-      bookingAmount,
+      planSelected: selectedPlan?.label ?? "",
+      bookingAmount: selectedPlan?.amount ?? null,
       submittedAt: new Date().toISOString(),
       source: "RPIANS Website",
     };
@@ -162,6 +213,11 @@ function RegisterForm() {
       setIsSubmitting(false);
     }
   };
+
+  const paymentStepLabel =
+    selectedPlan?.amount != null
+      ? `Complete ₹${selectedPlan.amount} booking payment`
+      : "Discuss custom pricing with our team";
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-white px-5 py-12 text-[#0f172a] md:px-8">
@@ -238,8 +294,9 @@ function RegisterForm() {
 
             <div className="mt-10 space-y-5">
               {[
+                "Select your plan",
                 "Share your business details",
-                `Complete ₹${bookingAmount} booking payment`,
+                paymentStepLabel,
                 "Application reviewed by RPIANS team",
                 "Receive confirmation on WhatsApp",
               ].map((item, index) => (
@@ -272,11 +329,15 @@ function RegisterForm() {
 
             <div className="mt-10 rounded-2xl border border-[#3b82f6]/20 bg-[#3b82f6]/5 p-6">
               <p className="text-sm font-semibold text-[#1d4ed8]">
-                Booking Amount
+                {selectedPlan ? `${selectedPlan.label} — Booking Amount` : "Booking Amount"}
               </p>
 
               <p className="mt-2 font-serif text-4xl font-bold">
-                ₹{bookingAmount}
+                {selectedPlan
+                  ? selectedPlan.amount != null
+                    ? `₹${selectedPlan.amount}`
+                    : "Custom"
+                  : "Select a plan"}
               </p>
 
               <p className="mt-3 text-sm leading-6 text-gray-500">
@@ -309,299 +370,402 @@ function RegisterForm() {
             }}
             className="rounded-3xl border border-[#3b82f6]/30 bg-black/[0.04] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.55)] backdrop-blur md:p-10"
           >
-            <div className="border-b border-black/10 pb-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-                Step 1 of 2
-              </p>
+            {step === 1 ? (
+              <div>
+                <div className="border-b border-black/10 pb-7">
+                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
+                    Step 1 of 3
+                  </p>
 
-              <h2 className="mt-3 text-2xl font-bold md:text-3xl">
-                Enter Your Business Details
-              </h2>
+                  <h2 className="mt-3 text-2xl font-bold md:text-3xl">
+                    Select Your Plan
+                  </h2>
 
-              <p className="mt-3 text-gray-500">
-                Fields marked with * are required.
-              </p>
-            </div>
-
-            <form
-              onSubmit={handleSubmit}
-              className="mt-8"
-            >
-              <div className="grid gap-5 md:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="fullName"
-                    className="mb-2 block text-sm text-gray-600"
-                  >
-                    Full Name *
-                  </label>
-
-                  <input
-                    id="fullName"
-                    type="text"
-                    value={formData.fullName}
-                    onChange={(event) =>
-                      updateField(
-                        "fullName",
-                        event.target.value,
-                      )
-                    }
-                    placeholder="Enter your full name"
-                    autoComplete="name"
-                    className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                  />
+                  <p className="mt-3 text-gray-500">
+                    Choose the program you want to apply for.
+                  </p>
                 </div>
 
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="mb-2 block text-sm text-gray-600"
-                  >
-                    WhatsApp Number *
-                  </label>
+                <div className="mt-8 space-y-4">
+                  {plans.map((plan) => {
+                    const isSelected = plan.id === selectedPlanId;
 
-                  <input
-                    id="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(event) =>
-                      updateField(
-                        "phone",
-                        event.target.value,
-                      )
-                    }
-                    placeholder="+91 98765 43210"
-                    autoComplete="tel"
-                    className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                  />
+                    return (
+                      <button
+                        key={plan.id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedPlanId(plan.id);
+                          setPlanError("");
+                        }}
+                        className={`w-full rounded-xl border-2 p-5 text-left transition ${
+                          isSelected
+                            ? "border-[#3b82f6] bg-[#3b82f6]/5"
+                            : "border-black/10 bg-white/70 hover:border-[#3b82f6]/40"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
+                                isSelected
+                                  ? "border-[#3b82f6]"
+                                  : "border-black/20"
+                              }`}
+                            >
+                              {isSelected && (
+                                <span className="h-2.5 w-2.5 rounded-full bg-[#3b82f6]" />
+                              )}
+                            </span>
+
+                            <div>
+                              <p className="font-bold">{plan.label}</p>
+
+                              <p className="mt-1 text-sm text-gray-600">
+                                {plan.description}
+                              </p>
+                            </div>
+                          </div>
+
+                          <p className="shrink-0 font-serif text-xl font-bold text-[#1d4ed8]">
+                            {plan.amount != null ? `₹${plan.amount}` : "Custom"}
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
 
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block text-sm text-gray-600"
-                  >
-                    Email Address *
-                  </label>
+                <AnimatePresence>
+                  {planError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+                    >
+                      {planError}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-                  <input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(event) =>
-                      updateField(
-                        "email",
-                        event.target.value,
-                      )
-                    }
-                    placeholder="name@company.com"
-                    autoComplete="email"
-                    className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="companyName"
-                    className="mb-2 block text-sm text-gray-600"
-                  >
-                    Company Name *
-                  </label>
-
-                  <input
-                    id="companyName"
-                    type="text"
-                    value={formData.companyName}
-                    onChange={(event) =>
-                      updateField(
-                        "companyName",
-                        event.target.value,
-                      )
-                    }
-                    placeholder="Enter company name"
-                    autoComplete="organization"
-                    className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="businessCategory"
-                    className="mb-2 block text-sm text-gray-600"
-                  >
-                    Business Category *
-                  </label>
-
-                  <select
-                    id="businessCategory"
-                    value={formData.businessCategory}
-                    onChange={(event) =>
-                      updateField(
-                        "businessCategory",
-                        event.target.value,
-                      )
-                    }
-                    className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 outline-none transition focus:border-[#3b82f6]"
-                  >
-                    <option value="">
-                      Select category
-                    </option>
-
-                    <option value="Retail">
-                      Retail
-                    </option>
-
-                    <option value="Wholesale">
-                      Wholesale
-                    </option>
-
-                    <option value="Distribution">
-                      Distribution
-                    </option>
-
-                    <option value="Manufacturing">
-                      Manufacturing
-                    </option>
-
-                    <option value="Service Business">
-                      Service Business
-                    </option>
-
-                    <option value="Construction / Project">
-                      Construction / Project
-                    </option>
-
-                    <option value="Other">
-                      Other
-                    </option>
-                  </select>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="annualTurnover"
-                    className="mb-2 block text-sm text-gray-600"
-                  >
-                    Annual Turnover *
-                  </label>
-
-                  <select
-                    id="annualTurnover"
-                    value={formData.annualTurnover}
-                    onChange={(event) =>
-                      updateField(
-                        "annualTurnover",
-                        event.target.value,
-                      )
-                    }
-                    className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 outline-none transition focus:border-[#3b82f6]"
-                  >
-                    <option value="">
-                      Select turnover
-                    </option>
-
-                    <option value="Below ₹1 Crore">
-                      Below ₹1 Crore
-                    </option>
-
-                    <option value="₹1–5 Crore">
-                      ₹1–5 Crore
-                    </option>
-
-                    <option value="₹5–10 Crore">
-                      ₹5–10 Crore
-                    </option>
-
-                    <option value="₹10–25 Crore">
-                      ₹10–25 Crore
-                    </option>
-
-                    <option value="₹25–50 Crore">
-                      ₹25–50 Crore
-                    </option>
-
-                    <option value="₹50 Crore+">
-                      ₹50 Crore+
-                    </option>
-                  </select>
-                </div>
-
-                <div className="md:col-span-2">
-                  <label
-                    htmlFor="employeeCount"
-                    className="mb-2 block text-sm text-gray-600"
-                  >
-                    Number of Employees *
-                  </label>
-
-                  <input
-                    id="employeeCount"
-                    type="number"
-                    min="0"
-                    value={formData.employeeCount}
-                    onChange={(event) =>
-                      updateField(
-                        "employeeCount",
-                        event.target.value,
-                      )
-                    }
-                    placeholder="Enter number of employees"
-                    className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                  />
-                </div>
+                <motion.button
+                  type="button"
+                  onClick={handleContinueFromPlan}
+                  whileHover={{ scale: 1.015 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
+                >
+                  Continue
+                </motion.button>
               </div>
+            ) : (
+              <div>
+                <div className="border-b border-black/10 pb-7">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
+                      Step 2 of 3
+                    </p>
 
-              <AnimatePresence>
-                {errorMessage && (
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: -8,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: -8,
-                    }}
-                    className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+                    <button
+                      type="button"
+                      onClick={() => setStep(1)}
+                      className="text-xs font-semibold text-gray-500 transition hover:text-[#1d4ed8]"
+                    >
+                      ← Change plan
+                    </button>
+                  </div>
+
+                  <h2 className="mt-3 text-2xl font-bold md:text-3xl">
+                    Enter Your Business Details
+                  </h2>
+
+                  <p className="mt-3 text-gray-500">
+                    Fields marked with * are required.
+                  </p>
+                </div>
+
+                <form
+                  onSubmit={handleSubmit}
+                  className="mt-8"
+                >
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <div>
+                      <label
+                        htmlFor="fullName"
+                        className="mb-2 block text-sm text-gray-600"
+                      >
+                        Full Name *
+                      </label>
+
+                      <input
+                        id="fullName"
+                        type="text"
+                        value={formData.fullName}
+                        onChange={(event) =>
+                          updateField(
+                            "fullName",
+                            event.target.value,
+                          )
+                        }
+                        placeholder="Enter your full name"
+                        autoComplete="name"
+                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="phone"
+                        className="mb-2 block text-sm text-gray-600"
+                      >
+                        WhatsApp Number *
+                      </label>
+
+                      <input
+                        id="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(event) =>
+                          updateField(
+                            "phone",
+                            event.target.value,
+                          )
+                        }
+                        placeholder="+91 98765 43210"
+                        autoComplete="tel"
+                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="mb-2 block text-sm text-gray-600"
+                      >
+                        Email Address *
+                      </label>
+
+                      <input
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(event) =>
+                          updateField(
+                            "email",
+                            event.target.value,
+                          )
+                        }
+                        placeholder="name@company.com"
+                        autoComplete="email"
+                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="companyName"
+                        className="mb-2 block text-sm text-gray-600"
+                      >
+                        Company Name *
+                      </label>
+
+                      <input
+                        id="companyName"
+                        type="text"
+                        value={formData.companyName}
+                        onChange={(event) =>
+                          updateField(
+                            "companyName",
+                            event.target.value,
+                          )
+                        }
+                        placeholder="Enter company name"
+                        autoComplete="organization"
+                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="businessCategory"
+                        className="mb-2 block text-sm text-gray-600"
+                      >
+                        Business Category *
+                      </label>
+
+                      <select
+                        id="businessCategory"
+                        value={formData.businessCategory}
+                        onChange={(event) =>
+                          updateField(
+                            "businessCategory",
+                            event.target.value,
+                          )
+                        }
+                        className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 outline-none transition focus:border-[#3b82f6]"
+                      >
+                        <option value="">
+                          Select category
+                        </option>
+
+                        <option value="Retail">
+                          Retail
+                        </option>
+
+                        <option value="Wholesale">
+                          Wholesale
+                        </option>
+
+                        <option value="Distribution">
+                          Distribution
+                        </option>
+
+                        <option value="Manufacturing">
+                          Manufacturing
+                        </option>
+
+                        <option value="Service Business">
+                          Service Business
+                        </option>
+
+                        <option value="Construction / Project">
+                          Construction / Project
+                        </option>
+
+                        <option value="Other">
+                          Other
+                        </option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="annualTurnover"
+                        className="mb-2 block text-sm text-gray-600"
+                      >
+                        Annual Turnover *
+                      </label>
+
+                      <select
+                        id="annualTurnover"
+                        value={formData.annualTurnover}
+                        onChange={(event) =>
+                          updateField(
+                            "annualTurnover",
+                            event.target.value,
+                          )
+                        }
+                        className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 outline-none transition focus:border-[#3b82f6]"
+                      >
+                        <option value="">
+                          Select turnover
+                        </option>
+
+                        <option value="Below ₹1 Crore">
+                          Below ₹1 Crore
+                        </option>
+
+                        <option value="₹1–5 Crore">
+                          ₹1–5 Crore
+                        </option>
+
+                        <option value="₹5–10 Crore">
+                          ₹5–10 Crore
+                        </option>
+
+                        <option value="₹10–25 Crore">
+                          ₹10–25 Crore
+                        </option>
+
+                        <option value="₹25–50 Crore">
+                          ₹25–50 Crore
+                        </option>
+
+                        <option value="₹50 Crore+">
+                          ₹50 Crore+
+                        </option>
+                      </select>
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label
+                        htmlFor="employeeCount"
+                        className="mb-2 block text-sm text-gray-600"
+                      >
+                        Number of Employees *
+                      </label>
+
+                      <input
+                        id="employeeCount"
+                        type="number"
+                        min="0"
+                        value={formData.employeeCount}
+                        onChange={(event) =>
+                          updateField(
+                            "employeeCount",
+                            event.target.value,
+                          )
+                        }
+                        placeholder="Enter number of employees"
+                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
+                      />
+                    </div>
+                  </div>
+
+                  <AnimatePresence>
+                    {errorMessage && (
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: -8,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                        }}
+                        exit={{
+                          opacity: 0,
+                          y: -8,
+                        }}
+                        className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+                      >
+                        {errorMessage}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  <motion.button
+                    type="submit"
+                    disabled={isSubmitting}
+                    whileHover={
+                      isSubmitting
+                        ? undefined
+                        : {
+                            scale: 1.015,
+                          }
+                    }
+                    whileTap={
+                      isSubmitting
+                        ? undefined
+                        : {
+                            scale: 0.98,
+                          }
+                    }
+                    className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)] disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    {errorMessage}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    {isSubmitting
+                      ? "Saving Your Application..."
+                      : "Continue to Payment Details"}
+                  </motion.button>
 
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={
-                  isSubmitting
-                    ? undefined
-                    : {
-                        scale: 1.015,
-                      }
-                }
-                whileTap={
-                  isSubmitting
-                    ? undefined
-                    : {
-                        scale: 0.98,
-                      }
-                }
-                className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isSubmitting
-                  ? "Saving Your Application..."
-                  : "Continue to Payment Details"}
-              </motion.button>
-
-              <p className="mt-4 text-center text-xs leading-6 text-gray-500">
-                By continuing, you agree to our Terms and Conditions,
-                Privacy Policy and Refund Policy.
-              </p>
-            </form>
+                  <p className="mt-4 text-center text-xs leading-6 text-gray-500">
+                    By continuing, you agree to our Terms and Conditions,
+                    Privacy Policy and Refund Policy.
+                  </p>
+                </form>
+              </div>
+            )}
           </motion.section>
         </div>
       </div>

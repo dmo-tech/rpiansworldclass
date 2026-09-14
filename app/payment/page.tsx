@@ -11,7 +11,8 @@ type ApplicationData = {
   companyName: string;
   businessCategory: string;
   annualTurnover: string;
-  bookingAmount: number;
+  planSelected?: string;
+  bookingAmount: number | null;
 };
 
 const DEFAULT_PAYMENT_AMOUNT = 999;
@@ -53,13 +54,18 @@ export default function PaymentPage() {
     setIsLoading(false);
   }, []);
 
-  const paymentAmount =
-    applicationData?.bookingAmount ?? DEFAULT_PAYMENT_AMOUNT;
+  const paymentAmount = applicationData
+    ? applicationData.bookingAmount
+    : DEFAULT_PAYMENT_AMOUNT;
 
   const paymentLink =
-    PAYMENT_LINKS[paymentAmount] ?? PAYMENT_LINKS[DEFAULT_PAYMENT_AMOUNT];
+    paymentAmount != null
+      ? (PAYMENT_LINKS[paymentAmount] ?? PAYMENT_LINKS[DEFAULT_PAYMENT_AMOUNT])
+      : null;
 
   const handlePayment = () => {
+    if (!paymentLink) return;
+
     if (paymentLink.includes("PASTE_YOUR")) {
       alert(
         "Please add your real Razorpay or Instamojo payment link inside app/payment/page.tsx.",
@@ -80,8 +86,13 @@ Company: ${applicationData?.companyName ?? ""}
 Phone: ${applicationData?.phone ?? ""}
 Business: ${applicationData?.businessCategory ?? ""}
 Annual Turnover: ${applicationData?.annualTurnover ?? ""}
+Plan Selected: ${applicationData?.planSelected ?? ""}
 
-I am now on the ₹${paymentAmount} payment page.`,
+${
+  paymentAmount != null
+    ? `I am now on the ₹${paymentAmount} payment page.`
+    : "I have selected a custom-pricing plan and would like to discuss the details."
+}`,
   );
 
   if (isLoading) {
@@ -156,9 +167,9 @@ I am now on the ₹${paymentAmount} payment page.`,
           </h1>
 
           <p className="mt-7 max-w-xl text-lg leading-8 text-gray-600">
-            Your application has been received. Complete the ₹{paymentAmount}{" "}
-            booking payment to confirm your Business Diagnostic session with
-            the RPIANS team.
+            {paymentAmount != null
+              ? `Your application has been received. Complete the ₹${paymentAmount} booking payment to confirm your Business Diagnostic session with the RPIANS team.`
+              : "Your application has been received. Our team will contact you to discuss pricing and confirm your Business Diagnostic session."}
           </p>
 
           <div className="mt-10 space-y-5">
@@ -233,7 +244,11 @@ I am now on the ₹${paymentAmount} payment page.`,
           className="relative z-10 rounded-2xl border border-black/10 bg-white p-7 shadow-[0_30px_100px_rgba(0,0,0,0.2)] md:p-9"
         >
           <div className="border-b border-black/10 pb-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1d4ed8]">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
+              Step 3 of 3
+            </p>
+
+            <p className="mt-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#1d4ed8]">
               Payment Details
             </p>
 
@@ -294,36 +309,55 @@ I am now on the ₹${paymentAmount} payment page.`,
           <div className="mt-8 border-y border-black/10 py-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Booking Amount</p>
+                <p className="text-sm text-gray-500">
+                  {applicationData?.planSelected
+                    ? `${applicationData.planSelected} — Booking Amount`
+                    : "Booking Amount"}
+                </p>
 
                 <p className="mt-1 text-xs text-gray-600">
-                  Inclusive of applicable taxes
+                  {paymentAmount != null
+                    ? "Inclusive of applicable taxes"
+                    : "Our team will share pricing on a call"}
                 </p>
               </div>
 
               <p className="font-serif text-4xl font-bold text-[#1d4ed8]">
-                ₹{paymentAmount}
+                {paymentAmount != null ? `₹${paymentAmount}` : "Custom"}
               </p>
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={handlePayment}
-            disabled={!applicationData}
-            className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            Pay ₹{paymentAmount}
-          </button>
+          {paymentAmount != null ? (
+            <>
+              <button
+                type="button"
+                onClick={handlePayment}
+                disabled={!applicationData}
+                className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Pay ₹{paymentAmount}
+              </button>
 
-          <a
-            href={`https://wa.me/917389638105?text=${whatsappMessage}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 block w-full rounded-lg border border-[#1d4ed8]/40 px-7 py-4 text-center font-semibold text-[#1e3a8a] transition hover:bg-[#1d4ed8]/5"
-          >
-            Contact Team on WhatsApp
-          </a>
+              <a
+                href={`https://wa.me/917389638105?text=${whatsappMessage}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 block w-full rounded-lg border border-[#1d4ed8]/40 px-7 py-4 text-center font-semibold text-[#1e3a8a] transition hover:bg-[#1d4ed8]/5"
+              >
+                Contact Team on WhatsApp
+              </a>
+            </>
+          ) : (
+            <a
+              href={`https://wa.me/917389638105?text=${whatsappMessage}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-7 block w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 text-center font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02]"
+            >
+              Talk to Our Team on WhatsApp
+            </a>
+          )}
 
           <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-600">
             <span>Secure Payment</span>

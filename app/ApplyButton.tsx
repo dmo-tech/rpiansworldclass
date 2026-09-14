@@ -6,13 +6,13 @@ import type { ReactNode } from "react";
 type ApplyButtonProps = {
   children: ReactNode;
   className?: string;
-  amount?: number;
+  plan?: string;
 };
 
 export default function ApplyButton({
   children,
   className = "",
-  amount,
+  plan,
 }: ApplyButtonProps) {
   const router = useRouter();
 
@@ -20,7 +20,7 @@ export default function ApplyButton({
     <button
       type="button"
       onClick={() =>
-        router.push(amount ? `/register?amount=${amount}` : "/register")
+        router.push(plan ? `/register?plan=${plan}` : "/register")
       }
       className={className}
     >

@@ -29,7 +29,7 @@ export default function OneMonthProgramPage() {
       ctaLabel="Register for the 1 Month Program"
       photoSrc="/rajesh-kumar-kare-1month.png"
       photoAlt="Rajesh Kumar Kare"
-      amount={9999}
+      planId="1-month"
     />
   );
 }

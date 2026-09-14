@@ -29,6 +29,7 @@ export default function TenMonthProgramPage() {
       ctaLabel="Register for the 10 Month Program"
       photoSrc="/rajesh-kumar-kare-10month.png"
       photoAlt="Rajesh Kumar Kare"
+      planId="10-month"
     />
   );
 }

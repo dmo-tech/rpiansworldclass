@@ -23,7 +23,7 @@ type ProgramPageTemplateProps = {
   photoAlt?: string;
   headingClassName?: string;
   eyebrowClassName?: string;
-  amount?: number;
+  planId?: string;
 };
 
 export default function ProgramPageTemplate({
@@ -40,7 +40,7 @@ export default function ProgramPageTemplate({
   photoAlt,
   headingClassName,
   eyebrowClassName,
-  amount,
+  planId,
 }: ProgramPageTemplateProps): ReactNode {
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
@@ -174,7 +174,7 @@ export default function ProgramPageTemplate({
                   </div>
 
                   <ApplyButton
-                    amount={amount}
+                    plan={planId}
                     className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
                   >
                     {ctaLabel}
