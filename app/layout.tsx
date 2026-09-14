@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
+import { Jost } from "next/font/google";
+
 import "./globals.css";
+
+const jost = Jost({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-jost",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rpiansworld.com"),
@@ -88,7 +96,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={jost.variable}>
       <body>{children}</body>
     </html>
   );
