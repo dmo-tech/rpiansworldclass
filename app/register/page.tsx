@@ -580,12 +580,6 @@ function RegisterForm() {
                     : "Custom"
                   : "Select a plan"}
               </p>
-
-              <p className="mt-3 text-sm leading-6 text-gray-500">
-                Your form response will be saved in the RPIANS Google
-                Sheet. After submission, you will be redirected to the
-                payment details page.
-              </p>
             </div>
           </motion.section>
 
