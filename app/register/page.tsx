@@ -13,7 +13,6 @@ type RegistrationData = {
   businessCategory: string;
   annualTurnover: string;
   employeeCount: string;
-  biggestChallenge: string;
 };
 
 const initialData: RegistrationData = {
@@ -24,7 +23,6 @@ const initialData: RegistrationData = {
   businessCategory: "",
   annualTurnover: "",
   employeeCount: "",
-  biggestChallenge: "",
 };
 
 export default function RegisterPage() {
@@ -90,10 +88,6 @@ function RegisterForm() {
 
     if (!formData.employeeCount.trim()) {
       return "Please enter the number of employees.";
-    }
-
-    if (!formData.biggestChallenge.trim()) {
-      return "Please enter your biggest business challenge.";
     }
 
     return "";
@@ -553,29 +547,6 @@ function RegisterForm() {
                     }
                     placeholder="Enter number of employees"
                     className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
-                  />
-                </div>
-
-                <div className="md:col-span-2">
-                  <label
-                    htmlFor="biggestChallenge"
-                    className="mb-2 block text-sm text-gray-600"
-                  >
-                    Biggest Business Challenge *
-                  </label>
-
-                  <textarea
-                    id="biggestChallenge"
-                    value={formData.biggestChallenge}
-                    onChange={(event) =>
-                      updateField(
-                        "biggestChallenge",
-                        event.target.value,
-                      )
-                    }
-                    rows={4}
-                    placeholder="Team accountability, inventory, cash flow, owner dependency..."
-                    className="w-full resize-none rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
                   />
                 </div>
               </div>

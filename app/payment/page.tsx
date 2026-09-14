@@ -11,7 +11,6 @@ type ApplicationData = {
   companyName: string;
   businessCategory: string;
   annualTurnover: string;
-  biggestChallenge: string;
   bookingAmount: number;
 };
 
