@@ -34,7 +34,7 @@ export default function SiteHeader() {
         <div className="flex shrink-0 items-center gap-3">
           <Link
             href="/login"
-            className="hidden whitespace-nowrap rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-6 py-3 text-sm font-bold text-white transition hover:scale-105 sm:block"
+            className="hidden whitespace-nowrap rounded-lg bg-[#3b82f6] px-6 py-3 text-sm font-bold text-white transition hover:scale-105 hover:bg-[#1d4ed8] sm:block"
           >
             Login
           </Link>
