@@ -27,6 +27,8 @@ export default function TenMonthProgramPage() {
         "Owner Freedom Roadmap",
       ]}
       ctaLabel="Register for the 10 Month Program"
+      photoSrc="/rajesh-kumar-kare-10month.png"
+      photoAlt="Rajesh Kumar Kare"
     />
   );
 }
