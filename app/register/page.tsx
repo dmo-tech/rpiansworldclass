@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { FormEvent, Suspense, useState } from "react";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import SiteHeader from "../SiteHeader";
@@ -491,43 +490,14 @@ function RegisterForm() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-white px-5 py-12 text-[#0f172a] md:px-8">
+    <main className="relative min-h-screen overflow-hidden bg-white px-5 pb-12 pt-24 text-[#0f172a] md:px-8">
+      <SiteHeader />
+
       {/* BACKGROUND EFFECT */}
 
       <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#3b82f6]/10 blur-[170px]" />
 
       <div className="relative mx-auto max-w-6xl">
-        {/* HEADER */}
-
-        <header className="flex items-center justify-between border-b border-black/10 pb-6">
-          <a href="/" className="flex items-center gap-3">
-            <Image
-              src="/rpians-logo.png"
-              alt="RPIANS logo"
-              width={44}
-              height={33}
-              className="h-9 w-auto"
-            />
-
-            <div>
-              <p className="text-xl font-bold tracking-[0.28em] text-[#3b82f6]">
-                RPIANS
-              </p>
-
-              <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-gray-500">
-                World Class Business Coaching
-              </p>
-            </div>
-          </a>
-
-          <a
-            href="/"
-            className="rounded-lg border border-[#3b82f6]/35 px-5 py-3 text-sm font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10"
-          >
-            Back to Website
-          </a>
-        </header>
-
         <div className="grid items-start gap-12 py-14 lg:grid-cols-[0.85fr_1.15fr] lg:py-20">
           {/* LEFT CONTENT */}
 
