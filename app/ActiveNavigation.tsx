@@ -20,7 +20,7 @@ const navigationItems = [
   },
   {
     href: "/results",
-    label: "Results",
+    label: "Who Is This For",
   },
   {
     href: "/about",
