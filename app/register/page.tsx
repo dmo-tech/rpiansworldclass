@@ -5,6 +5,8 @@ import { FormEvent, Suspense, useState } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
+import SiteHeader from "../SiteHeader";
+
 type Plan = {
   id: string;
   label: string;
@@ -331,7 +333,9 @@ function RegisterForm() {
   if (step === 2) {
     return (
       <main className="relative flex min-h-screen flex-col bg-white px-6 text-[#0f172a] md:px-16">
-        <div className="fixed left-0 top-0 z-20 h-1 w-full bg-black/10">
+        <SiteHeader />
+
+        <div className="fixed left-0 top-20 z-20 h-1 w-full bg-black/10">
           <motion.div
             animate={{
               width: `${((fieldIndex + 1) / businessFields.length) * 100}%`,
@@ -344,7 +348,7 @@ function RegisterForm() {
           />
         </div>
 
-        <div className="flex flex-1 items-center justify-center py-20">
+        <div className="flex flex-1 items-center justify-center pb-16 pt-24">
           <div className="w-full max-w-2xl">
             <AnimatePresence mode="wait">
               <motion.div
