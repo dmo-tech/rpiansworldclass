@@ -100,6 +100,14 @@ export default function MobileMenu() {
             >
               Apply Now
             </Link>
+
+            <Link
+              href="/login"
+              onClick={closeMenu}
+              className="rounded-lg border border-[#3b82f6]/35 px-5 py-3 text-center font-semibold text-[#1d4ed8]"
+            >
+              Login
+            </Link>
           </nav>
         </div>
       )}

@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import ActiveNavigation from "./ActiveNavigation";
-import ApplyButton from "./ApplyButton";
 import MobileMenu from "./MobileMenu";
 
 export default function SiteHeader() {
@@ -33,9 +32,12 @@ export default function SiteHeader() {
         <ActiveNavigation />
 
         <div className="flex shrink-0 items-center gap-3">
-          <ApplyButton className="hidden whitespace-nowrap rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-6 py-3 text-sm font-bold text-white transition hover:scale-105 sm:block">
-            Apply Now
-          </ApplyButton>
+          <Link
+            href="/login"
+            className="hidden whitespace-nowrap rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-6 py-3 text-sm font-bold text-white transition hover:scale-105 sm:block"
+          >
+            Login
+          </Link>
 
           <MobileMenu />
         </div>
