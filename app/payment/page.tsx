@@ -18,28 +18,84 @@ type ApplicationData = {
 
 const DEFAULT_PAYMENT_AMOUNT = 999;
 
-/*
-  IMPORTANT:
-  नीचे हर booking amount के लिए अपना वास्तविक Razorpay या Instamojo
-  payment-page link लगाइए। Razorpay Payment Links एक fixed amount के
-  लिए बनते हैं, इसलिए हर amount (₹999, ₹9999, आदि) का अलग link चाहिए।
-
-  Example:
-  999: "https://rzp.io/l/your-999-payment-link",
-  9999: "https://rzp.io/l/your-9999-payment-link",
-*/
-
-const PAYMENT_LINKS: Record<number, string> = {
-  999: "https://rzp.io/l/your-payment-link",
-  9999: "https://rzp.io/l/your-payment-link",
-  5000000: "https://rzp.io/l/your-payment-link",
+type RazorpayPaymentResponse = {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
 };
+
+type RazorpayOptions = {
+  key: string;
+  amount: number;
+  currency: string;
+  order_id: string;
+  name: string;
+  description?: string;
+  prefill?: {
+    name?: string;
+    email?: string;
+    contact?: string;
+  };
+  theme?: {
+    color?: string;
+  };
+  handler: (response: RazorpayPaymentResponse) => void;
+  modal?: {
+    ondismiss?: () => void;
+  };
+};
+
+type RazorpayInstance = {
+  open: () => void;
+  on: (event: "payment.failed", handler: (response: unknown) => void) => void;
+};
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: RazorpayOptions) => RazorpayInstance;
+  }
+}
+
+const RAZORPAY_CHECKOUT_SCRIPT_ID = "razorpay-checkout-js";
+const RAZORPAY_CHECKOUT_SCRIPT_SRC = "https://checkout.razorpay.com/v1/checkout.js";
+
+function loadRazorpayScript(): Promise<boolean> {
+  return new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
+
+    const existingScript = document.getElementById(
+      RAZORPAY_CHECKOUT_SCRIPT_ID,
+    );
+
+    if (existingScript) {
+      existingScript.addEventListener("load", () => resolve(true));
+      existingScript.addEventListener("error", () => resolve(false));
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.id = RAZORPAY_CHECKOUT_SCRIPT_ID;
+    script.src = RAZORPAY_CHECKOUT_SCRIPT_SRC;
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+}
 
 export default function PaymentPage() {
   const [applicationData, setApplicationData] =
     useState<ApplicationData | null>(null);
 
   const [isLoading, setIsLoading] = useState(true);
+
+  const [paymentStatus, setPaymentStatus] = useState<
+    "idle" | "processing" | "success" | "error"
+  >("idle");
+
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   useEffect(() => {
     const savedData = sessionStorage.getItem("rpiansApplicationData");
@@ -67,22 +123,114 @@ export default function PaymentPage() {
         }`
       : null;
 
-  const paymentLink =
-    paymentAmount != null
-      ? (PAYMENT_LINKS[paymentAmount] ?? PAYMENT_LINKS[DEFAULT_PAYMENT_AMOUNT])
-      : null;
+  const handlePayment = async () => {
+    if (!applicationData || paymentAmount == null) return;
 
-  const handlePayment = () => {
-    if (!paymentLink) return;
+    setPaymentStatus("processing");
+    setPaymentError(null);
 
-    if (paymentLink.includes("PASTE_YOUR")) {
-      alert(
-        "Please add your real Razorpay or Instamojo payment link inside app/payment/page.tsx.",
+    const scriptLoaded = await loadRazorpayScript();
+
+    if (!scriptLoaded || !window.Razorpay) {
+      setPaymentStatus("error");
+      setPaymentError(
+        "Could not load Razorpay checkout. Please check your connection and try again.",
       );
       return;
     }
 
-    window.location.href = paymentLink;
+    try {
+      const orderResponse = await fetch("/api/razorpay/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: paymentAmount,
+          customer: {
+            fullName: applicationData.fullName,
+            email: applicationData.email,
+            phone: applicationData.phone,
+            companyName: applicationData.companyName,
+          },
+        }),
+      });
+
+      const orderData = await orderResponse.json();
+
+      if (!orderResponse.ok || !orderData.success) {
+        throw new Error(orderData.message || "Could not create payment order.");
+      }
+
+      const razorpay = new window.Razorpay({
+        key: orderData.keyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        order_id: orderData.orderId,
+        name: "RPIANS — World Class Business Coaching",
+        description: applicationData.planSelected
+          ? `${applicationData.planSelected} — Booking Payment`
+          : "Business Diagnostic Booking",
+        prefill: {
+          name: applicationData.fullName,
+          email: applicationData.email,
+          contact: applicationData.phone,
+        },
+        theme: {
+          color: "#1e3a8a",
+        },
+        handler: async (response) => {
+          try {
+            const verifyResponse = await fetch(
+              "/api/razorpay/verify-payment",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(response),
+              },
+            );
+
+            const verifyData = await verifyResponse.json();
+
+            if (!verifyResponse.ok || !verifyData.success) {
+              throw new Error(
+                verifyData.message || "Payment verification failed.",
+              );
+            }
+
+            setPaymentStatus("success");
+          } catch (error) {
+            setPaymentStatus("error");
+            setPaymentError(
+              error instanceof Error
+                ? error.message
+                : "Payment verification failed.",
+            );
+          }
+        },
+        modal: {
+          ondismiss: () => {
+            setPaymentStatus((current) =>
+              current === "processing" ? "idle" : current,
+            );
+          },
+        },
+      });
+
+      razorpay.on("payment.failed", () => {
+        setPaymentStatus("error");
+        setPaymentError("Payment failed. Please try again.");
+      });
+
+      razorpay.open();
+    } catch (error) {
+      setPaymentStatus("error");
+      setPaymentError(
+        error instanceof Error ? error.message : "Something went wrong.",
+      );
+    }
   };
 
   const whatsappMessage = encodeURIComponent(
@@ -337,16 +485,41 @@ ${
             </div>
           </div>
 
-          {paymentAmount != null ? (
+          {paymentStatus === "success" ? (
+            <div className="mt-7 rounded-xl border border-green-300 bg-green-50 p-6 text-center">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-2xl text-green-600">
+                ✓
+              </div>
+
+              <p className="mt-4 text-lg font-bold text-green-800">
+                Payment Successful
+              </p>
+
+              <p className="mt-2 text-sm text-green-700">
+                Your booking payment of {formattedPaymentAmount} has been
+                confirmed. Our team will reach out to you shortly.
+              </p>
+
+              {/* TODO: Trigger WhatsApp booking confirmation message here once that integration is ready. */}
+            </div>
+          ) : paymentAmount != null ? (
             <>
               <button
                 type="button"
                 onClick={handlePayment}
-                disabled={!applicationData}
+                disabled={!applicationData || paymentStatus === "processing"}
                 className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Pay {formattedPaymentAmount}
+                {paymentStatus === "processing"
+                  ? "Processing..."
+                  : `Pay ${formattedPaymentAmount}`}
               </button>
+
+              {paymentStatus === "error" && paymentError ? (
+                <p className="mt-3 text-center text-sm text-red-600">
+                  {paymentError}
+                </p>
+              ) : null}
 
               <a
                 href={`https://wa.me/917389638105?text=${whatsappMessage}`}
