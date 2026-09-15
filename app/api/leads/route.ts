@@ -18,6 +18,7 @@ export async function POST(request: Request) {
         body: JSON.stringify(formData),
         redirect: "follow",
         cache: "no-store",
+        signal: AbortSignal.timeout(15000),
       },
     );
 

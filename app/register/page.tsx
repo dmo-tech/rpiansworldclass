@@ -194,7 +194,7 @@ function RegisterForm() {
     setStep(2);
   };
 
-  const submitApplication = async (data: RegistrationData) => {
+  const submitApplication = (data: RegistrationData) => {
     setIsSubmitting(true);
     setErrorMessage("");
 
@@ -207,51 +207,25 @@ function RegisterForm() {
       source: "RPIANS Website",
     };
 
-    try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(applicationData),
-      });
+    sessionStorage.setItem(
+      "rpiansApplicationData",
+      JSON.stringify(applicationData),
+    );
 
-      let result: {
-        success?: boolean;
-        message?: string;
-      };
+    // Lead is saved to Google Sheets in the background. The customer must
+    // never be blocked from reaching payment by a slow/flaky third-party
+    // spreadsheet call — we already have their data safely in sessionStorage.
+    fetch("/api/leads", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(applicationData),
+    }).catch((error) => {
+      console.error("Lead save error (non-blocking):", error);
+    });
 
-      try {
-        result = await response.json();
-      } catch {
-        throw new Error(
-          "Server returned an invalid response. Please try again.",
-        );
-      }
-
-      if (!response.ok || !result.success) {
-        throw new Error(
-          result.message ||
-            "Your application could not be saved.",
-        );
-      }
-
-      sessionStorage.setItem(
-        "rpiansApplicationData",
-        JSON.stringify(applicationData),
-      );
-
-      router.push("/payment");
-    } catch (error) {
-      console.error("Form submission error:", error);
-
-      setErrorMessage(
-        error instanceof Error
-          ? error.message
-          : "Your form could not be submitted. Please try again.",
-      );
-      setIsSubmitting(false);
-    }
+    router.push("/payment");
   };
 
   const advanceField = (valueOverride?: string) => {
