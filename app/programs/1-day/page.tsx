@@ -18,7 +18,7 @@ export default function OneDayProgramPage() {
       eyebrowClassName="text-2xl md:text-3xl font-bold uppercase tracking-[0.1em] text-[#0f172a]"
       description="A focused one-day session to identify where your business is leaking profit and give you a clear, practical action plan to fix it."
       duration="1 Day"
-      mode="Live Online or In-Person"
+      mode="Live Online"
       audience="Business Owners Ready for Quick Clarity"
       topics={[
         "Business Health Diagnostic",
