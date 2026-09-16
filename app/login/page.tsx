@@ -111,7 +111,7 @@ export default function LoginPage() {
                 href="https://wa.me/917389638105?text=Namaste%20RPIANS%20Team%2C%20mujhe%20login%20access%20chahiye."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-7 block w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
+                className="mt-7 block w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
               >
                 Contact Us on WhatsApp
               </a>
@@ -208,7 +208,7 @@ export default function LoginPage() {
                       type="submit"
                       whileHover={{ scale: 1.015 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
+                      className="w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
                     >
                       Send OTP
                     </motion.button>
@@ -276,7 +276,7 @@ export default function LoginPage() {
                       type="submit"
                       whileHover={{ scale: 1.015 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
+                      className="w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
                     >
                       Verify &amp; Login
                     </motion.button>

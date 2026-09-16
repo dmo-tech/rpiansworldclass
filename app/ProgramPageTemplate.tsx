@@ -190,7 +190,7 @@ export default function ProgramPageTemplate({
 
                   <ApplyButton
                     plan={planId}
-                    className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
+                    className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
                   >
                     {ctaLabel}
                   </ApplyButton>

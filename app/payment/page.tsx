@@ -508,7 +508,7 @@ ${
                 type="button"
                 onClick={handlePayment}
                 disabled={!applicationData || paymentStatus === "processing"}
-                className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+                className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {paymentStatus === "processing"
                   ? "Processing..."
@@ -535,7 +535,7 @@ ${
               href={`https://wa.me/917389638105?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-7 block w-full rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#1e3a8a] px-7 py-4 text-center font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02]"
+              className="mt-7 block w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 text-center font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02]"
             >
               Talk to Our Team on WhatsApp
             </a>
