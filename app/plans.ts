@@ -9,7 +9,7 @@ export type Plan = {
 export const plans: Plan[] = [
   {
     id: "day-1",
-    label: "Day 1",
+    label: "1 Day",
     description:
       "A focused one-day session to fix your biggest business bottleneck.",
     amount: 999,
