@@ -4,12 +4,11 @@ const whatsappUrl =
   "https://wa.me/917389638105?text=Namaste%20RPIANS%20Team,%20mujhe%20Business%20Automation%20aur%20Profit%20Growth%20ke%20baare%20mein%20jankari%20chahiye.";
 
 /*
-  TODO: In links ko apne real Instagram, LinkedIn, Facebook aur YouTube
-  page ke URLs se replace kar dijiye jab wo available hon.
+  TODO: Facebook page ka real URL apne available hote hi yahan add kar dijiye.
 */
 const socialLinks = [
   {
-    href: "#",
+    href: "https://www.instagram.com/worldclass_104?stkn=MXVnMWVnY3QyczV0cg==",
     label: "Instagram",
     color: "#E4405F",
     icon: (
@@ -19,7 +18,7 @@ const socialLinks = [
     ),
   },
   {
-    href: "#",
+    href: "https://www.linkedin.com/in/rajesh-kumar-kare?utm_source=share_via&utm_content=profile&utm_medium=member_android",
     label: "LinkedIn",
     color: "#0A66C2",
     icon: (
@@ -39,7 +38,7 @@ const socialLinks = [
     ),
   },
   {
-    href: "#",
+    href: "https://youtube.com/@businessbyrajesh?si=Lw5O9Z-hTf8KdLIP",
     label: "YouTube",
     color: "#FF0000",
     icon: (
