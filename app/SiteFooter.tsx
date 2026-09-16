@@ -78,6 +78,13 @@ export default function SiteFooter() {
               >
                 Refund Policy
               </a>
+
+              <a
+                href="/contact"
+                className="transition hover:text-[#3b82f6]"
+              >
+                Contact Details
+              </a>
             </div>
 
             <div className="flex items-center gap-6">
