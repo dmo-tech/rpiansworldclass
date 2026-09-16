@@ -3,9 +3,6 @@ import BackToTop from "./BackToTop";
 const whatsappUrl =
   "https://wa.me/917389638105?text=Namaste%20RPIANS%20Team,%20mujhe%20Business%20Automation%20aur%20Profit%20Growth%20ke%20baare%20mein%20jankari%20chahiye.";
 
-/*
-  TODO: Facebook page ka real URL apne available hote hi yahan add kar dijiye.
-*/
 const socialLinks = [
   {
     href: "https://www.instagram.com/worldclass_104?stkn=MXVnMWVnY3QyczV0cg==",
@@ -28,7 +25,7 @@ const socialLinks = [
     ),
   },
   {
-    href: "#",
+    href: "https://www.facebook.com/share/1G9F9aoJEz/",
     label: "Facebook",
     color: "#1877F2",
     icon: (
