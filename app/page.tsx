@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import AnimatedCounter from "./AnimatedCounter";
 import AnimatedWords from "./AnimatedWords";
 import ApplyButton from "./ApplyButton";
@@ -76,26 +74,8 @@ export default function Home() {
         className="luxury-background relative min-h-screen px-6 pb-20 pt-32"
       >
         <div className="relative z-10 mx-auto max-w-6xl">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <Reveal
-              direction="right"
-              className="order-2 flex justify-center lg:order-2 lg:justify-end"
-            >
-              <div className="relative h-[360px] w-full max-w-sm sm:h-[440px] lg:h-[520px]">
-                <Image
-                  src="/rajesh-kumar-kare-hero.png"
-                  alt="Rajesh Kumar Kare"
-                  fill
-                  priority
-                  className="object-contain object-top"
-                />
-              </div>
-            </Reveal>
-
-            <Reveal
-              direction="up"
-              className="order-1 text-center lg:order-1 lg:text-left"
-            >
+          <div className="grid items-center gap-12">
+            <Reveal direction="up" className="text-center">
               <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6] md:tracking-[0.4em]">
                 India’s Business Automation and Profit Coaching Movement
               </p>
@@ -104,7 +84,7 @@ export default function Home() {
                 <AnimatedWords
                   text="Business Automation And"
                   stagger={0.12}
-                  className="justify-center lg:justify-start"
+                  className="justify-center"
                 />
 
                 <span className="mt-3 block">
@@ -112,13 +92,13 @@ export default function Home() {
                     text="Profit Mastery Strategy"
                     delay={0.35}
                     stagger={0.14}
-                    className="text-[#1d4ed8] justify-center lg:justify-start"
+                    className="text-[#1d4ed8] justify-center"
                   />
                 </span>
               </h1>
 
               <Reveal direction="up" delay={0.5}>
-                <p className="mx-auto mt-7 max-w-xl text-base leading-8 text-gray-600 md:text-lg lg:mx-0">
+                <p className="mx-auto mt-7 max-w-xl text-base leading-8 text-gray-600 md:text-lg">
                   Run your business on autopilot mode, build an accountable
                   team, control inventory and cash flow, and multiply your
                   profit every year with proven business systems.
@@ -126,7 +106,7 @@ export default function Home() {
               </Reveal>
 
               <Reveal direction="up" delay={0.65}>
-                <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
+                <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
                   <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-9 py-4 text-base font-bold text-white transition hover:scale-105 sm:w-auto">
                     Apply to Work With Us
                   </ApplyButton>

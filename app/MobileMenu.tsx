@@ -17,12 +17,39 @@ const links = [
     label: "Journey",
   },
   {
-    href: "/results",
-    label: "Who Is This For",
-  },
-  {
     href: "/about",
     label: "About",
+  },
+];
+
+const whoIsThisForLinks = [
+  {
+    href: "/results/retailer",
+    label: "Retailer",
+  },
+  {
+    href: "/results/distributors",
+    label: "Distributors",
+  },
+  {
+    href: "/results/wholesalers",
+    label: "Wholesalers",
+  },
+  {
+    href: "/results/manufacturers",
+    label: "Manufacturers",
+  },
+  {
+    href: "/results/project-based",
+    label: "Project Based",
+  },
+  {
+    href: "/results/service-based",
+    label: "Service Based",
+  },
+  {
+    href: "/results/export-import",
+    label: "Export - Import",
   },
 ];
 
@@ -77,6 +104,25 @@ export default function MobileMenu() {
                 {link.label}
               </Link>
             ))}
+
+            <div className="border-t border-black/10 pt-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+                Who Is This For
+              </p>
+
+              <div className="mt-3 flex flex-col gap-4">
+                {whoIsThisForLinks.map((type) => (
+                  <Link
+                    key={type.href}
+                    href={type.href}
+                    onClick={closeMenu}
+                    className="hover:text-[#3b82f6]"
+                  >
+                    {type.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
             <div className="border-t border-black/10 pt-5">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
