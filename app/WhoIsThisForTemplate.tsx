@@ -9,6 +9,7 @@ import TiltCard from "./TiltCard";
 import type { WhoIsThisForSegment } from "./whoIsThisForData";
 
 export default function WhoIsThisForTemplate({
+  label,
   eyebrow,
   headingLine1,
   headingLine2,
@@ -16,6 +17,7 @@ export default function WhoIsThisForTemplate({
   audience,
   painPoints,
   solutions,
+  businessTypes,
 }: WhoIsThisForSegment): ReactNode {
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
@@ -92,6 +94,25 @@ export default function WhoIsThisForTemplate({
                 </TiltCard>
               </Reveal>
             </div>
+
+            <Reveal direction="up" delay={0.2} className="mt-12">
+              <p className="text-center text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
+                Top 20 {label} Business Types We Work With
+              </p>
+
+              <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {businessTypes.map((type, index) => (
+                  <Reveal key={type} direction="up" delay={index * 0.03}>
+                    <div className="flex h-full items-center gap-2 rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3">
+                      <span className="text-sm font-bold text-[#3b82f6]">
+                        {index + 1}.
+                      </span>
+                      <p className="text-sm font-medium">{type}</p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </Reveal>
 
             <Reveal direction="up" delay={0.3}>
               <div className="mt-12 flex flex-col items-center justify-center gap-6 rounded-3xl border border-black/10 bg-black/[0.03] p-8 text-center sm:flex-row sm:justify-between sm:text-left">
