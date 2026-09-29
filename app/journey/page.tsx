@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import BookCallBanner from "../BookCallBanner";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import TransformationJourney from "../TransformationJourney";
@@ -18,6 +19,11 @@ export default function JourneyPage() {
       <div className="pt-20">
         <TransformationJourney />
       </div>
+
+      <BookCallBanner
+        from="Journey"
+        title="Ready to Start Your Transformation Journey?"
+      />
 
       <SiteFooter />
     </main>

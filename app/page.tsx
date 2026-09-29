@@ -2,6 +2,8 @@ import AnimatedCounter from "./AnimatedCounter";
 import AnimatedWords from "./AnimatedWords";
 import ApplyButton from "./ApplyButton";
 import BeforeAfter from "./BeforeAfter";
+import BookCallButton from "./BookCallButton";
+import BookingCalendar from "./BookingCalendar";
 import BusinessHealthQuiz from "./BusinessHealthQuiz";
 import MouseGlow from "./MouseGlow";
 import ProfitLeakDiagnostic from "./ProfitLeakDiagnostic";
@@ -117,6 +119,13 @@ export default function Home() {
                   Watch the Transformation
                 </a>
               </div>
+
+              <a
+                href="#book-call"
+                className="mt-4 inline-block text-sm font-semibold text-[#1d4ed8] underline-offset-4 hover:underline md:mt-5"
+              >
+                Not ready to apply? Book a free call →
+              </a>
             </Reveal>
           </Reveal>
         </div>
@@ -244,9 +253,13 @@ export default function Home() {
             strengthen leadership and multiply business profit.
           </p>
 
-          <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white transition hover:scale-105">
-            Apply to Work With Us
-          </ApplyButton>
+          <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white transition hover:scale-105 sm:w-auto">
+              Apply to Work With Us
+            </ApplyButton>
+
+            <BookCallButton from="Home - Movement" />
+          </div>
         </Reveal>
       </section>
 
@@ -294,6 +307,35 @@ export default function Home() {
         </div>
       </section>
 
+      {/* BOOK A CALL */}
+
+      <section id="book-call" className="scroll-mt-24 px-6 py-28">
+        <div className="mx-auto max-w-6xl">
+          <Reveal direction="up" className="text-center">
+            <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
+              Book a Free Call
+            </p>
+
+            <h2 className="mt-5 font-serif text-4xl md:text-6xl">
+              <AnimatedWords
+                text="Talk to the RPIANS Team"
+                stagger={0.09}
+                className="justify-center"
+              />
+            </h2>
+
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+              Pick a date and time that suits you. We will understand your
+              business and guide you on the right program.
+            </p>
+          </Reveal>
+
+          <div className="mt-12">
+            <BookingCalendar from="Home - Calendar Section" />
+          </div>
+        </div>
+      </section>
+
       {/* FINAL CTA */}
 
       <section className="px-6 py-28">
@@ -312,9 +354,13 @@ export default function Home() {
               and sustainable profit growth.
             </p>
 
-            <ApplyButton className="mt-9 inline-block rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white transition hover:scale-105">
-              Apply Now
-            </ApplyButton>
+            <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white transition hover:scale-105 sm:w-auto">
+                Apply Now
+              </ApplyButton>
+
+              <BookCallButton from="Home - Final CTA" />
+            </div>
           </div>
         </Reveal>
       </section>

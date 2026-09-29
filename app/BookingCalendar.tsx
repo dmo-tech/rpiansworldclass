@@ -58,7 +58,13 @@ const slotToMinutes = (slot: string) => {
   return ((hours % 12) + (period === "PM" ? 12 : 0)) * 60 + minutes;
 };
 
-export default function BookingCalendar() {
+type BookingCalendarProps = {
+  // Where the booking came from. Falls back to the ?from= query param set
+  // by BookCallButton, so the Google Sheet shows which placement worked.
+  from?: string;
+};
+
+export default function BookingCalendar({ from }: BookingCalendarProps) {
   const today = useMemo(() => startOfDay(new Date()), []);
   const lastBookableDay = useMemo(() => {
     const date = new Date(today);
@@ -183,7 +189,11 @@ export default function BookingCalendar() {
       bookingDate: selectedDate ? formatDate(selectedDate) : "",
       bookingTime: `${selectedSlot} IST`,
       submittedAt: new Date().toISOString(),
-      source: "RPIANS Website - Book a Call",
+      source: `RPIANS Website - ${
+        from ||
+        new URLSearchParams(window.location.search).get("from") ||
+        "Book a Call Page"
+      }`,
     };
 
     try {
