@@ -1,9 +1,10 @@
+import Link from "next/link";
+
 import AnimatedCounter from "./AnimatedCounter";
 import AnimatedWords from "./AnimatedWords";
 import ApplyButton from "./ApplyButton";
 import BeforeAfter from "./BeforeAfter";
 import BookCallButton from "./BookCallButton";
-import BookingCalendar from "./BookingCalendar";
 import BusinessHealthQuiz from "./BusinessHealthQuiz";
 import MouseGlow from "./MouseGlow";
 import ProfitLeakDiagnostic from "./ProfitLeakDiagnostic";
@@ -120,12 +121,12 @@ export default function Home() {
                 </a>
               </div>
 
-              <a
-                href="#book-call"
+              <Link
+                href={`/book-call?from=${encodeURIComponent("Home - Hero")}`}
                 className="mt-4 inline-block text-sm font-semibold text-[#1d4ed8] underline-offset-4 hover:underline md:mt-5"
               >
                 Not ready to apply? Book a free call →
-              </a>
+              </Link>
             </Reveal>
           </Reveal>
         </div>
@@ -303,35 +304,6 @@ export default function Home() {
                 </details>
               </Reveal>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* BOOK A CALL */}
-
-      <section id="book-call" className="scroll-mt-24 px-6 py-28">
-        <div className="mx-auto max-w-6xl">
-          <Reveal direction="up" className="text-center">
-            <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
-              Book a Free Call
-            </p>
-
-            <h2 className="mt-5 font-serif text-4xl md:text-6xl">
-              <AnimatedWords
-                text="Talk to the RPIANS Team"
-                stagger={0.09}
-                className="justify-center"
-              />
-            </h2>
-
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-              Pick a date and time that suits you. We will understand your
-              business and guide you on the right program.
-            </p>
-          </Reveal>
-
-          <div className="mt-12">
-            <BookingCalendar from="Home - Calendar Section" />
           </div>
         </div>
       </section>
