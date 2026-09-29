@@ -33,6 +33,13 @@ export default function SiteHeader() {
 
         <div className="flex shrink-0 items-center gap-3">
           <Link
+            href="/book-call"
+            className="hidden whitespace-nowrap rounded-lg border border-[#3b82f6]/40 px-5 py-3 text-sm font-bold text-[#1d4ed8] transition hover:scale-105 hover:border-[#3b82f6] md:block"
+          >
+            Book a Call
+          </Link>
+
+          <Link
             href="/login"
             className="hidden whitespace-nowrap rounded-lg bg-[#3b82f6] px-6 py-3 text-sm font-bold text-white transition hover:scale-105 hover:bg-[#1d4ed8] sm:block"
           >

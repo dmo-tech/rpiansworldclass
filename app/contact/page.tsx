@@ -55,6 +55,13 @@ export default function ContactPage() {
                   info@worldclassbc.com
                 </a>
               </p>
+
+              <a
+                href="/book-call"
+                className="mt-8 inline-block rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-3 font-bold text-white transition hover:scale-105"
+              >
+                Book a Call
+              </a>
             </div>
           </Reveal>
 

@@ -144,6 +144,14 @@ export default function MobileMenu() {
             </div>
 
             <Link
+              href="/book-call"
+              onClick={closeMenu}
+              className="rounded-lg border border-[#3b82f6]/35 px-5 py-3 text-center font-semibold text-[#1d4ed8]"
+            >
+              Book a Call
+            </Link>
+
+            <Link
               href="/register"
               onClick={closeMenu}
               className="rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-3 text-center font-bold text-white"

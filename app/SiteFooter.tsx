@@ -80,6 +80,13 @@ export default function SiteFooter() {
               </a>
 
               <a
+                href="/book-call"
+                className="transition hover:text-[#3b82f6]"
+              >
+                Book a Call
+              </a>
+
+              <a
                 href="/contact"
                 className="transition hover:text-[#3b82f6]"
               >
