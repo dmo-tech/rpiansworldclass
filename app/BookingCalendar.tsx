@@ -315,7 +315,7 @@ export default function BookingCalendar({ from }: BookingCalendarProps) {
         </motion.button>
 
         <div className="mt-5 flex flex-wrap justify-center gap-5 text-xs text-gray-500">
-          <span>✓ Free consultation</span>
+          <span>✓ One-on-one consultation</span>
           <span>✓ WhatsApp confirmation</span>
           <span>✓ RPIANS team support</span>
         </div>

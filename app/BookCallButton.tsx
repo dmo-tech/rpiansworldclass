@@ -29,7 +29,7 @@ export function CalendarIcon({ className = "h-5 w-5" }: { className?: string }) 
 
 export default function BookCallButton({
   from,
-  children = "Book a Free Call",
+  children = "Book a Call",
   className = "inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#3b82f6]/60 px-9 py-4 text-center font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10 sm:w-auto",
 }: BookCallButtonProps) {
   return (

@@ -125,7 +125,7 @@ export default function Home() {
                 href={`/book-call?from=${encodeURIComponent("Home - Hero")}`}
                 className="mt-4 inline-block text-sm font-semibold text-[#1d4ed8] underline-offset-4 hover:underline md:mt-5"
               >
-                Not ready to apply? Book a free call →
+                Not ready to apply? Book a call →
               </Link>
             </Reveal>
           </Reveal>

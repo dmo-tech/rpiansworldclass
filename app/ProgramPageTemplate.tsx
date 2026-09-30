@@ -200,7 +200,7 @@ export default function ProgramPageTemplate({
                     from={`Program - ${plan?.label ?? eyebrow}`}
                     className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-[#3b82f6]/50 bg-white px-8 py-4 text-center font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10"
                   >
-                    Have Questions? Book a Free Call
+                    Have Questions? Book a Call
                   </BookCallButton>
                 </TiltCard>
               </Reveal>

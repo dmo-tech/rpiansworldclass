@@ -461,7 +461,7 @@ export default function ProfitLeakDiagnostic() {
                     from="Profit Leak Diagnostic"
                     className="mt-3 flex items-center justify-center gap-2 rounded-lg border border-[#3b82f6]/50 px-8 py-4 text-center font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10"
                   >
-                    Or Book a Free Call
+                    Or Book a Call
                   </BookCallButton>
                 </div>
               </motion.div>

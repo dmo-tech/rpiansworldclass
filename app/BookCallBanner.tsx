@@ -10,7 +10,7 @@ type BookCallBannerProps = {
 export default function BookCallBanner({
   from,
   title = "Not Sure Which Program Is Right for You?",
-  description = "Book a free call with the RPIANS team. We will understand your business and guide you on the right next step.",
+  description = "Book a call with the RPIANS team. We will understand your business and guide you on the right next step.",
 }: BookCallBannerProps) {
   return (
     <section className="px-6 py-20">
