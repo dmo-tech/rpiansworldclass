@@ -239,28 +239,6 @@ function RegisterForm() {
       console.error("Lead save error (non-blocking):", error);
     });
 
-    // Also record the call in the Bookings sheet, same as /book-call.
-    fetch("/api/leads", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        formType: "Call Booking",
-        fullName: data.fullName,
-        phone: data.phone,
-        email: data.email,
-        companyName: data.companyName,
-        message: `Plan: ${selectedPlan?.label ?? ""}`,
-        bookingDate,
-        bookingTime,
-        submittedAt: applicationData.submittedAt,
-        source: "RPIANS Website - Apply Flow",
-      }),
-    }).catch((error) => {
-      console.error("Call booking save error (non-blocking):", error);
-    });
-
     router.push("/payment");
   };
 
