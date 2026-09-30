@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
+import CallSlotPicker, { formatBookingDate } from "../CallSlotPicker";
 import { formatPlanAmount, plans } from "../plans";
 
 type RegistrationData = {
@@ -151,7 +152,10 @@ function RegisterForm() {
     (plan) => plan.id === searchParams.get("plan"),
   );
 
-  const [step, setStep] = useState<1 | 2>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [callDate, setCallDate] = useState<Date | null>(null);
+  const [callSlot, setCallSlot] = useState("");
+  const [callError, setCallError] = useState("");
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(
     planFromQuery?.id ?? null,
   );
@@ -195,11 +199,21 @@ function RegisterForm() {
   };
 
   const submitApplication = (data: RegistrationData) => {
+    if (!callDate || !callSlot) {
+      setCallError("Please select a date and time for your call.");
+      return;
+    }
+
     setIsSubmitting(true);
     setErrorMessage("");
 
+    const bookingDate = formatBookingDate(callDate);
+    const bookingTime = `${callSlot} IST`;
+
     const applicationData = {
       ...data,
+      bookingDate,
+      bookingTime,
       planSelected: selectedPlan?.label ?? "",
       bookingAmount: selectedPlan?.amount ?? null,
       gstApplicable: selectedPlan?.gstApplicable ?? false,
@@ -223,6 +237,28 @@ function RegisterForm() {
       body: JSON.stringify(applicationData),
     }).catch((error) => {
       console.error("Lead save error (non-blocking):", error);
+    });
+
+    // Also record the call in the Bookings sheet, same as /book-call.
+    fetch("/api/leads", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        formType: "Call Booking",
+        fullName: data.fullName,
+        phone: data.phone,
+        email: data.email,
+        companyName: data.companyName,
+        message: `Plan: ${selectedPlan?.label ?? ""}`,
+        bookingDate,
+        bookingTime,
+        submittedAt: applicationData.submittedAt,
+        source: "RPIANS Website - Apply Flow",
+      }),
+    }).catch((error) => {
+      console.error("Call booking save error (non-blocking):", error);
     });
 
     router.push("/payment");
@@ -249,7 +285,7 @@ function RegisterForm() {
     }
 
     if (isLastField) {
-      void submitApplication(updatedData);
+      setStep(3);
     } else {
       setFieldIndex((current) => current + 1);
     }
@@ -275,6 +311,100 @@ function RegisterForm() {
       ? `Complete ${formatPlanAmount(selectedPlan)} booking payment`
       : "Discuss custom pricing with our team"
     : "Complete your booking payment";
+
+  if (step === 3) {
+    return (
+      <main className="relative flex min-h-screen flex-col bg-white px-6 text-[#0f172a] md:px-16">
+        <SiteHeader />
+
+        <div className="flex flex-1 items-start justify-center pb-16 pt-32">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full max-w-2xl"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
+              Step 3 of 4
+            </p>
+
+            <h1 className="mt-3 font-serif text-3xl md:text-5xl">
+              Book Your Call With the RPIANS Team
+            </h1>
+
+            <p className="mt-4 leading-7 text-gray-600">
+              Pick a date and time that suits you. After booking your call,
+              you will continue to the payment page.
+            </p>
+
+            <div className="mt-8 rounded-2xl border border-black/10 bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:p-8">
+              <CallSlotPicker
+                selectedDate={callDate}
+                selectedSlot={callSlot}
+                onSelectDate={(date) => {
+                  setCallDate(date);
+                  setCallSlot("");
+                  setCallError("");
+                }}
+                onSelectSlot={(slot) => {
+                  setCallSlot(slot);
+                  setCallError("");
+                }}
+              />
+
+              {callDate && callSlot && (
+                <p className="mt-6 rounded-xl bg-[#3b82f6]/10 px-4 py-3 text-sm text-[#1d4ed8]">
+                  Selected: <strong>{formatBookingDate(callDate)}</strong> at{" "}
+                  <strong>{callSlot} IST</strong>
+                </p>
+              )}
+
+              <AnimatePresence>
+                {callError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+                  >
+                    {callError}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCallError("");
+                    setStep(2);
+                  }}
+                  className="rounded-xl border border-black/10 px-6 py-4 font-semibold text-gray-600 transition hover:border-[#3b82f6] hover:text-[#1d4ed8]"
+                >
+                  ← Back
+                </button>
+
+                <motion.button
+                  type="button"
+                  onClick={() => submitApplication(formData)}
+                  disabled={isSubmitting}
+                  whileHover={isSubmitting ? undefined : { scale: 1.015 }}
+                  whileTap={isSubmitting ? undefined : { scale: 0.98 }}
+                  className="flex-1 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(59,130,246,0.22)] transition disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isSubmitting
+                    ? "Booking Your Call..."
+                    : "Book Call & Continue to Payment"}
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        <SiteFooter />
+      </main>
+    );
+  }
 
   if (step === 2) {
     return (
@@ -350,7 +480,7 @@ function RegisterForm() {
                       type="submit"
                       className="mt-6 rounded-md bg-[#3b82f6] px-6 py-2.5 text-sm font-bold text-white transition hover:bg-[#1d4ed8]"
                     >
-                      {isLastField ? "Continue to Payment Details" : "OK"}
+                      {isLastField ? "Continue to Book a Call" : "OK"}
                     </button>
                   </form>
                 ) : (
@@ -486,6 +616,7 @@ function RegisterForm() {
               {[
                 "Select your plan",
                 "Share your business details",
+                "Book a call with our team",
                 paymentStepLabel,
                 "Application reviewed by RPIANS team",
                 "Receive confirmation on WhatsApp",
@@ -555,7 +686,7 @@ function RegisterForm() {
             <div>
                 <div className="border-b border-black/10 pb-7">
                   <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-                    Step 1 of 3
+                    Step 1 of 4
                   </p>
 
                   <h2 className="mt-3 text-2xl font-bold md:text-3xl">

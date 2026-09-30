@@ -12,6 +12,8 @@ type ApplicationData = {
   businessCategory: string;
   annualTurnover: string;
   planSelected?: string;
+  bookingDate?: string;
+  bookingTime?: string;
   bookingAmount: number | null;
   gstApplicable?: boolean;
 };
@@ -244,6 +246,7 @@ Phone: ${applicationData?.phone ?? ""}
 Business: ${applicationData?.businessCategory ?? ""}
 Annual Turnover: ${applicationData?.annualTurnover ?? ""}
 Plan Selected: ${applicationData?.planSelected ?? ""}
+Call Booked: ${applicationData?.bookingDate ?? ""} ${applicationData?.bookingTime ?? ""}
 
 ${
   paymentAmount != null
@@ -402,7 +405,7 @@ ${
         >
           <div className="border-b border-black/10 pb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-              Step 3 of 3
+              Step 4 of 4
             </p>
 
             <p className="mt-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#1d4ed8]">
@@ -455,6 +458,19 @@ ${
                   {applicationData.companyName}
                 </p>
               </div>
+
+              {applicationData.bookingDate && (
+                <div>
+                  <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
+                    Call Booked
+                  </p>
+
+                  <p className="mt-2 font-semibold text-[#1d4ed8]">
+                    {applicationData.bookingDate} at{" "}
+                    {applicationData.bookingTime}
+                  </p>
+                </div>
+              )}
             </div>
           ) : (
             <div className="mt-7 rounded-xl border border-orange-300 bg-orange-50 p-4 text-sm text-orange-800">
