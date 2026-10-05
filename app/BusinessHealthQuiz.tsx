@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
 import BookCallButton from "./BookCallButton";
+import { WHATSAPP_BASE_URL } from "./siteConfig";
 
 const questions = [
   {
@@ -393,7 +394,7 @@ I would like to discuss my business diagnostic.`,
 
                   <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
                     <a
-                      href={`https://wa.me/917389638105?text=${whatsappMessage}`}
+                      href={`${WHATSAPP_BASE_URL}?text=${whatsappMessage}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 font-bold text-white transition hover:scale-105"

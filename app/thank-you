@@ -37,7 +37,7 @@ export default function ThankYouPage() {
 
         <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
           <a
-            href="https://wa.me/917389638105?text=Namaste%20RPIANS%20Team,%20maine%20website%20par%20apni%20business%20application%20submit%20kar%20di%20hai."
+            href="https://wa.me/917049561975?text=Namaste%20RPIANS%20Team,%20maine%20website%20par%20apni%20business%20application%20submit%20kar%20di%20hai."
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 font-bold text-white transition hover:scale-105"

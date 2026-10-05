@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { FormEvent, useState } from "react";
 import Image from "next/image";
 
+import { WHATSAPP_BASE_URL } from "../siteConfig";
+
 /*
   IMPORTANT:
   Ye Login page abhi sirf UI/design placeholder hai — koi real backend,
@@ -108,7 +110,7 @@ export default function LoginPage() {
               </p>
 
               <a
-                href="https://wa.me/917389638105?text=Namaste%20RPIANS%20Team%2C%20mujhe%20login%20access%20chahiye."
+                href={`${WHATSAPP_BASE_URL}?text=Namaste%20RPIANS%20Team%2C%20mujhe%20login%20access%20chahiye.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-7 block w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 text-center font-bold text-white transition hover:scale-[1.02]"

@@ -4,6 +4,8 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+import { WHATSAPP_BASE_URL } from "../siteConfig";
+
 type ApplicationData = {
   fullName: string;
   phone: string;
@@ -538,7 +540,7 @@ ${
               ) : null}
 
               <a
-                href={`https://wa.me/917389638105?text=${whatsappMessage}`}
+                href={`${WHATSAPP_BASE_URL}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 block w-full rounded-lg border border-[#1d4ed8]/40 px-7 py-4 text-center font-semibold text-[#1e3a8a] transition hover:bg-[#1d4ed8]/5"
@@ -548,7 +550,7 @@ ${
             </>
           ) : (
             <a
-              href={`https://wa.me/917389638105?text=${whatsappMessage}`}
+              href={`${WHATSAPP_BASE_URL}?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-7 block w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 text-center font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02]"
