@@ -201,7 +201,7 @@ export default function Home() {
           </p>
 
           <Reveal direction="up" delay={0.25}>
-            <div className="mt-12 overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900">
+            <div className="mx-auto mt-12 max-w-5xl overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900">
               <div className="flex aspect-video items-center justify-center">
                 <div className="text-center">
                   <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-3xl text-white">

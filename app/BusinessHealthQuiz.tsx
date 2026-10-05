@@ -214,7 +214,7 @@ I would like to discuss my business diagnostic.`,
           </motion.p>
         </div>
 
-        <div className="mt-14">
+        <div className="mx-auto mt-14 max-w-3xl">
           <div className="mb-6">
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-500">
