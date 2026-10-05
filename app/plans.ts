@@ -33,8 +33,7 @@ export const plans: Plan[] = [
     label: "Personal Mentorship",
     description:
       "One-on-one mentorship with direct access to Rajesh Kumar Kare.",
-    amount: 5000000,
-    gstApplicable: true,
+    amount: 15000000,
   },
 ];
 
