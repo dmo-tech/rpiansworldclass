@@ -3,7 +3,11 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
-export default function BackToTop() {
+type BackToTopProps = {
+  hidden?: boolean;
+};
+
+export default function BackToTop({ hidden = false }: BackToTopProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -28,7 +32,7 @@ export default function BackToTop() {
 
   return (
     <AnimatePresence>
-      {isVisible && (
+      {isVisible && !hidden && (
         <motion.button
           type="button"
           onClick={scrollToTop}
