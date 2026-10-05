@@ -13,8 +13,8 @@ export default function BookCallBanner({
   description = "Book a call with the RPIANS team. We will understand your business and guide you on the right next step.",
 }: BookCallBannerProps) {
   return (
-    <section className="px-6 py-20">
-      <Reveal direction="up" className="mx-auto max-w-5xl">
+    <section className="py-20">
+      <Reveal direction="up" className="site-container">
         <div className="flex flex-col items-center gap-8 rounded-3xl border border-[#3b82f6]/25 bg-gradient-to-br from-[#3b82f6]/10 to-white p-8 text-center md:flex-row md:p-12 md:text-left">
           <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white">
             <CalendarIcon className="h-8 w-8" />

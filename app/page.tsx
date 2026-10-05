@@ -74,9 +74,9 @@ export default function Home() {
 
       <section
         id="home"
-        className="luxury-background relative flex min-h-[100dvh] flex-col justify-center px-6 pb-10 pt-24 md:pt-28"
+        className="luxury-background relative flex min-h-[100dvh] flex-col justify-center pb-10 pt-24 md:pt-28"
       >
-        <div className="relative z-10 mx-auto w-full max-w-6xl">
+        <div className="site-container relative z-10">
           <Reveal direction="up" className="text-center">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6] md:mb-6 md:tracking-[0.4em]">
               India’s Business Automation and Profit Coaching Movement
@@ -134,8 +134,8 @@ export default function Home() {
 
       {/* STATS */}
 
-      <section className="relative px-6 pb-20 pt-12 md:pt-16">
-        <div className="relative z-10 mx-auto max-w-6xl">
+      <section className="relative pb-20 pt-12 md:pt-16">
+        <div className="site-container relative z-10">
           <div className="grid gap-5 text-left md:grid-cols-3">
             {stats.map((item, index) => (
               <Reveal
@@ -171,8 +171,8 @@ export default function Home() {
 
       {/* VIDEO */}
 
-      <section id="video" className="px-6 py-24">
-        <Reveal direction="up" className="mx-auto max-w-5xl text-center">
+      <section id="video" className="py-24">
+        <Reveal direction="up" className="site-container text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
             Discover the RPIANS System
           </p>
@@ -200,7 +200,7 @@ export default function Home() {
             organisation.
           </p>
 
-          <Reveal direction="scale" delay={0.25}>
+          <Reveal direction="up" delay={0.25}>
             <div className="mt-12 overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900">
               <div className="flex aspect-video items-center justify-center">
                 <div className="text-center">
@@ -232,10 +232,10 @@ export default function Home() {
 
       {/* MOVEMENT */}
 
-      <section className="relative overflow-hidden border-y border-black/10 px-6 py-28">
+      <section className="relative overflow-hidden border-y border-black/10 py-28">
         <Reveal
-          direction="scale"
-          className="relative mx-auto max-w-4xl text-center"
+          direction="up"
+          className="site-container relative text-center"
         >
           <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
             The RPIANS Movement
@@ -266,8 +266,8 @@ export default function Home() {
 
       {/* FAQ */}
 
-      <section className="border-y border-black/10 bg-black/[0.02] px-6 py-28">
-        <div className="mx-auto max-w-4xl">
+      <section className="border-y border-black/10 bg-black/[0.02] py-28">
+        <div className="site-container">
           <Reveal direction="up" className="text-center">
             <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
               Frequently Asked Questions
@@ -310,8 +310,8 @@ export default function Home() {
 
       {/* FINAL CTA */}
 
-      <section className="px-6 py-28">
-        <Reveal direction="scale" className="mx-auto max-w-5xl">
+      <section className="py-28">
+        <Reveal direction="up" className="site-container">
           <div className="rounded-3xl border border-black/10 px-7 py-20 text-center">
             <h2 className="font-serif text-4xl md:text-6xl">
               <AnimatedWords

@@ -22,8 +22,8 @@ const afterPoints = [
 
 export default function BeforeAfter() {
   return (
-    <section className="relative overflow-hidden px-6 py-28">
-      <div className="mx-auto max-w-7xl">
+    <section className="relative overflow-hidden py-28">
+      <div className="site-container">
         <div className="mx-auto max-w-4xl text-center">
           <motion.p
             initial={{ opacity: 0, y: 25 }}
@@ -75,13 +75,11 @@ export default function BeforeAfter() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -90,
-              rotateY: -8,
+              y: 60,
             }}
             whileInView={{
               opacity: 1,
-              x: 0,
-              rotateY: 0,
+              y: 0,
             }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{
@@ -128,13 +126,11 @@ export default function BeforeAfter() {
           <motion.div
             initial={{
               opacity: 0,
-              x: 90,
-              rotateY: 8,
+              y: 60,
             }}
             whileInView={{
               opacity: 1,
-              x: 0,
-              rotateY: 0,
+              y: 0,
             }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{
@@ -181,8 +177,8 @@ export default function BeforeAfter() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 35, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.6 }}
           transition={{
             duration: 0.8,

@@ -7,7 +7,7 @@ import MobileMenu from "./MobileMenu";
 export default function SiteHeader() {
   return (
     <header className="fixed left-0 top-0 z-50 w-full border-b border-black/10 bg-white/90 backdrop-blur-xl">
-      <div className="relative mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
+      <div className="site-container relative flex items-center justify-between py-4">
         <Link href="/" className="flex shrink-0 items-center gap-3">
           <Image
             src="/rpians-logo.png"
@@ -34,7 +34,7 @@ export default function SiteHeader() {
         <div className="flex shrink-0 items-center gap-3">
           <Link
             href="/book-call"
-            className="hidden whitespace-nowrap rounded-lg border border-[#3b82f6]/40 px-5 py-3 text-sm font-bold text-[#1d4ed8] transition hover:scale-105 hover:border-[#3b82f6] md:block"
+            className="hidden whitespace-nowrap rounded-lg border border-[#3b82f6]/40 px-5 py-3 text-sm font-bold text-[#1d4ed8] transition hover:scale-105 hover:border-[#3b82f6] md:block lg:hidden xl:block"
           >
             Book a Call
           </Link>

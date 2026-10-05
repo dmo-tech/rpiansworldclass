@@ -62,9 +62,9 @@ export default function SystemsPage() {
 
         <section
           id="systems"
-          className="border-y border-black/10 bg-black/[0.02] px-6 py-28"
+          className="border-y border-black/10 bg-black/[0.02] py-28"
         >
-          <div className="mx-auto max-w-7xl">
+          <div className="site-container">
             <Reveal direction="up" className="mx-auto max-w-4xl text-center">
               <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
                 Our Proven Systems

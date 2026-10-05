@@ -22,8 +22,8 @@ export default function AboutPage() {
       <div className="pt-20">
         {/* ABOUT */}
 
-        <section id="about" className="px-6 py-28">
-          <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-2">
+        <section id="about" className="py-28">
+          <div className="site-container grid items-center gap-14 lg:grid-cols-2">
             <Reveal direction="left">
               <div className="relative h-[560px] overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900">
                 <ParallaxImage

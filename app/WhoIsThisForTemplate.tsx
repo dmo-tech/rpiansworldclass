@@ -25,8 +25,8 @@ export default function WhoIsThisForTemplate({
       <SiteHeader />
 
       <div className="pt-20">
-        <section className="relative overflow-hidden border-y border-black/10 px-6 py-28">
-          <div className="relative mx-auto max-w-5xl">
+        <section className="relative overflow-hidden border-y border-black/10 py-28">
+          <div className="site-container relative">
             <Reveal direction="up" className="text-center">
               <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
                 {eyebrow}

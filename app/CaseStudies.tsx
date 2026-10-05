@@ -181,8 +181,8 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
 
 export default function CaseStudies() {
   return (
-    <section id="case-studies" className="border-t border-black/10 px-6 py-28">
-      <div className="mx-auto max-w-6xl">
+    <section id="case-studies" className="border-t border-black/10 py-28">
+      <div className="site-container">
         <Reveal direction="up" className="mx-auto max-w-4xl text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
             Client Case Studies

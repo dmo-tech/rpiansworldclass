@@ -49,8 +49,8 @@ const socialLinks = [
 export default function SiteFooter() {
   return (
     <>
-      <footer className="border-t border-black/10 px-6 py-10">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-6 text-sm text-gray-500 md:flex-row">
+      <footer className="border-t border-black/10 py-10">
+        <div className="site-container flex flex-col justify-between gap-6 text-sm text-gray-500 md:flex-row">
           <div>
             <p className="font-semibold tracking-[0.2em] text-[#3b82f6]">
               RPIANS
@@ -112,8 +112,10 @@ export default function SiteFooter() {
           </div>
         </div>
 
-        <div className="mx-auto mt-8 max-w-7xl border-t border-black/10 pt-6 text-sm text-gray-600">
-          © 2026 RPIANS World Class Business Coaching LLP. All Rights Reserved.
+        <div className="site-container mt-8 text-sm text-gray-600">
+          <div className="border-t border-black/10 pt-6">
+            © 2026 RPIANS World Class Business Coaching LLP. All Rights Reserved.
+          </div>
         </div>
       </footer>
 

@@ -23,9 +23,10 @@ export default function Reveal({
   const hiddenStates = {
     up: { opacity: 0, y: 90 },
     down: { opacity: 0, y: -90 },
-    left: { opacity: 0, x: -100 },
-    right: { opacity: 0, x: 100 },
-    scale: { opacity: 0, scale: 0.86 },
+    // Only vertical motion, so boxes never shift off the shared container edges.
+    left: { opacity: 0, y: 60 },
+    right: { opacity: 0, y: 60 },
+    scale: { opacity: 0, y: 40 },
   };
 
   return (
@@ -36,9 +37,7 @@ export default function Reveal({
           ? undefined
           : {
               opacity: 1,
-              x: 0,
               y: 0,
-              scale: 1,
             }
       }
       viewport={{

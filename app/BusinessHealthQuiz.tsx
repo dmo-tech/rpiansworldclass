@@ -135,11 +135,11 @@ I would like to discuss my business diagnostic.`,
   return (
     <section
       id="business-health-quiz"
-      className="relative overflow-hidden border-y border-black/10 bg-black/[0.02] px-6 py-28"
+      className="relative overflow-hidden border-y border-black/10 bg-black/[0.02] py-28"
     >
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#3b82f6]/5 blur-[150px]" />
 
-      <div className="relative mx-auto max-w-5xl">
+      <div className="site-container relative">
         <div className="mx-auto max-w-4xl text-center">
           <motion.p
             initial={{
@@ -214,7 +214,7 @@ I would like to discuss my business diagnostic.`,
           </motion.p>
         </div>
 
-        <div className="mx-auto mt-14 max-w-3xl">
+        <div className="mt-14">
           <div className="mb-6">
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-500">

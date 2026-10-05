@@ -46,9 +46,9 @@ export default function TransformationJourney() {
   return (
     <section
       id="journey"
-      className="relative overflow-hidden border-y border-black/10 bg-black/[0.02] px-6 py-28"
+      className="relative overflow-hidden border-y border-black/10 bg-black/[0.02] py-28"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="site-container">
         <div className="mx-auto max-w-4xl text-center">
           <motion.p
             initial={{ opacity: 0, y: 25 }}
@@ -89,7 +89,7 @@ export default function TransformationJourney() {
           </motion.p>
         </div>
 
-        <div className="relative mx-auto mt-20 max-w-5xl">
+        <div className="relative mt-20">
           {/* Desktop centre line */}
 
           <div className="absolute bottom-0 left-1/2 top-0 hidden w-px -translate-x-1/2 bg-black/10 md:block">
@@ -114,12 +114,10 @@ export default function TransformationJourney() {
                   key={step.number}
                   initial={{
                     opacity: 0,
-                    x: isLeft ? -90 : 90,
                     y: 30,
                   }}
                   whileInView={{
                     opacity: 1,
-                    x: 0,
                     y: 0,
                   }}
                   viewport={{
@@ -191,14 +189,14 @@ export default function TransformationJourney() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 35 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.6 }}
           transition={{
             duration: 0.8,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="mx-auto mt-20 max-w-4xl rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-r from-[#3b82f6]/10 via-white to-[#3b82f6]/10 p-8 text-center md:p-12"
+          className="mt-20 rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-r from-[#3b82f6]/10 via-white to-[#3b82f6]/10 p-8 text-center md:p-12"
         >
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#3b82f6]">
             Final Transformation

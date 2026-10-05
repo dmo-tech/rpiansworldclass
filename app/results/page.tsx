@@ -39,9 +39,9 @@ export default function ResultsPage() {
 
         <section
           id="masterclass"
-          className="relative overflow-hidden border-y border-black/10 px-6 py-28"
+          className="relative overflow-hidden border-y border-black/10 py-28"
         >
-          <div className="relative mx-auto max-w-5xl">
+          <div className="site-container relative">
             <Reveal direction="up" className="text-center">
               <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
                 Exclusive for Serious Business Owners

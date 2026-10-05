@@ -52,9 +52,9 @@ export default function ProgramPageTemplate({
 
       <div className="pt-20">
         <section
-          className="relative overflow-hidden border-y border-black/10 px-6 py-28"
+          className="relative overflow-hidden border-y border-black/10 py-28"
         >
-          <div className="relative mx-auto max-w-5xl">
+          <div className="site-container relative">
             {photoSrc ? (
               <div className="grid items-center gap-12 lg:grid-cols-2">
                 <Reveal direction="up" className="text-center lg:text-left">

@@ -192,11 +192,11 @@ export default function ProfitLeakDiagnostic() {
     <section
       ref={sectionRef}
       id="profit-leak"
-      className="relative overflow-visible border-y border-black/10 bg-white px-6 py-28"
+      className="relative overflow-visible border-y border-black/10 bg-white py-28"
     >
       <div className="pointer-events-none absolute left-1/2 top-1/3 h-[550px] w-[550px] -translate-x-1/2 rounded-full bg-[#3b82f6]/5 blur-[160px]" />
 
-      <div className="relative mx-auto max-w-7xl">
+      <div className="site-container relative">
         <div className="mx-auto max-w-4xl text-center">
           <motion.p
             initial={{
@@ -281,13 +281,11 @@ export default function ProfitLeakDiagnostic() {
                 key={stage.number}
                 initial={{
                   opacity: 0,
-                  x: -80,
                   y: 40,
                   filter: "blur(6px)",
                 }}
                 whileInView={{
                   opacity: 1,
-                  x: 0,
                   y: 0,
                   filter: "blur(0px)",
                 }}
@@ -371,13 +369,11 @@ export default function ProfitLeakDiagnostic() {
               <motion.div
                 initial={{
                   opacity: 0,
-                  x: 80,
-                  scale: 0.95,
+                  y: 60,
                 }}
                 whileInView={{
                   opacity: 1,
-                  x: 0,
-                  scale: 1,
+                  y: 0,
                 }}
                 viewport={{
                   once: false,
