@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+import { formatInr } from "../plans";
 import { WHATSAPP_BASE_URL } from "../siteConfig";
 
 type ApplicationData = {
@@ -122,7 +123,7 @@ export default function PaymentPage() {
 
   const formattedPaymentAmount =
     paymentAmount != null
-      ? `₹${paymentAmount.toLocaleString("en-IN")}${
+      ? `${formatInr(paymentAmount)}${
           applicationData?.gstApplicable ? " + GST" : ""
         }`
       : null;
