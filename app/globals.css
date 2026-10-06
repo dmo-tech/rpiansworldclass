@@ -184,3 +184,24 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #3b82f6;
 }
+/* Next-session strip under the header */
+
+.session-ticker-track {
+  animation: sessionTicker 40s linear infinite;
+}
+
+.session-ticker:hover .session-ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes sessionTicker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .session-ticker-track {
+    animation: none;
+  }
+}

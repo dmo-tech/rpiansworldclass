@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import ActiveNavigation from "./ActiveNavigation";
 import MobileMenu from "./MobileMenu";
+import SessionTicker from "./SessionTicker";
 
 export default function SiteHeader() {
   return (
@@ -49,6 +50,8 @@ export default function SiteHeader() {
           <MobileMenu />
         </div>
       </div>
+
+      <SessionTicker />
     </header>
   );
 }
