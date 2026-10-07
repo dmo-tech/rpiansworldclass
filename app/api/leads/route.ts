@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
-
-
-  const GOOGLE_SHEET_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycby7gNgcO-id8ERU2igs7R8_oqRVr0gm9ZO8uvndLD3GEmvRywjH9yXvesrs1LwKjBY/exec";
+import { GOOGLE_SHEET_WEB_APP_URL } from "../../googleSheet";
 
 export async function POST(request: Request) {
   try {
