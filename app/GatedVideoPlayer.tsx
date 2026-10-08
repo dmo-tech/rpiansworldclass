@@ -10,12 +10,12 @@ import BookCallButton from "./BookCallButton";
 // watched to the "Video Views" tab of the Google Sheet (/api/video-views).
 
 const VIDEO_URL =
-  "https://worldclassbc.com/media/rpians-transformation-web.mp4";
+  "https://worldclassbc.com/media/rpians-transformation-v20-web.mp4";
 const POSTER_URL =
-  "https://worldclassbc.com/media/rpians-transformation-poster.jpg";
+  "https://worldclassbc.com/media/rpians-transformation-v20-poster.jpg";
 
 // Used for the time label until the browser has read the real duration.
-const FALLBACK_DURATION = 1373;
+const FALLBACK_DURATION = 1375;
 
 // Viewer may jump at most this far past the furthest point already watched
 // (covers normal timeupdate jitter).
@@ -25,7 +25,8 @@ const HEARTBEAT_MS = 60_000;
 const SAVE_PROGRESS_EVERY_SECONDS = 3;
 
 const VIEWER_KEY = "rpiansVideoViewer";
-const PROGRESS_KEY = "rpiansVideoProgress";
+// Versioned so progress saved on an older video doesn't resume the new one.
+const PROGRESS_KEY = "rpiansVideoProgressV20";
 
 const MILESTONES = [25, 50, 75];
 
