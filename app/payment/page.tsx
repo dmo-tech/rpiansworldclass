@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { formatInr } from "../plans";
 import { WHATSAPP_BASE_URL } from "../siteConfig";
@@ -108,6 +109,7 @@ export default function PaymentPage() {
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData) as ApplicationData;
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- sessionStorage is only readable after mount
         setApplicationData(parsedData);
       } catch {
         setApplicationData(null);
@@ -298,7 +300,7 @@ ${
           }}
           className="max-w-2xl"
         >
-          <a href="/" className="inline-flex items-center gap-3">
+          <Link href="/" className="inline-flex items-center gap-3">
             <Image
               src="/rpians-logo.png"
               alt="RPIANS logo"
@@ -316,7 +318,7 @@ ${
                 World Class Business Coaching
               </p>
             </div>
-          </a>
+          </Link>
 
           <p className="mt-12 text-sm font-semibold uppercase tracking-[0.25em] text-[#1d4ed8]">
             Strategic Business Diagnostic
@@ -569,12 +571,12 @@ ${
           </div>
 
           <div className="mt-6 border-t border-black/10 pt-5 text-center">
-            <a
+            <Link
               href="/#apply"
               className="text-sm font-medium text-gray-500 transition hover:text-[#1d4ed8]"
             >
               ← Edit application details
-            </a>
+            </Link>
           </div>
         </motion.section>
       </div>

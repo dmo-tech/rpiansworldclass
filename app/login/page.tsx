@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { FormEvent, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { WHATSAPP_BASE_URL } from "../siteConfig";
 
@@ -58,7 +59,7 @@ export default function LoginPage() {
       <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#3b82f6]/10 blur-[170px]" />
 
       <div className="relative w-full max-w-md">
-        <a href="/" className="mb-10 flex items-center justify-center gap-3">
+        <Link href="/" className="mb-10 flex items-center justify-center gap-3">
           <Image
             src="/rpians-logo.png"
             alt="RPIANS logo"
@@ -76,7 +77,7 @@ export default function LoginPage() {
               World Class Business Coaching
             </p>
           </div>
-        </a>
+        </Link>
 
         <motion.div
           initial={{
@@ -118,12 +119,12 @@ export default function LoginPage() {
                 Contact Us on WhatsApp
               </a>
 
-              <a
+              <Link
                 href="/"
                 className="mt-4 block w-full rounded-lg border border-[#3b82f6]/35 px-7 py-4 text-center font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10"
               >
                 Back to Website
-              </a>
+              </Link>
             </div>
           ) : (
             <AnimatePresence mode="wait">

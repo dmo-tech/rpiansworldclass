@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import Reveal from "../Reveal";
 
@@ -6,7 +7,7 @@ export default function TermsPage() {
   return (
     <main className="min-h-screen bg-white px-6 py-20 text-[#0f172a]">
       <div className="mx-auto max-w-4xl">
-        <a href="/" className="inline-flex items-center gap-2">
+        <Link href="/" className="inline-flex items-center gap-2">
           <Image
             src="/rpians-logo.png"
             alt="RPIANS logo"
@@ -15,7 +16,7 @@ export default function TermsPage() {
             className="h-7 w-auto"
           />
           <span className="text-[#3b82f6]">← Return to Home</span>
-        </a>
+        </Link>
 
         <p className="mt-12 text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
           Legal Information
