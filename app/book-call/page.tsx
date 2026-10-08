@@ -15,7 +15,7 @@ export default function BookCallPage() {
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
       <SiteHeader />
 
-      <section className="site-container pb-20 pt-40">
+      <section className="site-container pb-20 pt-32">
         <div className="text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
             Book a Call

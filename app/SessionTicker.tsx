@@ -1,6 +1,11 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useSyncExternalStore } from "react";
+
+// The strip advertises the Sunday session of the 1-Day program, so it only
+// shows on that program's page.
+const TICKER_PATH = "/programs/1-day";
 
 const SESSION_END_HOUR = 13; // Sessions run 9 AM – 1 PM IST
 
@@ -48,12 +53,18 @@ function getNextSessionLabel(): string {
 const subscribe = () => () => {};
 
 export default function SessionTicker() {
+  const pathname = usePathname();
+
   // Computed in the browser so the date never freezes at build time.
   const sessionDate = useSyncExternalStore(
     subscribe,
     getNextSessionLabel,
     () => null,
   );
+
+  if (pathname !== TICKER_PATH) {
+    return null;
+  }
 
   const message = sessionDate
     ? `Next Session: ${sessionDate} · 9:00 AM – 1:00 PM (IST)`
