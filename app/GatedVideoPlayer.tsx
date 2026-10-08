@@ -160,20 +160,20 @@ const validateViewer = (viewer: Viewer): FormErrors => {
   const errors: FormErrors = {};
 
   if (viewer.fullName.trim().length < 2) {
-    errors.fullName = "Kripya apna naam likhiye.";
+    errors.fullName = "Please enter your name.";
   }
 
   if (!viewer.phone) {
-    errors.phone = "Kripya apna mobile number likhiye.";
+    errors.phone = "Please enter your mobile number.";
   } else if (!/^[6-9]\d{9}$/.test(viewer.phone)) {
     errors.phone =
-      "Mobile number 10 digit ka hona chahiye aur 6, 7, 8 ya 9 se shuru hona chahiye.";
+      "Mobile number must be 10 digits and start with 6, 7, 8 or 9.";
   }
 
   if (!viewer.email.trim()) {
-    errors.email = "Kripya apna email likhiye.";
+    errors.email = "Please enter your email.";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(viewer.email.trim())) {
-    errors.email = "Kripya sahi email likhiye (jaise naam@gmail.com).";
+    errors.email = "Please enter a valid email (e.g. name@gmail.com).";
   }
 
   return errors;
@@ -840,7 +840,7 @@ export default function GatedVideoPlayer() {
 
           {phase !== "ended" && (
             <p className="pointer-events-none absolute left-2 right-2 top-2 mx-auto w-fit rounded-full bg-black/65 px-3 py-1 text-center text-[10px] font-medium leading-snug text-white sm:left-4 sm:right-auto sm:top-4 sm:mx-0 sm:text-xs">
-              Poora video dekhiye — beech mein rok ya aage nahi kar sakte
+              Please watch the full video — it can’t be paused or skipped
             </p>
           )}
 
@@ -857,8 +857,8 @@ export default function GatedVideoPlayer() {
 
               <p className="mt-3 text-xs font-medium text-white [text-shadow:0_1px_4px_rgb(0_0_0/0.8)] sm:mt-4 sm:text-sm">
                 {currentTime > 0
-                  ? `Wahin se dekhiye jahan chhoda tha (${formatTime(currentTime)})`
-                  : "Video dekhne ke liye Play dabaiye"}
+                  ? `Continue where you left off (${formatTime(currentTime)})`
+                  : "Press Play to watch the video"}
               </p>
             </div>
           )}
@@ -923,13 +923,10 @@ export default function GatedVideoPlayer() {
 
           {phase === "ended" && (
             <div className="absolute inset-0 flex flex-col items-center justify-center overflow-y-auto bg-neutral-950/90 px-4 py-3 text-center text-white">
-              <p className="font-serif text-base sm:text-3xl">
-                Ab aapki baari hai
-              </p>
+              <p className="font-serif text-base sm:text-3xl">Your next step</p>
 
               <p className="mt-1 hidden max-w-md text-sm text-white/70 sm:block">
-                Apne business ko system-driven banane ke liye agla kadam
-                uthaiye.
+                Take the next step towards a system-driven business.
               </p>
 
               <div className="mt-3 flex w-full flex-col items-center justify-center gap-2 sm:mt-6 sm:flex-row sm:gap-4">
@@ -948,7 +945,7 @@ export default function GatedVideoPlayer() {
                 onClick={handleReplay}
                 className="mt-2 text-xs text-white/60 underline underline-offset-4 hover:text-white sm:mt-5 sm:text-sm"
               >
-                Video dobara dekhein
+                Watch again
               </button>
             </div>
           )}
@@ -957,9 +954,9 @@ export default function GatedVideoPlayer() {
 
       {viewer && (
         <p className="mt-3 text-center text-xs text-gray-500">
-          Aap{" "}
-          <span className="font-semibold text-gray-700">{viewer.fullName}</span>{" "}
-          ke naam se dekh rahe hain.{" "}
+          Watching as{" "}
+          <span className="font-semibold text-gray-700">{viewer.fullName}</span>
+          .{" "}
           <button
             type="button"
             onClick={handleNotYou}
@@ -1000,7 +997,7 @@ export default function GatedVideoPlayer() {
                 id="video-gate-title"
                 className="mt-2 pr-8 font-serif text-2xl text-gray-900"
               >
-                Video dekhne se pehle apni details bhariye
+                Enter your details to watch the video
               </h3>
 
               <form
@@ -1013,7 +1010,7 @@ export default function GatedVideoPlayer() {
                     htmlFor="video-gate-name"
                     className="text-sm font-semibold text-gray-700"
                   >
-                    Naam
+                    Name
                   </label>
                   <input
                     id="video-gate-name"
@@ -1023,7 +1020,7 @@ export default function GatedVideoPlayer() {
                     onChange={(event) =>
                       setFormData({ ...formData, fullName: event.target.value })
                     }
-                    placeholder="Aapka poora naam"
+                    placeholder="Your full name"
                     className="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 text-base text-gray-900 outline-none transition focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20"
                   />
                   {formErrors.fullName && (
@@ -1084,7 +1081,7 @@ export default function GatedVideoPlayer() {
                     onChange={(event) =>
                       setFormData({ ...formData, email: event.target.value })
                     }
-                    placeholder="naam@gmail.com"
+                    placeholder="name@gmail.com"
                     className="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 text-base text-gray-900 outline-none transition focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20"
                   />
                   {formErrors.email && (
@@ -1099,11 +1096,11 @@ export default function GatedVideoPlayer() {
                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-4 font-bold text-white transition hover:scale-[1.02]"
                 >
                   <PlayIcon className="h-5 w-5" />
-                  Video Dekhein
+                  Watch Video
                 </button>
 
                 <p className="text-center text-xs text-gray-400">
-                  Aapki details sirf RPIANS team ke paas surakshit rahengi.
+                  Your details are safe with the RPIANS team.
                 </p>
               </form>
             </div>
