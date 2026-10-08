@@ -42,6 +42,8 @@ export async function POST(request: Request) {
     fullName: text(body.fullName, 100),
     phone: text(body.phone, 15),
     email: text(body.email, 150),
+    occupation: text(body.occupation, 40),
+    revenue: text(body.revenue, 40),
     maxPercent: Math.round(clampNumber(body.maxPercent, 0, 100)),
     minutesWatched:
       Math.round(clampNumber(body.minutesWatched, 0, 600) * 10) / 10,

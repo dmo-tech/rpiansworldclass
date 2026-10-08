@@ -6,7 +6,7 @@ import ApplyButton from "./ApplyButton";
 import BeforeAfter from "./BeforeAfter";
 import BookCallButton from "./BookCallButton";
 import BusinessHealthQuiz from "./BusinessHealthQuiz";
-import GatedVideoPlayer from "./GatedVideoPlayer";
+import HomeVideoShowcase from "./HomeVideoShowcase";
 import MouseGlow from "./MouseGlow";
 import ProfitLeakDiagnostic from "./ProfitLeakDiagnostic";
 import Reveal from "./Reveal";
@@ -63,7 +63,7 @@ const faqs = [
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
+    <main className="relative min-h-screen overflow-x-clip bg-white text-[#0f172a]">
       <ScrollProgress />
       <MouseGlow />
 
@@ -114,12 +114,12 @@ export default function Home() {
                   Apply to Work With Us
                 </ApplyButton>
 
-                <a
-                  href="#video"
+                <Link
+                  href="/watch"
                   className="w-full rounded-lg border border-[#3b82f6]/60 px-9 py-3 text-center text-sm font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10 sm:w-auto md:py-4 md:text-base"
                 >
                   Watch the Transformation
-                </a>
+                </Link>
               </div>
 
               <Link
@@ -132,6 +132,10 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* VIDEO */}
+
+      <HomeVideoShowcase />
 
       {/* STATS */}
 
@@ -168,43 +172,6 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
-
-      {/* VIDEO */}
-
-      <section id="video" className="py-24">
-        <Reveal direction="up" className="site-container text-center">
-          <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
-            Discover the RPIANS System
-          </p>
-
-          <h2 className="mt-5 font-serif text-4xl md:text-6xl">
-            <AnimatedWords
-              text="Watch How Business Owners"
-              stagger={0.09}
-              className="justify-center"
-            />
-
-            <span className="mt-2 block text-[#1d4ed8]">
-              <AnimatedWords
-                text="Transform Their Business"
-                delay={0.25}
-                stagger={0.1}
-                className="justify-center"
-              />
-            </span>
-          </h2>
-
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600">
-            Learn how systems, dashboards, accountability and implementation
-            can convert an owner-dependent business into a system-driven
-            organisation.
-          </p>
-
-          <Reveal direction="up" delay={0.25}>
-            <GatedVideoPlayer />
-          </Reveal>
-        </Reveal>
       </section>
 
       <BeforeAfter />

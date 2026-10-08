@@ -1,18 +1,22 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  FormEvent,
+  Ref,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import ApplyButton from "./ApplyButton";
 import BookCallButton from "./BookCallButton";
+import { VIDEO_POSTER_URL, VIDEO_URL } from "./siteConfig";
 
-// Self-hosted video that asks for name / mobile / email before it plays,
+// Self-hosted video that asks for the viewer's details before it plays,
 // can't be paused or skipped forward, and reports how much each viewer
 // watched to the "Video Views" tab of the Google Sheet (/api/video-views).
-
-const VIDEO_URL =
-  "https://worldclassbc.com/media/rpians-transformation-v20-web.mp4";
-const POSTER_URL =
-  "https://worldclassbc.com/media/rpians-transformation-v20-poster.jpg";
 
 // Used for the time label until the browser has read the real duration.
 const FALLBACK_DURATION = 1375;
@@ -71,10 +75,51 @@ const BLOCKED_KEYS = new Set([
   "9",
 ]);
 
+export const OCCUPATION_OPTIONS = [
+  "Retailer",
+  "Wholesaler",
+  "Distributor",
+  "Manufacturer",
+  "Service business",
+  "Other",
+];
+
+export const REVENUE_OPTIONS = [
+  "Below ₹5L",
+  "₹5L–₹25L",
+  "₹25L–₹1Cr",
+  "₹1Cr–₹5Cr",
+  "Above ₹5Cr",
+];
+
 type Viewer = {
   fullName: string;
   phone: string;
   email: string;
+  // Missing on viewers saved before these questions were added.
+  occupation: string;
+  revenue: string;
+};
+
+const EMPTY_VIEWER: Viewer = {
+  fullName: "",
+  phone: "",
+  email: "",
+  occupation: "",
+  revenue: "",
+};
+
+export type GatedVideoPlayerHandle = {
+  // Same as pressing the Play button: plays straight away for a saved
+  // viewer, otherwise opens the details form first.
+  open: () => void;
+};
+
+type GatedVideoPlayerProps = {
+  ref?: Ref<GatedVideoPlayerHandle>;
+  // Called synchronously right before play(), still inside the click /
+  // submit, so the page can make the player visible first.
+  onReveal?: () => void;
 };
 
 type SavedProgress = {
@@ -177,6 +222,14 @@ const validateViewer = (viewer: Viewer): FormErrors => {
     errors.email = "Please enter a valid email (e.g. name@gmail.com).";
   }
 
+  if (!OCCUPATION_OPTIONS.includes(viewer.occupation)) {
+    errors.occupation = "Please choose what you currently do.";
+  }
+
+  if (!REVENUE_OPTIONS.includes(viewer.revenue)) {
+    errors.revenue = "Please choose your current monthly revenue.";
+  }
+
   return errors;
 };
 
@@ -236,18 +289,98 @@ function FullscreenIcon({ active }: { active: boolean }) {
   );
 }
 
-export default function GatedVideoPlayer() {
+function IndiaFlag() {
+  return (
+    <svg
+      viewBox="0 0 30 20"
+      aria-hidden="true"
+      className="h-4 w-6 shrink-0 rounded-sm ring-1 ring-black/10"
+    >
+      <rect width="30" height="20" fill="#fff" />
+      <rect width="30" height="6.67" fill="#FF9933" />
+      <rect y="13.33" width="30" height="6.67" fill="#138808" />
+      <circle
+        cx="15"
+        cy="10"
+        r="2.6"
+        fill="none"
+        stroke="#000080"
+        strokeWidth="0.8"
+      />
+    </svg>
+  );
+}
+
+const fieldBaseClass =
+  "mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 text-base outline-none transition focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20";
+
+const fieldClass = `${fieldBaseClass} text-gray-900`;
+
+function SelectField({
+  id,
+  label,
+  value,
+  options,
+  error,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  options: string[];
+  error?: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="text-sm font-semibold text-gray-700">
+        {label}
+      </label>
+      <div className="relative">
+        <select
+          id={id}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className={`${fieldBaseClass} appearance-none bg-white pr-10 ${
+            value ? "text-gray-900" : "text-gray-400"
+          }`}
+        >
+          <option value="" disabled>
+            Select an option
+          </option>
+          {options.map((option) => (
+            <option key={option} value={option} className="text-gray-900">
+              {option}
+            </option>
+          ))}
+        </select>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          aria-hidden="true"
+          className="pointer-events-none absolute right-4 top-1/2 mt-0.5 h-4 w-4 -translate-y-1/2 text-gray-500"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </div>
+      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+    </div>
+  );
+}
+
+export default function GatedVideoPlayer({
+  ref,
+  onReveal,
+}: GatedVideoPlayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<WebkitVideo>(null);
 
   const [phase, setPhase] = useState<Phase>("idle");
   const [viewer, setViewer] = useState<Viewer | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [formData, setFormData] = useState<Viewer>({
-    fullName: "",
-    phone: "",
-    email: "",
-  });
+  const [formData, setFormData] = useState<Viewer>(EMPTY_VIEWER);
   const [formErrors, setFormErrors] = useState<FormErrors>({});
 
   const [currentTime, setCurrentTime] = useState(0);
@@ -357,9 +490,12 @@ export default function GatedVideoPlayer() {
 
   // Restore the saved viewer and, after a refresh, the last position.
   useEffect(() => {
-    const savedViewer = readStorage<Viewer>(VIEWER_KEY);
+    const stored = readStorage<Partial<Viewer>>(VIEWER_KEY);
 
-    if (savedViewer?.fullName && savedViewer.phone && savedViewer.email) {
+    // Viewers saved before occupation / revenue were asked still count as
+    // having filled the form.
+    if (stored?.fullName && stored.phone && stored.email) {
+      const savedViewer = { ...EMPTY_VIEWER, ...stored };
       viewerRef.current = savedViewer;
       // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is only readable after mount
       setViewer(savedViewer);
@@ -408,6 +544,7 @@ export default function GatedVideoPlayer() {
 
     allowPauseRef.current = false;
     video.playbackRate = 1;
+    onReveal?.();
     updatePhase("playing");
 
     // play() must be called straight from the click / submit so mobile
@@ -430,6 +567,14 @@ export default function GatedVideoPlayer() {
     }
   };
 
+  useImperativeHandle(ref, () => ({ open: handlePlayClick }));
+
+  // Typing in a field clears that field's error straight away.
+  const updateField = (field: keyof Viewer, value: string) => {
+    setFormData((current) => ({ ...current, [field]: value }));
+    setFormErrors((current) => ({ ...current, [field]: undefined }));
+  };
+
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -437,6 +582,8 @@ export default function GatedVideoPlayer() {
       fullName: formData.fullName.trim(),
       phone: normalizePhone(formData.phone),
       email: formData.email.trim().toLowerCase(),
+      occupation: formData.occupation,
+      revenue: formData.revenue,
     };
 
     const errors = validateViewer(cleaned);
@@ -467,7 +614,7 @@ export default function GatedVideoPlayer() {
     removeStorage(VIEWER_KEY);
     viewerRef.current = null;
     setViewer(null);
-    setFormData({ fullName: "", phone: "", email: "" });
+    setFormData(EMPTY_VIEWER);
     setFormErrors({});
     setCurrentTime(0);
     updatePhase("idle");
@@ -815,7 +962,7 @@ export default function GatedVideoPlayer() {
 
   return (
     <>
-      <div className="mx-auto mt-12 max-w-5xl overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900">
+      <div className="mx-auto w-full max-w-5xl overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900 shadow-2xl shadow-blue-950/20">
         <div
           ref={containerRef}
           onContextMenu={(event) => event.preventDefault()}
@@ -826,7 +973,7 @@ export default function GatedVideoPlayer() {
           <video
             ref={videoRef}
             src={VIDEO_URL}
-            poster={POSTER_URL}
+            poster={VIDEO_POSTER_URL}
             preload="metadata"
             playsInline
             controlsList="nodownload noplaybackrate noremoteplayback"
@@ -971,7 +1118,7 @@ export default function GatedVideoPlayer() {
       {isFormOpen &&
         createPortal(
           <div
-            className="fixed inset-0 z-[120] flex items-end justify-center bg-black/60 p-0 backdrop-blur-sm sm:items-center sm:p-4"
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
             onClick={() => setIsFormOpen(false)}
           >
             <div
@@ -979,7 +1126,7 @@ export default function GatedVideoPlayer() {
               aria-modal="true"
               aria-labelledby="video-gate-title"
               onClick={(event) => event.stopPropagation()}
-              className="relative max-h-[92vh] w-full max-w-md overflow-y-auto rounded-t-3xl bg-white p-6 text-left shadow-2xl sm:rounded-3xl sm:p-8"
+              className="relative max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl bg-white p-6 text-left shadow-2xl sm:p-8"
             >
               <button
                 type="button"
@@ -990,15 +1137,11 @@ export default function GatedVideoPlayer() {
                 ×
               </button>
 
-              <p className="text-xs uppercase tracking-[0.25em] text-[#3b82f6]">
-                RPIANS Video
-              </p>
-
               <h3
                 id="video-gate-title"
-                className="mt-2 pr-8 font-serif text-2xl text-gray-900"
+                className="pr-8 font-serif text-2xl font-bold leading-snug text-gray-900"
               >
-                Enter your details to watch the video
+                Enter your details below to watch the full video
               </h3>
 
               <form
@@ -1019,49 +1162,14 @@ export default function GatedVideoPlayer() {
                     autoComplete="name"
                     value={formData.fullName}
                     onChange={(event) =>
-                      setFormData({ ...formData, fullName: event.target.value })
+                      updateField("fullName", event.target.value)
                     }
                     placeholder="Your full name"
-                    className="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 text-base text-gray-900 outline-none transition focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20"
+                    className={fieldClass}
                   />
                   {formErrors.fullName && (
                     <p className="mt-1 text-sm text-red-600">
                       {formErrors.fullName}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="video-gate-phone"
-                    className="text-sm font-semibold text-gray-700"
-                  >
-                    Mobile
-                  </label>
-                  <div className="mt-1 flex rounded-xl border border-gray-300 transition focus-within:border-[#3b82f6] focus-within:ring-2 focus-within:ring-[#3b82f6]/20">
-                    <span className="flex items-center border-r border-gray-200 px-3 text-base text-gray-500">
-                      +91
-                    </span>
-                    <input
-                      id="video-gate-phone"
-                      type="tel"
-                      inputMode="numeric"
-                      autoComplete="tel-national"
-                      maxLength={10}
-                      value={formData.phone}
-                      onChange={(event) =>
-                        setFormData({
-                          ...formData,
-                          phone: normalizePhone(event.target.value),
-                        })
-                      }
-                      placeholder="10 digit mobile number"
-                      className="w-full rounded-r-xl px-4 py-3 text-base text-gray-900 outline-none"
-                    />
-                  </div>
-                  {formErrors.phone && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {formErrors.phone}
                     </p>
                   )}
                 </div>
@@ -1080,10 +1188,10 @@ export default function GatedVideoPlayer() {
                     autoComplete="email"
                     value={formData.email}
                     onChange={(event) =>
-                      setFormData({ ...formData, email: event.target.value })
+                      updateField("email", event.target.value)
                     }
                     placeholder="name@gmail.com"
-                    className="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 text-base text-gray-900 outline-none transition focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20"
+                    className={fieldClass}
                   />
                   {formErrors.email && (
                     <p className="mt-1 text-sm text-red-600">
@@ -1092,16 +1200,78 @@ export default function GatedVideoPlayer() {
                   )}
                 </div>
 
+                <div>
+                  <label
+                    htmlFor="video-gate-phone"
+                    className="text-sm font-semibold text-gray-700"
+                  >
+                    Mobile
+                  </label>
+                  <div className="mt-1 flex rounded-xl border border-gray-300 transition focus-within:border-[#3b82f6] focus-within:ring-2 focus-within:ring-[#3b82f6]/20">
+                    <span className="flex items-center gap-2 border-r border-gray-200 px-3 text-base text-gray-600">
+                      <IndiaFlag />
+                      +91
+                    </span>
+                    <input
+                      id="video-gate-phone"
+                      type="tel"
+                      inputMode="numeric"
+                      autoComplete="tel-national"
+                      maxLength={10}
+                      value={formData.phone}
+                      onChange={(event) =>
+                        updateField("phone", normalizePhone(event.target.value))
+                      }
+                      placeholder="10 digit mobile number"
+                      className="w-full min-w-0 rounded-r-xl px-4 py-3 text-base text-gray-900 outline-none"
+                    />
+                  </div>
+                  {formErrors.phone && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {formErrors.phone}
+                    </p>
+                  )}
+                </div>
+
+                <SelectField
+                  id="video-gate-occupation"
+                  label="What do you currently do?"
+                  value={formData.occupation}
+                  options={OCCUPATION_OPTIONS}
+                  error={formErrors.occupation}
+                  onChange={(occupation) =>
+                    updateField("occupation", occupation)
+                  }
+                />
+
+                <SelectField
+                  id="video-gate-revenue"
+                  label="Current monthly revenue"
+                  value={formData.revenue}
+                  options={REVENUE_OPTIONS}
+                  error={formErrors.revenue}
+                  onChange={(revenue) => updateField("revenue", revenue)}
+                />
+
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-4 font-bold text-white transition hover:scale-[1.02]"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-4 text-lg font-bold uppercase tracking-wide text-white shadow-lg shadow-blue-600/25 transition hover:scale-[1.02]"
                 >
                   <PlayIcon className="h-5 w-5" />
-                  Watch Video
+                  Watch Now
                 </button>
 
-                <p className="text-center text-xs text-gray-400">
-                  Your details are safe with the RPIANS team.
+                <p className="text-center text-xs leading-5 text-gray-400">
+                  By clicking Watch Now, you agree that the RPIANS team may
+                  contact you by call, WhatsApp or email. See our{" "}
+                  <a
+                    href="/privacy-policy"
+                    target="_blank"
+                    className="underline underline-offset-2 hover:text-gray-600"
+                  >
+                    Privacy Policy
+                  </a>
+                  .
                 </p>
               </form>
             </div>
