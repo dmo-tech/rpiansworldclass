@@ -71,71 +71,73 @@ export default function Home() {
 
       <SiteHeader />
 
-      {/* HERO */}
+      {/* HERO + VIDEO share one background, so there is no seam between them */}
 
-      <section
-        id="home"
-        className="luxury-background relative flex min-h-[100dvh] flex-col justify-center pb-10 pt-24 md:pt-28"
-      >
-        <div className="site-container relative z-10">
-          <Reveal direction="up" className="text-center">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6] md:mb-6 md:tracking-[0.4em]">
-              India’s Business Automation and Profit Coaching Movement
-            </p>
-
-            <h1 className="font-serif text-3xl font-semibold leading-tight sm:text-5xl md:text-6xl">
-              <AnimatedWords
-                text="Business Automation And"
-                stagger={0.12}
-                className="justify-center"
-              />
-
-              <span className="mt-2 block md:mt-3">
-                <AnimatedWords
-                  text="Profit Mastery Strategy"
-                  delay={0.35}
-                  stagger={0.14}
-                  className="text-[#1d4ed8] justify-center"
-                />
-              </span>
-            </h1>
-
-            <Reveal direction="up" delay={0.5}>
-              <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-gray-600 sm:text-base md:mt-7 md:text-lg md:leading-8">
-                Run your business on autopilot mode, build an accountable
-                team, control inventory and cash flow, and multiply your
-                profit every year with proven business systems.
+      <div className="luxury-background">
+        <section
+          id="home"
+          className="relative flex min-h-[100dvh] flex-col justify-center pb-10 pt-24 md:pt-28"
+        >
+          <div className="site-container relative z-10">
+            <Reveal direction="up" className="text-center">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6] md:mb-6 md:tracking-[0.4em]">
+                India’s Business Automation and Profit Coaching Movement
               </p>
-            </Reveal>
 
-            <Reveal direction="up" delay={0.65}>
-              <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4 md:mt-10">
-                <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-9 py-3 text-sm font-bold text-white transition hover:scale-105 sm:w-auto md:py-4 md:text-base">
-                  Apply to Work With Us
-                </ApplyButton>
+              <h1 className="font-serif text-3xl font-semibold leading-tight sm:text-5xl md:text-6xl">
+                <AnimatedWords
+                  text="Business Automation And"
+                  stagger={0.12}
+                  className="justify-center"
+                />
+
+                <span className="mt-2 block md:mt-3">
+                  <AnimatedWords
+                    text="Profit Mastery Strategy"
+                    delay={0.35}
+                    stagger={0.14}
+                    className="text-[#1d4ed8] justify-center"
+                  />
+                </span>
+              </h1>
+
+              <Reveal direction="up" delay={0.5}>
+                <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-gray-600 sm:text-base md:mt-7 md:text-lg md:leading-8">
+                  Run your business on autopilot mode, build an accountable
+                  team, control inventory and cash flow, and multiply your
+                  profit every year with proven business systems.
+                </p>
+              </Reveal>
+
+              <Reveal direction="up" delay={0.65}>
+                <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4 md:mt-10">
+                  <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-9 py-3 text-sm font-bold text-white transition hover:scale-105 sm:w-auto md:py-4 md:text-base">
+                    Apply to Work With Us
+                  </ApplyButton>
+
+                  <Link
+                    href="/watch"
+                    className="w-full rounded-lg border border-[#3b82f6]/60 px-9 py-3 text-center text-sm font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10 sm:w-auto md:py-4 md:text-base"
+                  >
+                    Watch the Transformation
+                  </Link>
+                </div>
 
                 <Link
-                  href="/watch"
-                  className="w-full rounded-lg border border-[#3b82f6]/60 px-9 py-3 text-center text-sm font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10 sm:w-auto md:py-4 md:text-base"
+                  href={`/book-call?from=${encodeURIComponent("Home - Hero")}`}
+                  className="mt-4 inline-block text-sm font-semibold text-[#1d4ed8] underline-offset-4 hover:underline md:mt-5"
                 >
-                  Watch the Transformation
+                  Not ready to apply? Book a call →
                 </Link>
-              </div>
-
-              <Link
-                href={`/book-call?from=${encodeURIComponent("Home - Hero")}`}
-                className="mt-4 inline-block text-sm font-semibold text-[#1d4ed8] underline-offset-4 hover:underline md:mt-5"
-              >
-                Not ready to apply? Book a call →
-              </Link>
+              </Reveal>
             </Reveal>
-          </Reveal>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* VIDEO */}
+        {/* VIDEO */}
 
-      <HomeVideoShowcase />
+        <HomeVideoShowcase />
+      </div>
 
       {/* STATS */}
 
