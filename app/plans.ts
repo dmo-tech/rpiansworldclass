@@ -12,7 +12,7 @@ export const plans: Plan[] = [
     label: "1 Day",
     description:
       "A focused one-day session to fix your biggest business bottleneck.",
-    amount: 999,
+    amount: 1199,
   },
   {
     id: "1-month",
@@ -34,6 +34,13 @@ export const plans: Plan[] = [
     description:
       "One-on-one mentorship with direct access to Rajesh Kumar Kare.",
     amount: 15000000,
+  },
+  {
+    id: "strategy-call",
+    label: "Book a Strategy Call",
+    description:
+      "A one-on-one strategy call with the RPIANS team to understand your business and recommend the right program.",
+    amount: 999,
   },
 ];
 

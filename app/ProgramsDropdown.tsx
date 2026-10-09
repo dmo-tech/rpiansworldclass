@@ -20,6 +20,10 @@ const programs = [
     href: "/programs/personal-mentorship",
     label: "Personal Mentorship",
   },
+  {
+    href: "/register?plan=strategy-call",
+    label: "Book a Strategy Call",
+  },
 ];
 
 export default function ProgramsDropdown() {
