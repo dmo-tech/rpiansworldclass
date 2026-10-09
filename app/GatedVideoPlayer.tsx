@@ -984,12 +984,6 @@ export default function GatedVideoPlayer({
           {/* Swallows clicks / taps / double-taps on the picture itself. */}
           <div aria-hidden="true" className="absolute inset-0" />
 
-          {phase !== "ended" && (
-            <p className="pointer-events-none absolute left-2 right-2 top-2 mx-auto w-fit rounded-full bg-black/65 px-3 py-1 text-center text-[10px] font-medium leading-snug text-white sm:left-4 sm:right-auto sm:top-4 sm:mx-0 sm:text-xs">
-              Please watch the full video — it can’t be paused or skipped
-            </p>
-          )}
-
           {phase === "idle" && (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/35">
               <button
