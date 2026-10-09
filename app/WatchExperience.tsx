@@ -3,12 +3,12 @@
 import { useRef, useState } from "react";
 import { flushSync } from "react-dom";
 
-import ApplyButton from "./ApplyButton";
+import BookCallButton from "./BookCallButton";
 import GatedVideoPlayer, { GatedVideoPlayerHandle } from "./GatedVideoPlayer";
 
 // /watch: a minimal landing with one "Get Started" button. It opens the
 // player's details form (or plays straight away for a saved viewer), then
-// the landing makes way for the player and the Apply Now button.
+// the landing makes way for the player and the Book a Call button.
 
 export default function WatchExperience() {
   const playerRef = useRef<GatedVideoPlayerHandle>(null);
@@ -70,9 +70,10 @@ export default function WatchExperience() {
             Ready to build a system-driven business?
           </p>
 
-          <ApplyButton className="mt-5 w-full max-w-md rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-12 py-5 text-xl font-bold text-white shadow-xl shadow-blue-600/30 transition hover:scale-105 sm:w-auto">
-            Apply Now
-          </ApplyButton>
+          <BookCallButton
+            from="Watch - Below Video"
+            className="mt-5 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-12 py-5 text-xl font-bold text-white! shadow-xl shadow-blue-600/30 transition hover:scale-105 sm:w-auto"
+          />
         </div>
       </section>
     </>
