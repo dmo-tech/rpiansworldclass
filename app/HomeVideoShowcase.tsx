@@ -85,8 +85,8 @@ function VideoCard({ className = "" }: { className?: string }) {
       </div>
 
       <div className="absolute inset-x-0 bottom-0 p-4 text-left text-white sm:p-8">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#93c5fd] sm:text-xs">
-          Discover the RPIANS System
+        <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-[#93c5fd] sm:text-xs sm:tracking-[0.3em]">
+          Business Automation And Profit Mastery Strategy
         </p>
         <p className="mt-1 font-serif text-lg font-semibold leading-tight sm:mt-2 sm:text-3xl md:text-4xl">
           Watch How Business Owners Transform Their Business
