@@ -59,20 +59,24 @@ export default function WatchExperience() {
       <section
         className={
           isRevealed
-            ? "mx-auto w-full max-w-5xl px-4 pb-16 pt-4 sm:pt-8"
+            ? "mx-auto w-full max-w-5xl px-4 pb-10 pt-4 sm:pt-6"
             : "hidden"
         }
       >
-        <GatedVideoPlayer ref={playerRef} onReveal={reveal} />
+        {/* On short screens the video shrinks to the screen height so the
+            Book a Call button below it is visible without scrolling. */}
+        <div className="mx-auto max-w-[max(20rem,calc((100dvh-18rem)*16/9))]">
+          <GatedVideoPlayer ref={playerRef} onReveal={reveal} />
+        </div>
 
-        <div className="mt-10 flex flex-col items-center text-center">
+        <div className="mt-6 flex flex-col items-center text-center">
           <p className="max-w-xl text-lg font-semibold text-[#0f172a] sm:text-xl">
             Ready to build a system-driven business?
           </p>
 
           <BookCallButton
             from="Watch - Below Video"
-            className="mt-5 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-12 py-5 text-xl font-bold text-white! shadow-xl shadow-blue-600/30 transition hover:scale-105 sm:w-auto"
+            className="mt-4 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-12 py-5 text-xl font-bold text-white! shadow-xl shadow-blue-600/30 transition hover:scale-105 sm:w-auto"
           />
         </div>
       </section>
