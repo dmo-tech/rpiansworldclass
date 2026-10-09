@@ -1,10 +1,15 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
+import {
+  PAYMENT_RECEIPT_STORAGE_KEY,
+  type PaymentReceipt,
+} from "../paymentReceipt";
 import { formatInr } from "../plans";
 import { WHATSAPP_BASE_URL } from "../siteConfig";
 
@@ -51,10 +56,28 @@ type RazorpayOptions = {
   };
 };
 
+type RazorpayPaymentFailedResponse = {
+  error?: {
+    description?: string;
+  };
+};
+
 type RazorpayInstance = {
   open: () => void;
-  on: (event: "payment.failed", handler: (response: unknown) => void) => void;
+  on: (
+    event: "payment.failed",
+    handler: (response: RazorpayPaymentFailedResponse) => void,
+  ) => void;
 };
+
+type PaymentState =
+  | { status: "idle" }
+  | { status: "processing" }
+  | { status: "verifying" }
+  | { status: "success" }
+  | { status: "error"; title: string; message: string };
+
+const VERIFY_TIMEOUT_MS = 30000;
 
 declare global {
   interface Window {
@@ -91,17 +114,52 @@ function loadRazorpayScript(): Promise<boolean> {
   });
 }
 
+function savePaymentReceipt(receipt: PaymentReceipt) {
+  try {
+    sessionStorage.setItem(
+      PAYMENT_RECEIPT_STORAGE_KEY,
+      JSON.stringify(receipt),
+    );
+  } catch {
+    // Storage can be blocked (e.g. private mode); /thank-you then shows its generic message.
+  }
+}
+
 export default function PaymentPage() {
+  const router = useRouter();
+
   const [applicationData, setApplicationData] =
     useState<ApplicationData | null>(null);
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [paymentStatus, setPaymentStatus] = useState<
-    "idle" | "processing" | "success" | "error"
-  >("idle");
+  const [payment, setPayment] = useState<PaymentState>({ status: "idle" });
 
-  const [paymentError, setPaymentError] = useState<string | null>(null);
+  // Mirrors `payment` so Razorpay callbacks and repeat clicks see the latest status.
+  const paymentRef = useRef<PaymentState>(payment);
+
+  const updatePayment = (next: PaymentState) => {
+    paymentRef.current = next;
+    setPayment(next);
+  };
+
+  const isPaymentBusy =
+    payment.status === "processing" ||
+    payment.status === "verifying" ||
+    payment.status === "success";
+
+  // Warn before leaving while the server is still confirming the payment.
+  useEffect(() => {
+    if (payment.status !== "verifying") return;
+
+    const warnBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+    };
+
+    window.addEventListener("beforeunload", warnBeforeUnload);
+
+    return () => window.removeEventListener("beforeunload", warnBeforeUnload);
+  }, [payment.status]);
 
   useEffect(() => {
     const savedData = sessionStorage.getItem("rpiansApplicationData");
@@ -133,16 +191,21 @@ export default function PaymentPage() {
   const handlePayment = async () => {
     if (!applicationData || paymentAmount == null) return;
 
-    setPaymentStatus("processing");
-    setPaymentError(null);
+    // Ignore repeat clicks while a checkout is open or a payment is being confirmed.
+    const currentStatus = paymentRef.current.status;
+    if (currentStatus !== "idle" && currentStatus !== "error") return;
+
+    updatePayment({ status: "processing" });
 
     const scriptLoaded = await loadRazorpayScript();
 
     if (!scriptLoaded || !window.Razorpay) {
-      setPaymentStatus("error");
-      setPaymentError(
-        "Could not load Razorpay checkout. Please check your connection and try again.",
-      );
+      updatePayment({
+        status: "error",
+        title: "Could not open payment",
+        message:
+          "Could not load Razorpay checkout. Please check your connection and try again.",
+      });
       return;
     }
 
@@ -169,6 +232,9 @@ export default function PaymentPage() {
         throw new Error(orderData.message || "Could not create payment order.");
       }
 
+      const planName =
+        applicationData.planSelected || "Business Diagnostic Booking";
+
       const razorpay = new window.Razorpay({
         key: orderData.keyId,
         amount: orderData.amount,
@@ -187,6 +253,8 @@ export default function PaymentPage() {
           color: "#1e3a8a",
         },
         handler: async (response) => {
+          updatePayment({ status: "verifying" });
+
           try {
             const verifyResponse = await fetch(
               "/api/razorpay/verify-payment",
@@ -196,6 +264,7 @@ export default function PaymentPage() {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify(response),
+                signal: AbortSignal.timeout(VERIFY_TIMEOUT_MS),
               },
             );
 
@@ -207,36 +276,59 @@ export default function PaymentPage() {
               );
             }
 
-            setPaymentStatus("success");
+            savePaymentReceipt({
+              planName,
+              amount: orderData.amount / 100,
+              paymentId: response.razorpay_payment_id,
+            });
+
+            updatePayment({ status: "success" });
+
+            // replace, so Back doesn't return to the payment step.
+            router.replace("/thank-you");
           } catch (error) {
-            setPaymentStatus("error");
-            setPaymentError(
-              error instanceof Error
-                ? error.message
-                : "Payment verification failed.",
-            );
+            console.error("Payment verification failed:", error);
+
+            updatePayment({
+              status: "error",
+              title: "We couldn't confirm your payment",
+              message: `If money was deducted from your account, please don't pay again. Contact our team on WhatsApp with your Payment ID ${response.razorpay_payment_id} and we will sort it out.`,
+            });
           }
         },
         modal: {
           ondismiss: () => {
-            setPaymentStatus((current) =>
-              current === "processing" ? "idle" : current,
-            );
+            if (paymentRef.current.status === "processing") {
+              updatePayment({
+                status: "error",
+                title: "Payment cancelled",
+                message:
+                  "The payment window was closed before the payment was completed. No payment was made.",
+              });
+            }
           },
         },
       });
 
-      razorpay.on("payment.failed", () => {
-        setPaymentStatus("error");
-        setPaymentError("Payment failed. Please try again.");
+      razorpay.on("payment.failed", (response) => {
+        updatePayment({
+          status: "error",
+          title: "Payment failed",
+          message: `${
+            response.error?.description ??
+            "Your payment could not be completed."
+          } If any amount was deducted, your bank will refund it automatically.`,
+        });
       });
 
       razorpay.open();
     } catch (error) {
-      setPaymentStatus("error");
-      setPaymentError(
-        error instanceof Error ? error.message : "Something went wrong.",
-      );
+      updatePayment({
+        status: "error",
+        title: "Could not start payment",
+        message:
+          error instanceof Error ? error.message : "Something went wrong.",
+      });
     }
   };
 
@@ -506,41 +598,40 @@ ${
             </div>
           </div>
 
-          {paymentStatus === "success" ? (
-            <div className="mt-7 rounded-xl border border-green-300 bg-green-50 p-6 text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-2xl text-green-600">
-                ✓
-              </div>
-
-              <p className="mt-4 text-lg font-bold text-green-800">
-                Payment Successful
-              </p>
-
-              <p className="mt-2 text-sm text-green-700">
-                Your booking payment of {formattedPaymentAmount} has been
-                confirmed. Our team will reach out to you shortly.
-              </p>
-
-              {/* TODO: Trigger WhatsApp booking confirmation message here once that integration is ready. */}
-            </div>
-          ) : paymentAmount != null ? (
+          {paymentAmount != null ? (
             <>
-              <button
-                type="button"
-                onClick={handlePayment}
-                disabled={!applicationData || paymentStatus === "processing"}
-                className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {paymentStatus === "processing"
-                  ? "Processing..."
-                  : `Pay ${formattedPaymentAmount}`}
-              </button>
+              {payment.status === "error" ? (
+                <div
+                  role="alert"
+                  className="mt-7 rounded-xl border border-red-200 bg-red-50 p-5"
+                >
+                  <p className="font-bold text-red-700">{payment.title}</p>
 
-              {paymentStatus === "error" && paymentError ? (
-                <p className="mt-3 text-center text-sm text-red-600">
-                  {paymentError}
-                </p>
-              ) : null}
+                  <p className="mt-2 text-sm leading-6 text-red-700">
+                    {payment.message}
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={handlePayment}
+                    disabled={!applicationData}
+                    className="mt-4 w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Try again
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handlePayment}
+                  disabled={!applicationData || isPaymentBusy}
+                  className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {isPaymentBusy
+                    ? "Processing..."
+                    : `Pay ${formattedPaymentAmount}`}
+                </button>
+              )}
 
               <a
                 href={`${WHATSAPP_BASE_URL}?text=${whatsappMessage}`}
@@ -580,6 +671,36 @@ ${
           </div>
         </motion.section>
       </div>
+
+      {payment.status === "verifying" || payment.status === "success" ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0f172a]/60 px-4 backdrop-blur-sm"
+        >
+          <div className="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-[0_30px_100px_rgba(0,0,0,0.3)]">
+            {payment.status === "verifying" ? (
+              <div className="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-black/10 border-t-[#3b82f6]" />
+            ) : (
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-2xl text-green-600">
+                ✓
+              </div>
+            )}
+
+            <p className="mt-6 text-lg font-bold">
+              {payment.status === "verifying"
+                ? "Confirming your payment, please don't close this page..."
+                : "Payment confirmed!"}
+            </p>
+
+            <p className="mt-2 text-sm text-gray-500">
+              {payment.status === "verifying"
+                ? "This usually takes a few seconds."
+                : "Taking you to the confirmation page..."}
+            </p>
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }
