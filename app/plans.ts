@@ -19,14 +19,14 @@ export const plans: Plan[] = [
     label: "1 Month",
     description:
       "Implement core business systems in one month with weekly reviews.",
-    amount: 9999,
+    amount: 19999,
   },
   {
     id: "10-month",
     label: "10 Month",
     description:
       "A complete business transformation mentorship journey.",
-    amount: null,
+    amount: 150000,
   },
   {
     id: "personal-mentorship",
