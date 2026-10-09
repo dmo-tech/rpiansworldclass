@@ -85,11 +85,9 @@ export const OCCUPATION_OPTIONS = [
 ];
 
 export const REVENUE_OPTIONS = [
-  "Below ₹5L",
-  "₹5L–₹25L",
-  "₹25L–₹1Cr",
-  "₹1Cr–₹5Cr",
-  "Above ₹5Cr",
+  "₹3 Cr – ₹5 Cr",
+  "₹5 Cr – ₹50 Cr",
+  "₹50 Cr – ₹500 Cr",
 ];
 
 type Viewer = {
@@ -227,7 +225,7 @@ const validateViewer = (viewer: Viewer): FormErrors => {
   }
 
   if (!REVENUE_OPTIONS.includes(viewer.revenue)) {
-    errors.revenue = "Please choose your current monthly revenue.";
+    errors.revenue = "Please choose your annual turnover.";
   }
 
   return errors;
@@ -1246,7 +1244,7 @@ export default function GatedVideoPlayer({
 
                 <SelectField
                   id="video-gate-revenue"
-                  label="Current monthly revenue"
+                  label="Annual Turnover"
                   value={formData.revenue}
                   options={REVENUE_OPTIONS}
                   error={formErrors.revenue}
