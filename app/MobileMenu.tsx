@@ -96,7 +96,9 @@ export default function MobileMenu() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full w-full border-t border-black/10 bg-white px-6 py-6 shadow-2xl">
+        // The header is fixed, so the menu scrolls inside itself; otherwise the
+        // Book a Call / Apply Now buttons at the bottom are cut off on phones.
+        <div className="absolute left-0 top-full max-h-[calc(100dvh-5rem)] w-full overflow-y-auto overscroll-contain border-t border-black/10 bg-white px-6 py-6 shadow-2xl">
           <nav className="flex flex-col gap-5 text-base text-gray-600">
             {links.map((link) => (
               <Link
