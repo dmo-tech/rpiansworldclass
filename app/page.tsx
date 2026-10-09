@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import AnimatedCounter from "./AnimatedCounter";
 import AnimatedWords from "./AnimatedWords";
 import ApplyButton from "./ApplyButton";
@@ -107,28 +105,6 @@ export default function Home() {
                   team, control inventory and cash flow, and multiply your
                   profit every year with proven business systems.
                 </p>
-              </Reveal>
-
-              <Reveal direction="up" delay={0.65}>
-                <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4 md:mt-10">
-                  <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-9 py-3 text-sm font-bold text-white transition hover:scale-105 sm:w-auto md:py-4 md:text-base">
-                    Apply to Work With Us
-                  </ApplyButton>
-
-                  <Link
-                    href="/watch"
-                    className="w-full rounded-lg border border-[#3b82f6]/60 px-9 py-3 text-center text-sm font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10 sm:w-auto md:py-4 md:text-base"
-                  >
-                    Watch the Transformation
-                  </Link>
-                </div>
-
-                <Link
-                  href={`/book-call?from=${encodeURIComponent("Home - Hero")}`}
-                  className="mt-4 inline-block text-sm font-semibold text-[#1d4ed8] underline-offset-4 hover:underline md:mt-5"
-                >
-                  Not ready to apply? Book a call →
-                </Link>
               </Reveal>
             </Reveal>
           </div>
