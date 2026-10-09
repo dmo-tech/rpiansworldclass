@@ -126,6 +126,14 @@ function savePaymentReceipt(receipt: PaymentReceipt) {
   }
 }
 
+// AbortSignal.timeout() is missing on older Safari (iOS 15), where it would
+// throw right after a successful payment; AbortController works everywhere.
+function timeoutSignal(ms: number): AbortSignal {
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), ms);
+  return controller.signal;
+}
+
 export default function PaymentPage() {
   const router = useRouter();
 
@@ -266,7 +274,7 @@ export default function PaymentPage() {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify(response),
-                signal: AbortSignal.timeout(VERIFY_TIMEOUT_MS),
+                signal: timeoutSignal(VERIFY_TIMEOUT_MS),
               },
             );
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { FormEvent, Suspense, useState } from "react";
+import { FormEvent, Suspense, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import SiteFooter from "../SiteFooter";
@@ -170,16 +170,29 @@ function RegisterForm() {
   const [fieldIndex, setFieldIndex] = useState(0);
   const [fieldError, setFieldError] = useState("");
 
+  // The previous question stays on screen while it animates out, and its input
+  // and buttons still act for that question. This ref lets them be ignored, so
+  // fast typing or a double Enter can't overwrite or skip a question.
+  const activeFieldIndexRef = useRef(0);
+
+  const goToField = (index: number) => {
+    activeFieldIndexRef.current = index;
+    setFieldIndex(index);
+  };
+
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const currentField = businessFields[fieldIndex];
   const isLastField = fieldIndex === businessFields.length - 1;
+  const isActiveField = () => activeFieldIndexRef.current === fieldIndex;
 
   const updateField = (
     field: keyof RegistrationData,
     value: string,
   ) => {
+    if (!isActiveField()) return;
+
     setFormData((current) => ({
       ...current,
       [field]: value,
@@ -247,6 +260,8 @@ function RegisterForm() {
   };
 
   const advanceField = (valueOverride?: string) => {
+    if (!isActiveField()) return;
+
     const value = valueOverride ?? formData[currentField.id];
     const error = validateField(currentField, value);
 
@@ -269,7 +284,7 @@ function RegisterForm() {
     if (isLastField) {
       setStep(3);
     } else {
-      setFieldIndex((current) => current + 1);
+      goToField(fieldIndex + 1);
     }
   };
 
@@ -279,7 +294,7 @@ function RegisterForm() {
     if (fieldIndex === 0) {
       setStep(1);
     } else {
-      setFieldIndex((current) => current - 1);
+      goToField(fieldIndex - 1);
     }
   };
 
