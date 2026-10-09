@@ -1,10 +1,14 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import Link from "next/link";
+import { FormEvent, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 
 import CallSlotPicker, { formatBookingDate as formatDate } from "./CallSlotPicker";
+import { plans } from "./plans";
+
+// A booked call is paid for as the "Book a Strategy Call" plan.
+const STRATEGY_CALL_PLAN = plans.find((plan) => plan.id === "strategy-call");
 
 type BookingData = {
   fullName: string;
@@ -29,12 +33,16 @@ type BookingCalendarProps = {
 };
 
 export default function BookingCalendar({ from }: BookingCalendarProps) {
+  const router = useRouter();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedSlot, setSelectedSlot] = useState("");
   const [formData, setFormData] = useState<BookingData>(initialData);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isBooked, setIsBooked] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
+  // Blocks a second submit before the disabled button re-renders, so a
+  // double click can't save the lead to the sheet twice.
+  const isRedirectingRef = useRef(false);
 
   const selectDate = (date: Date) => {
     setSelectedDate(date);
@@ -75,8 +83,10 @@ export default function BookingCalendar({ from }: BookingCalendarProps) {
     return "";
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (isRedirectingRef.current) return;
 
     const validationError = validateForm();
 
@@ -85,8 +95,12 @@ export default function BookingCalendar({ from }: BookingCalendarProps) {
       return;
     }
 
-    setIsSubmitting(true);
-    setErrorMessage("");
+    if (!STRATEGY_CALL_PLAN || STRATEGY_CALL_PLAN.amount == null) {
+      setErrorMessage(
+        "Online booking is unavailable right now. Please contact us on WhatsApp.",
+      );
+      return;
+    }
 
     const bookingData = {
       formType: "Call Booking",
@@ -101,69 +115,46 @@ export default function BookingCalendar({ from }: BookingCalendarProps) {
       }`,
     };
 
+    // Same hand-off as /register: /payment reads the booking from sessionStorage.
     try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingData),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        throw new Error(result.message || "Booking failed.");
-      }
-
-      setIsBooked(true);
-    } catch (error) {
-      console.error("Booking error:", error);
-      setErrorMessage(
-        "Your booking could not be saved. Please try again or contact us on WhatsApp.",
+      sessionStorage.setItem(
+        "rpiansApplicationData",
+        JSON.stringify({
+          ...bookingData,
+          planId: STRATEGY_CALL_PLAN.id,
+          planSelected: STRATEGY_CALL_PLAN.label,
+          bookingAmount: STRATEGY_CALL_PLAN.amount,
+          gstApplicable: STRATEGY_CALL_PLAN.gstApplicable ?? false,
+        }),
       );
-    } finally {
-      setIsSubmitting(false);
+    } catch {
+      setErrorMessage(
+        "Your browser blocked saving your booking. Please try another browser or contact us on WhatsApp.",
+      );
+      return;
     }
+
+    isRedirectingRef.current = true;
+    setIsRedirecting(true);
+    setErrorMessage("");
+
+    // As in /register, the lead is saved in the background so a slow Google
+    // Sheet never stops the visitor from reaching payment.
+    fetch("/api/leads", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookingData),
+    }).catch((error) => {
+      console.error("Lead save error (non-blocking):", error);
+    });
+
+    router.push("/payment");
   };
 
   const inputClass =
     "w-full rounded-xl border border-black/10 bg-white px-4 py-4 text-[#0f172a] outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]";
-
-  if (isBooked && selectedDate) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mx-auto max-w-xl rounded-2xl border border-black/10 bg-white p-10 text-center shadow-[0_20px_60px_rgba(15,23,42,0.08)]"
-      >
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-500/10 text-3xl text-green-600">
-          ✓
-        </div>
-
-        <h2 className="mt-6 font-serif text-3xl">Your Call Is Booked!</h2>
-
-        <p className="mt-4 leading-7 text-gray-600">
-          Thank you, {formData.fullName.trim()}. Your call is scheduled for
-        </p>
-
-        <p className="mt-2 text-lg font-bold text-[#1d4ed8]">
-          {formatDate(selectedDate)} at {selectedSlot} IST
-        </p>
-
-        <p className="mt-4 leading-7 text-gray-600">
-          Our team will confirm the appointment on WhatsApp shortly.
-        </p>
-
-        <Link
-          href="/"
-          className="mt-8 inline-block rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 font-bold text-white transition hover:scale-105"
-        >
-          Back to Home
-        </Link>
-      </motion.div>
-    );
-  }
 
   return (
     <form
@@ -306,12 +297,14 @@ export default function BookingCalendar({ from }: BookingCalendarProps) {
 
         <motion.button
           type="submit"
-          disabled={isSubmitting}
-          whileHover={isSubmitting ? undefined : { scale: 1.015 }}
-          whileTap={isSubmitting ? undefined : { scale: 0.98 }}
+          disabled={isRedirecting}
+          whileHover={isRedirecting ? undefined : { scale: 1.015 }}
+          whileTap={isRedirecting ? undefined : { scale: 0.98 }}
           className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 text-base font-bold text-white shadow-[0_15px_50px_rgba(59,130,246,0.22)] transition disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {isSubmitting ? "Booking Your Call..." : "Confirm Booking"}
+          {isRedirecting
+            ? "Redirecting to payment..."
+            : "Confirm & Continue to Payment"}
         </motion.button>
 
         <div className="mt-5 flex flex-wrap justify-center gap-5 text-xs text-gray-500">
