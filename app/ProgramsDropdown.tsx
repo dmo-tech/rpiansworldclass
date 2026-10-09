@@ -5,6 +5,10 @@ import { useEffect, useRef, useState } from "react";
 
 const programs = [
   {
+    href: "/register?plan=strategy-call",
+    label: "Book a Strategy Call",
+  },
+  {
     href: "/programs/1-day",
     label: "1 Day Program",
   },
@@ -19,10 +23,6 @@ const programs = [
   {
     href: "/programs/personal-mentorship",
     label: "Personal Mentorship",
-  },
-  {
-    href: "/register?plan=strategy-call",
-    label: "Book a Strategy Call",
   },
 ];
 

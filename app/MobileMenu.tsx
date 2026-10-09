@@ -55,6 +55,10 @@ const whoIsThisForLinks = [
 
 const programLinks = [
   {
+    href: "/register?plan=strategy-call",
+    label: "Book a Strategy Call",
+  },
+  {
     href: "/programs/1-day",
     label: "1 Day Program",
   },
@@ -69,10 +73,6 @@ const programLinks = [
   {
     href: "/programs/personal-mentorship",
     label: "Personal Mentorship",
-  },
-  {
-    href: "/register?plan=strategy-call",
-    label: "Book a Strategy Call",
   },
 ];
 
