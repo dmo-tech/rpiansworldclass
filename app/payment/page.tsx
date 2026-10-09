@@ -20,6 +20,7 @@ type ApplicationData = {
   companyName: string;
   businessCategory: string;
   annualTurnover: string;
+  planId?: string;
   planSelected?: string;
   bookingDate?: string;
   bookingTime?: string;
@@ -216,6 +217,7 @@ export default function PaymentPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          planId: applicationData.planId,
           amount: paymentAmount,
           customer: {
             fullName: applicationData.fullName,

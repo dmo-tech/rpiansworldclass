@@ -3,19 +3,33 @@ import { plans } from "@/app/plans";
 
 const RAZORPAY_ORDERS_URL = "https://api.razorpay.com/v1/orders";
 
-const ALLOWED_AMOUNTS_INR = plans
-  .map((plan) => plan.amount)
-  .filter((amount): amount is number => amount != null);
-
 export async function POST(request: Request) {
   try {
-    const { amount, customer } = await request.json();
+    const { planId, amount, customer } = await request.json();
 
-    if (typeof amount !== "number" || !ALLOWED_AMOUNTS_INR.includes(amount)) {
+    // The plan decides the price, so a visitor can't pay one plan's price for another.
+    const plan = plans.find((item) => item.id === planId);
+
+    if (!plan || plan.amount == null) {
       return NextResponse.json(
         {
           success: false,
-          message: "Invalid payment amount.",
+          message:
+            "We couldn't find the plan you selected. Please go back and choose your plan again.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    // A mismatch means the price changed since the visitor started, or the amount was tampered with.
+    if (amount !== plan.amount) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "The price for this plan has been updated. Please go back and start again to see the latest price.",
         },
         {
           status: 400,
@@ -39,10 +53,11 @@ export async function POST(request: Request) {
         Authorization: `Basic ${auth}`,
       },
       body: JSON.stringify({
-        amount: amount * 100,
+        amount: plan.amount * 100,
         currency: "INR",
         receipt: `rpians_${Date.now()}`,
         notes: {
+          plan: plan.label,
           fullName: customer?.fullName ?? "",
           email: customer?.email ?? "",
           phone: customer?.phone ?? "",

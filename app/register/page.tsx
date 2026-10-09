@@ -221,9 +221,13 @@ function RegisterForm() {
       source: "RPIANS Website",
     };
 
+    // planId is only needed by checkout, so it stays out of the Google Sheet lead.
     sessionStorage.setItem(
       "rpiansApplicationData",
-      JSON.stringify(applicationData),
+      JSON.stringify({
+        ...applicationData,
+        planId: selectedPlan?.id ?? "",
+      }),
     );
 
     // Lead is saved to Google Sheets in the background. The customer must
