@@ -321,7 +321,8 @@ function RegisterForm() {
       <main className="relative flex min-h-screen flex-col bg-white px-6 text-[#0f172a] md:px-16">
         <SiteHeader />
 
-        <div className="flex flex-1 items-start justify-center pb-16 pt-32">
+        {/* Fixed space above the footer (80px mobile, 112px desktop). */}
+        <div className="flex items-start justify-center pb-20 pt-32 md:pb-28">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -405,8 +406,9 @@ function RegisterForm() {
           </motion.div>
         </div>
 
-        {/* Cancel main's side padding so the dark footer spans the full width. */}
-        <div className="-mx-6 md:-mx-16">
+        {/* Cancel main's side padding so the dark footer spans the full width;
+            on tall screens the footer stretches to the bottom of the window. */}
+        <div className="-mx-6 flex flex-1 flex-col md:-mx-16">
           <SiteFooter />
         </div>
       </main>
@@ -431,7 +433,9 @@ function RegisterForm() {
           />
         </div>
 
-        <div className="flex flex-1 items-center justify-center pb-16 pt-24">
+        {/* The question starts at a fixed spot (as on the call-slot step) with a
+            fixed space above the footer (80px mobile, 112px desktop). */}
+        <div className="flex items-start justify-center pb-20 pt-24 md:pb-28 md:pt-[9.75rem]">
           <div className="w-full max-w-2xl">
             <AnimatePresence mode="wait">
               <motion.div
@@ -570,8 +574,9 @@ function RegisterForm() {
           </button>
         </div>
 
-        {/* Cancel main's side padding so the dark footer spans the full width. */}
-        <div className="-mx-6 md:-mx-16">
+        {/* Cancel main's side padding so the dark footer spans the full width;
+            on tall screens the footer stretches to the bottom of the window. */}
+        <div className="-mx-6 flex flex-1 flex-col md:-mx-16">
           <SiteFooter />
         </div>
       </main>
