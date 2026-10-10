@@ -576,49 +576,38 @@ ${
           </div>
 
           {paymentAmount != null ? (
-            <>
-              {payment.status === "error" ? (
-                <div
-                  role="alert"
-                  className="mt-7 rounded-xl border border-red-200 bg-red-50 p-5"
-                >
-                  <p className="font-bold text-red-700">{payment.title}</p>
+            payment.status === "error" ? (
+              <div
+                role="alert"
+                className="mt-7 rounded-xl border border-red-200 bg-red-50 p-5"
+              >
+                <p className="font-bold text-red-700">{payment.title}</p>
 
-                  <p className="mt-2 text-sm leading-6 text-red-700">
-                    {payment.message}
-                  </p>
+                <p className="mt-2 text-sm leading-6 text-red-700">
+                  {payment.message}
+                </p>
 
-                  <button
-                    type="button"
-                    onClick={handlePayment}
-                    disabled={!applicationData}
-                    className="mt-4 w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    Try again
-                  </button>
-                </div>
-              ) : (
                 <button
                   type="button"
                   onClick={handlePayment}
-                  disabled={!applicationData || isPaymentBusy}
-                  className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+                  disabled={!applicationData}
+                  className="mt-4 w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {isPaymentBusy
-                    ? "Processing..."
-                    : `Pay ${formattedPaymentAmount}`}
+                  Try again
                 </button>
-              )}
-
-              <a
-                href={`${WHATSAPP_BASE_URL}?text=${whatsappMessage}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 block w-full rounded-lg border border-[#1d4ed8]/40 px-7 py-4 text-center font-semibold text-[#1e3a8a] transition hover:bg-[#1d4ed8]/5"
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={handlePayment}
+                disabled={!applicationData || isPaymentBusy}
+                className="mt-7 w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_40px_rgba(34,197,94,0.25)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Contact Team on WhatsApp
-              </a>
-            </>
+                {isPaymentBusy
+                  ? "Processing..."
+                  : `Pay ${formattedPaymentAmount}`}
+              </button>
+            )
           ) : (
             <a
               href={`${WHATSAPP_BASE_URL}?text=${whatsappMessage}`}
