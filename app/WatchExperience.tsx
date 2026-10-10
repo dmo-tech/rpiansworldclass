@@ -14,8 +14,8 @@ const BOOK_CALL_REVEAL_SECONDS = 90;
 const BOOK_CALL_UNLOCKED_KEY = "rpiansWatchBookCallUnlocked";
 
 // /watch (the homepage video card links here): the player with its details
-// form already open for a new viewer. Submitting the form starts the video;
-// a saved viewer just presses Play. The Book a Call button below the video
+// form already open, on every visit. Submitting the form starts the video,
+// from where the viewer last stopped. The Book a Call button below the video
 // appears after BOOK_CALL_REVEAL_SECONDS of watching.
 
 export default function WatchExperience() {
