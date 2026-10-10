@@ -1,6 +1,7 @@
 import { formatInr, plans } from "./plans";
 
-// Terms shown under the payment buttons on /payment. Edit the wording here.
+// Terms shown on /payment (left column on desktop, below the payment card on
+// phones). Edit the wording here.
 
 const COMPANY_NAME = "RPIANS World Class Business Coaching LLP";
 const CONTACT_EMAIL = "info@worldclassbc.com";
@@ -16,7 +17,7 @@ const STRATEGY_CALL_TERMS = [
   `If your application is not accepted, we will refund your ${FEE}.`,
   `If your application is accepted, we will refund your ${FEE} after the call.`,
   "Please note that we will not refund the application fee if you fail to show up for the scheduled call or cancel without providing at least 24 hours' notice.",
-  "Upon paying the application fee, you will have 48 hours to submit your application form; otherwise, you may risk forfeiting your deposit.",
+  "After paying the application fee, our team will share a short application form with you on WhatsApp. Please submit it within 48 hours; otherwise, you may risk forfeiting your deposit.",
 ];
 
 const linkClass = "font-bold text-[#1d4ed8]! hover:underline";
@@ -41,17 +42,25 @@ function RefundPolicyNotice() {
   );
 }
 
-const headingClass = "text-[13px] font-bold text-[#0f172a] sm:text-sm";
+const headingClass = "text-base font-bold text-[#0f172a] md:text-lg";
 
-export default function PaymentTerms({ planId }: { planId?: string }) {
+export default function PaymentTerms({
+  planId,
+  className = "",
+}: {
+  planId?: string;
+  className?: string;
+}) {
   const terms = planId === "strategy-call" ? STRATEGY_CALL_TERMS : [];
 
   return (
-    <div className="mt-6 space-y-5 border-t border-black/10 pt-5 text-left text-[13px] font-medium leading-relaxed text-gray-600 sm:text-sm">
+    <div
+      className={`space-y-6 rounded-2xl border border-[#1d4ed8]/20 bg-white/70 p-6 text-left text-sm font-medium leading-relaxed text-gray-600 md:p-7 md:text-[15px] md:leading-7 ${className}`}
+    >
       <div>
         <h3 className={headingClass}>Terms &amp; Conditions</h3>
 
-        <ul className="mt-2 list-disc space-y-1.5 pl-4 marker:text-[#3b82f6]">
+        <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-[#3b82f6]">
           {terms.map((term) => (
             <li key={term}>{term}</li>
           ))}
@@ -65,7 +74,7 @@ export default function PaymentTerms({ planId }: { planId?: string }) {
       <div>
         <h3 className={headingClass}>Information Sharing &amp; Consent</h3>
 
-        <p className="mt-2">
+        <p className="mt-3">
           You agree to share the information entered on this page with{" "}
           {COMPANY_NAME} (owner of this page) and Razorpay, in accordance with
           applicable laws.
@@ -75,7 +84,7 @@ export default function PaymentTerms({ planId }: { planId?: string }) {
       <div>
         <h3 className={headingClass}>Contact Us</h3>
 
-        <p className="mt-2">{COMPANY_NAME}</p>
+        <p className="mt-3">{COMPANY_NAME}</p>
 
         <p>
           Email:{" "}

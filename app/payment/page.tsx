@@ -434,59 +434,11 @@ ${
             </span>
           </h1>
 
-          <p className="mt-7 max-w-xl text-lg leading-8 text-gray-600">
-            {paymentAmount != null
-              ? `Your application has been received. Complete the ${formattedPaymentAmount} booking payment to confirm your Business Diagnostic session with the RPIANS team.`
-              : "Your application has been received. Our team will contact you to discuss pricing and confirm your Business Diagnostic session."}
-          </p>
-
-          <div className="mt-10 space-y-5">
-            {[
-              "Complete the secure booking payment",
-              "Our team will review your application",
-              "You will receive confirmation on WhatsApp",
-              "Selected business owners will receive the diagnostic schedule",
-            ].map((step, index) => (
-              <motion.div
-                key={step}
-                initial={{
-                  opacity: 0,
-                  x: -20,
-                }}
-                animate={{
-                  opacity: 1,
-                  x: 0,
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.25 + index * 0.1,
-                }}
-                className="flex items-start gap-4"
-              >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1d4ed8] text-sm font-bold text-white">
-                  {index + 1}
-                </span>
-
-                <p className="pt-1 text-gray-700">{step}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-10 rounded-2xl border border-[#1d4ed8]/20 bg-white/70 p-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1d4ed8]">
-              Contact Support
-            </p>
-
-            <p className="mt-3 text-gray-700">
-              Call/WhatsApp:
-              <a
-                href="tel:+917389638105"
-                className="ml-2 font-semibold text-[#1e3a8a]"
-              >
-                +91 73896 38105
-              </a>
-            </p>
-          </div>
+          {/* Desktop only; on phones the terms sit below the payment card so Pay stays near the top. */}
+          <PaymentTerms
+            planId={applicationData?.planId}
+            className="mt-10 hidden lg:block"
+          />
         </motion.section>
 
         {/* PAYMENT CARD */}
@@ -664,8 +616,6 @@ ${
             </a>
           )}
 
-          <PaymentTerms planId={applicationData?.planId} />
-
           <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-600">
             <span>Secure Payment</span>
             <span>•</span>
@@ -683,6 +633,12 @@ ${
             </Link>
           </div>
         </motion.section>
+
+        {/* Phones / tablets: the same terms, after the payment card. */}
+        <PaymentTerms
+          planId={applicationData?.planId}
+          className="lg:hidden"
+        />
       </div>
 
       {payment.status === "verifying" || payment.status === "success" ? (
