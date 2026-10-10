@@ -15,22 +15,22 @@ export const metadata: Metadata = {
 
 const systems = [
   {
-    title: "Inventory Management System",
-    shortName: "IMS",
+    title: "Advanced Inventory Management System",
+    shortName: "AIMS",
     description:
-      "Control dead stock, improve inventory rotation and release blocked working capital.",
+      "Control dead stock, improve inventory rotation and release blocked working capital with smart, data-driven inventory control.",
   },
   {
-    title: "HR Management System",
-    shortName: "HRMS",
+    title: "Team Accountability System",
+    shortName: "TAS",
     description:
-      "Build team accountability with KRA, KPI, training and performance tracking.",
+      "Build team accountability with clear KRA, KPI, training and daily performance tracking.",
   },
   {
-    title: "Profit Multiplication System",
-    shortName: "PMS",
+    title: "GP Dashboard System",
+    shortName: "GPD",
     description:
-      "Track gross profit, control expenses and improve business profitability.",
+      "Track gross profit product-wise and category-wise, control expenses and improve business profitability.",
   },
   {
     title: "Cash Flow Management",
@@ -49,6 +49,24 @@ const systems = [
     shortName: "AI",
     description:
       "Use dashboards, automation tools and technology for faster business decisions.",
+  },
+  {
+    title: "Sales Person Wise Sales System",
+    shortName: "SPS",
+    description:
+      "Track sales, targets and conversions for every sales person, so you know who is performing and where to improve.",
+  },
+  {
+    title: "Project Management System",
+    shortName: "PJMS",
+    description:
+      "Plan projects, assign tasks, track deadlines and progress, and make sure every project is delivered on time.",
+  },
+  {
+    title: "Production Management System",
+    shortName: "PRMS",
+    description:
+      "Plan production, track raw material and output, and reduce wastage for smooth, on-time manufacturing.",
   },
 ];
 
@@ -105,7 +123,7 @@ export default function SystemsPage() {
                     <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#3b82f6]/0 blur-3xl transition duration-500 group-hover:bg-[#3b82f6]/15" />
 
                     <div
-                      className="relative z-10 flex h-14 w-14 items-center justify-center rounded-xl border border-[#3b82f6]/40 bg-[#3b82f6]/10 text-sm font-bold text-[#1d4ed8]"
+                      className="relative z-10 flex h-14 w-fit min-w-14 items-center justify-center rounded-xl border border-[#3b82f6]/40 bg-[#3b82f6]/10 px-3 text-sm font-bold text-[#1d4ed8]"
                       style={{
                         transform: "translateZ(45px)",
                       }}
