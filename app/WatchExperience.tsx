@@ -1,10 +1,18 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 
 import BookCallButton from "./BookCallButton";
 import GatedVideoPlayer, { GatedVideoPlayerHandle } from "./GatedVideoPlayer";
+
+// The Book a Call button below the video appears once the viewer has
+// actually watched this many seconds of it (real watch time, not page time).
+const BOOK_CALL_REVEAL_SECONDS = 90;
+
+// Remembers the button was unlocked, since finishing the video clears the
+// saved progress the player would otherwise restore it from.
+const BOOK_CALL_UNLOCKED_KEY = "rpiansWatchBookCallUnlocked";
 
 // /watch: a minimal landing with one "Get Started" button. It opens the
 // player's details form (or plays straight away for a saved viewer), then
@@ -12,7 +20,10 @@ import GatedVideoPlayer, { GatedVideoPlayerHandle } from "./GatedVideoPlayer";
 
 export default function WatchExperience() {
   const playerRef = useRef<GatedVideoPlayerHandle>(null);
+  const bookCallRef = useRef<HTMLDivElement>(null);
+  const isBookCallShownRef = useRef(false);
   const [isRevealed, setIsRevealed] = useState(false);
+  const [isBookCallShown, setIsBookCallShown] = useState(false);
 
   // Runs inside the click / submit, right before video.play(). flushSync
   // puts the player on screen first so mobile browsers play it with sound.
@@ -20,6 +31,56 @@ export default function WatchExperience() {
     flushSync(() => setIsRevealed(true));
     window.scrollTo({ top: 0 });
   };
+
+  const showBookCall = () => {
+    isBookCallShownRef.current = true;
+    setIsBookCallShown(true);
+  };
+
+  const handleWatchTime = (seconds: number) => {
+    if (isBookCallShownRef.current || seconds < BOOK_CALL_REVEAL_SECONDS) {
+      return;
+    }
+
+    showBookCall();
+
+    try {
+      localStorage.setItem(BOOK_CALL_UNLOCKED_KEY, "1");
+    } catch {
+      // Private mode: it's still shown for this visit.
+    }
+
+    // On phones, bring it into view once if it's below the screen. Scrolling
+    // doesn't pause the video; skipped while the player is fullscreen.
+    const element = bookCallRef.current;
+
+    if (
+      element &&
+      !document.fullscreenElement &&
+      element.getClientRects().length > 0 &&
+      element.getBoundingClientRect().bottom > window.innerHeight &&
+      window.matchMedia("(max-width: 767px), (pointer: coarse)").matches
+    ) {
+      element.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
+          .matches
+          ? "auto"
+          : "smooth",
+        block: "nearest",
+      });
+    }
+  };
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(BOOK_CALL_UNLOCKED_KEY)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is only readable after mount
+        showBookCall();
+      }
+    } catch {
+      // Storage blocked: falls back to the watch time.
+    }
+  }, []);
 
   return (
     <>
@@ -66,10 +127,22 @@ export default function WatchExperience() {
         {/* On short screens the video shrinks to the screen height so the
             Book a Call button below it is visible without scrolling. */}
         <div className="mx-auto max-w-[max(20rem,calc((100dvh-18rem)*16/9))]">
-          <GatedVideoPlayer ref={playerRef} onReveal={reveal} />
+          <GatedVideoPlayer
+            ref={playerRef}
+            onReveal={reveal}
+            onWatchTime={handleWatchTime}
+          />
         </div>
 
-        <div className="mt-6 flex flex-col items-center text-center">
+        {/* Keeps its space while hidden so nothing jumps when it fades in. */}
+        <div
+          ref={bookCallRef}
+          className={`mt-6 flex scroll-mb-4 flex-col items-center text-center transition-[opacity,translate,visibility] duration-700 ease-out motion-reduce:transition-none ${
+            isBookCallShown
+              ? "visible translate-y-0 opacity-100"
+              : "invisible translate-y-4 opacity-0 motion-reduce:translate-y-0"
+          }`}
+        >
           <p className="max-w-xl text-lg font-semibold text-[#0f172a] sm:text-xl">
             Ready to build a system-driven business?
           </p>

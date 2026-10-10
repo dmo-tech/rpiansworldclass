@@ -119,6 +119,11 @@ type GatedVideoPlayerProps = {
   // Called synchronously right before play(), still inside the click /
   // submit, so the page can make the player visible first.
   onReveal?: () => void;
+  // Called with how many seconds of the video the viewer has really watched:
+  // the furthest point reached, capped by the time actually spent playing
+  // it, so jumping ahead, re-watching or leaving the page open doesn't count.
+  // Also called once on load with the figure from saved progress.
+  onWatchTime?: (seconds: number) => void;
 };
 
 type SavedProgress = {
@@ -372,6 +377,7 @@ function SelectField({
 export default function GatedVideoPlayer({
   ref,
   onReveal,
+  onWatchTime,
 }: GatedVideoPlayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<WebkitVideo>(null);
@@ -401,6 +407,12 @@ export default function GatedVideoPlayer({
   const resumeAtRef = useRef(0);
   // True only while WE pause the video (tab hidden, "Not you?").
   const allowPauseRef = useRef(false);
+  // Latest onWatchTime, for the media listeners attached once below.
+  const onWatchTimeRef = useRef(onWatchTime);
+
+  useEffect(() => {
+    onWatchTimeRef.current = onWatchTime;
+  });
 
   const updatePhase = (next: Phase) => {
     phaseRef.current = next;
@@ -511,6 +523,9 @@ export default function GatedVideoPlayer({
       resumeAtRef.current = progress.position || 0;
       lastTimeRef.current = progress.position || 0;
       setCurrentTime(progress.position || 0);
+      onWatchTimeRef.current?.(
+        Math.min(watchedSecondsRef.current, maxWatchedRef.current),
+      );
     }
   }, []);
 
@@ -725,6 +740,9 @@ export default function GatedVideoPlayer({
       lastTimeRef.current = time;
       maxWatchedRef.current = Math.max(maxWatchedRef.current, time);
       setCurrentTime(time);
+      onWatchTimeRef.current?.(
+        Math.min(watchedSecondsRef.current, maxWatchedRef.current),
+      );
 
       const percent = (maxWatchedRef.current / getDuration()) * 100;
 
