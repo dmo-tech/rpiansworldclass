@@ -1,12 +1,11 @@
 import { formatInr, plans } from "./plans";
+import { CONTACT_PHONE, CONTACT_PHONE_TEL } from "./siteConfig";
 
 // Terms shown on /payment (left column on desktop, below the payment card on
 // phones). Edit the wording here.
 
 const COMPANY_NAME = "RPIANS World Class Business Coaching LLP";
 const CONTACT_EMAIL = "info@worldclassbc.com";
-const CONTACT_PHONE = "+91 70495 61975";
-const CONTACT_PHONE_TEL = "+917049561975";
 
 // The strategy-call fee, read from plans.ts so the text follows the price.
 const STRATEGY_CALL_AMOUNT = plans.find((plan) => plan.id === "strategy-call")?.amount;
@@ -89,7 +88,7 @@ export default function PaymentTerms({
 
         <p>
           Contact Number:{" "}
-          <a href={`tel:${CONTACT_PHONE_TEL}`} className={linkClass}>
+          <a href={CONTACT_PHONE_TEL} className={linkClass}>
             {CONTACT_PHONE}
           </a>
         </p>

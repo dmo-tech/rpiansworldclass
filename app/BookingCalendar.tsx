@@ -213,7 +213,7 @@ export default function BookingCalendar({ from }: BookingCalendarProps) {
               type="tel"
               value={formData.phone}
               onChange={(event) => updateField("phone", event.target.value)}
-              placeholder="+91 98765 43210"
+              placeholder="10 digit mobile number"
               autoComplete="tel"
               className={inputClass}
             />

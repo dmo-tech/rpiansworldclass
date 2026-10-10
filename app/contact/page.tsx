@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Reveal from "../Reveal";
-import { WHATSAPP_URL } from "../siteConfig";
+import { CONTACT_PHONE, WHATSAPP_URL } from "../siteConfig";
 
 export default function ContactPage() {
   return (
@@ -46,7 +46,7 @@ export default function ContactPage() {
                   rel="noopener noreferrer"
                   className="hover:text-[#3b82f6]"
                 >
-                  +91 70495 61975
+                  {CONTACT_PHONE}
                 </a>
               </p>
 

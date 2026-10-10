@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Reveal from "../Reveal";
+import { CONTACT_PHONE, CONTACT_PHONE_TEL } from "../siteConfig";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -611,7 +612,12 @@ export default function PrivacyPolicyPage() {
                 info@worldclassbc.com
               </a>
             </p>
-            <p>Contact Number: 7049561975</p>
+            <p>
+              Contact Number:{" "}
+              <a href={CONTACT_PHONE_TEL} className="text-[#3b82f6]">
+                {CONTACT_PHONE}
+              </a>
+            </p>
           </section>
           </Reveal>
         </div>

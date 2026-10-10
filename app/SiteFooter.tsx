@@ -2,12 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import BookCallButton from "./BookCallButton";
-import { WHATSAPP_URL } from "./siteConfig";
+import { CONTACT_PHONE, CONTACT_PHONE_TEL, WHATSAPP_URL } from "./siteConfig";
 import WhatsAppChat from "./WhatsAppChat";
 
 const CONTACT_EMAIL = "info@worldclassbc.com";
-const CONTACT_PHONE = "+91 70495 61975";
-const CONTACT_PHONE_TEL = "+917049561975";
 
 const programLinks = [
   { href: "/programs/1-day", label: "1 Day Program" },
@@ -175,7 +173,7 @@ export default function SiteFooter() {
                   </p>
 
                   <a
-                    href={`tel:${CONTACT_PHONE_TEL}`}
+                    href={CONTACT_PHONE_TEL}
                     className={`mt-1 inline-block text-gray-200! ${linkClass}`}
                   >
                     {CONTACT_PHONE}

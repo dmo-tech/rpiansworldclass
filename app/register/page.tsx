@@ -59,7 +59,7 @@ const businessFields: BusinessField[] = [
     label: "WhatsApp Number",
     kind: "input",
     type: "tel",
-    placeholder: "+91 98765 43210",
+    placeholder: "10 digit mobile number",
     autoComplete: "tel",
   },
   {

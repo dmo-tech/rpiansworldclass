@@ -147,7 +147,7 @@ export default function LeadForm() {
             onChange={(event) =>
               updateField("phone", event.target.value)
             }
-            placeholder="+91 98765 43210"
+            placeholder="10 digit mobile number"
             autoComplete="tel"
             className="w-full rounded-xl border border-black/10 bg-white px-4 py-4 text-[#0f172a] outline-none transition placeholder:text-gray-600 focus:border-[#3b82f6]"
           />
