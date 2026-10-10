@@ -405,7 +405,10 @@ function RegisterForm() {
           </motion.div>
         </div>
 
-        <SiteFooter />
+        {/* Cancel main's side padding so the dark footer spans the full width. */}
+        <div className="-mx-6 md:-mx-16">
+          <SiteFooter />
+        </div>
       </main>
     );
   }
@@ -567,7 +570,10 @@ function RegisterForm() {
           </button>
         </div>
 
-        <SiteFooter />
+        {/* Cancel main's side padding so the dark footer spans the full width. */}
+        <div className="-mx-6 md:-mx-16">
+          <SiteFooter />
+        </div>
       </main>
     );
   }
