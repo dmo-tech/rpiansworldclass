@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  FormEvent,
-  Ref,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import ApplyButton from "./ApplyButton";
 import BookCallButton from "./BookCallButton";
@@ -108,22 +100,17 @@ const EMPTY_VIEWER: Viewer = {
   revenue: "",
 };
 
-export type GatedVideoPlayerHandle = {
-  // Same as pressing the Play button: plays straight away for a saved
-  // viewer, otherwise opens the details form first.
-  open: () => void;
-};
-
 type GatedVideoPlayerProps = {
-  ref?: Ref<GatedVideoPlayerHandle>;
-  // Called synchronously right before play(), still inside the click /
-  // submit, so the page can make the player visible first.
-  onReveal?: () => void;
+  // Opens the details form as soon as the page loads, for a viewer who
+  // hasn't filled it in yet. A saved viewer gets the Play button instead
+  // (browsers only allow playing with sound after a tap).
+  openFormOnLoad?: boolean;
   // Called with how many seconds of the video the viewer has really watched:
   // the furthest point reached, capped by the time actually spent playing
   // it, so jumping ahead, re-watching or leaving the page open doesn't count.
-  // Also called once on load with the figure from saved progress.
-  onWatchTime?: (seconds: number) => void;
+  // Also called once on load with the figure from saved progress
+  // (fromSavedProgress = true).
+  onWatchTime?: (seconds: number, fromSavedProgress: boolean) => void;
 };
 
 type SavedProgress = {
@@ -375,8 +362,7 @@ function SelectField({
 }
 
 export default function GatedVideoPlayer({
-  ref,
-  onReveal,
+  openFormOnLoad = false,
   onWatchTime,
 }: GatedVideoPlayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -511,6 +497,8 @@ export default function GatedVideoPlayer({
       // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is only readable after mount
       setViewer(savedViewer);
       setFormData(savedViewer);
+    } else if (openFormOnLoad) {
+      setIsFormOpen(true);
     }
 
     const progress = readStorage<SavedProgress>(PROGRESS_KEY);
@@ -525,9 +513,10 @@ export default function GatedVideoPlayer({
       setCurrentTime(progress.position || 0);
       onWatchTimeRef.current?.(
         Math.min(watchedSecondsRef.current, maxWatchedRef.current),
+        true,
       );
     }
-  }, []);
+  }, [openFormOnLoad]);
 
   const startPlayback = () => {
     const video = videoRef.current;
@@ -558,7 +547,6 @@ export default function GatedVideoPlayer({
 
     allowPauseRef.current = false;
     video.playbackRate = 1;
-    onReveal?.();
     updatePhase("playing");
 
     // play() must be called straight from the click / submit so mobile
@@ -580,8 +568,6 @@ export default function GatedVideoPlayer({
       setIsFormOpen(true);
     }
   };
-
-  useImperativeHandle(ref, () => ({ open: handlePlayClick }));
 
   // Typing in a field clears that field's error straight away.
   const updateField = (field: keyof Viewer, value: string) => {
@@ -742,6 +728,7 @@ export default function GatedVideoPlayer({
       setCurrentTime(time);
       onWatchTimeRef.current?.(
         Math.min(watchedSecondsRef.current, maxWatchedRef.current),
+        false,
       );
 
       const percent = (maxWatchedRef.current / getDuration()) * 100;
