@@ -22,22 +22,16 @@ const STRATEGY_CALL_TERMS = [
 
 const linkClass = "font-bold text-[#1d4ed8]! hover:underline";
 
-// Opens in a new tab so the visitor keeps their filled-in payment page.
-function PolicyLink({ href, children }: { href: string; children: string }) {
-  return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
-      {children}
-    </a>
-  );
-}
-
+// Same tab; ?from=payment shows a "Back to Payment" button on /refund-policy,
+// and /payment re-reads the booking from sessionStorage when the visitor returns.
 function RefundPolicyNotice() {
   return (
     <>
       Before making a payment, please carefully read our{" "}
-      <PolicyLink href="/refund-policy">refund policy</PolicyLink> and only
-      proceed with the payment if you agree to our{" "}
-      <PolicyLink href="/terms">Terms &amp; Conditions</PolicyLink>.
+      <a href="/refund-policy?from=payment" className={linkClass}>
+        refund policy
+      </a>{" "}
+      and only proceed with the payment if you agree to these terms.
     </>
   );
 }

@@ -172,19 +172,31 @@ export default function PaymentPage() {
   }, [payment.status]);
 
   useEffect(() => {
-    const savedData = sessionStorage.getItem("rpiansApplicationData");
+    const readApplicationData = () => {
+      const savedData = sessionStorage.getItem("rpiansApplicationData");
 
-    if (savedData) {
-      try {
-        const parsedData = JSON.parse(savedData) as ApplicationData;
-        // eslint-disable-next-line react-hooks/set-state-in-effect -- sessionStorage is only readable after mount
-        setApplicationData(parsedData);
-      } catch {
-        setApplicationData(null);
+      if (savedData) {
+        try {
+          setApplicationData(JSON.parse(savedData) as ApplicationData);
+        } catch {
+          setApplicationData(null);
+        }
       }
-    }
 
-    setIsLoading(false);
+      setIsLoading(false);
+    };
+
+    readApplicationData();
+
+    // Coming back (e.g. from /refund-policy) can restore this page from the
+    // back/forward cache without remounting; re-read the booking then too.
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) readApplicationData();
+    };
+
+    window.addEventListener("pageshow", handlePageShow);
+
+    return () => window.removeEventListener("pageshow", handlePageShow);
   }, []);
 
   const paymentAmount = applicationData
@@ -378,14 +390,16 @@ ${
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#f4f1e9] text-[#171717]">
+    // overflow-x-clip (not overflow-hidden) so the payment card can be sticky.
+    <main className="relative min-h-screen overflow-x-clip bg-[#f4f1e9] text-[#171717]">
       {/* Background pattern */}
 
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[34%] bg-[#1b1b1b] lg:block">
         <div className="absolute inset-0 opacity-80 [background-image:linear-gradient(135deg,transparent_25%,rgba(59,130,246,0.08)_25%,rgba(59,130,246,0.08)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.08)_75%)] [background-size:180px_180px]" />
       </div>
 
-      <div className="relative mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-[1fr_0.8fr] lg:px-10">
+      {/* Desktop: both columns start at the top, so the logo and the card line up. */}
+      <div className="relative mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-[1fr_0.8fr] lg:items-start lg:px-10">
         {/* LEFT CONTENT */}
 
         <motion.section
@@ -423,11 +437,11 @@ ${
             </div>
           </Link>
 
-          <p className="mt-12 text-sm font-semibold uppercase tracking-[0.25em] text-[#1d4ed8]">
+          <p className="mt-10 text-sm font-semibold uppercase tracking-[0.25em] text-[#1d4ed8]">
             Strategic Business Diagnostic
           </p>
 
-          <h1 className="mt-5 font-serif text-4xl leading-tight md:text-6xl">
+          <h1 className="mt-4 font-serif text-4xl leading-tight md:text-6xl">
             Complete Your Booking
             <span className="mt-2 block text-[#1d4ed8]">
               and Take the Next Step
@@ -461,7 +475,7 @@ ${
             delay: 0.15,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="relative z-10 rounded-2xl border border-black/10 bg-white p-7 shadow-[0_30px_100px_rgba(0,0,0,0.2)] md:p-9"
+          className="relative z-10 rounded-2xl border border-black/10 bg-white p-7 shadow-[0_30px_100px_rgba(0,0,0,0.2)] md:p-9 lg:sticky lg:top-8"
         >
           <div className="border-b border-black/10 pb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">

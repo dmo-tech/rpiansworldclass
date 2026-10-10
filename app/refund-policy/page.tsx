@@ -1,22 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import BackToPaymentButton from "../BackToPaymentButton";
 import Reveal from "../Reveal";
 
 export default function RefundPolicyPage() {
   return (
     <main className="min-h-screen bg-white px-6 py-20 text-[#0f172a]">
       <div className="mx-auto max-w-4xl">
-        <Link href="/" className="inline-flex items-center gap-2">
-          <Image
-            src="/rpians-logo.png"
-            alt="RPIANS logo"
-            width={32}
-            height={24}
-            className="h-7 w-auto"
-          />
-          <span className="text-[#3b82f6]">← Return to Home</span>
-        </Link>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <Link href="/" className="inline-flex items-center gap-2">
+            <Image
+              src="/rpians-logo.png"
+              alt="RPIANS logo"
+              width={32}
+              height={24}
+              className="h-7 w-auto"
+            />
+            <span className="text-[#3b82f6]">← Return to Home</span>
+          </Link>
+
+          {/* Only shown when opened from the /payment page. */}
+          <BackToPaymentButton />
+        </div>
 
         <p className="mt-12 text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
           Legal Information
