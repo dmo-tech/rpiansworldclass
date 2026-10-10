@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import AnimatedWords from "../AnimatedWords";
-import ApplyButton from "../ApplyButton";
 import BookCallButton from "../BookCallButton";
 import ParallaxImage from "../ParallaxImage";
 import Reveal from "../Reveal";
@@ -78,10 +77,6 @@ export default function AboutPage() {
                 </p>
 
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-                  <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-9 py-4 font-bold text-white transition hover:scale-105 sm:w-auto">
-                    Work With Rajesh Kumar Kare
-                  </ApplyButton>
-
                   <BookCallButton from="About" />
                 </div>
               </div>
