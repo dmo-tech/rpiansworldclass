@@ -10,6 +10,7 @@ import {
   PAYMENT_RECEIPT_STORAGE_KEY,
   type PaymentReceipt,
 } from "../paymentReceipt";
+import PaymentTerms from "../PaymentTerms";
 import { formatInr } from "../plans";
 import { WHATSAPP_BASE_URL } from "../siteConfig";
 
@@ -662,6 +663,8 @@ ${
               Talk to Our Team on WhatsApp
             </a>
           )}
+
+          <PaymentTerms planId={applicationData?.planId} />
 
           <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-600">
             <span>Secure Payment</span>
