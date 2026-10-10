@@ -1,9 +1,25 @@
 import { NextResponse } from "next/server";
-import { GOOGLE_SHEET_WEB_APP_URL } from "../../googleSheet";
+import { GOOGLE_SHEET_WEB_APP_URL, sheetNameForLead } from "../../googleSheet";
 
 export async function POST(request: Request) {
   try {
-    const formData = await request.json();
+    const body: unknown = await request.json();
+
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid request body." },
+        { status: 400 },
+      );
+    }
+
+    // Any sheetName from the browser is dropped; the server picks the tab.
+    const fields = { ...(body as Record<string, unknown>) };
+    delete fields.sheetName;
+
+    const formData = {
+      ...fields,
+      sheetName: sheetNameForLead(fields.formType),
+    };
 
     const googleResponse = await fetch(
       GOOGLE_SHEET_WEB_APP_URL,

@@ -16,7 +16,8 @@ import { VIDEO_POSTER_URL, VIDEO_URL } from "./siteConfig";
 
 // Self-hosted video that asks for the viewer's details before it plays,
 // can't be paused or skipped forward, and reports how much each viewer
-// watched to the "Video Views" tab of the Google Sheet (/api/video-views).
+// watched to the "video watch data" tab of the Google Sheet (/api/video-views).
+// The details form itself is saved as a lead in "video form data" (/api/leads).
 
 // Used for the time label until the browser has read the real duration.
 const FALLBACK_DURATION = 1375;
@@ -597,6 +598,22 @@ export default function GatedVideoPlayer({
     setIsFormOpen(false);
 
     startPlayback();
+
+    // The details form is also a lead on its own ("video form data" tab);
+    // watch progress is tracked separately through /api/video-views.
+    fetch("/api/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        formType: "Video Form",
+        ...cleaned,
+        submittedAt: new Date().toISOString(),
+        source: `RPIANS Website - Video Form (${window.location.pathname})`,
+      }),
+      keepalive: true,
+    }).catch((error) => {
+      console.error("Video form lead error (non-blocking):", error);
+    });
   };
 
   const handleNotYou = () => {

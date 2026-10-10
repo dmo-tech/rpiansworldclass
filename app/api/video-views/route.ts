@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { GOOGLE_SHEET_WEB_APP_URL } from "../../googleSheet";
+import { GOOGLE_SHEET_WEB_APP_URL, SHEET_TABS } from "../../googleSheet";
 
 // Receives watch-progress updates from GatedVideoPlayer and forwards them to
-// the Apps Script, which keeps ONE row per sessionId in the "Video Views"
+// the Apps Script, which keeps ONE row per sessionId in the "video watch data"
 // tab. The body is read as text because navigator.sendBeacon (used when the
 // page closes) sends text/plain, not application/json.
 
@@ -35,8 +35,10 @@ export async function POST(request: Request) {
     );
   }
 
+  // Built field by field, so a sheetName from the browser never gets through.
   const viewData = {
     formType: "Video View",
+    sheetName: SHEET_TABS.videoWatch,
     sessionId,
     event: text(body.event, 20),
     fullName: text(body.fullName, 100),
