@@ -58,13 +58,13 @@ const systems = [
   },
   {
     title: "Project Management System",
-    shortName: "PJMS",
+    shortName: "PMS",
     description:
       "Plan projects, assign tasks, track deadlines and progress, and make sure every project is delivered on time.",
   },
   {
     title: "Production Management System",
-    shortName: "PRMS",
+    shortName: "PMS",
     description:
       "Plan production, track raw material and output, and reduce wastage for smooth, on-time manufacturing.",
   },
