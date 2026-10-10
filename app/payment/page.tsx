@@ -441,9 +441,10 @@ ${
             Business Automation And Profit Mastery Strategy
           </p>
 
-          <h1 className="mt-4 font-serif text-4xl leading-tight md:text-6xl">
-            Complete Your Booking
-            <span className="mt-2 block text-[#1d4ed8]">
+          {/* Sized so each phrase fits on one line from 360px up. */}
+          <h1 className="mt-4 text-balance font-serif text-[1.75rem] leading-tight sm:text-[2rem] md:text-4xl lg:text-[2.5rem] xl:text-[2.75rem]">
+            <span className="block">Complete Your Booking</span>
+            <span className="mt-1 block text-[#1d4ed8]">
               and Take the Next Step
             </span>
           </h1>
