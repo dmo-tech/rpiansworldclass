@@ -15,7 +15,9 @@ type ProgramPageTemplateProps = {
   eyebrow: string;
   headingLine1: string;
   headingLine2: string;
-  description: string;
+  description?: string;
+  // Shown under the heading instead of the description paragraph.
+  heroContent?: ReactNode;
   duration: string;
   mode: string;
   audience: string;
@@ -33,6 +35,7 @@ export default function ProgramPageTemplate({
   headingLine1,
   headingLine2,
   description,
+  heroContent,
   duration,
   mode,
   audience,
@@ -86,9 +89,11 @@ export default function ProgramPageTemplate({
                     </span>
                   </h1>
 
-                  <p className="mx-auto mt-7 max-w-xl text-lg leading-8 text-gray-600 lg:mx-0">
-                    {description}
-                  </p>
+                  {heroContent ?? (
+                    <p className="mx-auto mt-7 max-w-xl text-lg leading-8 text-gray-600 lg:mx-0">
+                      {description}
+                    </p>
+                  )}
                 </Reveal>
 
                 <Reveal
@@ -129,9 +134,11 @@ export default function ProgramPageTemplate({
                   </span>
                 </h1>
 
-                <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-gray-600">
-                  {description}
-                </p>
+                {heroContent ?? (
+                  <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-gray-600">
+                    {description}
+                  </p>
+                )}
               </Reveal>
             )}
 

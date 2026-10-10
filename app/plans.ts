@@ -26,7 +26,8 @@ export const plans: Plan[] = [
     label: "10 Month",
     description:
       "A complete business transformation mentorship journey.",
-    amount: 150000,
+    // Includes GST: this is the exact amount charged (no gstApplicable).
+    amount: 590000,
   },
   {
     id: "personal-mentorship",
