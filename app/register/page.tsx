@@ -168,7 +168,8 @@ function RegisterForm() {
   const [planError, setPlanError] = useState("");
 
   // Arriving with a valid ?plan= (a program page, Our Programs) shows only
-  // that plan; "Change plan" reveals the rest. Without one, all plans show.
+  // that plan; "Change plan" reveals the rest (not offered for the strategy
+  // call). Without one, all plans show.
   const [showAllPlans, setShowAllPlans] = useState(!planFromQuery);
 
   const selectedPlan =
@@ -807,7 +808,7 @@ function RegisterForm() {
                   })}
                 </div>
 
-                {!showAllPlans && (
+                {!showAllPlans && selectedPlan?.id !== "strategy-call" && (
                   <button
                     type="button"
                     onClick={() => setShowAllPlans(true)}
