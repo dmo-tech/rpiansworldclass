@@ -438,7 +438,7 @@ ${
           </Link>
 
           <p className="mt-10 text-sm font-semibold uppercase tracking-[0.25em] text-[#1d4ed8]">
-            Strategic Business Diagnostic
+            Business Automation And Profit Mastery Strategy
           </p>
 
           <h1 className="mt-4 font-serif text-4xl leading-tight md:text-6xl">
