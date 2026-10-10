@@ -3,7 +3,6 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
-import type { ReactNode } from "react";
 
 import {
   PAYMENT_RECEIPT_STORAGE_KEY,
@@ -11,9 +10,6 @@ import {
 } from "./paymentReceipt";
 import { formatInr } from "./plans";
 import { WHATSAPP_URL } from "./siteConfig";
-
-// The application form opened by "Click here" in step 1. Change it here only.
-const APPLICATION_FORM_URL = "<<URL I WILL GIVE>>";
 
 const CONTACT_EMAIL = "info@worldclassbc.com";
 
@@ -33,22 +29,9 @@ const readStoredReceipt = () => {
 // undefined during the server render, so "not read yet" differs from "no receipt".
 const readNothingOnServer = () => undefined;
 
-const NEXT_STEPS: ReactNode[] = [
-  <>
-    <a
-      href={APPLICATION_FORM_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="mr-1 inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-4 py-1.5 align-middle font-bold text-white! shadow-[0_10px_30px_rgba(37,99,235,0.3)] transition hover:scale-[1.03]"
-    >
-      Click here
-      <span aria-hidden="true">↗</span>
-    </a>{" "}
-    to fill out the short application. Based on your answers your
-    application will be selected or rejected. So just be very honest with
-    your answers as per your current business situation.
-  </>,
-  "Please check your email, we have already sent you the application form. If it went to spam, kindly move it to Primary. If you still don't see it, let us know.",
+const NEXT_STEPS = [
+  "Our team will share a short application with you on WhatsApp. Based on your answers your application will be selected or rejected. So just be very honest with your answers as per your current business situation.",
+  "Please keep an eye on your WhatsApp and email (also check the spam folder). If you don't hear from us, let us know.",
   "Our team will review your answers and get back to you with a response within 48 business hours.",
 ];
 
@@ -170,7 +153,7 @@ export default function ThankYouDetails() {
       <ol className="mt-6 space-y-4">
         {NEXT_STEPS.map((step, index) => (
           <li
-            key={index}
+            key={step}
             className={`flex items-start gap-4 rounded-2xl border bg-white p-5 shadow-[0_15px_45px_rgba(15,23,42,0.07)] sm:gap-5 sm:p-6 ${
               index === 0 ? "border-[#3b82f6]/50" : "border-black/10"
             }`}
