@@ -5,7 +5,8 @@ import Image from "next/image";
 import AnimatedWords from "./AnimatedWords";
 import ApplyButton from "./ApplyButton";
 import BookCallButton from "./BookCallButton";
-import { formatPlanAmount, plans } from "./plans";
+import { formatPlanAmount, planAmountLabel, plans } from "./plans";
+import { WaitlistBadge } from "./ProgramOffer";
 import Reveal from "./Reveal";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
@@ -23,6 +24,8 @@ type ProgramPageTemplateProps = {
   audience: string;
   topics: string[];
   ctaLabel: string;
+  // Opens this link (new tab) instead of /register, e.g. a waitlist WhatsApp chat.
+  ctaHref?: string;
   photoSrc?: string;
   photoAlt?: string;
   headingClassName?: string;
@@ -41,6 +44,7 @@ export default function ProgramPageTemplate({
   audience,
   topics,
   ctaLabel,
+  ctaHref,
   photoSrc,
   photoAlt,
   headingClassName,
@@ -186,22 +190,53 @@ export default function ProgramPageTemplate({
 
                   {plan && (
                     <div className="mt-7 rounded-2xl border border-[#3b82f6]/20 bg-[#3b82f6]/5 p-6">
+                      {plan.waitlist && (
+                        <p className="mb-3">
+                          <WaitlistBadge>
+                            ⏳ Waitlist Till {plan.waitlist.until}
+                          </WaitlistBadge>
+                        </p>
+                      )}
+
                       <p className="text-sm font-semibold text-[#1d4ed8]">
-                        {plan.label} — Booking Amount
+                        {plan.label} — {planAmountLabel(plan)}
                       </p>
 
-                      <p className="mt-2 font-serif text-4xl font-bold">
-                        {formatPlanAmount(plan)}
-                      </p>
+                      {plan.waitlist ? (
+                        <>
+                          <p className="mt-2 text-balance font-serif text-2xl font-bold sm:text-3xl md:text-4xl">
+                            {plan.waitlist.price}
+                          </p>
+
+                          <p className="mt-1 text-lg font-semibold text-gray-700">
+                            {plan.waitlist.extra}
+                          </p>
+                        </>
+                      ) : (
+                        <p className="mt-2 font-serif text-4xl font-bold">
+                          {formatPlanAmount(plan)}
+                        </p>
+                      )}
                     </div>
                   )}
 
-                  <ApplyButton
-                    plan={planId}
-                    className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
-                  >
-                    {ctaLabel}
-                  </ApplyButton>
+                  {ctaHref ? (
+                    <a
+                      href={ctaHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 text-center font-bold text-white! transition hover:scale-[1.02]"
+                    >
+                      {ctaLabel}
+                    </a>
+                  ) : (
+                    <ApplyButton
+                      plan={planId}
+                      className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
+                    >
+                      {ctaLabel}
+                    </ApplyButton>
+                  )}
 
                   <BookCallButton
                     from={`Program - ${plan?.label ?? eyebrow}`}

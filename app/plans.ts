@@ -1,9 +1,19 @@
+import { WHATSAPP_BASE_URL } from "./siteConfig";
+
 export type Plan = {
   id: string;
   label: string;
   description: string;
   amount: number | null;
   gstApplicable?: boolean;
+  // Waitlist-only plans have no online amount: they show this pricing and
+  // send visitors to WhatsApp instead of checkout.
+  waitlist?: {
+    price: string;
+    extra: string;
+    shortPrice: string;
+    until: string;
+  };
 };
 
 export const plans: Plan[] = [
@@ -34,7 +44,14 @@ export const plans: Plan[] = [
     label: "Personal Mentorship",
     description:
       "One-on-one mentorship with direct access to Rajesh Kumar Kare.",
-    amount: 15000000,
+    // Not payable online (too large for Razorpay); waitlist via WhatsApp.
+    amount: null,
+    waitlist: {
+      price: "₹1.5 Crore / Year",
+      extra: "+ Profit Sharing",
+      shortPrice: "₹1.5 Cr / Year + Profit Sharing",
+      until: "2030",
+    },
   },
   {
     id: "strategy-call",
@@ -55,6 +72,10 @@ export function formatInr(amount: number): string {
 }
 
 export function formatPlanAmount(plan: Plan): string {
+  if (plan.waitlist) {
+    return `${plan.waitlist.shortPrice} · Waitlist till ${plan.waitlist.until}`;
+  }
+
   if (plan.amount == null) {
     return "Custom";
   }
@@ -62,4 +83,20 @@ export function formatPlanAmount(plan: Plan): string {
   const formatted = formatInr(plan.amount);
 
   return plan.gstApplicable ? `${formatted} + GST` : formatted;
+}
+
+// The heading next to a plan's price ("1 Day — Booking Amount").
+export function planAmountLabel(plan: Plan): string {
+  return plan.waitlist ? "Investment" : "Booking Amount";
+}
+
+// WhatsApp chat for joining a waitlist-only plan.
+export function waitlistWhatsAppUrl(plan: Plan): string {
+  const price = plan.waitlist
+    ? ` (${plan.waitlist.price} ${plan.waitlist.extra})`
+    : "";
+
+  return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(
+    `Hi RPIANS Team, I want more info about ${plan.label}${price} and the waitlist.`,
+  )}`;
 }

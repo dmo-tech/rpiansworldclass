@@ -10,6 +10,18 @@ export async function POST(request: Request) {
     // The plan decides the price, so a visitor can't pay one plan's price for another.
     const plan = plans.find((item) => item.id === planId);
 
+    if (plan?.waitlist) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: `${plan.label} is waitlist-only and can't be paid online. Please join the waitlist on WhatsApp.`,
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
     if (!plan || plan.amount == null) {
       return NextResponse.json(
         {

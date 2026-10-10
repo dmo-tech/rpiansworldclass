@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import ProgramOffer from "../../ProgramOffer";
 import ProgramPageTemplate from "../../ProgramPageTemplate";
 import { formatInr, plans } from "../../plans";
 import { WHATSAPP_BASE_URL } from "../../siteConfig";
@@ -24,44 +25,14 @@ const HIGHLIGHTS = [
 
 function TenMonthOffer() {
   return (
-    <div className="mx-auto mt-8 max-w-xl lg:mx-0">
-      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#3b82f6]">
-        Small Group Mentorship
-      </p>
-
-      <h2 className="mt-2 text-2xl font-bold text-[#0f172a] md:text-3xl">
-        Business Automation &amp; Profit Mastery
-      </h2>
-
-      <ul className="mt-6 space-y-4 text-left">
-        {HIGHLIGHTS.map((highlight) => (
-          <li key={highlight} className="flex items-start gap-3">
-            <span aria-hidden="true" className="mt-0.5 shrink-0 text-lg leading-7">
-              ✅
-            </span>
-
-            <span className="text-base leading-7 text-gray-700 md:text-lg md:leading-8">
-              {highlight}
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      <p className="mt-8 font-serif text-4xl font-bold text-[#0f172a] md:text-5xl">
-        {PRICE}.00
-      </p>
-
-      <p className="mt-1 text-sm text-gray-500">Including GST</p>
-
-      <a
-        href={MORE_INFO_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[#f97316] px-8 py-4 text-base font-bold tracking-wide text-white! shadow-[0_14px_34px_rgba(249,115,22,0.35)] transition hover:bg-[#ea580c] sm:w-auto"
-      >
-        YES! I WANT MORE INFO
-      </a>
-    </div>
+    <ProgramOffer
+      label="Small Group Mentorship"
+      title="Business Automation & Profit Mastery"
+      highlights={HIGHLIGHTS}
+      price={`${PRICE}.00`}
+      priceNote="Including GST"
+      moreInfoUrl={MORE_INFO_URL}
+    />
   );
 }
 

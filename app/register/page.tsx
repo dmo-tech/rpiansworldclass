@@ -7,7 +7,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import CallSlotPicker, { formatBookingDate } from "../CallSlotPicker";
-import { formatPlanAmount, plans } from "../plans";
+import {
+  formatPlanAmount,
+  planAmountLabel,
+  plans,
+  waitlistWhatsAppUrl,
+} from "../plans";
+import { WaitlistBadge } from "../ProgramOffer";
 
 type RegistrationData = {
   fullName: string;
@@ -214,6 +220,8 @@ function RegisterForm() {
       return;
     }
 
+    if (selectedPlan?.waitlist) return;
+
     setPlanError("");
     setStep(2);
   };
@@ -311,7 +319,9 @@ function RegisterForm() {
   };
 
   const paymentStepLabel = selectedPlan
-    ? selectedPlan.amount != null
+    ? selectedPlan.waitlist
+      ? "Join the waitlist on WhatsApp"
+      : selectedPlan.amount != null
       ? `Complete ${formatPlanAmount(selectedPlan)} booking payment`
       : "Discuss custom pricing with our team"
     : "Complete your booking payment";
@@ -664,15 +674,37 @@ function RegisterForm() {
             </div>
 
             <div className="mt-10 rounded-2xl border border-[#3b82f6]/20 bg-[#3b82f6]/5 p-6">
+              {selectedPlan?.waitlist && (
+                <p className="mb-3">
+                  <WaitlistBadge>
+                    ⏳ Waitlist Till {selectedPlan.waitlist.until}
+                  </WaitlistBadge>
+                </p>
+              )}
+
               <p className="text-sm font-semibold text-[#1d4ed8]">
-                {selectedPlan ? `${selectedPlan.label} — Booking Amount` : "Booking Amount"}
+                {selectedPlan
+                  ? `${selectedPlan.label} — ${planAmountLabel(selectedPlan)}`
+                  : "Booking Amount"}
               </p>
 
-              <p className="mt-2 font-serif text-4xl font-bold">
-                {selectedPlan
-                  ? formatPlanAmount(selectedPlan)
-                  : "Select a plan"}
-              </p>
+              {selectedPlan?.waitlist ? (
+                <>
+                  <p className="mt-2 font-serif text-3xl font-bold md:text-4xl">
+                    {selectedPlan.waitlist.price}
+                  </p>
+
+                  <p className="mt-1 text-lg font-semibold text-gray-700">
+                    {selectedPlan.waitlist.extra}
+                  </p>
+                </>
+              ) : (
+                <p className="mt-2 font-serif text-4xl font-bold">
+                  {selectedPlan
+                    ? formatPlanAmount(selectedPlan)
+                    : "Select a plan"}
+                </p>
+              )}
             </div>
           </motion.section>
 
@@ -732,7 +764,7 @@ function RegisterForm() {
                         }`}
                       >
                         <div className="flex items-center justify-between gap-4">
-                          <div className="flex items-center gap-3">
+                          <div className="flex min-w-0 items-center gap-3">
                             <span
                               className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
                                 isSelected
@@ -754,9 +786,21 @@ function RegisterForm() {
                             </div>
                           </div>
 
-                          <p className="shrink-0 font-serif text-xl font-bold text-[#1d4ed8]">
-                            {formatPlanAmount(plan)}
-                          </p>
+                          {plan.waitlist ? (
+                            <div className="max-w-[7rem] shrink-0 text-right sm:max-w-[9.5rem]">
+                              <p className="text-[13px] font-bold leading-5 text-[#1d4ed8] sm:text-sm">
+                                {plan.waitlist.shortPrice}
+                              </p>
+
+                              <p className="mt-1 text-[11px] font-semibold text-amber-700">
+                                Waitlist till {plan.waitlist.until}
+                              </p>
+                            </div>
+                          ) : (
+                            <p className="shrink-0 font-serif text-xl font-bold text-[#1d4ed8]">
+                              {formatPlanAmount(plan)}
+                            </p>
+                          )}
                         </div>
                       </button>
                     );
@@ -786,15 +830,42 @@ function RegisterForm() {
                   )}
                 </AnimatePresence>
 
-                <motion.button
-                  type="button"
-                  onClick={handleContinueFromPlan}
-                  whileHover={{ scale: 1.015 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
-                >
-                  Continue
-                </motion.button>
+                {selectedPlan?.waitlist ? (
+                  <>
+                    <div
+                      role="note"
+                      className="mt-6 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800"
+                    >
+                      <p className="font-bold">
+                        {selectedPlan.label} is waitlist-only
+                      </p>
+
+                      <p className="mt-1">
+                        Waitlist till {selectedPlan.waitlist.until}. Join the
+                        waitlist on WhatsApp and our team will get in touch.
+                      </p>
+                    </div>
+
+                    <a
+                      href={waitlistWhatsAppUrl(selectedPlan)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-5 block w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 text-center font-bold text-white! shadow-[0_15px_50px_rgba(34,197,94,0.22)] transition hover:scale-[1.015]"
+                    >
+                      Join the Waitlist
+                    </a>
+                  </>
+                ) : (
+                  <motion.button
+                    type="button"
+                    onClick={handleContinueFromPlan}
+                    whileHover={{ scale: 1.015 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
+                  >
+                    Continue
+                  </motion.button>
+                )}
               </div>
           </motion.section>
         </div>
