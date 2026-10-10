@@ -161,8 +161,15 @@ function RegisterForm() {
   );
   const [planError, setPlanError] = useState("");
 
+  // Arriving with a valid ?plan= (a program page, Our Programs) shows only
+  // that plan; "Change plan" reveals the rest. Without one, all plans show.
+  const [showAllPlans, setShowAllPlans] = useState(!planFromQuery);
+
   const selectedPlan =
     plans.find((plan) => plan.id === selectedPlanId) ?? null;
+
+  const visiblePlans =
+    showAllPlans || !selectedPlan ? plans : [selectedPlan];
 
   const [formData, setFormData] =
     useState<RegistrationData>(initialData);
@@ -696,7 +703,7 @@ function RegisterForm() {
                 </div>
 
                 <div className="mt-8 space-y-4">
-                  {plans.map((plan) => {
+                  {visiblePlans.map((plan) => {
                     const isSelected = plan.id === selectedPlanId;
 
                     return (
@@ -744,6 +751,16 @@ function RegisterForm() {
                     );
                   })}
                 </div>
+
+                {!showAllPlans && (
+                  <button
+                    type="button"
+                    onClick={() => setShowAllPlans(true)}
+                    className="mt-4 text-sm font-semibold text-[#1d4ed8] underline underline-offset-4 transition hover:text-[#1e3a8a]"
+                  >
+                    Change plan
+                  </button>
+                )}
 
                 <AnimatePresence>
                   {planError && (
