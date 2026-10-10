@@ -487,7 +487,7 @@ ${
             </p>
 
             <h2 className="mt-3 text-2xl font-bold">
-              Business Diagnostic Booking
+              Business Automation And Profit Mastery Strategy
             </h2>
           </div>
 
