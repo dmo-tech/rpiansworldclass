@@ -33,10 +33,10 @@ export default function SiteHeader() {
         <ActiveNavigation />
 
         <div className="flex shrink-0 items-center gap-3">
-          {/* Quiet grey, no border, matching the white header (not a blue button). */}
+          {/* Plain text like the menu links: no box, blue on hover. */}
           <Link
             href="/login"
-            className="hidden whitespace-nowrap rounded-lg bg-gray-100 px-6 py-3 text-sm font-bold text-gray-700! transition hover:bg-gray-200 sm:block"
+            className="hidden whitespace-nowrap py-2 text-sm text-gray-600! transition duration-300 hover:text-[#3b82f6]! sm:block"
           >
             Log in
           </Link>
