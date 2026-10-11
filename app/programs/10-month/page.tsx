@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import ProgramOffer from "../../ProgramOffer";
 import ProgramPageTemplate from "../../ProgramPageTemplate";
+import WatchApplyButton from "../../WatchApplyButton";
 import { formatInr, plans } from "../../plans";
-import { WHATSAPP_BASE_URL } from "../../siteConfig";
 
 export const metadata: Metadata = {
   title: "10 Month Program",
@@ -13,10 +13,6 @@ export const metadata: Metadata = {
 
 // The price comes from plans.ts (it includes GST), so it always matches checkout.
 const PRICE = formatInr(plans.find((plan) => plan.id === "10-month")?.amount ?? 0);
-
-const MORE_INFO_URL = `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(
-  `Hi RPIANS Team, I want more info about the 10 Month Business Automation & Profit Mastery Program (${PRICE}).`,
-)}`;
 
 const HIGHLIGHTS = [
   "Customized Small Group Mentorship to accelerate business growth, automate operations, and multiply profits.",
@@ -31,8 +27,12 @@ function TenMonthOffer() {
       highlights={HIGHLIGHTS}
       price={`${PRICE}.00`}
       priceNote="Including GST"
-      moreInfoUrl={MORE_INFO_URL}
-      moreInfoLabel="Explore Exclusive Mentorship"
+      action={
+        <WatchApplyButton
+          from="Program - 10 Month - Offer"
+          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
+        />
+      }
     />
   );
 }
