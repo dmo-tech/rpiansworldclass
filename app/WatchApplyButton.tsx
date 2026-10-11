@@ -37,6 +37,8 @@ type WatchApplyButtonProps = {
   // Links need text-…! colours: globals.css sets `a { color: inherit }`.
   className: string;
   children?: ReactNode;
+  // Defaults to ▶ in a circle.
+  icon?: ReactNode;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
 };
 
@@ -44,11 +46,12 @@ export default function WatchApplyButton({
   from,
   className,
   children = "Start Your Business Transformation Today",
+  icon = <PlayCircleIcon />,
   onClick,
 }: WatchApplyButtonProps) {
   return (
     <Link href={watchApplyHref(from)} onClick={onClick} className={className}>
-      <PlayCircleIcon />
+      {icon}
       {/* Long label: wraps into even, centred lines on narrow buttons. */}
       <span className="text-balance text-center">{children}</span>
     </Link>
