@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { FormEvent, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,24 +10,63 @@ import { WHATSAPP_BASE_URL } from "../siteConfig";
 /*
   IMPORTANT:
   Ye Login page abhi sirf UI/design placeholder hai — koi real backend,
-  user database ya OTP bhejne wala service (SMS/email) connected nahi hai.
-  Jab real authentication system ready ho, "handleSendOtp" aur
-  "handleVerifyOtp" ke andar actual API calls add karni hongi.
+  user database ya password reset service connected nahi hai. Jab real
+  authentication system ready ho, "handleLogin" aur "handleReset" ke andar
+  actual API calls add karni hongi.
 */
 
+type Tab = "login" | "reset";
+
+const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
+
+const fieldClass =
+  "w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-base text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[#1d4ed8] focus:ring-2 focus:ring-[#1d4ed8]/15";
+
+function Required() {
+  return (
+    <span aria-hidden="true" className="text-red-600">
+      *
+    </span>
+  );
+}
+
+function SignInIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="h-4 w-4"
+    >
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+      <path d="m10 17 5-5-5-5" />
+      <path d="M15 12H3" />
+    </svg>
+  );
+}
+
 export default function LoginPage() {
-  const [step, setStep] = useState<"credentials" | "otp">("credentials");
-  const [loginId, setLoginId] = useState("");
+  const [tab, setTab] = useState<Tab>("login");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [otp, setOtp] = useState("");
+  const [resetEmail, setResetEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [noticeMessage, setNoticeMessage] = useState("");
 
-  const handleSendOtp = (event: FormEvent<HTMLFormElement>) => {
+  const switchTab = (next: Tab) => {
+    setTab(next);
+    setErrorMessage("");
+  };
+
+  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!loginId.trim()) {
-      setErrorMessage("Please enter your registered email or phone number.");
+    if (!isEmail(email)) {
+      setErrorMessage("Please enter your registered email address.");
       return;
     }
 
@@ -37,20 +76,22 @@ export default function LoginPage() {
     }
 
     setErrorMessage("");
-    setStep("otp");
+    setNoticeMessage(
+      "Login is not active yet. Our team is setting this up — please contact us on WhatsApp for account access.",
+    );
   };
 
-  const handleVerifyOtp = (event: FormEvent<HTMLFormElement>) => {
+  const handleReset = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (otp.trim().length < 4) {
-      setErrorMessage("Please enter the OTP sent to you.");
+    if (!isEmail(resetEmail)) {
+      setErrorMessage("Please enter your registered email address.");
       return;
     }
 
     setErrorMessage("");
     setNoticeMessage(
-      "Login is not active yet. Our team is setting this up — please contact us on WhatsApp for account access.",
+      "Password reset is not active yet. Our team is setting this up — please contact us on WhatsApp and we will help you.",
     );
   };
 
@@ -58,258 +99,216 @@ export default function LoginPage() {
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white px-5 py-12 text-[#0f172a] md:px-8">
       <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#3b82f6]/10 blur-[170px]" />
 
-      <div className="relative w-full max-w-md">
-        <Link href="/" className="mb-10 flex items-center justify-center gap-3">
-          <Image
-            src="/rpians-logo.png"
-            alt="RPIANS logo"
-            width={44}
-            height={33}
-            className="h-9 w-auto"
-          />
-
-          <div>
-            <p className="text-xl font-bold tracking-[0.28em] text-[#3b82f6]">
-              RPIANS
-            </p>
-
-            <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-gray-500">
-              World Class Business Coaching
-            </p>
-          </div>
-        </Link>
-
+      <div className="relative w-full max-w-lg">
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 30,
-            scale: 0.97,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
-          }}
-          transition={{
-            duration: 0.7,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="rounded-3xl border border-[#3b82f6]/30 bg-black/[0.04] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.2)] backdrop-blur md:p-10"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="rounded-2xl border border-black/10 bg-white p-5 shadow-[0_24px_70px_rgba(15,23,42,0.12)] sm:p-6 md:p-10"
         >
+          <Link href="/" className="flex items-center justify-center gap-3">
+            <Image
+              src="/rpians-logo.png"
+              alt="RPIANS logo"
+              width={44}
+              height={33}
+              className="h-9 w-auto"
+            />
+
+            <div>
+              <p className="text-xl font-bold tracking-[0.28em] text-[#3b82f6]">
+                RPIANS
+              </p>
+
+              <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                World Class Business Coaching
+              </p>
+            </div>
+          </Link>
+
+          <h1 className="mt-6 text-balance text-center text-2xl font-bold leading-snug md:text-[1.7rem]">
+            <span className="block">Welcome to</span>{" "}
+            <span className="block">
+              Business Automation And Profit Mastery Program
+            </span>
+          </h1>
+
+          <hr className="mt-6 border-black/10" />
+
           {noticeMessage ? (
-            <div className="text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-                Login
-              </p>
+            <div className="mt-6 text-center">
+              <h2 className="text-xl font-bold">We&rsquo;ll Get You In Soon</h2>
 
-              <h1 className="mt-3 text-2xl font-bold">
-                We&rsquo;ll Get You In Soon
-              </h1>
-
-              <p className="mt-4 leading-7 text-gray-600">
-                {noticeMessage}
-              </p>
+              <p className="mt-3 leading-7 text-gray-600">{noticeMessage}</p>
 
               <a
                 href={`${WHATSAPP_BASE_URL}?text=Namaste%20RPIANS%20Team%2C%20mujhe%20login%20access%20chahiye.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-7 block w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
+                className="mt-6 block w-full rounded-lg bg-[#1d4ed8] px-7 py-3.5 text-center font-bold text-white! transition hover:bg-[#1e40af]"
               >
                 Contact Us on WhatsApp
               </a>
 
-              <Link
-                href="/"
-                className="mt-4 block w-full rounded-lg border border-[#3b82f6]/35 px-7 py-4 text-center font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10"
+              <button
+                type="button"
+                onClick={() => setNoticeMessage("")}
+                className="mt-3 block w-full rounded-lg border border-black/10 bg-gray-100 px-7 py-3.5 text-center font-semibold text-gray-700 transition hover:bg-gray-200"
               >
-                Back to Website
-              </Link>
+                Back to Login
+              </button>
             </div>
           ) : (
-            <AnimatePresence mode="wait">
-              {step === "credentials" ? (
-                <motion.div
-                  key="credentials"
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -30 }}
-                  transition={{ duration: 0.3 }}
+            <>
+              <div
+                role="tablist"
+                aria-label="Login options"
+                className="mt-6 flex rounded-lg bg-gray-100 p-1"
+              >
+                {(
+                  [
+                    ["login", "Log in"],
+                    ["reset", "Reset your password"],
+                  ] as const
+                ).map(([value, label]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    role="tab"
+                    id={`tab-${value}`}
+                    aria-selected={tab === value}
+                    aria-controls={`panel-${value}`}
+                    onClick={() => switchTab(value)}
+                    className={`whitespace-nowrap rounded-md px-3 py-2.5 text-sm font-semibold transition sm:px-4 ${
+                      tab === value
+                        ? "bg-[#1d4ed8] text-white shadow-sm"
+                        : "text-gray-500 hover:text-gray-800"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              {tab === "login" ? (
+                <form
+                  id="panel-login"
+                  role="tabpanel"
+                  aria-labelledby="tab-login"
+                  onSubmit={handleLogin}
+                  noValidate
+                  className="mt-6 space-y-5"
                 >
-                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-                    Login
-                  </p>
+                  <div>
+                    <label htmlFor="email" className="mb-1.5 block text-sm font-semibold text-gray-700">
+                      Email address <Required />
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      inputMode="email"
+                      value={email}
+                      onChange={(event) => {
+                        setEmail(event.target.value);
+                        setErrorMessage("");
+                      }}
+                      placeholder="you@company.com"
+                      autoComplete="username"
+                      required
+                      className={fieldClass}
+                    />
+                  </div>
 
-                  <h1 className="mt-3 text-2xl font-bold md:text-3xl">
-                    Login to Your Account
-                  </h1>
+                  <div>
+                    <label htmlFor="password" className="mb-1.5 block text-sm font-semibold text-gray-700">
+                      Password <Required />
+                    </label>
+                    <input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(event) => {
+                        setPassword(event.target.value);
+                        setErrorMessage("");
+                      }}
+                      placeholder="Enter your password"
+                      autoComplete="current-password"
+                      required
+                      className={fieldClass}
+                    />
+                  </div>
 
-                  <p className="mt-3 text-gray-500">
-                    Enter your ID and password to continue.
-                  </p>
+                  {errorMessage && (
+                    <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700">
+                      {errorMessage}
+                    </p>
+                  )}
 
-                  <form onSubmit={handleSendOtp} className="mt-8 space-y-5">
-                    <div>
-                      <label
-                        htmlFor="loginId"
-                        className="mb-2 block text-sm text-gray-600"
-                      >
-                        Email or Phone Number
-                      </label>
-
-                      <input
-                        id="loginId"
-                        type="text"
-                        value={loginId}
-                        onChange={(event) => {
-                          setLoginId(event.target.value);
-                          setErrorMessage("");
-                        }}
-                        placeholder="you@company.com"
-                        autoComplete="username"
-                        autoFocus
-                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-400 focus:border-[#3b82f6]"
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="password"
-                        className="mb-2 block text-sm text-gray-600"
-                      >
-                        Password
-                      </label>
-
-                      <input
-                        id="password"
-                        type="password"
-                        value={password}
-                        onChange={(event) => {
-                          setPassword(event.target.value);
-                          setErrorMessage("");
-                        }}
-                        placeholder="Enter your password"
-                        autoComplete="current-password"
-                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 outline-none transition placeholder:text-gray-400 focus:border-[#3b82f6]"
-                      />
-                    </div>
-
-                    <AnimatePresence>
-                      {errorMessage && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -8 }}
-                          className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
-                        >
-                          {errorMessage}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    <motion.button
-                      type="submit"
-                      whileHover={{ scale: 1.015 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
-                    >
-                      Send OTP
-                    </motion.button>
-                  </form>
-                </motion.div>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#1d4ed8] px-6 py-3 font-bold text-white transition hover:bg-[#1e40af]"
+                  >
+                    <SignInIcon />
+                    Log in
+                  </button>
+                </form>
               ) : (
-                <motion.div
-                  key="otp"
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -30 }}
-                  transition={{ duration: 0.3 }}
+                <form
+                  id="panel-reset"
+                  role="tabpanel"
+                  aria-labelledby="tab-reset"
+                  onSubmit={handleReset}
+                  noValidate
+                  className="mt-6 space-y-5"
                 >
-                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-                    Verify OTP
+                  <p className="text-sm leading-6 text-gray-600">
+                    Enter the email address you use for your account and we
+                    will help you reset your password.
                   </p>
 
-                  <h1 className="mt-3 text-2xl font-bold md:text-3xl">
-                    Enter OTP
-                  </h1>
+                  <div>
+                    <label htmlFor="reset-email" className="mb-1.5 block text-sm font-semibold text-gray-700">
+                      Email address <Required />
+                    </label>
+                    <input
+                      id="reset-email"
+                      type="email"
+                      inputMode="email"
+                      value={resetEmail}
+                      onChange={(event) => {
+                        setResetEmail(event.target.value);
+                        setErrorMessage("");
+                      }}
+                      placeholder="you@company.com"
+                      autoComplete="email"
+                      required
+                      className={fieldClass}
+                    />
+                  </div>
 
-                  <p className="mt-3 text-gray-500">
-                    We&rsquo;ve sent a one-time password to {loginId || "your registered ID"}.
-                  </p>
+                  {errorMessage && (
+                    <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700">
+                      {errorMessage}
+                    </p>
+                  )}
 
-                  <form onSubmit={handleVerifyOtp} className="mt-8 space-y-5">
-                    <div>
-                      <label
-                        htmlFor="otp"
-                        className="mb-2 block text-sm text-gray-600"
-                      >
-                        One-Time Password
-                      </label>
-
-                      <input
-                        id="otp"
-                        type="text"
-                        inputMode="numeric"
-                        maxLength={6}
-                        value={otp}
-                        onChange={(event) => {
-                          setOtp(event.target.value.replace(/\D/g, ""));
-                          setErrorMessage("");
-                        }}
-                        placeholder="Enter OTP"
-                        autoFocus
-                        className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-4 text-center text-2xl tracking-[0.5em] outline-none transition placeholder:text-sm placeholder:tracking-normal placeholder:text-gray-400 focus:border-[#3b82f6]"
-                      />
-                    </div>
-
-                    <AnimatePresence>
-                      {errorMessage && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -8 }}
-                          className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
-                        >
-                          {errorMessage}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    <motion.button
-                      type="submit"
-                      whileHover={{ scale: 1.015 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
-                    >
-                      Verify &amp; Login
-                    </motion.button>
-
-                    <div className="flex items-center justify-between text-sm">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setStep("credentials");
-                          setErrorMessage("");
-                        }}
-                        className="font-semibold text-gray-500 transition hover:text-[#1d4ed8]"
-                      >
-                        ← Back
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => setOtp("")}
-                        className="font-semibold text-[#1d4ed8] transition hover:text-[#1e3a8a]"
-                      >
-                        Resend OTP
-                      </button>
-                    </div>
-                  </form>
-                </motion.div>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#1d4ed8] px-6 py-3 font-bold text-white transition hover:bg-[#1e40af]"
+                  >
+                    Send reset link
+                  </button>
+                </form>
               )}
-            </AnimatePresence>
+            </>
           )}
         </motion.div>
+
+        <p className="mt-6 text-center text-sm text-gray-500">
+          <Link href="/" className="font-semibold text-gray-600! hover:text-[#1d4ed8]!">
+            ← Back to website
+          </Link>
+        </p>
       </div>
     </main>
   );
