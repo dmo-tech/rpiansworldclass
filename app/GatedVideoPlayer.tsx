@@ -1294,15 +1294,16 @@ export default function GatedVideoPlayer({
 
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-4 text-lg font-bold uppercase tracking-wide text-white shadow-lg shadow-blue-600/25 transition hover:scale-[1.02]"
+                  className="flex w-full items-center justify-center gap-2 text-balance rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-4 text-center text-base font-bold uppercase leading-snug tracking-wide text-white shadow-lg shadow-blue-600/25 transition hover:scale-[1.02]"
                 >
-                  <PlayIcon className="h-5 w-5" />
-                  Watch Now
+                  <PlayIcon className="h-5 w-5 shrink-0" />
+                  Register for the Training Now
                 </button>
 
                 <p className="text-center text-xs leading-5 text-gray-400">
-                  By clicking Watch Now, you agree that the RPIANS team may
-                  contact you by call, WhatsApp or email. See our{" "}
+                  By clicking Register for the Training Now, you agree that the
+                  RPIANS team may contact you by call, WhatsApp or email. See
+                  our{" "}
                   <a
                     href="/privacy-policy"
                     target="_blank"
