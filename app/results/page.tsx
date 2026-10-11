@@ -11,7 +11,7 @@ import VideoTestimonials from "../VideoTestimonials";
 import WatchApplyButton from "../WatchApplyButton";
 
 export const metadata: Metadata = {
-  title: "Results",
+  title: "Reviews",
   description:
     "Real systems. Real implementation. Real business results from RPIANS clients.",
 };
@@ -125,7 +125,7 @@ export default function ResultsPage() {
                   </div>
 
                   <WatchApplyButton
-                    from="Results - Masterclass"
+                    from="Reviews - Masterclass"
                     className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 text-center font-bold text-white! transition hover:scale-[1.02]"
                   />
                 </TiltCard>
@@ -136,7 +136,7 @@ export default function ResultsPage() {
       </div>
 
       <ApplyBanner
-        from="Results"
+        from="Reviews"
         title="Want Results Like These for Your Business?"
       />
 

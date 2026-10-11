@@ -16,8 +16,8 @@ const beforeItems = [
     label: "Systems",
   },
   {
-    href: "/journey",
-    label: "Journey",
+    href: "/results",
+    label: "Reviews",
   },
 ];
 
@@ -32,9 +32,11 @@ export default function ActiveNavigation() {
   const pathname = usePathname();
 
   const renderItem = (item: { href: string; label: string }) => {
+    // "/" and Reviews (/results) match exactly: the Who Is This For pages
+    // live under /results/… and have their own dropdown.
     const isActive =
-      item.href === "/"
-        ? pathname === "/"
+      item.href === "/" || item.href === "/results"
+        ? pathname === item.href
         : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
     return (

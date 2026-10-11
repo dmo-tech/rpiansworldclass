@@ -40,7 +40,8 @@ export default function WhoIsThisForDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const isActive = pathname.startsWith("/results");
+  // The segment pages only; /results itself is Reviews.
+  const isActive = pathname.startsWith("/results/");
 
   useEffect(() => {
     const closeOnOutsideClick = (event: MouseEvent) => {
