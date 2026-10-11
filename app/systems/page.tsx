@@ -11,7 +11,7 @@ import WatchApplyButton from "../WatchApplyButton";
 export const metadata: Metadata = {
   title: "Systems",
   description:
-    "Implement practical systems that improve team accountability, inventory control, working capital and business profitability.",
+    "Implement proven business systems that reduce owner dependency, improve team accountability, control inventory, strengthen cash flow, and drive sustainable profit growth.",
 };
 
 const systems = [
@@ -84,21 +84,22 @@ export default function SystemsPage() {
           className="border-y border-black/10 bg-black/[0.02] py-28"
         >
           <div className="site-container">
-            <Reveal direction="up" className="mx-auto max-w-4xl text-center">
+            <Reveal direction="up" className="mx-auto max-w-6xl text-center">
               <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
                 Our Proven Systems
               </p>
 
-              <h2 className="mt-5 font-serif text-4xl md:text-6xl">
+              {/* Sized so each line stays whole from tablets up. */}
+              <h2 className="mt-5 font-serif text-4xl lg:text-5xl xl:text-6xl">
                 <AnimatedWords
-                  text="Build a Business That Works"
+                  text="Run Your Business on Autopilot Mode"
                   stagger={0.09}
                   className="justify-center"
                 />
 
                 <span className="mt-2 block text-[#1d4ed8]">
                   <AnimatedWords
-                    text="Without Your Daily Involvement"
+                    text="& Multiply Your Profits Every Year"
                     delay={0.25}
                     stagger={0.09}
                     className="justify-center"
@@ -107,8 +108,9 @@ export default function SystemsPage() {
               </h2>
 
               <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600">
-                Implement practical systems that improve team accountability,
-                inventory control, working capital and business profitability.
+                Implement proven business systems that reduce owner dependency,
+                improve team accountability, control inventory, strengthen cash
+                flow, and drive sustainable profit growth.
               </p>
 
               <div className="mt-9 flex justify-center">
@@ -169,6 +171,7 @@ export default function SystemsPage() {
       <ApplyBanner
         from="Systems"
         title="Want These Systems in Your Business?"
+        description="Watch our free RPIANS training video to discover how proven systems can help you automate your business and multiply your profits. Take the first step toward transforming your business today."
       />
 
       <SiteFooter />
