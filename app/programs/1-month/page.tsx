@@ -18,7 +18,7 @@ export default function OneMonthProgramPage() {
       headingClassName="text-[2rem] md:text-[2.75rem] lg:text-[1.75rem] xl:text-4xl"
       description="A structured one-month program to implement inventory control, team accountability, cash-flow tracking and dashboards, with weekly reviews and hands-on support."
       duration="1 Month"
-      mode="Live Online Sessions + Weekly Reviews"
+      mode="4 Live Sessions on Zoom + Weekly Review"
       audience="Business Owners Ready to Implement Systems"
       topics={[
         "Inventory Management Setup",
