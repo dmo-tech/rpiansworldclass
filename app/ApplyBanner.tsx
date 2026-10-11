@@ -8,11 +8,12 @@ type ApplyBannerProps = {
   description?: string;
 };
 
-// Closing call to action on a page: "Apply to Work With Us" into the video.
+// Closing call to action on a page: "Start Your Business Transformation
+// Today" into the video.
 export default function ApplyBanner({
   from,
   title = "Not Sure Which Program Is Right for You?",
-  description = "Watch the RPIANS video and apply to work with us. Our team will understand your business and guide you on the right next step.",
+  description = "Watch the RPIANS video and start your business transformation today. Our team will understand your business and guide you on the right next step.",
 }: ApplyBannerProps) {
   return (
     <section className="py-20">
@@ -30,7 +31,7 @@ export default function ApplyBanner({
 
           <WatchApplyButton
             from={from}
-            className="inline-flex w-full shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 font-bold text-white! transition hover:scale-105 md:w-auto"
+            className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 font-bold text-white! transition hover:scale-105 md:w-auto md:max-w-[17rem] lg:max-w-none"
           />
         </div>
       </Reveal>

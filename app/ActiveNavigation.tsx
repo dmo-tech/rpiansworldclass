@@ -59,7 +59,7 @@ export default function ActiveNavigation() {
   };
 
   return (
-    <nav className="hidden items-center gap-4 text-sm text-gray-600 lg:flex xl:gap-6">
+    <nav className="hidden items-center gap-4 text-sm text-gray-600 lg:flex min-[1440px]:gap-6">
       {beforeItems.map(renderItem)}
 
       <WhoIsThisForDropdown />

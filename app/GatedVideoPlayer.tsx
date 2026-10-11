@@ -648,7 +648,8 @@ export default function GatedVideoPlayer({
 
     startPlayback();
 
-    // Arrived from an "Apply to Work With Us" button (/watch?apply=1&from=…):
+    // Arrived from a "Start Your Business Transformation Today" button
+    // (/watch?apply=1&from=…):
     // the button's page or place is added to the lead source.
     const params = new URLSearchParams(window.location.search);
     const applyFrom =
@@ -1137,8 +1138,8 @@ export default function GatedVideoPlayer({
               </p>
 
               <div className="mt-3 flex w-full flex-col items-center justify-center gap-2 sm:mt-6 sm:flex-row sm:gap-4">
-                <ApplyButton className="w-full max-w-xs rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-2 text-sm font-bold text-white transition hover:scale-105 sm:w-auto sm:px-9 sm:py-4 sm:text-base">
-                  Apply to Work With Us
+                <ApplyButton className="w-full max-w-xs text-balance rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-2 text-sm font-bold text-white transition hover:scale-105 sm:w-auto sm:max-w-md sm:px-9 sm:py-4 sm:text-base">
+                  Start Your Business Transformation Today
                 </ApplyButton>
               </div>
 
@@ -1294,16 +1295,16 @@ export default function GatedVideoPlayer({
 
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-2 text-balance rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-4 text-center text-base font-bold uppercase leading-snug tracking-wide text-white shadow-lg shadow-blue-600/25 transition hover:scale-[1.02]"
+                  className="flex w-full items-center justify-center gap-2 text-balance rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-4 text-center text-base font-bold uppercase leading-snug tracking-wide text-white shadow-lg shadow-blue-600/25 transition hover:scale-[1.02] max-[359px]:px-3 max-[359px]:text-sm max-[359px]:tracking-normal"
                 >
                   <PlayIcon className="h-5 w-5 shrink-0" />
-                  Register for the Training Now
+                  Register for the Free Training Now
                 </button>
 
                 <p className="text-center text-xs leading-5 text-gray-400">
-                  By clicking Register for the Training Now, you agree that the
-                  RPIANS team may contact you by call, WhatsApp or email. See
-                  our{" "}
+                  By clicking Register for the Free Training Now, you agree that
+                  the RPIANS team may contact you by call, WhatsApp or email.
+                  See our{" "}
                   <a
                     href="/privacy-policy"
                     target="_blank"

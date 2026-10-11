@@ -1,9 +1,10 @@
 import Link from "next/link";
 import type { MouseEventHandler, ReactNode } from "react";
 
-// Every generic "Apply to Work With Us" button leads into the video: /watch
-// opens with its details form, and `from` (the page or place of the button)
-// is added to the lead's source so we can see which button was used.
+// Every "Start Your Business Transformation Today" button (formerly "Apply to
+// Work With Us") leads into the video: /watch opens with its details form,
+// and `from` (the page or place of the button) is added to the lead's source
+// so we can see which button was used.
 export const watchApplyHref = (from: string) =>
   `/watch?apply=1&from=${encodeURIComponent(from)}`;
 
@@ -42,13 +43,14 @@ type WatchApplyButtonProps = {
 export default function WatchApplyButton({
   from,
   className,
-  children = "Apply to Work With Us",
+  children = "Start Your Business Transformation Today",
   onClick,
 }: WatchApplyButtonProps) {
   return (
     <Link href={watchApplyHref(from)} onClick={onClick} className={className}>
       <PlayCircleIcon />
-      {children}
+      {/* Long label: wraps into even, centred lines on narrow buttons. */}
+      <span className="text-balance text-center">{children}</span>
     </Link>
   );
 }
