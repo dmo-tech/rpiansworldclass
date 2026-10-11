@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 
 // The offer block under a program page heading: label, ✅ points, price and
-// the orange "YES! I WANT MORE INFO" WhatsApp button.
+// the orange WhatsApp button ("YES! I WANT MORE INFO" unless a page sets its
+// own label).
 
 type ProgramOfferProps = {
   label: string;
@@ -11,6 +12,7 @@ type ProgramOfferProps = {
   priceNote?: string;
   badge?: string;
   moreInfoUrl: string;
+  moreInfoLabel?: string;
   // Centre on every screen size (program pages without a photo).
   centered?: boolean;
 };
@@ -31,6 +33,7 @@ export default function ProgramOffer({
   priceNote,
   badge,
   moreInfoUrl,
+  moreInfoLabel = "YES! I WANT MORE INFO",
   centered = false,
 }: ProgramOfferProps) {
   return (
@@ -77,7 +80,7 @@ export default function ProgramOffer({
         rel="noopener noreferrer"
         className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[#f97316] px-8 py-4 text-base font-bold tracking-wide text-white! shadow-[0_14px_34px_rgba(249,115,22,0.35)] transition hover:bg-[#ea580c] sm:w-auto"
       >
-        YES! I WANT MORE INFO
+        {moreInfoLabel}
       </a>
     </div>
   );

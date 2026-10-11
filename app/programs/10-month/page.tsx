@@ -32,6 +32,7 @@ function TenMonthOffer() {
       price={`${PRICE}.00`}
       priceNote="Including GST"
       moreInfoUrl={MORE_INFO_URL}
+      moreInfoLabel="Explore Exclusive Mentorship"
     />
   );
 }
@@ -58,6 +59,8 @@ export default function TenMonthProgramPage() {
       photoSrc="/rajesh-kumar-kare-10month.png"
       photoAlt="Rajesh Kumar Kare"
       planId="10-month"
+      bannerTitle="Not Sure Which Program Is Right for Your Business?"
+      bannerDescription="Explore our proven business growth programs and discover the right path to automate your business, improve profitability, and accelerate growth. Watch our free training video to take your first step toward business transformation."
     />
   );
 }

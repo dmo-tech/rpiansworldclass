@@ -32,6 +32,9 @@ type ProgramPageTemplateProps = {
   headingClassName?: string;
   eyebrowClassName?: string;
   planId?: string;
+  // Bottom banner text; the banner's default wording when left out.
+  bannerTitle?: string;
+  bannerDescription?: string;
 };
 
 export default function ProgramPageTemplate({
@@ -51,6 +54,8 @@ export default function ProgramPageTemplate({
   headingClassName,
   eyebrowClassName,
   planId,
+  bannerTitle,
+  bannerDescription,
 }: ProgramPageTemplateProps): ReactNode {
   const plan = plans.find((item) => item.id === planId);
   const eyebrowLines = eyebrow.split("\n");
@@ -256,7 +261,11 @@ export default function ProgramPageTemplate({
         </section>
       </div>
 
-      <ApplyBanner from={`Program - ${plan?.label ?? eyebrow}`} />
+      <ApplyBanner
+        from={`Program - ${plan?.label ?? eyebrow}`}
+        title={bannerTitle}
+        description={bannerDescription}
+      />
 
       <SiteFooter />
     </main>
