@@ -22,7 +22,7 @@ export const plans: Plan[] = [
     label: "1 Day",
     description:
       "A focused one-day session to fix your biggest business bottleneck.",
-    amount: 1199,
+    amount: 1180,
   },
   {
     id: "1-month",

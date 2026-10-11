@@ -12,8 +12,10 @@ export default function OneMonthProgramPage() {
   return (
     <ProgramPageTemplate
       eyebrow="Set Up the Core Systems Your Business Runs On"
-      headingLine1="Business Automation and"
-      headingLine2="Profit Scaleup"
+      headingLine1={"One Month\nBusiness Automation And Profit"}
+      headingLine2="Scaleup Program"
+      // Sized so "Business Automation And Profit" stays on one line beside the photo from 1280px.
+      headingClassName="text-[2rem] md:text-[2.75rem] lg:text-[1.75rem] xl:text-4xl"
       description="A structured one-month program to implement inventory control, team accountability, cash-flow tracking and dashboards, with weekly reviews and hands-on support."
       duration="1 Month"
       mode="Live Online Sessions + Weekly Reviews"

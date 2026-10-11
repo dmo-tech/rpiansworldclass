@@ -11,11 +11,12 @@ export const metadata: Metadata = {
 export default function OneDayProgramPage() {
   return (
     <ProgramPageTemplate
-      eyebrow="One Day Business Automation And Profit Accelerator"
+      eyebrow={"One Day\nBusiness Automation And Profit\nAccelerator Program"}
       headingLine1="Fix Your Biggest"
       headingLine2="Business Bottleneck in a Day"
       headingClassName="text-xs text-[#3b82f6]"
-      eyebrowClassName="text-2xl md:text-3xl font-bold uppercase tracking-[0.1em] text-[#0f172a]"
+      // Sized so "Business Automation And Profit" stays on one line beside the photo from 1280px.
+      eyebrowClassName="text-2xl md:text-3xl lg:text-2xl xl:text-[1.625rem] font-bold uppercase tracking-[0.1em] text-[#0f172a]"
       description="A focused one-day session to identify where your business is leaking profit and give you a clear, practical action plan to fix it."
       duration="1 Day"
       mode="Live Online"

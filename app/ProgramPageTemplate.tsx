@@ -13,6 +13,7 @@ import SiteHeader from "./SiteHeader";
 import TiltCard from "./TiltCard";
 
 type ProgramPageTemplateProps = {
+  // With a photo, eyebrow and headingLine1 may contain "\n" for a new line.
   eyebrow: string;
   headingLine1: string;
   headingLine2: string;
@@ -52,6 +53,8 @@ export default function ProgramPageTemplate({
   planId,
 }: ProgramPageTemplateProps): ReactNode {
   const plan = plans.find((item) => item.id === planId);
+  const eyebrowLines = eyebrow.split("\n");
+  const headingLines = headingLine1.split("\n");
 
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
@@ -71,22 +74,31 @@ export default function ProgramPageTemplate({
                       "text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
                     }
                   >
-                    {eyebrow}
+                    {eyebrowLines.map((line) => (
+                      <span key={line} className="block text-balance">
+                        {line}
+                      </span>
+                    ))}
                   </p>
 
                   <h1
                     className={`mt-5 font-serif ${headingClassName ?? "text-4xl md:text-5xl"}`}
                   >
-                    <AnimatedWords
-                      text={headingLine1}
-                      stagger={0.1}
-                      className="justify-center lg:justify-start"
-                    />
+                    {headingLines.map((line, index) => (
+                      <span key={line} className={`block ${index > 0 ? "mt-2" : ""}`}>
+                        <AnimatedWords
+                          text={line}
+                          delay={index * 0.15}
+                          stagger={0.1}
+                          className="justify-center lg:justify-start"
+                        />
+                      </span>
+                    ))}
 
                     <span className="mt-2 block text-[#1d4ed8]">
                       <AnimatedWords
                         text={headingLine2}
-                        delay={0.25}
+                        delay={0.25 + (headingLines.length - 1) * 0.15}
                         stagger={0.1}
                         className="justify-center lg:justify-start"
                       />
