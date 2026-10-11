@@ -1,12 +1,56 @@
 import type { Metadata } from "next";
-import { Jost } from "next/font/google";
+import localFont from "next/font/local";
 
 import "./globals.css";
 
-const jost = Jost({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-jost",
+// Jost, self-hosted so the build never downloads fonts (Hostinger's build
+// can't reach Google Fonts). app/fonts holds the exact files Google Fonts
+// served: Jost is a variable font, so each file covers weights 400–700 for
+// one character set, with the same unicode-range as on Google. globals.css
+// joins them into --font-jost with the same "Jost Fallback" metrics.
+// (next/font needs literal options, hence three similar blocks.)
+const jostLatin = localFont({
+  src: [{ path: "./fonts/jost-latin.woff2", weight: "400 700", style: "normal" }],
+  display: "swap",
+  variable: "--font-jost-latin",
+  adjustFontFallback: false,
+  declarations: [
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
+});
+
+// Latin Extended includes the ₹ sign.
+const jostLatinExt = localFont({
+  src: [{ path: "./fonts/jost-latin-ext.woff2", weight: "400 700", style: "normal" }],
+  display: "swap",
+  variable: "--font-jost-latin-ext",
+  adjustFontFallback: false,
+  preload: false,
+  declarations: [
+    {
+      prop: "unicode-range",
+      value:
+        "U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF",
+    },
+  ],
+});
+
+const jostCyrillic = localFont({
+  src: [{ path: "./fonts/jost-cyrillic.woff2", weight: "400 700", style: "normal" }],
+  display: "swap",
+  variable: "--font-jost-cyrillic",
+  adjustFontFallback: false,
+  preload: false,
+  declarations: [
+    {
+      prop: "unicode-range",
+      value: "U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116",
+    },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -96,7 +140,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={jost.variable}>
+    <html
+      lang="en"
+      className={`${jostLatin.variable} ${jostLatinExt.variable} ${jostCyrillic.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

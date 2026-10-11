@@ -5,7 +5,23 @@
   --font-serif: var(--font-jost), Georgia, serif;
 }
 
+/* Arial sized like Jost while the font loads (the same metrics next/font
+   generated when Jost came from Google Fonts), so text doesn't jump. */
+@font-face {
+  font-family: "Jost Fallback";
+  src: local("Arial");
+  ascent-override: 111.45%;
+  descent-override: 39.06%;
+  line-gap-override: 0%;
+  size-adjust: 96.01%;
+}
+
 :root {
+  /* Self-hosted Jost (see app/layout.tsx): one face per character set. */
+  --font-jost:
+    var(--font-jost-latin), var(--font-jost-latin-ext),
+    var(--font-jost-cyrillic), "Jost Fallback";
+
   --background: #ffffff;
   --foreground: #0f172a;
 
