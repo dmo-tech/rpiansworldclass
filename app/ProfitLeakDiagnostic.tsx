@@ -8,10 +8,10 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react";
-import Link from "next/link";
 
 import BookCallButton from "./BookCallButton";
 import { useRef, useState } from "react";
+import WatchApplyButton from "./WatchApplyButton";
 
 const leakStages = [
   {
@@ -446,12 +446,10 @@ export default function ProfitLeakDiagnostic() {
                     </div>
                   </div>
 
-                  <Link
-                    href="/register"
-                    className="mt-8 block rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]"
-                  >
-                    Get Your Business Diagnostic
-                  </Link>
+                  <WatchApplyButton
+                    from="Home - Profit Leak Diagnostic"
+                    className="mt-8 flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 text-center font-bold text-white! transition hover:scale-[1.02]"
+                  />
 
                   <BookCallButton
                     from="Profit Leak Diagnostic"

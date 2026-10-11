@@ -160,6 +160,7 @@ export default function SystemsPage() {
 
       <BookCallBanner
         from="Systems"
+        applyFrom="Systems"
         title="Want These Systems in Your Business?"
       />
 

@@ -1,6 +1,5 @@
 import AnimatedCounter from "./AnimatedCounter";
 import AnimatedWords from "./AnimatedWords";
-import ApplyButton from "./ApplyButton";
 import BeforeAfter from "./BeforeAfter";
 import BookCallButton from "./BookCallButton";
 import BusinessHealthQuiz from "./BusinessHealthQuiz";
@@ -13,6 +12,7 @@ import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 import Testimonials from "./Testimonials";
 import TiltCard from "./TiltCard";
+import WatchApplyButton from "./WatchApplyButton";
 
 
 const stats = [
@@ -189,9 +189,10 @@ export default function Home() {
           </p>
 
           <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white transition hover:scale-105 sm:w-auto">
-              Apply to Work With Us
-            </ApplyButton>
+            <WatchApplyButton
+              from="Home - Movement"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
+            />
 
             <BookCallButton from="Home - Movement" />
           </div>
@@ -261,9 +262,10 @@ export default function Home() {
             </p>
 
             <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white transition hover:scale-105 sm:w-auto">
-                Apply Now
-              </ApplyButton>
+              <WatchApplyButton
+                from="Home"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
+              />
 
               <BookCallButton from="Home - Final CTA" />
             </div>

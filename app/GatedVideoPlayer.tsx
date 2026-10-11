@@ -649,6 +649,14 @@ export default function GatedVideoPlayer({
 
     startPlayback();
 
+    // Arrived from an "Apply to Work With Us" button (/watch?apply=1&from=…):
+    // the button's page or place is added to the lead source.
+    const params = new URLSearchParams(window.location.search);
+    const applyFrom =
+      params.get("apply") === "1"
+        ? (params.get("from") ?? "").replace(/[\u0000-\u001f]/g, "").trim().slice(0, 80)
+        : "";
+
     // The details form is also a lead on its own ("video form data" tab);
     // watch progress is tracked separately through /api/video-views.
     fetch("/api/leads", {
@@ -658,7 +666,9 @@ export default function GatedVideoPlayer({
         formType: "Video Form",
         ...cleaned,
         submittedAt: new Date().toISOString(),
-        source: `RPIANS Website - Video Form (${window.location.pathname})`,
+        source: `RPIANS Website - Video Form (${window.location.pathname})${
+          applyFrom ? ` - Apply: ${applyFrom}` : ""
+        }`,
       }),
       keepalive: true,
     }).catch((error) => {

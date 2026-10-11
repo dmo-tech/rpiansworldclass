@@ -22,6 +22,7 @@ export default function JourneyPage() {
 
       <BookCallBanner
         from="Journey"
+        applyFrom="Journey"
         title="Ready to Start Your Transformation Journey?"
       />
 

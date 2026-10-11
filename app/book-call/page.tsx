@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import BookingCalendar from "../BookingCalendar";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
+import WatchApplyButton from "../WatchApplyButton";
 
 export const metadata: Metadata = {
   title: "Book a Call",
@@ -33,6 +34,15 @@ export default function BookCallPage() {
 
         <div className="mt-12">
           <BookingCalendar />
+        </div>
+
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 text-sm text-gray-600 sm:flex-row">
+          <p>Not ready to book?</p>
+
+          <WatchApplyButton
+            from="Book a Call"
+            className="inline-flex items-center gap-2 rounded-lg border border-[#3b82f6]/50 px-5 py-2.5 text-sm font-bold text-[#1d4ed8]! transition hover:bg-[#3b82f6]/10"
+          />
         </div>
       </section>
 

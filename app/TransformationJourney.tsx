@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import Link from "next/link";
+
+import WatchApplyButton from "./WatchApplyButton";
 
 const journeySteps = [
   {
@@ -211,12 +212,10 @@ export default function TransformationJourney() {
             growth and long-term wealth creation.
           </p>
 
-          <Link
-            href="/register"
-            className="mt-8 inline-block rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-9 py-4 font-bold text-white transition hover:scale-105"
-          >
-            Start Your Transformation
-          </Link>
+          <WatchApplyButton
+            from="Journey - Transformation"
+            className="mt-8 inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-9 py-4 font-bold text-white! transition hover:scale-105"
+          />
         </motion.div>
       </div>
     </section>

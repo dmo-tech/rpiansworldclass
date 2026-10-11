@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 
+import WatchApplyButton from "./WatchApplyButton";
+
 const links = [
   {
     href: "/",
@@ -97,7 +99,7 @@ export default function MobileMenu() {
 
       {isOpen && (
         // The header is fixed, so the menu scrolls inside itself; otherwise the
-        // Book a Call / Apply Now buttons at the bottom are cut off on phones.
+        // Book a Call / Apply buttons at the bottom are cut off on phones.
         <div className="absolute left-0 top-full max-h-[calc(100dvh-5rem)] w-full overflow-y-auto overscroll-contain border-t border-black/10 bg-white px-6 py-6 shadow-2xl">
           <nav className="flex flex-col gap-5 text-base text-gray-600">
             {links.map((link) => (
@@ -157,13 +159,11 @@ export default function MobileMenu() {
               Book a Call
             </Link>
 
-            <Link
-              href="/register"
+            <WatchApplyButton
+              from="Mobile Menu"
               onClick={closeMenu}
-              className="rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-3 text-center font-bold text-white"
-            >
-              Apply Now
-            </Link>
+              className="flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-3 text-center font-bold text-white!"
+            />
 
             <Link
               href="/login"

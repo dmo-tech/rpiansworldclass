@@ -1,14 +1,18 @@
 import BookCallButton, { CalendarIcon } from "./BookCallButton";
 import Reveal from "./Reveal";
+import WatchApplyButton from "./WatchApplyButton";
 
 type BookCallBannerProps = {
   from: string;
+  // Adds "Apply to Work With Us" under Book a Call, tagged with this name.
+  applyFrom?: string;
   title?: string;
   description?: string;
 };
 
 export default function BookCallBanner({
   from,
+  applyFrom,
   title = "Not Sure Which Program Is Right for You?",
   description = "Book a call with the RPIANS team. We will understand your business and guide you on the right next step.",
 }: BookCallBannerProps) {
@@ -26,10 +30,19 @@ export default function BookCallBanner({
             <p className="mt-3 leading-7 text-gray-600">{description}</p>
           </div>
 
-          <BookCallButton
-            from={from}
-            className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 font-bold text-white transition hover:scale-105 md:w-auto"
-          />
+          <div className="flex w-full shrink-0 flex-col gap-3 md:w-auto">
+            <BookCallButton
+              from={from}
+              className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 font-bold text-white transition hover:scale-105 md:w-auto"
+            />
+
+            {applyFrom && (
+              <WatchApplyButton
+                from={applyFrom}
+                className="inline-flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-[#3b82f6]/50 bg-white px-8 py-4 font-bold text-[#1d4ed8]! transition hover:scale-105 md:w-auto"
+              />
+            )}
+          </div>
         </div>
       </Reveal>
     </section>

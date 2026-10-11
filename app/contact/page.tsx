@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import Reveal from "../Reveal";
 import { CONTACT_PHONE, WHATSAPP_URL } from "../siteConfig";
+import WatchApplyButton from "../WatchApplyButton";
 
 export default function ContactPage() {
   return (
@@ -69,6 +70,11 @@ export default function ContactPage() {
               >
                 Book a Call
               </a>
+
+              <WatchApplyButton
+                from="Contact"
+                className="mt-3 inline-flex items-center gap-2 rounded-lg border border-[#3b82f6]/50 px-7 py-3 font-bold text-[#1d4ed8]! transition hover:scale-105 sm:ml-3"
+              />
             </div>
           </Reveal>
 

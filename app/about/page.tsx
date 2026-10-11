@@ -6,6 +6,7 @@ import ParallaxImage from "../ParallaxImage";
 import Reveal from "../Reveal";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
+import WatchApplyButton from "../WatchApplyButton";
 
 export const metadata: Metadata = {
   title: "About",
@@ -77,6 +78,11 @@ export default function AboutPage() {
                 </p>
 
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+                  <WatchApplyButton
+                    from="About"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
+                  />
+
                   <BookCallButton from="About" />
                 </div>
               </div>

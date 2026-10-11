@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 
 import AnimatedWords from "./AnimatedWords";
-import ApplyButton from "./ApplyButton";
 import BookCallButton from "./BookCallButton";
 import Reveal from "./Reveal";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 import TiltCard from "./TiltCard";
+import WatchApplyButton from "./WatchApplyButton";
 import type { WhoIsThisForSegment } from "./whoIsThisForData";
 
 export default function WhoIsThisForTemplate({
@@ -123,9 +123,10 @@ export default function WhoIsThisForTemplate({
                 </div>
 
                 <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-                  <ApplyButton className="w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-9 py-4 text-base font-bold text-white transition hover:scale-105 sm:w-auto">
-                    Apply to Work With Us
-                  </ApplyButton>
+                  <WatchApplyButton
+                    from={`Who Is This For - ${label}`}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-9 py-4 text-base font-bold text-white! transition hover:scale-105 sm:w-auto"
+                  />
 
                   <BookCallButton from={`Who Is This For - ${label}`} />
                 </div>

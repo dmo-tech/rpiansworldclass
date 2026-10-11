@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import AnimatedWords from "../AnimatedWords";
-import ApplyButton from "../ApplyButton";
 import CaseStudies from "../CaseStudies";
 import Reveal from "../Reveal";
 import BookCallBanner from "../BookCallBanner";
@@ -9,6 +8,7 @@ import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import TiltCard from "../TiltCard";
 import VideoTestimonials from "../VideoTestimonials";
+import WatchApplyButton from "../WatchApplyButton";
 
 export const metadata: Metadata = {
   title: "Results",
@@ -124,9 +124,10 @@ export default function ResultsPage() {
                     </div>
                   </div>
 
-                  <ApplyButton className="mt-8 block w-full rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 text-center font-bold text-white transition hover:scale-[1.02]">
-                    Register for the Masterclass
-                  </ApplyButton>
+                  <WatchApplyButton
+                    from="Results - Masterclass"
+                    className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 text-center font-bold text-white! transition hover:scale-[1.02]"
+                  />
                 </TiltCard>
               </Reveal>
             </div>
@@ -136,6 +137,7 @@ export default function ResultsPage() {
 
       <BookCallBanner
         from="Results"
+        applyFrom="Results"
         title="Want Results Like These for Your Business?"
       />
 
