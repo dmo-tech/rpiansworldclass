@@ -88,6 +88,19 @@ export default function TransformationJourney() {
             See how RPIANS transforms an owner-dependent business into a
             structured, system-driven and profitable organisation.
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mt-9 flex justify-center"
+          >
+            <WatchApplyButton
+              from="Journey - Hero"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
+            />
+          </motion.div>
         </div>
 
         <div className="relative mt-20">

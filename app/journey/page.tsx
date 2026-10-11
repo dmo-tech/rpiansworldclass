@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import BookCallBanner from "../BookCallBanner";
+import ApplyBanner from "../ApplyBanner";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import TransformationJourney from "../TransformationJourney";
@@ -20,9 +20,8 @@ export default function JourneyPage() {
         <TransformationJourney />
       </div>
 
-      <BookCallBanner
+      <ApplyBanner
         from="Journey"
-        applyFrom="Journey"
         title="Ready to Start Your Transformation Journey?"
       />
 

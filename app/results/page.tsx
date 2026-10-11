@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import AnimatedWords from "../AnimatedWords";
 import CaseStudies from "../CaseStudies";
 import Reveal from "../Reveal";
-import BookCallBanner from "../BookCallBanner";
+import ApplyBanner from "../ApplyBanner";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import TiltCard from "../TiltCard";
@@ -135,9 +135,8 @@ export default function ResultsPage() {
         </section>
       </div>
 
-      <BookCallBanner
+      <ApplyBanner
         from="Results"
-        applyFrom="Results"
         title="Want Results Like These for Your Business?"
       />
 

@@ -3,7 +3,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
-import BookCallButton from "./BookCallButton";
 import { WHATSAPP_BASE_URL } from "./siteConfig";
 
 const questions = [
@@ -401,13 +400,6 @@ I would like to discuss my business diagnostic.`,
                     >
                       Get Your Free Diagnostic
                     </a>
-
-                    <BookCallButton
-                      from={`Health Quiz - Score ${percentageScore}%`}
-                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#3b82f6]/50 px-8 py-4 font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10"
-                    >
-                      Book a Call to Discuss
-                    </BookCallButton>
 
                     <button
                       type="button"

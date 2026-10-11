@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 
 import AnimatedWords from "./AnimatedWords";
-import BookCallButton from "./BookCallButton";
 import Reveal from "./Reveal";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
@@ -52,6 +51,13 @@ export default function WhoIsThisForTemplate({
               <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-gray-600">
                 {description}
               </p>
+
+              <div className="mt-9 flex justify-center">
+                <WatchApplyButton
+                  from={`Who Is This For - ${label} - Hero`}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
+                />
+              </div>
             </Reveal>
 
             <div className="mt-12 grid gap-6 lg:grid-cols-2">
@@ -127,8 +133,6 @@ export default function WhoIsThisForTemplate({
                     from={`Who Is This For - ${label}`}
                     className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-9 py-4 text-base font-bold text-white! transition hover:scale-105 sm:w-auto"
                   />
-
-                  <BookCallButton from={`Who Is This For - ${label}`} />
                 </div>
               </div>
             </Reveal>

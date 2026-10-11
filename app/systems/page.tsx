@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 
 import AnimatedWords from "../AnimatedWords";
 import Reveal from "../Reveal";
-import BookCallBanner from "../BookCallBanner";
+import ApplyBanner from "../ApplyBanner";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import TiltCard from "../TiltCard";
+import WatchApplyButton from "../WatchApplyButton";
 
 export const metadata: Metadata = {
   title: "Systems",
@@ -109,6 +110,13 @@ export default function SystemsPage() {
                 Implement practical systems that improve team accountability,
                 inventory control, working capital and business profitability.
               </p>
+
+              <div className="mt-9 flex justify-center">
+                <WatchApplyButton
+                  from="Systems - Hero"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
+                />
+              </div>
             </Reveal>
 
             <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -158,9 +166,8 @@ export default function SystemsPage() {
         </section>
       </div>
 
-      <BookCallBanner
+      <ApplyBanner
         from="Systems"
-        applyFrom="Systems"
         title="Want These Systems in Your Business?"
       />
 

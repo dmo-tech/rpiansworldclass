@@ -64,16 +64,9 @@ export default function ContactPage() {
                 </a>
               </p>
 
-              <a
-                href="/book-call"
-                className="mt-8 inline-block rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-3 font-bold text-white transition hover:scale-105"
-              >
-                Book a Call
-              </a>
-
               <WatchApplyButton
                 from="Contact"
-                className="mt-3 inline-flex items-center gap-2 rounded-lg border border-[#3b82f6]/50 px-7 py-3 font-bold text-[#1d4ed8]! transition hover:scale-105 sm:ml-3"
+                className="mt-8 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-3 font-bold text-white! transition hover:scale-105"
               />
             </div>
           </Reveal>

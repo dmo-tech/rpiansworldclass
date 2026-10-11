@@ -9,7 +9,6 @@ import {
   type MotionValue,
 } from "motion/react";
 
-import BookCallButton from "./BookCallButton";
 import { useRef, useState } from "react";
 import WatchApplyButton from "./WatchApplyButton";
 
@@ -450,13 +449,6 @@ export default function ProfitLeakDiagnostic() {
                     from="Home - Profit Leak Diagnostic"
                     className="mt-8 flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 text-center font-bold text-white! transition hover:scale-[1.02]"
                   />
-
-                  <BookCallButton
-                    from="Profit Leak Diagnostic"
-                    className="mt-3 flex items-center justify-center gap-2 rounded-lg border border-[#3b82f6]/50 px-8 py-4 text-center font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10"
-                  >
-                    Or Book a Call
-                  </BookCallButton>
                 </div>
               </motion.div>
             </div>

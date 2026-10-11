@@ -3,9 +3,8 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 
 import AnimatedWords from "./AnimatedWords";
+import ApplyBanner from "./ApplyBanner";
 import ApplyButton from "./ApplyButton";
-import BookCallBanner from "./BookCallBanner";
-import BookCallButton from "./BookCallButton";
 import { formatPlanAmount, planAmountLabel, plans } from "./plans";
 import { WaitlistBadge } from "./ProgramOffer";
 import Reveal from "./Reveal";
@@ -238,13 +237,6 @@ export default function ProgramPageTemplate({
                       {ctaLabel}
                     </ApplyButton>
                   )}
-
-                  <BookCallButton
-                    from={`Program - ${plan?.label ?? eyebrow}`}
-                    className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-[#3b82f6]/50 bg-white px-8 py-4 text-center font-semibold text-[#1d4ed8] transition hover:bg-[#3b82f6]/10"
-                  >
-                    Have Questions? Book a Call
-                  </BookCallButton>
                 </TiltCard>
               </Reveal>
             </div>
@@ -252,10 +244,7 @@ export default function ProgramPageTemplate({
         </section>
       </div>
 
-      <BookCallBanner
-        from={`Program - ${plan?.label ?? eyebrow} (Bottom)`}
-        applyFrom={`Program - ${plan?.label ?? eyebrow}`}
-      />
+      <ApplyBanner from={`Program - ${plan?.label ?? eyebrow}`} />
 
       <SiteFooter />
     </main>

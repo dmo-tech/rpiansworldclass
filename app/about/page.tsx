@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import AnimatedWords from "../AnimatedWords";
-import BookCallButton from "../BookCallButton";
 import ParallaxImage from "../ParallaxImage";
 import Reveal from "../Reveal";
 import SiteFooter from "../SiteFooter";
@@ -82,8 +81,6 @@ export default function AboutPage() {
                     from="About"
                     className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
                   />
-
-                  <BookCallButton from="About" />
                 </div>
               </div>
             </Reveal>

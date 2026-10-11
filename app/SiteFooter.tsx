@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import BookCallButton from "./BookCallButton";
 import { CONTACT_PHONE, CONTACT_PHONE_TEL, WHATSAPP_URL } from "./siteConfig";
+import WatchApplyButton from "./WatchApplyButton";
 import WhatsAppChat from "./WhatsAppChat";
 
 const CONTACT_EMAIL = "info@worldclassbc.com";
@@ -194,7 +194,7 @@ export default function SiteFooter() {
                 </li>
               </ul>
 
-              <BookCallButton
+              <WatchApplyButton
                 from="Footer"
                 className="mt-4 inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-2.5 text-sm font-bold text-white! shadow-[0_10px_24px_rgba(37,99,235,0.35)] transition hover:scale-[1.03]"
               />

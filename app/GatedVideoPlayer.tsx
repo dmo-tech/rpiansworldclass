@@ -3,7 +3,6 @@
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import ApplyButton from "./ApplyButton";
-import BookCallButton from "./BookCallButton";
 import { VIDEO_POSTER_URL, VIDEO_URL } from "./siteConfig";
 
 // Self-hosted video that asks for the viewer's details before it plays (on
@@ -1141,11 +1140,6 @@ export default function GatedVideoPlayer({
                 <ApplyButton className="w-full max-w-xs rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-2 text-sm font-bold text-white transition hover:scale-105 sm:w-auto sm:px-9 sm:py-4 sm:text-base">
                   Apply to Work With Us
                 </ApplyButton>
-
-                <BookCallButton
-                  from="Home - Video End"
-                  className="inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-lg border border-white/50 px-6 py-2 text-sm font-semibold text-white transition hover:bg-white/10 sm:w-auto sm:px-9 sm:py-4 sm:text-base"
-                />
               </div>
 
               <button

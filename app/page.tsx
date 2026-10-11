@@ -1,7 +1,6 @@
 import AnimatedCounter from "./AnimatedCounter";
 import AnimatedWords from "./AnimatedWords";
 import BeforeAfter from "./BeforeAfter";
-import BookCallButton from "./BookCallButton";
 import BusinessHealthQuiz from "./BusinessHealthQuiz";
 import HomeVideoShowcase from "./HomeVideoShowcase";
 import MouseGlow from "./MouseGlow";
@@ -105,6 +104,13 @@ export default function Home() {
                   team, control inventory and cash flow, and multiply your
                   profit every year with proven business systems.
                 </p>
+
+                <div className="mt-6 flex justify-center md:mt-9">
+                  <WatchApplyButton
+                    from="Home - Hero"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
+                  />
+                </div>
               </Reveal>
             </Reveal>
           </div>
@@ -193,8 +199,6 @@ export default function Home() {
               from="Home - Movement"
               className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
             />
-
-            <BookCallButton from="Home - Movement" />
           </div>
         </Reveal>
       </section>
@@ -266,8 +270,6 @@ export default function Home() {
                 from="Home"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
               />
-
-              <BookCallButton from="Home - Final CTA" />
             </div>
           </div>
         </Reveal>
