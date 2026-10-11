@@ -135,8 +135,16 @@ export default function LoginPage() {
   return (
     // Below sm the right padding leaves room for the Enquire Now tab, so it
     // never covers the card (a little tighter below 360px so the tabs fit).
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white py-12 pl-4 pr-12 text-[#0f172a] max-[359px]:pl-3 max-[359px]:pr-11 sm:px-5 md:px-8">
+    // The top padding keeps the card clear of "Back to website".
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white pb-12 pl-4 pr-12 pt-16 text-[#0f172a] max-[359px]:pl-3 max-[359px]:pr-11 sm:px-5 md:px-8">
       <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#3b82f6]/10 blur-[170px]" />
+
+      <Link
+        href="/"
+        className="absolute left-4 top-4 py-1 text-sm font-semibold text-gray-600! transition hover:text-[#1d4ed8]! max-[359px]:left-3 sm:left-6 sm:top-6 md:left-8"
+      >
+        ← Back to website
+      </Link>
 
       <EnquireNowTab />
 
@@ -344,12 +352,6 @@ export default function LoginPage() {
             </>
           )}
         </motion.div>
-
-        <p className="mt-6 text-center text-sm text-gray-500">
-          <Link href="/" className="font-semibold text-gray-600! hover:text-[#1d4ed8]!">
-            ← Back to website
-          </Link>
-        </p>
       </div>
     </main>
   );
