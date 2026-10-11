@@ -44,6 +44,7 @@ export default function PersonalMentorshipProgramPage() {
           }
           badge={`⏳ Waitlist Till ${WAITLIST.until}`}
           moreInfoUrl={WAITLIST_URL}
+          moreInfoLabel="Explore Exclusive Mentorship"
         />
       }
       duration="Ongoing 1:1 Mentorship"
