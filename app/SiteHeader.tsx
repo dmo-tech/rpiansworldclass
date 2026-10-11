@@ -33,9 +33,10 @@ export default function SiteHeader() {
         <ActiveNavigation />
 
         <div className="flex shrink-0 items-center gap-3">
+          {/* Quiet grey, matching the white header (not a blue button). */}
           <Link
             href="/login"
-            className="hidden whitespace-nowrap rounded-lg bg-[#3b82f6] px-6 py-3 text-sm font-bold text-white transition hover:scale-105 hover:bg-[#1d4ed8] sm:block"
+            className="hidden whitespace-nowrap rounded-lg border border-black/10 bg-gray-100 px-6 py-3 text-sm font-bold text-gray-700! transition hover:bg-gray-200 sm:block"
           >
             Login
           </Link>

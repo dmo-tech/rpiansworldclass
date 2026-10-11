@@ -160,7 +160,7 @@ export default function MobileMenu() {
             <Link
               href="/login"
               onClick={closeMenu}
-              className="rounded-lg border border-[#3b82f6]/35 px-5 py-3 text-center font-semibold text-[#1d4ed8]"
+              className="rounded-lg border border-black/10 bg-gray-100 px-5 py-3 text-center font-semibold text-gray-700! transition hover:bg-gray-200"
             >
               Login
             </Link>
