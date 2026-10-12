@@ -26,6 +26,14 @@ export const SOCIAL_LINKS = [
     brand: "bg-[#ff0000]",
     path: "M21.6 7.2c-.2-1-1-1.7-1.9-1.9C18 5 12 5 12 5s-6 0-7.7.3c-1 .2-1.7 1-1.9 1.9C2 8.9 2 12 2 12s0 3.1.4 4.8c.2 1 1 1.7 1.9 1.9C6 19 12 19 12 19s6 0 7.7-.3c1-.2 1.7-1 1.9-1.9.4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8zM10 15.5v-7l6 3.5-6 3.5z",
   },
+  {
+    href: "https://x.com/ProductRpgh",
+    // Also the footer icon's aria-label.
+    label: "X (Twitter)",
+    brand: "bg-black",
+    // The 𝕏 logo.
+    path: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z",
+  },
 ];
 
 export const WHATSAPP_ICON_PATH =
