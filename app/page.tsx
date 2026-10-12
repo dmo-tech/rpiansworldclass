@@ -2,6 +2,7 @@ import AnimatedCounter from "./AnimatedCounter";
 import AnimatedWords from "./AnimatedWords";
 import BeforeAfter from "./BeforeAfter";
 import BusinessHealthQuiz from "./BusinessHealthQuiz";
+import EnquireNowTab from "./EnquireNowTab";
 import HomeVideoShowcase from "./HomeVideoShowcase";
 import MouseGlow from "./MouseGlow";
 import ProfitLeakDiagnostic from "./ProfitLeakDiagnostic";
@@ -67,6 +68,7 @@ export default function Home() {
       {/* HEADER */}
 
       <SiteHeader />
+      <EnquireNowTab from="Home - Enquire Now" />
 
       {/* HERO + VIDEO share one background, so there is no seam between them */}
 

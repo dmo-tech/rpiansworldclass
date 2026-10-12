@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import AnimatedWords from "../AnimatedWords";
 import CaseStudies from "../CaseStudies";
+import EnquireNowTab from "../EnquireNowTab";
 import Reveal from "../Reveal";
 import ApplyBanner from "../ApplyBanner";
 import SiteFooter from "../SiteFooter";
@@ -29,6 +30,7 @@ export default function ResultsPage() {
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
       <SiteHeader />
+      <EnquireNowTab from="Reviews - Enquire Now" />
 
       <div className="pt-20">
         <CaseStudies />

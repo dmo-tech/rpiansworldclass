@@ -5,6 +5,7 @@ import Image from "next/image";
 import AnimatedWords from "./AnimatedWords";
 import ApplyBanner from "./ApplyBanner";
 import ApplyButton from "./ApplyButton";
+import EnquireNowTab from "./EnquireNowTab";
 import { formatPlanAmount, planAmountLabel, plans } from "./plans";
 import { WaitlistBadge } from "./ProgramOffer";
 import Reveal from "./Reveal";
@@ -64,6 +65,7 @@ export default function ProgramPageTemplate({
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
       <SiteHeader />
+      <EnquireNowTab from={`Program - ${plan?.label ?? eyebrow} - Enquire Now`} />
 
       <div className="pt-20">
         <section

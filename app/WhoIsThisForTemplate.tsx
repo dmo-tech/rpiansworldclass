@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import AnimatedWords from "./AnimatedWords";
+import EnquireNowTab from "./EnquireNowTab";
 import Reveal from "./Reveal";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
@@ -22,6 +23,7 @@ export default function WhoIsThisForTemplate({
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-white text-[#0f172a]">
       <SiteHeader />
+      <EnquireNowTab from={`Who Is This For - ${label} - Enquire Now`} />
 
       <div className="pt-20">
         <section className="relative overflow-hidden border-y border-black/10 py-28">
