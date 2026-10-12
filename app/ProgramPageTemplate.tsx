@@ -36,6 +36,9 @@ type ProgramPageTemplateProps = {
   // Bottom banner text; the banner's default wording when left out.
   bannerTitle?: string;
   bannerDescription?: string;
+  // Tighter hero (layout without a photo): less space under the header and a
+  // smaller heading, so the whole offer fits one laptop screen.
+  compactHero?: boolean;
 };
 
 export default function ProgramPageTemplate({
@@ -57,6 +60,7 @@ export default function ProgramPageTemplate({
   planId,
   bannerTitle,
   bannerDescription,
+  compactHero = false,
 }: ProgramPageTemplateProps): ReactNode {
   const plan = plans.find((item) => item.id === planId);
   const eyebrowLines = eyebrow.split("\n");
@@ -69,7 +73,9 @@ export default function ProgramPageTemplate({
 
       <div className="pt-20">
         <section
-          className="relative overflow-hidden border-y border-black/10 py-28"
+          className={`relative overflow-hidden border-y border-black/10 ${
+            compactHero ? "pb-28 pt-8" : "py-28"
+          }`}
         >
           <div className="site-container relative">
             {photoSrc ? (
@@ -140,7 +146,15 @@ export default function ProgramPageTemplate({
                   {eyebrow}
                 </p>
 
-                <h1 className="mt-5 font-serif text-4xl md:text-6xl">
+                {/* Compact: each heading line stays on one line on phones
+                    (28px fits 390px, 22.4px fits 320px), 48px on laptops. */}
+                <h1
+                  className={`font-serif ${
+                    compactHero
+                      ? "mt-3 text-[1.75rem]/[1.2] max-[359px]:text-[1.4rem] sm:text-4xl md:text-5xl"
+                      : "mt-5 text-4xl md:text-6xl"
+                  }`}
+                >
                   <AnimatedWords
                     text={headingLine1}
                     stagger={0.1}

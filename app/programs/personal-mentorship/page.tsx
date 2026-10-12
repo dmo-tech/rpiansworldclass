@@ -29,6 +29,7 @@ export default function PersonalMentorshipProgramPage() {
       heroContent={
         <ProgramOffer
           centered
+          compact
           label="Personal Mentorship"
           highlights={HIGHLIGHTS}
           price={
@@ -61,6 +62,8 @@ export default function PersonalMentorshipProgramPage() {
       ctaLabel="Join the Waitlist"
       ctaHref={WAITLIST_URL}
       planId="personal-mentorship"
+      // The whole offer (up to the orange button) fits one laptop screen.
+      compactHero
     />
   );
 }

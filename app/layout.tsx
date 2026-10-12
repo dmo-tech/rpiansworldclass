@@ -3,6 +3,22 @@ import localFont from "next/font/local";
 
 import "./globals.css";
 
+// Full page loads (reload, opening a URL, Back to a page the browser had
+// unloaded) start at the top. Chrome's own scroll restore lines up an element
+// near the top, but the server sends the heroes still shifted down for their
+// slide-up animation (Reveal: translateY(90px)), so the page landed 90px low
+// with the hero's first line under the fixed header.
+// - Restore is off while the page loads, and back on at the visitor's first
+//   pointer / key / touch / wheel, so in-site Back/Forward (every in-site
+//   navigation starts with one) still returns to the old position. Switching
+//   it back on at "load" was too early: Chrome still restores then.
+// - It is turned off again on pagehide (reload, leaving the site): Chrome
+//   uses the setting the page had when it was left.
+// - A page shown again from the back-forward cache re-arms the same way.
+// A plain inline <head> script, so it runs while the HTML is parsed, before
+// Chrome restores (next/script's beforeInteractive runs too late for this).
+const SCROLL_TO_TOP_ON_LOAD = `(function(){var h=history,e=["pointerdown","keydown","touchstart","wheel"];function on(){h.scrollRestoration="auto";e.forEach(function(n){removeEventListener(n,on,true)})}function arm(){h.scrollRestoration="manual";e.forEach(function(n){addEventListener(n,on,{capture:true,passive:true})})}arm();addEventListener("pagehide",function(){h.scrollRestoration="manual"});addEventListener("pageshow",function(v){if(v.persisted)arm()})})();`;
+
 // Jost, self-hosted so the build never downloads fonts (Hostinger's build
 // can't reach Google Fonts). app/fonts holds the exact files Google Fonts
 // served: Jost is a variable font, so each file covers weights 400–700 for
@@ -140,10 +156,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // data-scroll-behavior: globals.css sets smooth scrolling; this lets Next
+    // switch it off during page changes, so a new page opens at the top at
+    // once instead of gliding up from the old page's scroll position.
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${jostLatin.variable} ${jostLatinExt.variable} ${jostCyrillic.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: SCROLL_TO_TOP_ON_LOAD }} />
+      </head>
       <body>{children}</body>
     </html>
   );

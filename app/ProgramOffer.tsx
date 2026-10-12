@@ -13,6 +13,9 @@ type ProgramOfferProps = {
   badge?: string;
   // Centre on every screen size (program pages without a photo).
   centered?: boolean;
+  // Tighter spacing and slightly smaller points / price, so the hero fits one
+  // laptop screen (pairs with ProgramPageTemplate's compactHero).
+  compact?: boolean;
 } & (
   | { moreInfoUrl: string; moreInfoLabel?: string; action?: never }
   | { action: ReactNode; moreInfoUrl?: never; moreInfoLabel?: never }
@@ -37,9 +40,12 @@ export default function ProgramOffer({
   moreInfoLabel = "YES! I WANT MORE INFO",
   action,
   centered = false,
+  compact = false,
 }: ProgramOfferProps) {
   return (
-    <div className={`mx-auto mt-8 ${centered ? "max-w-2xl" : "max-w-xl lg:mx-0"}`}>
+    <div
+      className={`mx-auto ${compact ? "mt-5" : "mt-8"} ${centered ? "max-w-2xl" : "max-w-xl lg:mx-0"}`}
+    >
       <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#3b82f6]">
         {label}
       </p>
@@ -50,28 +56,35 @@ export default function ProgramOffer({
         </h2>
       )}
 
-      <ul className={`mt-6 space-y-4 text-left ${centered ? "mx-auto max-w-xl" : ""}`}>
+      <ul
+        className={`${compact ? "mt-4 space-y-3" : "mt-6 space-y-4"} text-left ${centered ? "mx-auto max-w-xl" : ""}`}
+      >
         {highlights.map((highlight) => (
           <li key={highlight} className="flex items-start gap-3">
             <span aria-hidden="true" className="mt-0.5 shrink-0 text-lg leading-7">
               ✅
             </span>
 
-            <span className="text-base leading-7 text-gray-700 md:text-lg md:leading-8">
+            {/* Compact: text-pretty keeps a single word off the last line. */}
+            <span
+              className={`text-base leading-7 text-gray-700 ${compact ? "text-pretty" : "md:text-lg md:leading-8"}`}
+            >
               {highlight}
             </span>
           </li>
         ))}
       </ul>
 
-      <p className="mt-8 font-serif text-4xl font-bold text-[#0f172a] md:text-5xl">
+      <p
+        className={`font-serif text-4xl font-bold text-[#0f172a] ${compact ? "mt-5" : "mt-8 md:text-5xl"}`}
+      >
         {price}
       </p>
 
       {priceNote && <p className="mt-1 text-sm text-gray-500">{priceNote}</p>}
 
       {badge && (
-        <p className="mt-3">
+        <p className={compact ? "mt-2" : "mt-3"}>
           <WaitlistBadge>{badge}</WaitlistBadge>
         </p>
       )}
@@ -81,7 +94,7 @@ export default function ProgramOffer({
           href={moreInfoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[#f97316] px-8 py-4 text-base font-bold tracking-wide text-white! shadow-[0_14px_34px_rgba(249,115,22,0.35)] transition hover:bg-[#ea580c] sm:w-auto"
+          className={`${compact ? "mt-4" : "mt-6"} inline-flex w-full items-center justify-center rounded-lg bg-[#f97316] px-8 py-4 text-base font-bold tracking-wide text-white! shadow-[0_14px_34px_rgba(249,115,22,0.35)] transition hover:bg-[#ea580c] sm:w-auto`}
         >
           {moreInfoLabel}
         </a>
