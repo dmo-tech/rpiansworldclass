@@ -6,8 +6,9 @@ export type Plan = {
   description: string;
   amount: number | null;
   gstApplicable?: boolean;
-  // Waitlist-only plans have no online amount: they show this pricing and
-  // send visitors to WhatsApp instead of checkout.
+  // Waitlist-only plans have no online amount: they show this pricing, and
+  // their /register flow ends by joining the waitlist on WhatsApp instead of
+  // checkout.
   waitlist?: {
     price: string;
     extra: string;
@@ -44,7 +45,8 @@ export const plans: Plan[] = [
     label: "Personal Mentorship",
     description:
       "One-on-one mentorship with direct access to Rajesh Kumar Kare.",
-    // Not payable online (too large for Razorpay); waitlist via WhatsApp.
+    // Not payable online (too large for Razorpay): /register's questions and
+    // call step, then the waitlist on WhatsApp.
     amount: null,
     waitlist: {
       price: "₹1.5 Crore / Year",
@@ -90,13 +92,20 @@ export function planAmountLabel(plan: Plan): string {
   return plan.waitlist ? "Investment" : "Booking Amount";
 }
 
-// WhatsApp chat for joining a waitlist-only plan.
-export function waitlistWhatsAppUrl(plan: Plan): string {
+// WhatsApp chat for joining a waitlist-only plan, opened from the call step
+// of /register with the applicant's name, company and chosen call time.
+export function waitlistWhatsAppUrl(
+  plan: Plan,
+  applicant: { fullName: string; companyName: string; callTime: string },
+): string {
   const price = plan.waitlist
     ? ` (${plan.waitlist.price} ${plan.waitlist.extra})`
     : "";
 
   return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(
-    `Hi RPIANS Team, I want more info about ${plan.label}${price} and the waitlist.`,
+    `Hi RPIANS Team, I want to join the waitlist for ${plan.label}${price}.\n` +
+      `Name: ${applicant.fullName}\n` +
+      `Company: ${applicant.companyName}\n` +
+      `Preferred call: ${applicant.callTime}`,
   )}`;
 }

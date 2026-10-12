@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import ProgramOffer from "../../ProgramOffer";
 import ProgramPageTemplate from "../../ProgramPageTemplate";
-import { plans, waitlistWhatsAppUrl } from "../../plans";
+import { plans } from "../../plans";
 
 export const metadata: Metadata = {
   title: "Personal Mentorship",
@@ -10,10 +10,12 @@ export const metadata: Metadata = {
     "One-on-one personal mentorship with direct access to Rajesh Kumar Kare for serious business owners.",
 };
 
-// Waitlist-only: pricing and the WhatsApp link come from plans.ts.
+// Waitlist-only: pricing comes from plans.ts. Both "Explore Exclusive
+// Mentorship" buttons open /register's questions, then the call step, which
+// ends with "Join the Waitlist" on WhatsApp.
 const PLAN = plans.find((plan) => plan.id === "personal-mentorship")!;
 const WAITLIST = PLAN.waitlist!;
-const WAITLIST_URL = waitlistWhatsAppUrl(PLAN);
+const REGISTER_URL = `/register?plan=${PLAN.id}`;
 
 const HIGHLIGHTS = [
   "Customized One-on-One Mentorship to accelerate business growth, automation, and profit multiplication.",
@@ -44,7 +46,7 @@ export default function PersonalMentorshipProgramPage() {
             </>
           }
           badge={`⏳ Waitlist Till ${WAITLIST.until}`}
-          moreInfoUrl={WAITLIST_URL}
+          moreInfoUrl={REGISTER_URL}
           moreInfoLabel="Explore Exclusive Mentorship"
         />
       }
@@ -59,8 +61,7 @@ export default function PersonalMentorshipProgramPage() {
         "Leadership and Team Development",
         "Dedicated Profit Multiplication Strategy",
       ]}
-      ctaLabel="Join the Waitlist"
-      ctaHref={WAITLIST_URL}
+      ctaLabel="Explore Exclusive Mentorship"
       planId="personal-mentorship"
       // The whole offer (up to the orange button) fits one laptop screen.
       compactHero

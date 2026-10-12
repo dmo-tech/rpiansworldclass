@@ -158,7 +158,10 @@ function RegisterForm() {
     (plan) => plan.id === searchParams.get("plan"),
   );
 
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  // Waitlist plans (Personal Mentorship) arrive from their page's "Explore
+  // Exclusive Mentorship" and start at the questions; Back from the first
+  // question still shows the plan step.
+  const [step, setStep] = useState<1 | 2 | 3>(planFromQuery?.waitlist ? 2 : 1);
   const [callDate, setCallDate] = useState<Date | null>(null);
   const [callSlot, setCallSlot] = useState("");
   const [callError, setCallError] = useState("");
@@ -221,11 +224,26 @@ function RegisterForm() {
       return;
     }
 
-    if (selectedPlan?.waitlist) return;
-
     setPlanError("");
     setStep(2);
   };
+
+  // The lead that goes to the Google Sheet (and, for checkout, sessionStorage).
+  const buildApplication = (
+    data: RegistrationData,
+    date: Date,
+    slot: string,
+    source: string,
+  ) => ({
+    ...data,
+    bookingDate: formatBookingDate(date),
+    bookingTime: `${slot} IST`,
+    planSelected: selectedPlan?.label ?? "",
+    bookingAmount: selectedPlan?.amount ?? null,
+    gstApplicable: selectedPlan?.gstApplicable ?? false,
+    submittedAt: new Date().toISOString(),
+    source,
+  });
 
   const submitApplication = (data: RegistrationData) => {
     if (!callDate || !callSlot) {
@@ -236,19 +254,12 @@ function RegisterForm() {
     setIsSubmitting(true);
     setErrorMessage("");
 
-    const bookingDate = formatBookingDate(callDate);
-    const bookingTime = `${callSlot} IST`;
-
-    const applicationData = {
-      ...data,
-      bookingDate,
-      bookingTime,
-      planSelected: selectedPlan?.label ?? "",
-      bookingAmount: selectedPlan?.amount ?? null,
-      gstApplicable: selectedPlan?.gstApplicable ?? false,
-      submittedAt: new Date().toISOString(),
-      source: "RPIANS Website",
-    };
+    const applicationData = buildApplication(
+      data,
+      callDate,
+      callSlot,
+      "RPIANS Website",
+    );
 
     // planId is only needed by checkout, so it stays out of the Google Sheet lead.
     sessionStorage.setItem(
@@ -273,6 +284,56 @@ function RegisterForm() {
     });
 
     router.push("/payment");
+  };
+
+  // Waitlist plans end at the call step: "Join the Waitlist" saves the lead
+  // (once per chosen call time) and opens WhatsApp with the details. The tab
+  // opens inside the click itself, so pop-up blockers allow it; a link to
+  // open it again is shown below in case it didn't.
+  const [waitlistJoined, setWaitlistJoined] = useState(false);
+  const waitlistLeadKeyRef = useRef("");
+
+  const waitlistUrl =
+    selectedPlan?.waitlist && callDate && callSlot
+      ? waitlistWhatsAppUrl(selectedPlan, {
+          fullName: formData.fullName.trim(),
+          companyName: formData.companyName.trim(),
+          callTime: `${formatBookingDate(callDate)} at ${callSlot} IST`,
+        })
+      : "";
+
+  const joinWaitlist = () => {
+    if (!callDate || !callSlot || !waitlistUrl) {
+      setCallError("Please select a date and time for your call.");
+      return;
+    }
+
+    const leadKey = `${callDate.toDateString()}|${callSlot}`;
+
+    if (waitlistLeadKeyRef.current !== leadKey) {
+      waitlistLeadKeyRef.current = leadKey;
+
+      fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          buildApplication(
+            formData,
+            callDate,
+            callSlot,
+            "RPIANS Website - Waitlist",
+          ),
+        ),
+        keepalive: true,
+      }).catch((error) => {
+        console.error("Waitlist lead save error (non-blocking):", error);
+      });
+    }
+
+    window.open(waitlistUrl, "_blank", "noopener,noreferrer");
+    setWaitlistJoined(true);
   };
 
   const advanceField = (valueOverride?: string) => {
@@ -341,7 +402,7 @@ function RegisterForm() {
             className="w-full max-w-2xl"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-              Step 3 of 4
+              {selectedPlan?.waitlist ? "Step 3 of 3" : "Step 3 of 4"}
             </p>
 
             <h1 className="mt-3 font-serif text-3xl md:text-5xl">
@@ -349,8 +410,9 @@ function RegisterForm() {
             </h1>
 
             <p className="mt-4 leading-7 text-gray-600">
-              Pick a date and time that suits you. After booking your call,
-              you will continue to the payment page.
+              {selectedPlan?.waitlist
+                ? "Pick a date and time that suits you, then join the waitlist on WhatsApp. Our team will call you at this time."
+                : "Pick a date and time that suits you. After booking your call, you will continue to the payment page."}
             </p>
 
             <div className="mt-8 rounded-2xl border border-black/10 bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:p-8">
@@ -361,10 +423,12 @@ function RegisterForm() {
                   setCallDate(date);
                   setCallSlot("");
                   setCallError("");
+                  setWaitlistJoined(false);
                 }}
                 onSelectSlot={(slot) => {
                   setCallSlot(slot);
                   setCallError("");
+                  setWaitlistJoined(false);
                 }}
               />
 
@@ -400,19 +464,55 @@ function RegisterForm() {
                   ← Back
                 </button>
 
-                <motion.button
-                  type="button"
-                  onClick={() => submitApplication(formData)}
-                  disabled={isSubmitting}
-                  whileHover={isSubmitting ? undefined : { scale: 1.015 }}
-                  whileTap={isSubmitting ? undefined : { scale: 0.98 }}
-                  className="flex-1 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(59,130,246,0.22)] transition disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {isSubmitting
-                    ? "Booking Your Call..."
-                    : "Book Call & Continue to Payment"}
-                </motion.button>
+                {selectedPlan?.waitlist ? (
+                  <motion.button
+                    type="button"
+                    onClick={joinWaitlist}
+                    whileHover={{ scale: 1.015 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex-1 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(59,130,246,0.22)] transition"
+                  >
+                    Join the Waitlist
+                  </motion.button>
+                ) : (
+                  <motion.button
+                    type="button"
+                    onClick={() => submitApplication(formData)}
+                    disabled={isSubmitting}
+                    whileHover={isSubmitting ? undefined : { scale: 1.015 }}
+                    whileTap={isSubmitting ? undefined : { scale: 0.98 }}
+                    className="flex-1 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(59,130,246,0.22)] transition disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {isSubmitting
+                      ? "Booking Your Call..."
+                      : "Book Call & Continue to Payment"}
+                  </motion.button>
+                )}
               </div>
+
+              {waitlistJoined && waitlistUrl && (
+                <div
+                  role="status"
+                  className="mt-5 rounded-xl border border-[#22c55e]/30 bg-[#22c55e]/10 px-4 py-3 text-sm text-[#15803d]"
+                >
+                  <p className="font-bold">
+                    Thank you! Your details and call time are saved.
+                  </p>
+
+                  <p className="mt-1">
+                    Send the message in WhatsApp to join the waitlist.
+                    WhatsApp didn&rsquo;t open?{" "}
+                    <a
+                      href={waitlistUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-[#15803d]! underline! underline-offset-2"
+                    >
+                      Open WhatsApp
+                    </a>
+                  </p>
+                </div>
+              )}
             </div>
           </motion.div>
         </div>
@@ -831,42 +931,32 @@ function RegisterForm() {
                   )}
                 </AnimatePresence>
 
-                {selectedPlan?.waitlist ? (
-                  <>
-                    <div
-                      role="note"
-                      className="mt-6 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800"
-                    >
-                      <p className="font-bold">
-                        {selectedPlan.label} is waitlist-only
-                      </p>
-
-                      <p className="mt-1">
-                        Waitlist till {selectedPlan.waitlist.until}. Join the
-                        waitlist on WhatsApp and our team will get in touch.
-                      </p>
-                    </div>
-
-                    <a
-                      href={waitlistWhatsAppUrl(selectedPlan)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-5 block w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 text-center font-bold text-white! shadow-[0_15px_50px_rgba(34,197,94,0.22)] transition hover:scale-[1.015]"
-                    >
-                      Join the Waitlist
-                    </a>
-                  </>
-                ) : (
-                  <motion.button
-                    type="button"
-                    onClick={handleContinueFromPlan}
-                    whileHover={{ scale: 1.015 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
+                {selectedPlan?.waitlist && (
+                  <div
+                    role="note"
+                    className="mt-6 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800"
                   >
-                    Continue
-                  </motion.button>
+                    <p className="font-bold">
+                      {selectedPlan.label} is waitlist-only
+                    </p>
+
+                    <p className="mt-1">
+                      Waitlist till {selectedPlan.waitlist.until}. Share your
+                      details and pick a call time, then join the waitlist on
+                      WhatsApp.
+                    </p>
+                  </div>
                 )}
+
+                <motion.button
+                  type="button"
+                  onClick={handleContinueFromPlan}
+                  whileHover={{ scale: 1.015 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="mt-7 w-full rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(34,197,94,0.22)]"
+                >
+                  Continue
+                </motion.button>
               </div>
           </motion.section>
         </div>
