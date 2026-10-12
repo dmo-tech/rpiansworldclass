@@ -14,7 +14,6 @@ const FEE = STRATEGY_CALL_AMOUNT != null ? formatInr(STRATEGY_CALL_AMOUNT) : "th
 const STRATEGY_CALL_TERMS = [
   `Please note that the application fee of ${FEE} is necessary to reserve your spot and book a call.`,
   `If your application is not accepted, we will refund your ${FEE}.`,
-  `If your application is accepted, we will refund your ${FEE} after the call.`,
   "Please note that we will not refund the application fee if you fail to show up for the scheduled call or cancel without providing at least 24 hours' notice.",
   "After paying the application fee, our team will share a short application form with you on WhatsApp. Please submit it within 48 hours; otherwise, you may risk forfeiting your deposit.",
 ];
