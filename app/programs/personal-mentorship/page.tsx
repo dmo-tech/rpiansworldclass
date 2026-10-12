@@ -63,7 +63,7 @@ export default function PersonalMentorshipProgramPage() {
       ]}
       ctaLabel="Explore Exclusive Mentorship"
       planId="personal-mentorship"
-      // The whole offer (up to the orange button) fits one laptop screen.
+      // The whole offer (up to the Explore button) fits one laptop screen.
       compactHero
     />
   );
