@@ -14,7 +14,7 @@ export const WHATSAPP_BASE_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 // "Chat on WhatsApp", /contact and the Thank You page. Line breaks become %0A
 // in the link, so WhatsApp shows the three parts on separate lines.
 const WHATSAPP_MESSAGE = [
-  "Namaste RPIANS Team,",
+  "Hello RPIANS Team,",
   "",
   "I want more information about Business Automation and Profit Growth.",
   "",
