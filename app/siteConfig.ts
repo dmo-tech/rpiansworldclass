@@ -10,7 +10,18 @@ export const CONTACT_PHONE_TEL = `tel:+${WHATSAPP_NUMBER}`;
 
 export const WHATSAPP_BASE_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 
-export const WHATSAPP_URL = `${WHATSAPP_BASE_URL}?text=Namaste%20RPIANS%20Team,%20mujhe%20Business%20Automation%20aur%20Profit%20Growth%20ke%20baare%20mein%20jankari%20chahiye.`;
+// The general pre-filled WhatsApp message: floating WhatsApp button, footer
+// "Chat on WhatsApp", /contact and the Thank You page. Line breaks become %0A
+// in the link, so WhatsApp shows the three parts on separate lines.
+const WHATSAPP_MESSAGE = [
+  "Namaste RPIANS Team,",
+  "",
+  "I want more information about Business Automation and Profit Growth.",
+  "",
+  "Thank you.",
+].join("\n");
+
+export const WHATSAPP_URL = `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
 // Homepage / "Watch the Transformation" video, hosted on worldclassbc.com.
 // Upload a new encode under a new file name and change it here only.
