@@ -5,12 +5,22 @@ const nextConfig: NextConfig = {
     // Video poster hosted next to the video on worldclassbc.com.
     remotePatterns: [new URL("https://worldclassbc.com/media/**")],
   },
-  // The Journey page was removed; old links land on Reviews (/results).
-  // Not permanent, so browsers don't cache it if the page comes back.
+  // Not permanent (307), so browsers don't cache them if things change.
   async redirects() {
     return [
+      // The Journey page was removed; old links land on Reviews (/results).
       { source: "/journey", destination: "/results", permanent: false },
       { source: "/reviews", destination: "/results", permanent: false },
+      // Short link worldclassbc.com/training: the /watch video form, with the
+      // lead's source ending "- Apply: Training Link". The space is written
+      // %2520: Next decodes the destination once and doesn't re-encode values
+      // from this config, so "%20" (or "+") would reach the Location header as
+      // a raw space; this way the header carries a valid "Training%20Link".
+      {
+        source: "/training",
+        destination: "/watch?apply=1&from=Training%2520Link",
+        permanent: false,
+      },
     ];
   },
 };
