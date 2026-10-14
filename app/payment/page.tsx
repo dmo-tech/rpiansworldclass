@@ -489,8 +489,13 @@ ${
           className="relative z-10 rounded-2xl border border-black/10 bg-white p-7 shadow-[0_30px_100px_rgba(0,0,0,0.2)] md:p-9 lg:sticky lg:top-8"
         >
           <div className="border-b border-black/10 pb-6">
+            {/* Book a Call under the /watch video pays first and picks the
+                call in the application form after (2 steps); /register and
+                /book-call book the call before paying. */}
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-              Step 4 of 4
+              {applicationData && !applicationData.bookingDate
+                ? "Step 1 of 2"
+                : "Step 4 of 4"}
             </p>
 
             <p className="mt-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#1d4ed8]">
@@ -534,17 +539,20 @@ ${
                 </p>
               </div>
 
-              <div>
-                <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
-                  Company
-                </p>
+              {/* None yet after the /watch video: asked in the application form. */}
+              {applicationData.companyName && (
+                <div>
+                  <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
+                    Company
+                  </p>
 
-                <p className="mt-2 font-semibold">
-                  {applicationData.companyName}
-                </p>
-              </div>
+                  <p className="mt-2 font-semibold">
+                    {applicationData.companyName}
+                  </p>
+                </div>
+              )}
 
-              {applicationData.bookingDate && (
+              {applicationData.bookingDate ? (
                 <div>
                   <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
                     Call Booked
@@ -553,6 +561,16 @@ ${
                   <p className="mt-2 font-semibold text-[#1d4ed8]">
                     {applicationData.bookingDate} at{" "}
                     {applicationData.bookingTime}
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
+                    Call
+                  </p>
+
+                  <p className="mt-2 font-semibold text-[#1d4ed8]">
+                    You&apos;ll pick your call date &amp; time after payment
                   </p>
                 </div>
               )}

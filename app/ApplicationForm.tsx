@@ -6,9 +6,13 @@ import { type ReactNode, useEffect, useState } from "react";
 
 import {
   APPLICATION_QUESTIONS,
+  CALL_QUESTION,
   CONTACT_QUESTIONS,
+  parseCallSlot,
 } from "./businessQuestions";
+import { formatBookingDate } from "./CallSlotPicker";
 import {
+  addCallToPaymentReceipt,
   markApplicationSubmitted,
   parsePaymentReceipt,
   PAYMENT_RECEIPT_STORAGE_KEY,
@@ -19,7 +23,12 @@ import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 import { WHATSAPP_BASE_URL } from "./siteConfig";
 
-const QUESTIONS = [...CONTACT_QUESTIONS, ...APPLICATION_QUESTIONS];
+// The call time is asked only when it wasn't booked before paying.
+const questionsFor = (askCall: boolean) => [
+  ...CONTACT_QUESTIONS,
+  ...(askCall ? [CALL_QUESTION] : []),
+  ...APPLICATION_QUESTIONS,
+];
 
 const SUBMIT_TIMEOUT_MS = 15000;
 
@@ -33,20 +42,21 @@ const readSession = (key: string) => {
   }
 };
 
-// Name, WhatsApp, email and company from the booking (and the business
-// answers too, after /register), for the visitor to check. Empty when the
-// link was opened on another device.
-function prefilledValues(): Record<string, string> {
-  let booking: Record<string, unknown> = {};
-
+// The booking this browser made before paying (/watch, /book-call,
+// /register); empty when the link was opened on another device.
+function readBooking(): Record<string, unknown> {
   try {
-    booking = JSON.parse(readSession("rpiansApplicationData") ?? "{}") ?? {};
+    return JSON.parse(readSession("rpiansApplicationData") ?? "{}") ?? {};
   } catch {
-    // Ignore: start empty.
+    return {};
   }
+}
 
+// Name, WhatsApp, email and company from the booking (and the business
+// answers too, after /register), for the visitor to check.
+function prefilledValues(booking: Record<string, unknown>): Record<string, string> {
   return Object.fromEntries(
-    QUESTIONS.map((question) => {
+    questionsFor(true).map((question) => {
       const value = booking[question.id];
 
       return [
@@ -86,6 +96,7 @@ export default function ApplicationForm() {
   const hasPaymentId = RAZORPAY_PAYMENT_ID_PATTERN.test(paymentId);
 
   const [status, setStatus] = useState<Status>("checking");
+  const [askCall, setAskCall] = useState(false);
   const [values, setValues] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -98,7 +109,9 @@ export default function ApplicationForm() {
     let isCancelled = false;
 
     const checkPayment = async () => {
+      const booking = readBooking();
       let paid: boolean | null = null;
+      let callBooked = Boolean(booking.bookingDate);
 
       try {
         const response = await fetch(
@@ -109,6 +122,7 @@ export default function ApplicationForm() {
 
         if (response.ok && result.success) {
           paid = result.paid === true;
+          callBooked = result.callBooked === true;
         }
       } catch {
         // Checked below.
@@ -128,7 +142,8 @@ export default function ApplicationForm() {
 
       if (isCancelled) return;
 
-      setValues(prefilledValues());
+      setValues(prefilledValues(booking));
+      setAskCall(!callBooked);
       setStatus(paid === true ? "ready" : paid === false ? "not-paid" : "unconfirmed");
     };
 
@@ -144,6 +159,19 @@ export default function ApplicationForm() {
 
     setIsSubmitting(true);
 
+    // The call picked in the form, written like the other bookings
+    // ("Monday, 20 October 2026", "11:00 AM IST"), for the sheet and the
+    // receipt on /thank-you.
+    const { date, slot } = parseCallSlot(answers[CALL_QUESTION.id] ?? "");
+    const call =
+      askCall && date && slot
+        ? { bookingDate: formatBookingDate(date), bookingTime: `${slot} IST` }
+        : { bookingDate: "", bookingTime: "" };
+
+    if (call.bookingDate) {
+      addCallToPaymentReceipt(paymentId, call.bookingDate, call.bookingTime);
+    }
+
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
 
@@ -158,6 +186,7 @@ export default function ApplicationForm() {
           ...Object.fromEntries(
             CONTACT_QUESTIONS.map((question) => [question.id, answers[question.id]]),
           ),
+          ...call,
           answers: Object.fromEntries(
             APPLICATION_QUESTIONS.map((question) => [question.id, answers[question.id]]),
           ),
@@ -247,7 +276,7 @@ export default function ApplicationForm() {
 
   return (
     <QuestionFlow
-      questions={QUESTIONS}
+      questions={questionsFor(askCall)}
       values={values}
       onChange={(id, value) =>
         setValues((current) => ({ ...current, [id]: value }))

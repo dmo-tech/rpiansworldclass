@@ -149,6 +149,13 @@ const APPLICATION_FIELDS = [
   "orderId",
 ];
 
+// Application fields with their own column name; like the answers, the column
+// is added at the end the first time it is needed.
+const APPLICATION_NAMED_FIELDS = {
+  bookingDate: "Call Date",
+  bookingTime: "Call Time",
+};
+
 function doPost(e) {
   const lock = LockService.getScriptLock();
 
@@ -283,23 +290,28 @@ function saveVideoWatchRow(sheet, row, data) {
 }
 
 // Application form: the website names each answer by its question (e.g.
-// "Annual Turnover"). An answer whose column doesn't exist yet gets a new one
-// at the end, so new questions never shift old rows. The same Payment ID sent
-// again updates its row (keeping its first Date) instead of adding another.
+// "Annual Turnover"); the call date / time go to "Call Date" / "Call Time".
+// A column that doesn't exist yet is added at the end, so new questions never
+// shift old rows. The same Payment ID sent again updates its row (keeping its
+// first Date) instead of adding another.
 function saveApplicationRow(sheet, fixedRow, data) {
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(String);
-  const answerKeys = Object.keys(data).filter((key) => APPLICATION_FIELDS.indexOf(key) === -1);
+  // [column name, field] for every field after the fixed columns.
+  const extraColumns = Object.keys(data)
+    .filter((key) => APPLICATION_FIELDS.indexOf(key) === -1)
+    .map((key) => [APPLICATION_NAMED_FIELDS[key] || key, key]);
 
-  answerKeys.forEach((key) => {
-    if (headers.indexOf(key) === -1) {
-      headers.push(key);
-      sheet.getRange(1, headers.length).setValue(key).setFontWeight("bold");
+  extraColumns.forEach((column) => {
+    if (headers.indexOf(column[0]) === -1) {
+      headers.push(column[0]);
+      sheet.getRange(1, headers.length).setValue(column[0]).setFontWeight("bold");
     }
   });
 
   const row = headers.map((header, index) => {
     if (index < fixedRow.length) return fixedRow[index];
-    return answerKeys.indexOf(header) === -1 ? "" : safeCell(data[header]);
+    const column = extraColumns.find((extra) => extra[0] === header);
+    return column ? safeCell(data[column[1]]) : "";
   });
 
   const paymentColumn = headers.indexOf("Payment ID") + 1;

@@ -47,6 +47,29 @@ export function parsePaymentReceipt(raw: string | null): PaymentReceipt | null {
   return null;
 }
 
+// The call picked in the application form (Book a Call under the /watch
+// video pays before the call is booked), so /thank-you shows it.
+export function addCallToPaymentReceipt(
+  paymentId: string,
+  callDate: string,
+  callTime: string,
+) {
+  try {
+    const receipt = parsePaymentReceipt(
+      sessionStorage.getItem(PAYMENT_RECEIPT_STORAGE_KEY),
+    );
+
+    if (receipt?.paymentId === paymentId) {
+      sessionStorage.setItem(
+        PAYMENT_RECEIPT_STORAGE_KEY,
+        JSON.stringify({ ...receipt, callDate, callTime }),
+      );
+    }
+  } catch {
+    // Storage blocked: /thank-you shows its generic message anyway.
+  }
+}
+
 // The application form that follows a payment. The link also works later,
 // e.g. from WhatsApp: /application checks the payment with Razorpay.
 export const applicationPath = (paymentId: string) =>

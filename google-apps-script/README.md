@@ -63,8 +63,8 @@ your account → Allow), that's normal: the script needs access to edit this she
   Razorpay Payment ID and Order ID). Until the new script is deployed, these
   rows land in the **Leads** tab instead.
 - **application form data:** one row per paid booking. After the fixed
-  columns (Date … Order ID) each question has its own column, named by the
-  question (e.g. "Annual Turnover", "Biggest Challenge"). A new question adds a
+  columns (Date … Order ID) come Call Date / Call Time and one column per
+  question, named by the question (e.g. "Annual Turnover", "Biggest Challenge"). A new question adds a
   column at the end; the same Payment ID sent again updates its row. Until the
   new script is deployed, these rows land in the **Leads** tab instead.
 - Two submissions at the same moment are handled one after the other

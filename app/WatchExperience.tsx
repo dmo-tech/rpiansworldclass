@@ -1,9 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
 
-import BookCallButton from "./BookCallButton";
-import GatedVideoPlayer from "./GatedVideoPlayer";
+import { CalendarIcon } from "./BookCallButton";
+import GatedVideoPlayer, { VIEWER_KEY } from "./GatedVideoPlayer";
+import { plans } from "./plans";
 
 // The Book a Call button below the video appears once the viewer has
 // actually watched this many seconds of it (real watch time, not page time).
@@ -13,12 +16,23 @@ const BOOK_CALL_REVEAL_SECONDS = 90;
 // saved progress the player would otherwise restore it from.
 const BOOK_CALL_UNLOCKED_KEY = "rpiansWatchBookCallUnlocked";
 
+const BOOK_CALL_FROM = "Watch - Below Video";
+
+// A booked call is paid for as the "Book a Strategy Call" plan (₹999).
+const STRATEGY_CALL_PLAN = plans.find((plan) => plan.id === "strategy-call");
+
 // /watch (the homepage video card links here): the player with its details
 // form already open, on every visit. Submitting the form starts the video,
 // from where the viewer last stopped. The Book a Call button below the video
 // appears after BOOK_CALL_REVEAL_SECONDS of watching.
+//
+// Book a Call goes straight to /payment with the name, WhatsApp and email
+// from the video form (the booking /payment reads from sessionStorage); the
+// company and the call time are asked in the application form after paying.
+// Without those details (storage blocked) it opens /book-call as before.
 
 export default function WatchExperience() {
+  const router = useRouter();
   const bookCallRef = useRef<HTMLDivElement>(null);
   const isBookCallShownRef = useRef(false);
   const [isBookCallShown, setIsBookCallShown] = useState(false);
@@ -64,6 +78,35 @@ export default function WatchExperience() {
     }
   };
 
+  const startBooking = (event: MouseEvent<HTMLAnchorElement>) => {
+    try {
+      const viewer = JSON.parse(localStorage.getItem(VIEWER_KEY) ?? "null");
+
+      if (!viewer?.fullName || !viewer.phone || !viewer.email || !STRATEGY_CALL_PLAN) {
+        throw new Error("No video form details saved.");
+      }
+
+      sessionStorage.setItem(
+        "rpiansApplicationData",
+        JSON.stringify({
+          fullName: viewer.fullName,
+          phone: viewer.phone,
+          email: viewer.email,
+          companyName: "",
+          planId: STRATEGY_CALL_PLAN.id,
+          planSelected: STRATEGY_CALL_PLAN.label,
+          bookingAmount: STRATEGY_CALL_PLAN.amount,
+          gstApplicable: STRATEGY_CALL_PLAN.gstApplicable ?? false,
+          submittedAt: new Date().toISOString(),
+          source: `RPIANS Website - ${BOOK_CALL_FROM}`,
+        }),
+      );
+    } catch {
+      event.preventDefault();
+      router.push(`/book-call?from=${encodeURIComponent(BOOK_CALL_FROM)}`);
+    }
+  };
+
   useEffect(() => {
     try {
       if (localStorage.getItem(BOOK_CALL_UNLOCKED_KEY)) {
@@ -100,10 +143,14 @@ export default function WatchExperience() {
           Ready to build a system-driven business?
         </p>
 
-        <BookCallButton
-          from="Watch - Below Video"
+        <Link
+          href="/payment"
+          onClick={startBooking}
           className="mt-4 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-12 py-5 text-xl font-bold text-white! shadow-xl shadow-blue-600/30 transition hover:scale-105 sm:w-auto"
-        />
+        >
+          <CalendarIcon />
+          Book a Call
+        </Link>
       </div>
     </section>
   );

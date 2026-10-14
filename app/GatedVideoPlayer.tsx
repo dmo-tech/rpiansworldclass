@@ -25,7 +25,7 @@ const SAVE_PROGRESS_EVERY_SECONDS = 1;
 const RESTART_NEAR_END_SECONDS = 5;
 
 // Last details entered on this browser, used to prefill the form.
-const VIEWER_KEY = "rpiansVideoViewer";
+export const VIEWER_KEY = "rpiansVideoViewer";
 // Versioned so progress saved on an older video doesn't resume the new one.
 const PROGRESS_KEY = "rpiansVideoProgressV20";
 
