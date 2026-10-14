@@ -9,6 +9,7 @@
  *   "calender book data & form data"  the Book a Call page (/book-call)
  *   "video watch data"                video watch tracking (one row per viewing session)
  *   "payment data"                    every Razorpay payment, once it is verified
+ *   "application form data"           the application form after payment (/application)
  *
  * A tab that doesn't exist yet is created automatically, with a bold header row.
  *
@@ -31,6 +32,7 @@ const TABS = {
   CALL_BOOKING: "calender book data & form data",
   VIDEO_WATCH: "video watch data",
   PAYMENT: "payment data",
+  APPLICATION: "application form data",
 };
 
 // Column order for each tab: [header, value].
@@ -118,7 +120,34 @@ const COLUMNS = {
     ["Call Time", "bookingTime"],
     ["Lead Source", ["source", "formType"]],
   ],
+
+  // The fixed columns; after them every answer gets its own column, named by
+  // its question (see saveApplicationRow).
+  [TABS.APPLICATION]: [
+    ["Date", (data, now) => now],
+    ["Full Name", "fullName"],
+    ["WhatsApp Number", "phone"],
+    ["Email", "email"],
+    ["Company Name", "companyName"],
+    ["Selected Plan", "planSelected"],
+    ["Payment ID", "paymentId"],
+    ["Order ID", "orderId"],
+  ],
 };
+
+// Fields of an application that have a fixed column (or none); every other
+// field is an answer.
+const APPLICATION_FIELDS = [
+  "sheetName",
+  "formType",
+  "fullName",
+  "phone",
+  "email",
+  "companyName",
+  "planSelected",
+  "paymentId",
+  "orderId",
+];
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -143,6 +172,8 @@ function doPost(e) {
 
     if (sheetName === TABS.VIDEO_WATCH) {
       saveVideoWatchRow(sheet, row, data);
+    } else if (sheetName === TABS.APPLICATION) {
+      saveApplicationRow(sheet, row, data);
     } else {
       sheet.appendRow(row);
     }
@@ -194,6 +225,8 @@ function resolveSheetName(data) {
       return TABS.VIDEO_WATCH;
     case "Payment":
       return TABS.PAYMENT;
+    case "Application Form":
+      return TABS.APPLICATION;
     default:
       return TABS.LEADS;
   }
@@ -240,6 +273,44 @@ function saveVideoWatchRow(sheet, row, data) {
 
     for (let i = 0; i < ids.length; i++) {
       if (String(ids[i][0]) === sessionId) {
+        sheet.getRange(i + 2, 2, 1, row.length - 1).setValues([row.slice(1)]);
+        return;
+      }
+    }
+  }
+
+  sheet.appendRow(row);
+}
+
+// Application form: the website names each answer by its question (e.g.
+// "Annual Turnover"). An answer whose column doesn't exist yet gets a new one
+// at the end, so new questions never shift old rows. The same Payment ID sent
+// again updates its row (keeping its first Date) instead of adding another.
+function saveApplicationRow(sheet, fixedRow, data) {
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(String);
+  const answerKeys = Object.keys(data).filter((key) => APPLICATION_FIELDS.indexOf(key) === -1);
+
+  answerKeys.forEach((key) => {
+    if (headers.indexOf(key) === -1) {
+      headers.push(key);
+      sheet.getRange(1, headers.length).setValue(key).setFontWeight("bold");
+    }
+  });
+
+  const row = headers.map((header, index) => {
+    if (index < fixedRow.length) return fixedRow[index];
+    return answerKeys.indexOf(header) === -1 ? "" : safeCell(data[header]);
+  });
+
+  const paymentColumn = headers.indexOf("Payment ID") + 1;
+  const paymentId = String(data.paymentId || "");
+  const lastRow = sheet.getLastRow();
+
+  if (paymentId && paymentColumn > 0 && lastRow >= 2) {
+    const ids = sheet.getRange(2, paymentColumn, lastRow - 1, 1).getValues();
+
+    for (let i = 0; i < ids.length; i++) {
+      if (String(ids[i][0]) === paymentId) {
         sheet.getRange(i + 2, 2, 1, row.length - 1).setValues([row.slice(1)]);
         return;
       }

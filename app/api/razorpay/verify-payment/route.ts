@@ -2,47 +2,11 @@ import { after, NextResponse } from "next/server";
 import { createHmac, timingSafeEqual } from "crypto";
 
 import { saveToGoogleSheet, SHEET_TABS } from "@/app/googleSheet";
-
-const RAZORPAY_ORDERS_URL = "https://api.razorpay.com/v1/orders";
-
-type RazorpayOrder = {
-  amount?: number;
-  // Razorpay sends [] when an order has no notes.
-  notes?: Record<string, unknown> | unknown[];
-};
-
-async function fetchRazorpayOrder(orderId: string): Promise<RazorpayOrder> {
-  const keyId = process.env.RAZORPAY_KEY_ID;
-  const keySecret = process.env.RAZORPAY_KEY_SECRET;
-
-  if (!keyId || !keySecret) {
-    throw new Error("Razorpay credentials are not configured.");
-  }
-
-  const auth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
-
-  const razorpayResponse = await fetch(
-    `${RAZORPAY_ORDERS_URL}/${encodeURIComponent(orderId)}`,
-    {
-      headers: {
-        Authorization: `Basic ${auth}`,
-      },
-      cache: "no-store",
-      signal: AbortSignal.timeout(15000),
-    },
-  );
-
-  const order = await razorpayResponse.json();
-
-  if (!razorpayResponse.ok) {
-    throw new Error(
-      order?.error?.description ||
-        `Razorpay order request failed: ${razorpayResponse.status}`,
-    );
-  }
-
-  return order;
-}
+import {
+  fetchRazorpayOrder,
+  orderNote,
+  type RazorpayOrder,
+} from "@/app/razorpay";
 
 // Adds a verified payment to the "payment data" tab. Name, phone, email,
 // plan, call date / time and source come from the Razorpay order's notes
@@ -55,6 +19,10 @@ async function recordPayment(orderId: string, paymentId: string) {
 
   try {
     order = await fetchRazorpayOrder(orderId);
+
+    if (!order) {
+      throw new Error("Razorpay has no such order.");
+    }
   } catch (error) {
     console.error(
       `Payment sheet: Razorpay order ${orderId} could not be loaded (payment ${paymentId}):`,
@@ -62,10 +30,7 @@ async function recordPayment(orderId: string, paymentId: string) {
     );
   }
 
-  const notes =
-    order?.notes && !Array.isArray(order.notes) ? order.notes : {};
-  const note = (key: string) =>
-    typeof notes[key] === "string" ? notes[key] : "";
+  const note = (key: string) => orderNote(order, key);
 
   try {
     await saveToGoogleSheet({

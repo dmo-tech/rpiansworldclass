@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import {
+  applicationPath,
   PAYMENT_RECEIPT_STORAGE_KEY,
   type PaymentReceipt,
 } from "../paymentReceipt";
@@ -309,12 +310,15 @@ export default function PaymentPage() {
               planName,
               amount: orderData.amount / 100,
               paymentId: response.razorpay_payment_id,
+              callDate: applicationData.bookingDate,
+              callTime: applicationData.bookingTime,
             });
 
             updatePayment({ status: "success" });
 
-            // replace, so Back doesn't return to the payment step.
-            router.replace("/thank-you");
+            // On to the application form, then /thank-you (which shows the
+            // receipt). replace, so Back doesn't return to the payment step.
+            router.replace(applicationPath(response.razorpay_payment_id));
           } catch (error) {
             console.error("Payment verification failed:", error);
 
@@ -675,7 +679,7 @@ ${
             <p className="mt-2 text-sm text-gray-500">
               {payment.status === "verifying"
                 ? "This usually takes a few seconds."
-                : "Taking you to the confirmation page..."}
+                : "Taking you to the application form..."}
             </p>
           </div>
         </div>

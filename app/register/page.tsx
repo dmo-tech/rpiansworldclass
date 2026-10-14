@@ -1,9 +1,15 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { FormEvent, Suspense, useRef, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+import {
+  ANNUAL_TURNOVER_OPTIONS,
+  BUSINESS_CATEGORY_OPTIONS,
+  type Question,
+} from "../businessQuestions";
+import QuestionFlow from "../QuestionFlow";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import CallSlotPicker, { formatBookingDate } from "../CallSlotPicker";
@@ -35,23 +41,7 @@ const initialData: RegistrationData = {
   employeeCount: "",
 };
 
-type BusinessField =
-  | {
-      id: keyof RegistrationData;
-      label: string;
-      kind: "input";
-      type: "text" | "tel" | "email" | "number";
-      placeholder: string;
-      autoComplete?: string;
-    }
-  | {
-      id: keyof RegistrationData;
-      label: string;
-      kind: "select";
-      options: string[];
-    };
-
-const businessFields: BusinessField[] = [
+const businessFields: Question<keyof RegistrationData>[] = [
   {
     id: "fullName",
     label: "Full Name",
@@ -88,28 +78,13 @@ const businessFields: BusinessField[] = [
     id: "businessCategory",
     label: "Business Category",
     kind: "select",
-    options: [
-      "Retail",
-      "Wholesale",
-      "Distribution",
-      "Manufacturing",
-      "Service Business",
-      "Construction / Project",
-      "Other",
-    ],
+    options: BUSINESS_CATEGORY_OPTIONS,
   },
   {
     id: "annualTurnover",
     label: "Annual Turnover",
     kind: "select",
-    options: [
-      "Below ₹1 Crore",
-      "₹1–5 Crore",
-      "₹5–10 Crore",
-      "₹10–25 Crore",
-      "₹25–50 Crore",
-      "₹50 Crore+",
-    ],
+    options: ANNUAL_TURNOVER_OPTIONS,
   },
   {
     id: "employeeCount",
@@ -119,28 +94,6 @@ const businessFields: BusinessField[] = [
     placeholder: "Enter number of employees",
   },
 ];
-
-function validateField(field: BusinessField, value: string): string {
-  if (field.id === "phone") {
-    const cleanPhone = value.replace(/\D/g, "");
-
-    if (cleanPhone.length < 10) {
-      return "Please enter a valid WhatsApp number.";
-    }
-
-    return "";
-  }
-
-  if (!value.trim()) {
-    return `Please enter your ${field.label.toLowerCase()}.`;
-  }
-
-  if (field.id === "email" && !value.includes("@")) {
-    return "Please enter a valid email address.";
-  }
-
-  return "";
-}
 
 export default function RegisterPage() {
   return (
@@ -184,38 +137,20 @@ function RegisterForm() {
   const [formData, setFormData] =
     useState<RegistrationData>(initialData);
 
-  const [fieldIndex, setFieldIndex] = useState(0);
-  const [fieldError, setFieldError] = useState("");
-
-  // The previous question stays on screen while it animates out, and its input
-  // and buttons still act for that question. This ref lets them be ignored, so
-  // fast typing or a double Enter can't overwrite or skip a question.
-  const activeFieldIndexRef = useRef(0);
-
-  const goToField = (index: number) => {
-    activeFieldIndexRef.current = index;
-    setFieldIndex(index);
-  };
+  // The question QuestionFlow is on, so Back from the call step returns to it.
+  const [questionIndex, setQuestionIndex] = useState(0);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const currentField = businessFields[fieldIndex];
-  const isLastField = fieldIndex === businessFields.length - 1;
-  const isActiveField = () => activeFieldIndexRef.current === fieldIndex;
 
   const updateField = (
     field: keyof RegistrationData,
     value: string,
   ) => {
-    if (!isActiveField()) return;
-
     setFormData((current) => ({
       ...current,
       [field]: value,
     }));
-
-    setFieldError("");
   };
 
   const handleContinueFromPlan = () => {
@@ -334,50 +269,6 @@ function RegisterForm() {
 
     window.open(waitlistUrl, "_blank", "noopener,noreferrer");
     setWaitlistJoined(true);
-  };
-
-  const advanceField = (valueOverride?: string) => {
-    if (!isActiveField()) return;
-
-    const value = valueOverride ?? formData[currentField.id];
-    const error = validateField(currentField, value);
-
-    if (error) {
-      setFieldError(error);
-      return;
-    }
-
-    setFieldError("");
-
-    const updatedData =
-      valueOverride !== undefined
-        ? { ...formData, [currentField.id]: valueOverride }
-        : formData;
-
-    if (valueOverride !== undefined) {
-      setFormData(updatedData);
-    }
-
-    if (isLastField) {
-      setStep(3);
-    } else {
-      goToField(fieldIndex + 1);
-    }
-  };
-
-  const goBackField = () => {
-    setFieldError("");
-
-    if (fieldIndex === 0) {
-      setStep(1);
-    } else {
-      goToField(fieldIndex - 1);
-    }
-  };
-
-  const handleFieldSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    advanceField();
   };
 
   const paymentStepLabel = selectedPlan
@@ -528,169 +419,19 @@ function RegisterForm() {
 
   if (step === 2) {
     return (
-      <main className="relative flex min-h-screen flex-col bg-white px-6 text-[#0f172a] md:px-16">
-        <SiteHeader />
-
-        <div className="fixed left-0 top-20 z-20 h-1 w-full bg-black/10">
-          <motion.div
-            animate={{
-              width: `${((fieldIndex + 1) / businessFields.length) * 100}%`,
-            }}
-            transition={{
-              duration: 0.4,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="h-full bg-gradient-to-r from-[#ef4444] via-[#22c55e] to-[#3b82f6]"
-          />
-        </div>
-
-        {/* The question starts at a fixed spot (as on the call-slot step) with a
-            fixed space above the footer (80px mobile, 112px desktop). */}
-        <div className="flex items-start justify-center pb-20 pt-24 md:pb-28 md:pt-[9.75rem]">
-          <div className="w-full max-w-2xl">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentField.id}
-                initial={{
-                  opacity: 0,
-                  y: 24,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: -24,
-                }}
-                transition={{
-                  duration: 0.35,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              >
-                <label
-                  htmlFor={currentField.id}
-                  className="flex items-start gap-3 text-2xl font-bold leading-snug md:text-3xl"
-                >
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded bg-[#3b82f6] text-sm font-bold text-white">
-                    {fieldIndex + 1}
-                  </span>
-
-                  <span>{currentField.label} *</span>
-                </label>
-
-                {currentField.kind === "input" ? (
-                  <form onSubmit={handleFieldSubmit} className="mt-8 pl-10">
-                    <input
-                      key={currentField.id}
-                      id={currentField.id}
-                      type={currentField.type}
-                      min={
-                        currentField.type === "number" ? "0" : undefined
-                      }
-                      value={formData[currentField.id]}
-                      onChange={(event) =>
-                        updateField(currentField.id, event.target.value)
-                      }
-                      placeholder="Type your answer here..."
-                      autoComplete={currentField.autoComplete}
-                      autoFocus
-                      className="w-full border-0 border-b-2 border-black/15 bg-transparent px-0 py-3 text-2xl outline-none transition placeholder:text-gray-300 focus:border-[#3b82f6]"
-                    />
-
-                    <button
-                      type="submit"
-                      className="mt-6 rounded-md bg-[#3b82f6] px-6 py-2.5 text-sm font-bold text-white transition hover:bg-[#1d4ed8]"
-                    >
-                      {isLastField ? "Continue to Book a Call" : "OK"}
-                    </button>
-                  </form>
-                ) : (
-                  <div className="mt-8 grid gap-3 pl-10 sm:grid-cols-2">
-                    {currentField.options.map((option) => {
-                      const isSelected =
-                        formData[currentField.id] === option;
-
-                      return (
-                        <button
-                          key={option}
-                          type="button"
-                          onClick={() => advanceField(option)}
-                          className={`rounded-lg border-2 px-4 py-4 text-left font-semibold transition ${
-                            isSelected
-                              ? "border-[#3b82f6] bg-[#3b82f6]/5"
-                              : "border-black/10 bg-white hover:border-[#3b82f6]/40"
-                          }`}
-                        >
-                          {option}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-
-                <AnimatePresence>
-                  {fieldError && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      className="mt-5 ml-10 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
-                    >
-                      {fieldError}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <AnimatePresence>
-                  {errorMessage && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      className="mt-5 ml-10 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
-                    >
-                      {errorMessage}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {isSubmitting && (
-                  <p className="mt-5 ml-10 text-sm text-gray-500">
-                    Saving your application...
-                  </p>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-
-        <div className="fixed bottom-6 right-6 z-20 flex flex-col gap-2">
-          <button
-            type="button"
-            onClick={goBackField}
-            aria-label="Previous question"
-            className="flex h-10 w-10 items-center justify-center rounded-md border border-black/10 bg-white text-lg text-gray-500 shadow-md transition hover:text-[#1d4ed8]"
-          >
-            ↑
-          </button>
-
-          <button
-            type="button"
-            onClick={() => advanceField()}
-            aria-label="Next question"
-            className="flex h-10 w-10 items-center justify-center rounded-md border border-black/10 bg-white text-lg text-gray-500 shadow-md transition hover:text-[#1d4ed8]"
-          >
-            ↓
-          </button>
-        </div>
-
-        {/* Cancel main's side padding so the dark footer spans the full width;
-            on tall screens the footer stretches to the bottom of the window. */}
-        <div className="-mx-6 flex flex-1 flex-col md:-mx-16">
-          <SiteFooter />
-        </div>
-      </main>
+      <QuestionFlow
+        questions={businessFields}
+        values={formData}
+        onChange={updateField}
+        onComplete={() => setStep(3)}
+        onBackFromFirst={() => setStep(1)}
+        finishLabel="Continue to Book a Call"
+        isSubmitting={isSubmitting}
+        submittingText="Saving your application..."
+        errorMessage={errorMessage}
+        initialIndex={questionIndex}
+        onIndexChange={setQuestionIndex}
+      />
     );
   }
 

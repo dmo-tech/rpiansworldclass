@@ -1,5 +1,5 @@
 // Google Apps Script web app that writes website data into the RPIANS
-// Google Sheet. Used by /api/leads, /api/video-views and
+// Google Sheet. Used by /api/leads, /api/video-views, /api/application and
 // /api/razorpay/verify-payment. If the Apps Script is ever deployed under a
 // new URL, change it here only.
 export const GOOGLE_SHEET_WEB_APP_URL =
@@ -13,6 +13,7 @@ export const SHEET_TABS = {
   callBooking: "calender book data & form data",
   videoWatch: "video watch data",
   payment: "payment data",
+  application: "application form data",
 } as const;
 
 // Which tab a /api/leads submission goes to. Decided here on the server from
