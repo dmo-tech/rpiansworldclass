@@ -3,11 +3,8 @@ import Link from "next/link";
 
 import BackToTop from "./BackToTop";
 import CookieSettingsButton from "./CookieSettingsButton";
-import { CONTACT_PHONE, CONTACT_PHONE_TEL, WHATSAPP_URL } from "./siteConfig";
-import { SOCIAL_LINKS, WHATSAPP_ICON_PATH } from "./socialLinks";
+import { SOCIAL_LINKS } from "./socialLinks";
 import WatchApplyButton from "./WatchApplyButton";
-
-const CONTACT_EMAIL = "info@worldclassbc.com";
 
 const programLinks = [
   { href: "/programs/1-day", label: "1 Day Program" },
@@ -63,35 +60,6 @@ function FooterLinks({
   );
 }
 
-// Small icons in the Get in Touch column (mail / phone blue, WhatsApp green),
-// in a 14px gutter so labels, values and the chat link line up beside them.
-const contactIconClass = "h-3.5 w-3.5 shrink-0";
-
-function MailIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth={2.25} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={contactIconClass}>
-      <rect width="20" height="16" x="2" y="4" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth={2.25} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={contactIconClass}>
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  );
-}
-
-function WhatsAppIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="#25D366" aria-hidden="true" className={contactIconClass}>
-      <path d={WHATSAPP_ICON_PATH} />
-    </svg>
-  );
-}
-
 export default function SiteFooter() {
   return (
     <>
@@ -101,12 +69,7 @@ export default function SiteFooter() {
           className="h-[3px] bg-gradient-to-r from-[#1d4ed8] via-[#3b82f6] to-[#60a5fa]"
         />
 
-        {/* Extra bottom space lifts the last row (the Get in Touch button)
-            above the floating back-to-top button when the page is
-            scrolled to the end: a lot at 1024–1359px, 8px at 1360–1399px
-            (WhatsApp only); from 1400px there is room. All min-[…], since an
-            arbitrary min-[…] is ordered before lg: and couldn't override it. */}
-        <div className="site-container flex-1 pb-8 pt-8 lg:pt-10 min-[1024px]:pb-28 min-[1360px]:pb-12 min-[1400px]:pb-10">
+        <div className="site-container flex-1 pb-8 pt-8 lg:pb-10 lg:pt-10">
           <div className="grid gap-7 sm:grid-cols-2 sm:gap-8 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
             <div>
               <Link href="/" className="inline-flex items-center gap-2.5">
@@ -164,55 +127,11 @@ export default function SiteFooter() {
             <FooterLinks title="Quick Links" links={quickLinks} />
 
             <div>
-              <h3 className={headingClass}>Get in Touch</h3>
-
-              {/* Icon (14px) + gap (8px): values sit 22px in, under their label. */}
-              <ul className="mt-3.5 space-y-2.5">
-                <li>
-                  <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-gray-500">
-                    <MailIcon />
-                    Email
-                  </p>
-
-                  <a
-                    href={`mailto:${CONTACT_EMAIL}`}
-                    className={`ml-5.5 mt-0.5 inline-block break-all text-gray-200! ${linkClass}`}
-                  >
-                    {CONTACT_EMAIL}
-                  </a>
-                </li>
-
-                <li>
-                  <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-gray-500">
-                    <PhoneIcon />
-                    Call Us
-                  </p>
-
-                  <a
-                    href={CONTACT_PHONE_TEL}
-                    className={`ml-5.5 mt-0.5 inline-block text-gray-200! ${linkClass}`}
-                  >
-                    {CONTACT_PHONE}
-                  </a>
-
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-0.5 flex w-fit items-center gap-2 text-xs font-semibold text-[#4ade80]! transition-colors duration-200 hover:text-white!"
-                  >
-                    <WhatsAppIcon />
-                    Chat on WhatsApp →
-                  </a>
-                </li>
-              </ul>
-
               {/* From xl: one line at 12px with ▶ beside the text (fits the
-                  column). Below: two even lines that still hug the icon, which
-                  keeps the button clear of the floating buttons on phones. */}
+                  column). Below: two even lines that hug the icon. */}
               <WatchApplyButton
                 from="Footer"
-                className="mt-4 inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-2.5 text-sm font-bold text-white! shadow-[0_10px_24px_rgba(37,99,235,0.35)] transition hover:scale-[1.03] xl:gap-1.5 xl:whitespace-nowrap xl:px-4 xl:text-xs"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-2.5 text-sm font-bold text-white! shadow-[0_10px_24px_rgba(37,99,235,0.35)] transition hover:scale-[1.03] xl:gap-1.5 xl:whitespace-nowrap xl:px-4 xl:text-xs"
               >
                 <span className="block xl:inline">Start Your Business</span>{" "}
                 <span className="block xl:inline">Transformation Today</span>
