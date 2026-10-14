@@ -1,5 +1,6 @@
-import Link from "next/link";
 import type { MouseEventHandler, ReactNode } from "react";
+
+import WatchApplyLink from "./WatchApplyLink";
 
 // Every "Start Your Business Transformation Today" button (formerly "Apply to
 // Work With Us") leads into the video: /watch opens with its details form,
@@ -50,10 +51,14 @@ export default function WatchApplyButton({
   onClick,
 }: WatchApplyButtonProps) {
   return (
-    <Link href={watchApplyHref(from)} onClick={onClick} className={className}>
+    <WatchApplyLink
+      href={watchApplyHref(from)}
+      onClick={onClick}
+      className={className}
+    >
       {icon}
       {/* Long label: wraps into even, centred lines on narrow buttons. */}
       <span className="text-balance text-center">{children}</span>
-    </Link>
+    </WatchApplyLink>
   );
 }
