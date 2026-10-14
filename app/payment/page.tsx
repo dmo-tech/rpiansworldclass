@@ -27,6 +27,7 @@ type ApplicationData = {
   bookingTime?: string;
   bookingAmount: number | null;
   gstApplicable?: boolean;
+  source?: string;
 };
 
 const DEFAULT_PAYMENT_AMOUNT = 999;
@@ -240,11 +241,16 @@ export default function PaymentPage() {
         body: JSON.stringify({
           planId: applicationData.planId,
           amount: paymentAmount,
+          // Kept in the Razorpay order's notes; verify-payment copies them to
+          // the "payment data" sheet once the payment is confirmed.
           customer: {
             fullName: applicationData.fullName,
             email: applicationData.email,
             phone: applicationData.phone,
             companyName: applicationData.companyName,
+            bookingDate: applicationData.bookingDate,
+            bookingTime: applicationData.bookingTime,
+            source: applicationData.source,
           },
         }),
       });

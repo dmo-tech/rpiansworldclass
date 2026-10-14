@@ -8,6 +8,7 @@
  *   "video form data"                 the "Get Started" form on the video
  *   "calender book data & form data"  the Book a Call page (/book-call)
  *   "video watch data"                video watch tracking (one row per viewing session)
+ *   "payment data"                    every Razorpay payment, once it is verified
  *
  * A tab that doesn't exist yet is created automatically, with a bold header row.
  *
@@ -29,6 +30,7 @@ const TABS = {
   VIDEO_FORM: "video form data",
   CALL_BOOKING: "calender book data & form data",
   VIDEO_WATCH: "video watch data",
+  PAYMENT: "payment data",
 };
 
 // Column order for each tab: [header, value].
@@ -99,6 +101,22 @@ const COLUMNS = {
     ["What do you currently do?", "occupation"],
     ["Annual Turnover", "revenue"],
     ["Last Updated", (data, now) => now],
+  ],
+
+  // Sent by the website only after Razorpay confirms the payment. Amount is
+  // in rupees.
+  [TABS.PAYMENT]: [
+    ["Date", (data, now) => now],
+    ["Full Name", "fullName"],
+    ["WhatsApp Number", "phone"],
+    ["Email", "email"],
+    ["Selected Plan", "planSelected"],
+    ["Amount (₹)", "amount"],
+    ["Payment ID", "paymentId"],
+    ["Order ID", "orderId"],
+    ["Call Date", "bookingDate"],
+    ["Call Time", "bookingTime"],
+    ["Lead Source", ["source", "formType"]],
   ],
 };
 
@@ -174,6 +192,8 @@ function resolveSheetName(data) {
       return TABS.VIDEO_FORM;
     case "Video View":
       return TABS.VIDEO_WATCH;
+    case "Payment":
+      return TABS.PAYMENT;
     default:
       return TABS.LEADS;
   }

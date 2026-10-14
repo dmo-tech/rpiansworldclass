@@ -9,6 +9,7 @@ of the **RPIANS Website Leads** Google Sheet:
 | "Get Started" form on the video | **video form data** |
 | Book a Call page (`/book-call`) | **calender book data & form data** |
 | Video watch tracking (one row per viewing session) | **video watch data** |
+| Razorpay payment, after it is verified | **payment data** |
 
 If a tab is missing, the script creates it with a bold header row.
 
@@ -57,5 +58,8 @@ your account → Allow), that's normal: the script needs access to edit this she
 - **video watch data:** each viewing session is one row that updates as the
   visitor watches (Seconds Watched, Percent Watched, Completed, Last Event).
   The old "Video Views" tab is left as it is.
+- **payment data:** one row per successful payment (Amount in rupees, with the
+  Razorpay Payment ID and Order ID). Until the new script is deployed, these
+  rows land in the **Leads** tab instead.
 - Two submissions at the same moment are handled one after the other
   (LockService), so rows never overwrite each other.

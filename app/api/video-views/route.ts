@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { GOOGLE_SHEET_WEB_APP_URL, SHEET_TABS } from "../../googleSheet";
+import { saveToGoogleSheet, SHEET_TABS } from "../../googleSheet";
 
 // Receives watch-progress updates from GatedVideoPlayer and forwards them to
 // the Apps Script, which keeps ONE row per sessionId in the "video watch data"
@@ -56,37 +56,7 @@ export async function POST(request: Request) {
   };
 
   try {
-    const googleResponse = await fetch(GOOGLE_SHEET_WEB_APP_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8",
-      },
-      body: JSON.stringify(viewData),
-      redirect: "follow",
-      cache: "no-store",
-      signal: AbortSignal.timeout(15000),
-    });
-
-    const responseText = await googleResponse.text();
-    let googleResult: { success?: boolean; message?: string } = {};
-
-    try {
-      googleResult = JSON.parse(responseText);
-    } catch {
-      throw new Error(
-        `Google Apps Script returned an invalid response: ${responseText.slice(
-          0,
-          200,
-        )}`,
-      );
-    }
-
-    if (!googleResponse.ok || !googleResult.success) {
-      throw new Error(
-        googleResult.message ||
-          `Google Apps Script request failed: ${googleResponse.status}`,
-      );
-    }
+    await saveToGoogleSheet(viewData);
 
     return NextResponse.json({ success: true });
   } catch (error) {

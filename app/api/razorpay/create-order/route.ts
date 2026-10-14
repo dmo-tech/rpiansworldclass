@@ -3,6 +3,11 @@ import { plans } from "@/app/plans";
 
 const RAZORPAY_ORDERS_URL = "https://api.razorpay.com/v1/orders";
 
+// Razorpay notes are strings of at most 256 characters; a longer one would
+// stop the order from being created.
+const note = (value: unknown) =>
+  typeof value === "string" ? value.slice(0, 256) : "";
+
 export async function POST(request: Request) {
   try {
     const { planId, amount, customer } = await request.json();
@@ -68,12 +73,16 @@ export async function POST(request: Request) {
         amount: plan.amount * 100,
         currency: "INR",
         receipt: `rpians_${Date.now()}`,
+        // verify-payment reads these back for the "payment data" sheet row.
         notes: {
           plan: plan.label,
-          fullName: customer?.fullName ?? "",
-          email: customer?.email ?? "",
-          phone: customer?.phone ?? "",
-          companyName: customer?.companyName ?? "",
+          fullName: note(customer?.fullName),
+          email: note(customer?.email),
+          phone: note(customer?.phone),
+          companyName: note(customer?.companyName),
+          bookingDate: note(customer?.bookingDate),
+          bookingTime: note(customer?.bookingTime),
+          source: note(customer?.source),
         },
       }),
       cache: "no-store",
