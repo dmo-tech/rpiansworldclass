@@ -3,11 +3,8 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
-type BackToTopProps = {
-  hidden?: boolean;
-};
-
-export default function BackToTop({ hidden = false }: BackToTopProps) {
+// Bottom-right corner, shown after scrolling down (rendered by SiteFooter).
+export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -32,7 +29,7 @@ export default function BackToTop({ hidden = false }: BackToTopProps) {
 
   return (
     <AnimatePresence>
-      {isVisible && !hidden && (
+      {isVisible && (
         <motion.button
           type="button"
           onClick={scrollToTop}
@@ -62,7 +59,7 @@ export default function BackToTop({ hidden = false }: BackToTopProps) {
           transition={{
             duration: 0.3,
           }}
-          className="fixed bottom-24 right-7 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-[#22c55e]/50 bg-white/90 text-xl text-[#22c55e] shadow-[0_10px_30px_rgba(34, 197, 94, 0.25)] backdrop-blur transition hover:border-[#22c55e]"
+          className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-[#22c55e]/50 bg-white/90 text-xl text-[#22c55e] shadow-[0_10px_30px_rgba(34, 197, 94, 0.25)] backdrop-blur transition hover:border-[#22c55e]"
         >
           ↑
         </motion.button>

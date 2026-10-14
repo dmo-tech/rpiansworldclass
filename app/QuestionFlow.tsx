@@ -332,8 +332,8 @@ export default function QuestionFlow<Id extends string>({
         </div>
       </div>
 
-      {/* Left of the floating WhatsApp button (64px wide at right-6), which
-          would otherwise cover them. */}
+      {/* Left of the back-to-top button (48px wide at right-6), which would
+          otherwise cover them once the page is scrolled down. */}
       <div className="fixed bottom-6 right-[6.5rem] z-20 flex flex-col gap-2">
         <button
           type="button"

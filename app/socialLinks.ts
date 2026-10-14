@@ -1,5 +1,5 @@
 // RPIANS social profiles (footer icons, About Us on /contact) and the
-// WhatsApp glyph (floating chat button, /contact). Change the links here only.
+// WhatsApp glyph (footer "Chat on WhatsApp", /contact). Change the links here only.
 // Icons show in this order: LinkedIn first, then Instagram and Facebook.
 
 export const SOCIAL_LINKS = [

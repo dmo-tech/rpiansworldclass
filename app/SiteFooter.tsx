@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import BackToTop from "./BackToTop";
 import CookieSettingsButton from "./CookieSettingsButton";
 import { CONTACT_PHONE, CONTACT_PHONE_TEL, WHATSAPP_URL } from "./siteConfig";
 import { SOCIAL_LINKS, WHATSAPP_ICON_PATH } from "./socialLinks";
 import WatchApplyButton from "./WatchApplyButton";
-import WhatsAppChat from "./WhatsAppChat";
 
 const CONTACT_EMAIL = "info@worldclassbc.com";
 
@@ -102,7 +102,7 @@ export default function SiteFooter() {
         />
 
         {/* Extra bottom space lifts the last row (the Get in Touch button)
-            above the floating WhatsApp / back-to-top buttons when the page is
+            above the floating back-to-top button when the page is
             scrolled to the end: a lot at 1024–1359px, 8px at 1360–1399px
             (WhatsApp only); from 1400px there is room. All min-[…], since an
             arbitrary min-[…] is ordered before lg: and couldn't override it. */}
@@ -223,7 +223,7 @@ export default function SiteFooter() {
 
         <div className="border-t border-white/10">
           {/* The right padding below 1400px keeps the bar clear of the floating
-              WhatsApp and back-to-top buttons in the bottom-right corner. */}
+              back-to-top button in the bottom-right corner. */}
           <div className="site-container">
             <div className="flex flex-col gap-2 py-4 pr-20 text-xs text-gray-500 md:pr-24 lg:flex-row lg:items-center lg:justify-between min-[1400px]:pr-0">
               <p>
@@ -263,7 +263,7 @@ export default function SiteFooter() {
         </div>
       </footer>
 
-      <WhatsAppChat href={WHATSAPP_URL} />
+      <BackToTop />
     </>
   );
 }

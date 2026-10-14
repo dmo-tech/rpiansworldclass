@@ -25,11 +25,11 @@ function SendIcon() {
 // turned) runs 6px past the screen and slides out on hover.
 // Same flow as "Start Your Business Transformation Today": /watch form → video.
 // `from` names the page, e.g. "Home - Enquire Now", for the lead's source.
-// It sits under the header, popups and WhatsApp/back-to-top buttons (z-40).
+// It sits under the header, popups and back-to-top button (z-40).
 // Full size only on md screens taller than a landscape phone (md-tall, see
 // globals.css). On short screens it stays compact and is centred between the
 // header (up to 114px with the session ticker) and the back-to-top button
-// (144px from the bottom).
+// (72px from the bottom).
 export default function EnquireNowTab({ from }: { from: string }) {
   return (
     <WatchApplyButton
