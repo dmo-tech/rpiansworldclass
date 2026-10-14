@@ -160,7 +160,7 @@ export default function MobileMenu() {
             <Link
               href="/login"
               onClick={closeMenu}
-              className="hover:text-[#3b82f6]"
+              className="text-[#3b82f6]! hover:text-[#1d4ed8]!"
             >
               Log in
             </Link>

@@ -30,13 +30,20 @@ export default function SiteHeader() {
           </div>
         </Link>
 
+        {/* From lg the free space is split 2:1 between these spacers, so Log
+            in sits closer to the menu than the menu does to the logo. Below
+            lg the menu is hidden and justify-between places the rest. */}
+        <div aria-hidden="true" className="hidden lg:block lg:flex-[2]" />
+
         <ActiveNavigation />
 
+        <div aria-hidden="true" className="hidden lg:block lg:flex-1" />
+
         <div className="flex shrink-0 items-center gap-3">
-          {/* Plain text like the menu links: no box, blue on hover. */}
+          {/* Plain blue text: no box, darker blue on hover. */}
           <Link
             href="/login"
-            className="hidden whitespace-nowrap py-2 text-sm text-gray-600! transition duration-300 hover:text-[#3b82f6]! sm:block"
+            className="hidden whitespace-nowrap py-2 text-sm text-[#3b82f6]! transition duration-300 hover:text-[#1d4ed8]! sm:block"
           >
             Log in
           </Link>
