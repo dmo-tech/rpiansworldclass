@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
+import ConsentScripts from "./ConsentScripts";
+import CookieBanner from "./CookieBanner";
 import "./globals.css";
 
 // Full page loads (reload, opening a URL, Back to a page the browser had
@@ -167,7 +169,11 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: SCROLL_TO_TOP_ON_LOAD }} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <CookieBanner />
+        <ConsentScripts />
+      </body>
     </html>
   );
 }

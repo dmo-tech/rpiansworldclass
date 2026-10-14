@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import CookieSettingsButton from "./CookieSettingsButton";
 import { CONTACT_PHONE, CONTACT_PHONE_TEL, WHATSAPP_URL } from "./siteConfig";
 import { SOCIAL_LINKS, WHATSAPP_ICON_PATH } from "./socialLinks";
 import WatchApplyButton from "./WatchApplyButton";
@@ -28,6 +29,7 @@ const legalLinks = [
   { href: "/privacy-policy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms and Conditions" },
   { href: "/refund-policy", label: "Refund Policy" },
+  { href: "/cookie-policy", label: "Cookie Policy" },
 ];
 
 // Links inherit the column's gray (globals.css sets `a { color: inherit }`),
@@ -247,6 +249,14 @@ export default function SiteFooter() {
                     </Link>
                   </span>
                 ))}
+
+                <span className="flex items-center gap-3">
+                  <span aria-hidden="true" className="hidden sm:inline">
+                    ·
+                  </span>
+
+                  <CookieSettingsButton className={linkClass} />
+                </span>
               </nav>
             </div>
           </div>
