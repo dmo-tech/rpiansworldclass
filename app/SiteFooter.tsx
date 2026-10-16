@@ -6,6 +6,8 @@ import CookieSettingsButton from "./CookieSettingsButton";
 import { SOCIAL_LINKS } from "./socialLinks";
 import WatchApplyButton from "./WatchApplyButton";
 
+const CONTACT_EMAIL = "info@worldclassbc.com";
+
 const programLinks = [
   { href: "/programs/1-day", label: "1 Day Program" },
   { href: "/programs/1-month", label: "1 Month Program" },
@@ -19,7 +21,7 @@ const quickLinks = [
   { href: "/about", label: "About" },
   { href: "/systems", label: "Systems" },
   { href: "/results", label: "Reviews" },
-  { href: "/contact", label: "Contact" },
+  { href: "/contact", label: "Contact Us" },
 ];
 
 const legalLinks = [
@@ -57,6 +59,15 @@ function FooterLinks({
         ))}
       </ul>
     </nav>
+  );
+}
+
+function MailIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth={2.25} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-3.5 w-3.5 shrink-0">
+      <rect width="20" height="16" x="2" y="4" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
   );
 }
 
@@ -136,6 +147,14 @@ export default function SiteFooter() {
                 <span className="block xl:inline">Start Your Business</span>{" "}
                 <span className="block xl:inline">Transformation Today</span>
               </WatchApplyButton>
+
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className={`mt-4 flex w-fit items-center gap-2 break-all text-gray-200! ${linkClass}`}
+              >
+                <MailIcon />
+                {CONTACT_EMAIL}
+              </a>
             </div>
           </div>
         </div>

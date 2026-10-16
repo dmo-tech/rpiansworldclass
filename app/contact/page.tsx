@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
 import Reveal from "../Reveal";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
-import { CONTACT_PHONE, CONTACT_PHONE_TEL, WHATSAPP_URL } from "../siteConfig";
-import { SOCIAL_LINKS, WHATSAPP_ICON_PATH } from "../socialLinks";
+import { CONTACT_PHONE, CONTACT_PHONE_TEL } from "../siteConfig";
+import { SOCIAL_LINKS } from "../socialLinks";
 import WatchApplyButton from "../WatchApplyButton";
 
 const CONTACT_EMAIL = "info@worldclassbc.com";
@@ -60,27 +60,12 @@ function MailIcon() {
   );
 }
 
-function WhatsAppIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
-      <path d={WHATSAPP_ICON_PATH} />
-    </svg>
-  );
-}
-
 const reachUs = [
   {
     label: "Mobile",
     value: CONTACT_PHONE,
     href: CONTACT_PHONE_TEL,
     icon: <PhoneIcon />,
-  },
-  {
-    label: "WhatsApp",
-    value: "Chat on WhatsApp",
-    href: WHATSAPP_URL,
-    external: true,
-    icon: <WhatsAppIcon />,
   },
   {
     label: "Email",
@@ -136,9 +121,6 @@ export default function ContactPage() {
 
                             <a
                               href={item.href}
-                              {...(item.external
-                                ? { target: "_blank", rel: "noopener noreferrer" }
-                                : {})}
                               className={`mt-1 block break-words text-lg font-bold ${valueLinkClass}`}
                             >
                               {item.value}
