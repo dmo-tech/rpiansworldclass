@@ -14,10 +14,11 @@ import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import CallSlotPicker, { formatBookingDate } from "../CallSlotPicker";
 import {
+  endsOnWhatsApp,
   formatPlanAmount,
   planAmountLabel,
   plans,
-  waitlistWhatsAppUrl,
+  planWhatsAppUrl,
 } from "../plans";
 import { WaitlistBadge } from "../ProgramOffer";
 
@@ -131,6 +132,10 @@ function RegisterForm() {
   const selectedPlan =
     plans.find((plan) => plan.id === selectedPlanId) ?? null;
 
+  // Waitlist plans and 10 Month end at the call step, on WhatsApp.
+  const isWhatsAppPlan = selectedPlan ? endsOnWhatsApp(selectedPlan) : false;
+  const stepCount = isWhatsAppPlan ? 3 : 4;
+
   const visiblePlans =
     showAllPlans || !selectedPlan ? plans : [selectedPlan];
 
@@ -221,32 +226,33 @@ function RegisterForm() {
     router.push("/payment");
   };
 
-  // Waitlist plans end at the call step: "Join the Waitlist" saves the lead
-  // (once per chosen call time) and opens WhatsApp with the details. The tab
-  // opens inside the click itself, so pop-up blockers allow it; a link to
-  // open it again is shown below in case it didn't.
-  const [waitlistJoined, setWaitlistJoined] = useState(false);
-  const waitlistLeadKeyRef = useRef("");
+  // WhatsApp plans end at the call step: "Join the Waitlist" / "Book Call on
+  // WhatsApp" saves the lead (once per chosen call time) and opens WhatsApp
+  // with the details. The tab opens inside the click itself, so pop-up
+  // blockers allow it; a link to open it again is shown below in case it
+  // didn't.
+  const [whatsAppOpened, setWhatsAppOpened] = useState(false);
+  const whatsAppLeadKeyRef = useRef("");
 
-  const waitlistUrl =
-    selectedPlan?.waitlist && callDate && callSlot
-      ? waitlistWhatsAppUrl(selectedPlan, {
+  const whatsAppUrl =
+    selectedPlan && isWhatsAppPlan && callDate && callSlot
+      ? planWhatsAppUrl(selectedPlan, {
           fullName: formData.fullName.trim(),
           companyName: formData.companyName.trim(),
           callTime: `${formatBookingDate(callDate)} at ${callSlot} IST`,
         })
       : "";
 
-  const joinWaitlist = () => {
-    if (!callDate || !callSlot || !waitlistUrl) {
+  const sendOnWhatsApp = () => {
+    if (!callDate || !callSlot || !whatsAppUrl) {
       setCallError("Please select a date and time for your call.");
       return;
     }
 
     const leadKey = `${callDate.toDateString()}|${callSlot}`;
 
-    if (waitlistLeadKeyRef.current !== leadKey) {
-      waitlistLeadKeyRef.current = leadKey;
+    if (whatsAppLeadKeyRef.current !== leadKey) {
+      whatsAppLeadKeyRef.current = leadKey;
 
       fetch("/api/leads", {
         method: "POST",
@@ -258,22 +264,26 @@ function RegisterForm() {
             formData,
             callDate,
             callSlot,
-            "RPIANS Website - Waitlist",
+            selectedPlan?.waitlist
+              ? "RPIANS Website - Waitlist"
+              : "RPIANS Website - WhatsApp Booking",
           ),
         ),
         keepalive: true,
       }).catch((error) => {
-        console.error("Waitlist lead save error (non-blocking):", error);
+        console.error("WhatsApp lead save error (non-blocking):", error);
       });
     }
 
-    window.open(waitlistUrl, "_blank", "noopener,noreferrer");
-    setWaitlistJoined(true);
+    window.open(whatsAppUrl, "_blank", "noopener,noreferrer");
+    setWhatsAppOpened(true);
   };
 
   const paymentStepLabel = selectedPlan
     ? selectedPlan.waitlist
       ? "Join the waitlist on WhatsApp"
+      : selectedPlan.bookOnWhatsApp
+      ? "Confirm your call with our team on WhatsApp"
       : selectedPlan.amount != null
       ? `Complete ${formatPlanAmount(selectedPlan)} booking payment`
       : "Discuss custom pricing with our team"
@@ -293,7 +303,7 @@ function RegisterForm() {
             className="w-full max-w-2xl"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-              {selectedPlan?.waitlist ? "Step 3 of 3" : "Step 3 of 4"}
+              Step 3 of {stepCount}
             </p>
 
             <h1 className="mt-3 font-serif text-3xl md:text-5xl">
@@ -303,6 +313,8 @@ function RegisterForm() {
             <p className="mt-4 leading-7 text-gray-600">
               {selectedPlan?.waitlist
                 ? "Pick a date and time that suits you, then join the waitlist on WhatsApp. Our team will call you at this time."
+                : isWhatsAppPlan
+                ? "Pick a date and time that suits you, then send your booking to our team on WhatsApp. Our team will call you at this time."
                 : "Pick a date and time that suits you. After booking your call, you will continue to the payment page."}
             </p>
 
@@ -314,12 +326,12 @@ function RegisterForm() {
                   setCallDate(date);
                   setCallSlot("");
                   setCallError("");
-                  setWaitlistJoined(false);
+                  setWhatsAppOpened(false);
                 }}
                 onSelectSlot={(slot) => {
                   setCallSlot(slot);
                   setCallError("");
-                  setWaitlistJoined(false);
+                  setWhatsAppOpened(false);
                 }}
               />
 
@@ -355,15 +367,17 @@ function RegisterForm() {
                   ← Back
                 </button>
 
-                {selectedPlan?.waitlist ? (
+                {isWhatsAppPlan ? (
                   <motion.button
                     type="button"
-                    onClick={joinWaitlist}
+                    onClick={sendOnWhatsApp}
                     whileHover={{ scale: 1.015 }}
                     whileTap={{ scale: 0.98 }}
                     className="flex-1 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(59,130,246,0.22)] transition"
                   >
-                    Join the Waitlist
+                    {selectedPlan?.waitlist
+                      ? "Join the Waitlist"
+                      : "Book Call on WhatsApp"}
                   </motion.button>
                 ) : (
                   <motion.button
@@ -381,7 +395,7 @@ function RegisterForm() {
                 )}
               </div>
 
-              {waitlistJoined && waitlistUrl && (
+              {whatsAppOpened && whatsAppUrl && (
                 <div
                   role="status"
                   className="mt-5 rounded-xl border border-[#22c55e]/30 bg-[#22c55e]/10 px-4 py-3 text-sm text-[#15803d]"
@@ -391,10 +405,12 @@ function RegisterForm() {
                   </p>
 
                   <p className="mt-1">
-                    Send the message in WhatsApp to join the waitlist.
+                    {selectedPlan?.waitlist
+                      ? "Send the message in WhatsApp to join the waitlist."
+                      : "Send the message in WhatsApp to confirm your call."}{" "}
                     WhatsApp didn&rsquo;t open?{" "}
                     <a
-                      href={waitlistUrl}
+                      href={whatsAppUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="font-semibold text-[#15803d]! underline! underline-offset-2"
@@ -575,7 +591,7 @@ function RegisterForm() {
             <div>
                 <div className="border-b border-black/10 pb-7">
                   <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-                    Step 1 of 4
+                    Step 1 of {stepCount}
                   </p>
 
                   <h2 className="mt-3 text-2xl font-bold md:text-3xl">

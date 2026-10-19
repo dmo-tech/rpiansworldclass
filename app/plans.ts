@@ -15,6 +15,10 @@ export type Plan = {
     shortPrice: string;
     until: string;
   };
+  // Not paid online from /register: the call step ends by sending the
+  // booking to the team on WhatsApp (like a waitlist plan, without the
+  // waitlist).
+  bookOnWhatsApp?: boolean;
 };
 
 export const plans: Plan[] = [
@@ -39,6 +43,7 @@ export const plans: Plan[] = [
       "A complete business transformation mentorship journey.",
     // Includes GST: this is the exact amount charged (no gstApplicable).
     amount: 590000,
+    bookOnWhatsApp: true,
   },
   {
     id: "personal-mentorship",
@@ -92,18 +97,23 @@ export function planAmountLabel(plan: Plan): string {
   return plan.waitlist ? "Investment" : "Booking Amount";
 }
 
-// WhatsApp chat for joining a waitlist-only plan, opened from the call step
-// of /register with the applicant's name, company and chosen call time.
-export function waitlistWhatsAppUrl(
+// Waitlist and bookOnWhatsApp plans end /register on WhatsApp, not checkout.
+export function endsOnWhatsApp(plan: Plan): boolean {
+  return Boolean(plan.waitlist || plan.bookOnWhatsApp);
+}
+
+// WhatsApp chat that ends /register for those plans, opened from the call
+// step with the applicant's name, company and chosen call time.
+export function planWhatsAppUrl(
   plan: Plan,
   applicant: { fullName: string; companyName: string; callTime: string },
 ): string {
-  const price = plan.waitlist
-    ? ` (${plan.waitlist.price} ${plan.waitlist.extra})`
-    : "";
+  const request = plan.waitlist
+    ? `join the waitlist for ${plan.label} (${plan.waitlist.price} ${plan.waitlist.extra})`
+    : `book a call for the ${plan.label} program`;
 
   return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(
-    `Hi RPIANS Team, I want to join the waitlist for ${plan.label}${price}.\n` +
+    `Hi RPIANS Team, I want to ${request}.\n` +
       `Name: ${applicant.fullName}\n` +
       `Company: ${applicant.companyName}\n` +
       `Preferred call: ${applicant.callTime}`,
