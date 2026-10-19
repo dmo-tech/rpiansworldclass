@@ -10,9 +10,12 @@ import WatchApplyButton from "../WatchApplyButton";
 
 const CONTACT_EMAIL = "info@worldclassbc.com";
 
-// Instagram, Facebook, X and Pinterest, the same profiles as the footer icons.
+// Instagram, Facebook, YouTube, X and Pinterest, the same profiles as the
+// footer icons.
 const FOLLOW_LINKS = SOCIAL_LINKS.filter((social) =>
-  ["Instagram", "Facebook", "X (Twitter)", "Pinterest"].includes(social.label),
+  ["Instagram", "Facebook", "YouTube", "X (Twitter)", "Pinterest"].includes(
+    social.label,
+  ),
 );
 
 const cardClass =
