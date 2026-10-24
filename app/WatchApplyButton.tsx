@@ -1,13 +1,14 @@
 import type { MouseEventHandler, ReactNode } from "react";
 
+import { watchApplyHref } from "./applyFlow";
 import WatchApplyLink from "./WatchApplyLink";
 
 // Every "Start Your Business Transformation Today" button (formerly "Apply to
-// Work With Us") leads into the video: /watch opens with its details form,
-// and `from` (the page or place of the button) is added to the lead's source
-// so we can see which button was used.
-export const watchApplyHref = (from: string) =>
-  `/watch?apply=1&from=${encodeURIComponent(from)}`;
+// Work With Us") and "Enquire Now" first asks whether the visitor has watched
+// the full video (ApplyCheckPopup): "Yes" books the strategy call, "No" leads
+// into the video (/watch opens with its details form). `from` (the page or
+// place of the button) is added to the lead's source so we can see which
+// button was used.
 
 // ▶ in a circle, drawn with the video player's play triangle.
 export function PlayCircleIcon({
@@ -53,6 +54,7 @@ export default function WatchApplyButton({
   return (
     <WatchApplyLink
       href={watchApplyHref(from)}
+      from={from}
       onClick={onClick}
       className={className}
     >

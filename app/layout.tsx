@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
+import ApplyCheckPopup from "./ApplyCheckPopup";
 import ConsentScripts from "./ConsentScripts";
 import CookieBanner from "./CookieBanner";
 import "./globals.css";
@@ -171,6 +172,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <ApplyCheckPopup />
         <CookieBanner />
         <ConsentScripts />
       </body>

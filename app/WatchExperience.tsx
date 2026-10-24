@@ -5,8 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { CalendarIcon } from "./BookCallButton";
-import GatedVideoPlayer, { VIEWER_KEY } from "./GatedVideoPlayer";
-import { plans } from "./plans";
+import GatedVideoPlayer from "./GatedVideoPlayer";
+import { saveStrategyCallBooking } from "./strategyCallBooking";
+import { readSavedViewer } from "./ViewerDetailsForm";
+import WatchedVideoQuestion from "./WatchedVideoQuestion";
 
 // The Book a Call button below the video appears once the viewer has
 // actually watched this many seconds of it (real watch time, not page time).
@@ -17,9 +19,6 @@ const BOOK_CALL_REVEAL_SECONDS = 90;
 const BOOK_CALL_UNLOCKED_KEY = "rpiansWatchBookCallUnlocked";
 
 const BOOK_CALL_FROM = "Watch - Below Video";
-
-// A booked call is paid for as the "Book a Strategy Call" plan (₹999).
-const STRATEGY_CALL_PLAN = plans.find((plan) => plan.id === "strategy-call");
 
 // /watch (the homepage video card links here): the player with its details
 // form already open, on every visit. Submitting the form starts the video,
@@ -32,24 +31,6 @@ const STRATEGY_CALL_PLAN = plans.find((plan) => plan.id === "strategy-call");
 // call time are asked in the application form after paying. Without those
 // details (storage blocked) it opens /book-call as before. "No" closes the
 // popup and scrolls back up to the video.
-
-function WarningIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      className="h-7 w-7"
-    >
-      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
-      <path d="M12 9v4M12 17h.01" />
-    </svg>
-  );
-}
 
 export default function WatchExperience() {
   const router = useRouter();
@@ -103,33 +84,12 @@ export default function WatchExperience() {
   // Saves the booking for /payment; false if the video form details are
   // missing or storage is blocked.
   const saveBooking = () => {
-    try {
-      const viewer = JSON.parse(localStorage.getItem(VIEWER_KEY) ?? "null");
+    const viewer = readSavedViewer();
 
-      if (!viewer?.fullName || !viewer.phone || !viewer.email || !STRATEGY_CALL_PLAN) {
-        throw new Error("No video form details saved.");
-      }
-
-      sessionStorage.setItem(
-        "rpiansApplicationData",
-        JSON.stringify({
-          fullName: viewer.fullName,
-          phone: viewer.phone,
-          email: viewer.email,
-          companyName: "",
-          planId: STRATEGY_CALL_PLAN.id,
-          planSelected: STRATEGY_CALL_PLAN.label,
-          bookingAmount: STRATEGY_CALL_PLAN.amount,
-          gstApplicable: STRATEGY_CALL_PLAN.gstApplicable ?? false,
-          submittedAt: new Date().toISOString(),
-          source: `RPIANS Website - ${BOOK_CALL_FROM}`,
-        }),
-      );
-
-      return true;
-    } catch {
-      return false;
-    }
+    return (
+      viewer !== null &&
+      saveStrategyCallBooking(viewer, `RPIANS Website - ${BOOK_CALL_FROM}`)
+    );
   };
 
   const continueToBooking = () => {
@@ -240,45 +200,12 @@ export default function WatchExperience() {
               onClick={(event) => event.stopPropagation()}
               className="max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl bg-white p-6 text-center shadow-2xl sm:p-8"
             >
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-amber-50 text-amber-500 ring-1 ring-amber-200">
-                <WarningIcon />
-              </div>
-
-              <h2
-                id="watch-confirm-title"
-                className="mt-5 font-serif text-2xl font-bold text-gray-900 sm:text-3xl"
-              >
-                One Important Thing
-              </h2>
-
-              <p
-                id="watch-confirm-text"
-                className="mt-3 text-base leading-relaxed text-gray-600"
-              >
-                Before you go ahead, please watch the{" "}
-                <strong className="font-semibold text-[#2563eb]">
-                  full video
-                </strong>{" "}
-                above. Only then will you know which plan is right for your
-                business.
-              </p>
-
-              <button
-                type="button"
-                onClick={continueToBooking}
-                autoFocus
-                className="mt-6 w-full text-balance rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:scale-[1.02]"
-              >
-                Yes, I&apos;ve watched the full video
-              </button>
-
-              <button
-                type="button"
-                onClick={backToVideo}
-                className="mt-3 w-full text-balance rounded-xl border border-gray-300 px-5 py-3.5 text-base font-medium text-gray-600 transition hover:bg-gray-50 hover:text-gray-900"
-              >
-                No, I haven&apos;t watched it. Take me back to the video
-              </button>
+              <WatchedVideoQuestion
+                titleId="watch-confirm-title"
+                textId="watch-confirm-text"
+                onYes={continueToBooking}
+                onNo={backToVideo}
+              />
             </div>
           </div>,
           document.body,

@@ -23,7 +23,8 @@ function SendIcon() {
 // writing turned 180°. Physical paddings only (py/px are logical and swap in
 // vertical text). Its edge-side padding (pl, which lands on the right once
 // turned) runs 6px past the screen and slides out on hover.
-// Same flow as "Start Your Business Transformation Today": /watch form → video.
+// Same flow as "Start Your Business Transformation Today": the "One Important
+// Thing" popup, then the call booking or the /watch form → video.
 // `from` names the page, e.g. "Home - Enquire Now", for the lead's source.
 // It sits under the header, popups and back-to-top button (z-40).
 // Full size only on md screens taller than a landscape phone (md-tall, see
