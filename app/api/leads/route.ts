@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { saveToGoogleSheet, sheetNameForLead } from "../../googleSheet";
+import { sendToLeadGridd } from "../../leadGridd";
 
 export async function POST(request: Request) {
   try {
@@ -20,6 +21,13 @@ export async function POST(request: Request) {
       ...fields,
       sheetName: sheetNameForLead(fields.formType),
     };
+
+    // The strategy-call form ("Video Form", "video form data" tab) is also a
+    // LeadGridd contact. After the response, and whether or not the Sheet
+    // saves, so neither one holds up or breaks the other.
+    if (fields.formType === "Video Form") {
+      after(() => sendToLeadGridd(fields));
+    }
 
     await saveToGoogleSheet(formData);
 
