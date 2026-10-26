@@ -3,19 +3,11 @@
 // Important Thing" popup (ApplyCheckPopup) on the page they are on. `from`
 // names the button's page or place and goes into the lead source.
 
-// The popup's "No, take me back to the video": /watch with the video ready to
-// play, without its details form (GatedVideoPlayer). Also the buttons' href,
-// used when one is opened in a new tab.
+// The popup's "No, take me back to the video": the video on /watch, ready to
+// play. `from` stays in the URL, which the watch tracking saves. Also the
+// buttons' href, used when one is opened in a new tab.
 export const watchVideoHref = (from: string) =>
   `/watch?from=${encodeURIComponent(from)}`;
-
-// A /watch visit made through watchVideoHref. Plain /watch (the homepage
-// video card) and older /watch?apply=1&from=… links still ask for the details
-// first.
-export function isVideoOnlyVisit(search: string): boolean {
-  const params = new URLSearchParams(search);
-  return params.has("from") && params.get("apply") !== "1";
-}
 
 // The video on /watch, for the popup's "No" there to scroll back to.
 export const WATCH_VIDEO_ID = "watch-video";

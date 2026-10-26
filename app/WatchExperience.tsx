@@ -17,12 +17,10 @@ const BOOK_CALL_UNLOCKED_KEY = "rpiansWatchBookCallUnlocked";
 
 const BOOK_CALL_FROM = "Watch - Below Video";
 
-// /watch (the homepage video card links here): the player with its details
-// form already open, on every visit. Submitting the form starts the video,
-// from where the viewer last stopped. Through the "One Important Thing"
-// popup's "No" (/watch?from=…) there is no form; Play starts the video. The
-// Book a Call button below the video appears after BOOK_CALL_REVEAL_SECONDS
-// of watching.
+// /watch (the homepage video card and the "One Important Thing" popup's "No"
+// link here): the video, ready to play from where this browser last stopped,
+// with no details form. The Book a Call button below it appears after
+// BOOK_CALL_REVEAL_SECONDS of watching.
 //
 // Book a Call opens the "One Important Thing" popup (ApplyCheckPopup): "Yes"
 // asks for the details, then /payment for the strategy call; the call time
@@ -106,7 +104,7 @@ export default function WatchExperience() {
         id={WATCH_VIDEO_ID}
         className="mx-auto max-w-[max(20rem,calc((100dvh-18rem)*16/9))]"
       >
-        <GatedVideoPlayer openFormOnLoad onWatchTime={handleWatchTime} />
+        <GatedVideoPlayer onWatchTime={handleWatchTime} />
       </div>
 
       {/* Keeps its space while hidden so nothing jumps when it fades in. */}

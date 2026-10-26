@@ -1,11 +1,10 @@
 import type { FormEvent, ReactNode } from "react";
 
-// The details form asked before the /watch video plays (GatedVideoPlayer),
-// and again, with its own heading and button, before a strategy call is
-// booked from a "Start Your Business Transformation Today" / "Enquire Now"
-// button (ApplyCheckPopup). Same fields, same checks.
+// The details form asked before a strategy call is booked: "Enter your
+// details to book your strategy call" in ApplyCheckPopup.
 
-// Last details entered on this browser, used to prefill the form.
+// Last details entered on this browser: prefill the form, and go with the
+// /watch tracking (videoViews).
 export const VIEWER_KEY = "rpiansVideoViewer";
 
 export const OCCUPATION_OPTIONS = [
@@ -187,7 +186,7 @@ function SelectField({
 }
 
 type ViewerDetailsFormProps = {
-  // Start of each field's id ("video-gate" on /watch).
+  // Start of each field's id.
   idPrefix: string;
   viewer: Viewer;
   errors: FormErrors;

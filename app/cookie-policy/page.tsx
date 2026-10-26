@@ -33,7 +33,7 @@ const ESSENTIAL_COOKIES: CookieRow[] = [
   {
     name: "rpiansVideoViewer, rpiansVideoProgress… (browser storage)",
     purpose:
-      "Remembers the details you entered for the training video and where you stopped, so you can resume without filling the form again.",
+      "Remembers where you stopped in the training video, so you can resume, and the details you entered to book a call, so the form is filled in next time and your viewing is linked to them.",
     duration: "Until you clear your browser data",
     setBy: "RPIANS (this website)",
   },

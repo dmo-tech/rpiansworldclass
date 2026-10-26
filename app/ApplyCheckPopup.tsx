@@ -17,6 +17,7 @@ import {
 } from "./applyFlow";
 import { CalendarIcon } from "./BookCallButton";
 import { saveStrategyCallBooking } from "./strategyCallBooking";
+import { linkVideoViewToViewer } from "./videoViews";
 import ViewerDetailsForm, {
   cleanViewer,
   EMPTY_VIEWER,
@@ -34,13 +35,14 @@ import WatchedVideoQuestion from "./WatchedVideoQuestion";
 // when the mobile menu closes.
 //
 // 1. "One Important Thing": has the visitor watched the full video?
-// 2. "Yes": the /watch details form (prefilled from the last details saved
-//    on this browser), saved as a lead in "video form data". Then straight to
+// 2. "Yes": the details form (prefilled from the last details saved on this
+//    browser), saved as a lead in "video form data" and put on this
+//    browser's latest /watch viewing in "video watch data". Then straight to
 //    /payment for the ₹999 strategy call, with the name, WhatsApp and email
 //    filled in; the call time and the application form come after paying.
 //    Without storage it opens /book-call instead.
-//    "No": /watch?from=… — the video, ready to play without the details
-//    form. Already on /watch, it just closes and scrolls to the video.
+//    "No": /watch?from=… — the video, ready to play. Already on /watch, it
+//    just closes and scrolls to the video.
 //
 // A page opened with ?enquire=1&from=… opens it on load (worldclassbc.com/
 // training lands on the homepage this way, see next.config.ts).
@@ -221,12 +223,15 @@ export default function ApplyCheckPopup() {
 
     const source = `RPIANS Website - Apply (Watched Video: Yes) - ${from}`;
 
-    // Prefills the /watch form (and this one) next time.
+    // Prefills this form next time, and names the /watch tracking.
     try {
       localStorage.setItem(VIEWER_KEY, JSON.stringify(cleaned));
     } catch {
       // Private mode: nothing to prefill next time.
     }
+
+    // A viewing tracked without a name gets this one on the same row.
+    linkVideoViewToViewer();
 
     // A lead in "video form data", like the /watch form. Never holds the
     // visitor up.

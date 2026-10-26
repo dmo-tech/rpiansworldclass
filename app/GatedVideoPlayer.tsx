@@ -1,29 +1,21 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ApplyButton from "./ApplyButton";
-import { isVideoOnlyVisit } from "./applyFlow";
 import { VIDEO_POSTER_URL, VIDEO_URL } from "./siteConfig";
-import ViewerDetailsForm, {
-  cleanViewer,
-  EMPTY_VIEWER,
-  type FormErrors,
-  readSavedViewer,
-  validateViewer,
-  type Viewer,
-  VIEWER_KEY,
-} from "./ViewerDetailsForm";
+import {
+  PROGRESS_KEY,
+  sendVideoView,
+  VIEWER_DETAILS_EVENT,
+} from "./videoViews";
+import { readSavedViewer } from "./ViewerDetailsForm";
 
-// Self-hosted video that asks for the viewer's details before it plays (on
-// every visit, then resumes from where they left off), can't be paused or
-// skipped forward, and reports how much each viewer
-// watched to the "video watch data" tab of the Google Sheet (/api/video-views).
-// The details form itself (ViewerDetailsForm) is saved as a lead in "video
-// form data" (/api/leads).
-// A video-only visit (the "One Important Thing" popup's "No", see applyFlow)
-// skips the form: Play starts the video straight away, and watch time is
-// tracked under the details saved on this browser, or without name / phone.
+// Self-hosted video that plays as soon as Play is pressed (no details form),
+// resumes from where this browser left off, can't be paused or skipped
+// forward, and reports how much was watched to the "video watch data" tab of
+// the Google Sheet (videoViews). Updates carry the details saved on this
+// browser, if any; a viewer without them gets their name on the same row
+// once they fill the strategy-call form.
 
 // Used for the time label until the browser has read the real duration.
 const FALLBACK_DURATION = 1375;
@@ -38,13 +30,16 @@ const SAVE_PROGRESS_EVERY_SECONDS = 1;
 // A saved position this close to the end starts the video again from 0:00.
 const RESTART_NEAR_END_SECONDS = 5;
 
-// Versioned so progress saved on an older video doesn't resume the new one.
-const PROGRESS_KEY = "rpiansVideoProgressV20";
+// Where this browser stopped, with its tracking session.
+const BROWSER_PROGRESS_KEY = `${PROGRESS_KEY}:browser`;
 
-// Progress is saved per email, so each viewer resumes their own position
-// (one shared position for viewers without details on a video-only visit).
-const progressKey = (email: string) =>
-  `${PROGRESS_KEY}:${email.trim().toLowerCase() || "anonymous"}`;
+// Older saves, picked up once: per email while the video asked for details
+// first ("anonymous" without them), and before that PROGRESS_KEY itself.
+const legacyProgressKeys = (email: string | undefined) => [
+  ...(email ? [`${PROGRESS_KEY}:${email.trim().toLowerCase()}`] : []),
+  `${PROGRESS_KEY}:anonymous`,
+  PROGRESS_KEY,
+];
 
 const MILESTONES = [25, 50, 75];
 
@@ -90,9 +85,6 @@ const BLOCKED_KEYS = new Set([
 ]);
 
 type GatedVideoPlayerProps = {
-  // Opens the details form as soon as the page loads (prefilled for a
-  // returning viewer) instead of waiting for the Play button.
-  openFormOnLoad?: boolean;
   // Called with how many seconds of the video the viewer has really watched:
   // the furthest point reached, capped by the time actually spent playing
   // it, so jumping ahead, re-watching or leaving the page open doesn't count.
@@ -153,25 +145,6 @@ const formatTime = (seconds: number) => {
   return `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
 };
 
-const getDevice = () =>
-  /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
-    ? "Mobile"
-    : "Desktop";
-
-const getBrowser = () => {
-  const ua = navigator.userAgent;
-
-  if (/Edg\//.test(ua)) return "Edge";
-  if (/OPR\/|Opera/.test(ua)) return "Opera";
-  if (/SamsungBrowser/.test(ua)) return "Samsung Internet";
-  if (/FxiOS|Firefox\//.test(ua)) return "Firefox";
-  if (/CriOS|Chrome\//.test(ua)) return "Chrome";
-  if (/Safari\//.test(ua)) return "Safari";
-
-  return "Other";
-};
-
 function PlayIcon({ className = "h-8 w-8" }: { className?: string }) {
   return (
     <svg
@@ -229,18 +202,12 @@ function FullscreenIcon({ active }: { active: boolean }) {
 }
 
 export default function GatedVideoPlayer({
-  openFormOnLoad = false,
   onWatchTime,
 }: GatedVideoPlayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<WebkitVideo>(null);
 
   const [phase, setPhase] = useState<Phase>("idle");
-  // False on a video-only visit: no details form at all.
-  const [asksDetails, setAsksDetails] = useState(true);
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [formData, setFormData] = useState<Viewer>(EMPTY_VIEWER);
-  const [formErrors, setFormErrors] = useState<FormErrors>({});
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(FALLBACK_DURATION);
@@ -251,10 +218,6 @@ export default function GatedVideoPlayer({
   // Refs mirror the state the media event listeners need, so the listeners
   // can be attached once and never read stale values.
   const phaseRef = useRef<Phase>("idle");
-  // Whoever submitted the form on this visit, or on a video-only visit the
-  // details saved on this browser (empty if none); tracking and progress use
-  // it.
-  const viewerRef = useRef<Viewer | null>(null);
   const sessionIdRef = useRef<string | null>(null);
   const maxWatchedRef = useRef(0);
   const watchedSecondsRef = useRef(0);
@@ -283,14 +246,8 @@ export default function GatedVideoPlayer({
 
   const saveProgress = useCallback(() => {
     const video = videoRef.current;
-    const viewer = viewerRef.current;
 
-    if (
-      !sessionIdRef.current ||
-      !video ||
-      !viewer ||
-      phaseRef.current !== "playing"
-    ) {
+    if (!sessionIdRef.current || !video || phaseRef.current !== "playing") {
       return;
     }
 
@@ -302,12 +259,12 @@ export default function GatedVideoPlayer({
       milestones: [...milestonesRef.current],
     };
 
-    writeStorage(progressKey(viewer.email), progress);
+    writeStorage(BROWSER_PROGRESS_KEY, progress);
   }, []);
 
-  // Picks up the saved position for this email; none means a fresh start.
-  const loadProgress = useCallback((email: string) => {
-    const progress = readStorage<SavedProgress>(progressKey(email));
+  // Picks up the saved position; none means a fresh start.
+  const loadProgress = useCallback(() => {
+    const progress = readStorage<SavedProgress>(BROWSER_PROGRESS_KEY);
     const position = progress?.position || 0;
 
     sessionIdRef.current = progress?.sessionId || null;
@@ -327,44 +284,25 @@ export default function GatedVideoPlayer({
       event: string,
       options: { beacon?: boolean; completed?: boolean } = {},
     ) => {
-      const currentViewer = viewerRef.current;
-
-      if (!sessionIdRef.current || !currentViewer) {
+      if (!sessionIdRef.current) {
         return;
       }
 
       const completed = options.completed ?? false;
 
-      const payload = JSON.stringify({
-        event,
-        sessionId: sessionIdRef.current,
-        ...currentViewer,
-        maxPercent: completed
-          ? 100
-          : Math.min(100, (maxWatchedRef.current / getDuration()) * 100),
-        minutesWatched: watchedSecondsRef.current / 60,
-        completed,
-        device: getDevice(),
-        browser: getBrowser(),
-        pageUrl: window.location.href,
-      });
-
-      if (options.beacon && navigator.sendBeacon) {
-        navigator.sendBeacon(
-          "/api/video-views",
-          new Blob([payload], { type: "text/plain;charset=UTF-8" }),
-        );
-        return;
-      }
-
-      fetch("/api/video-views", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: payload,
-        keepalive: true,
-      }).catch((error) => {
-        console.error("Video view tracking error:", error);
-      });
+      sendVideoView(
+        {
+          event,
+          sessionId: sessionIdRef.current,
+          maxPercent: completed
+            ? 100
+            : Math.min(100, (maxWatchedRef.current / getDuration()) * 100),
+          minutesWatched: watchedSecondsRef.current / 60,
+          completed,
+          pageUrl: window.location.href,
+        },
+        { beacon: options.beacon },
+      );
     },
     [],
   );
@@ -378,48 +316,37 @@ export default function GatedVideoPlayer({
     milestonesRef.current = new Set();
     resumeAtRef.current = 0;
 
-    if (viewerRef.current) {
-      removeStorage(progressKey(viewerRef.current.email));
-    }
+    removeStorage(BROWSER_PROGRESS_KEY);
   };
 
-  // Prefill the form with the last details entered on this browser and show
-  // that email's saved position on the Play button. Nothing plays until the
-  // form is submitted, except on a video-only visit.
+  // Show where this browser stopped on the Play button ("Continue where you
+  // left off"). A save from before progress was kept per browser (the saved
+  // details' email first) is carried over once.
   useEffect(() => {
-    const savedViewer = readSavedViewer();
-    const isVideoOnly = isVideoOnlyVisit(window.location.search);
+    const legacyKeys = legacyProgressKeys(readSavedViewer()?.email);
 
-    if (savedViewer) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is only readable after mount
-      setFormData(savedViewer);
+    if (!readStorage(BROWSER_PROGRESS_KEY)) {
+      const legacyKey = legacyKeys.find(
+        (key) => readStorage<SavedProgress>(key)?.sessionId,
+      );
 
-      // Progress saved before it was kept per email belongs to this viewer.
-      const legacyProgress = readStorage<SavedProgress>(PROGRESS_KEY);
-
-      if (legacyProgress) {
-        if (!readStorage(progressKey(savedViewer.email))) {
-          writeStorage(progressKey(savedViewer.email), legacyProgress);
-        }
-        removeStorage(PROGRESS_KEY);
+      if (legacyKey) {
+        writeStorage(BROWSER_PROGRESS_KEY, readStorage(legacyKey));
       }
     }
 
-    const viewer = savedViewer ?? (isVideoOnly ? EMPTY_VIEWER : null);
+    for (const key of legacyKeys) {
+      removeStorage(key);
+    }
 
-    if (viewer && loadProgress(viewer.email)?.sessionId) {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is only readable after mount
+    if (loadProgress()?.sessionId) {
       onWatchTimeRef.current?.(
         Math.min(watchedSecondsRef.current, maxWatchedRef.current),
         true,
       );
     }
-
-    if (isVideoOnly) {
-      setAsksDetails(false);
-    } else if (openFormOnLoad) {
-      setIsFormOpen(true);
-    }
-  }, [loadProgress, openFormOnLoad]);
+  }, [loadProgress]);
 
   const startPlayback = () => {
     const video = videoRef.current;
@@ -467,12 +394,11 @@ export default function GatedVideoPlayer({
     sendUpdate("start");
   };
 
-  // Plays from where this email last stopped (an email with no saved progress
-  // starts from 0:00, with its own tracking session). A position saved right
-  // at the end starts the video over.
-  const beginWatching = (viewer: Viewer) => {
-    viewerRef.current = viewer;
-    loadProgress(viewer.email);
+  // Plays from where this browser last stopped (nothing saved: from 0:00,
+  // with a new tracking session). A position saved right at the end starts
+  // the video over.
+  const handlePlayClick = () => {
+    loadProgress();
 
     if (resumeAtRef.current >= getDuration() - RESTART_NEAR_END_SECONDS) {
       resetSession();
@@ -482,72 +408,7 @@ export default function GatedVideoPlayer({
     startPlayback();
   };
 
-  // Play asks for the details first (prefilled for a returning viewer); the
-  // video starts when the form is submitted. On a video-only visit it plays
-  // straight away.
-  const handlePlayClick = () => {
-    if (!asksDetails) {
-      beginWatching(readSavedViewer() ?? EMPTY_VIEWER);
-      return;
-    }
-
-    setFormErrors({});
-    setIsFormOpen(true);
-  };
-
-  // Typing in a field clears that field's error straight away.
-  const updateField = (field: keyof Viewer, value: string) => {
-    setFormData((current) => ({ ...current, [field]: value }));
-    setFormErrors((current) => ({ ...current, [field]: undefined }));
-  };
-
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const cleaned = cleanViewer(formData);
-
-    const errors = validateViewer(cleaned);
-    setFormErrors(errors);
-
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
-
-    writeStorage(VIEWER_KEY, cleaned);
-    setIsFormOpen(false);
-
-    beginWatching(cleaned);
-
-    // Arrived by an older "Start Your Business Transformation Today" link
-    // (/watch?apply=1&from=…): the button's page or place is added to the
-    // lead source.
-    const params = new URLSearchParams(window.location.search);
-    const applyFrom =
-      params.get("apply") === "1"
-        ? (params.get("from") ?? "").replace(/[\u0000-\u001f]/g, "").trim().slice(0, 80)
-        : "";
-
-    // The details form is also a lead on its own ("video form data" tab);
-    // watch progress is tracked separately through /api/video-views.
-    fetch("/api/leads", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        formType: "Video Form",
-        ...cleaned,
-        submittedAt: new Date().toISOString(),
-        source: `RPIANS Website - Video Form (${window.location.pathname})${
-          applyFrom ? ` - Apply: ${applyFrom}` : ""
-        }`,
-      }),
-      keepalive: true,
-    }).catch((error) => {
-      console.error("Video form lead error (non-blocking):", error);
-    });
-  };
-
-  // "Watch again" also goes through the form (if asked), then starts from
-  // 0:00.
+  // "Watch again" starts from 0:00 with a new tracking session.
   const handleReplay = () => {
     resetSession();
     setCurrentTime(0);
@@ -691,10 +552,7 @@ export default function GatedVideoPlayer({
       sendUpdate("100%", { completed: true });
 
       sessionIdRef.current = null;
-
-      if (viewerRef.current) {
-        removeStorage(progressKey(viewerRef.current.email));
-      }
+      removeStorage(BROWSER_PROGRESS_KEY);
 
       updatePhase("ended");
 
@@ -874,200 +732,153 @@ export default function GatedVideoPlayer({
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
 
+  // The strategy-call form saved new details: put them on this viewing's row
+  // now, with the live figures (see linkVideoViewToViewer). Without a session
+  // here (not played yet, or finished) the last update sent is used instead.
   useEffect(() => {
-    if (!isFormOpen) {
-      return;
-    }
-
-    document.body.style.overflow = "hidden";
-
-    const closeWithEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsFormOpen(false);
+    const handleViewerDetails = (event: Event) => {
+      if (!sessionIdRef.current) {
+        return;
       }
+
+      event.preventDefault();
+      sendUpdate("details");
     };
 
-    window.addEventListener("keydown", closeWithEscape);
+    window.addEventListener(VIEWER_DETAILS_EVENT, handleViewerDetails);
 
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", closeWithEscape);
-    };
-  }, [isFormOpen]);
+    return () =>
+      window.removeEventListener(VIEWER_DETAILS_EVENT, handleViewerDetails);
+  }, [sendUpdate]);
 
   const progressPercent = Math.min(100, (currentTime / duration) * 100);
 
   return (
-    <>
-      <div className="mx-auto w-full max-w-5xl overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900 shadow-2xl shadow-blue-950/20">
-        <div
-          ref={containerRef}
-          onContextMenu={(event) => event.preventDefault()}
-          className={`relative aspect-video w-full select-none bg-black ${
-            isFullscreen ? "flex items-center justify-center" : ""
-          }`}
-        >
-          <video
-            ref={videoRef}
-            src={VIDEO_URL}
-            poster={VIDEO_POSTER_URL}
-            preload="metadata"
-            playsInline
-            controlsList="nodownload noplaybackrate noremoteplayback"
-            disablePictureInPicture
-            disableRemotePlayback
-            tabIndex={-1}
-            className="absolute inset-0 h-full w-full bg-black object-contain"
-          />
+    <div className="mx-auto w-full max-w-5xl overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-neutral-900 shadow-2xl shadow-blue-950/20">
+      <div
+        ref={containerRef}
+        onContextMenu={(event) => event.preventDefault()}
+        className={`relative aspect-video w-full select-none bg-black ${
+          isFullscreen ? "flex items-center justify-center" : ""
+        }`}
+      >
+        <video
+          ref={videoRef}
+          src={VIDEO_URL}
+          poster={VIDEO_POSTER_URL}
+          preload="metadata"
+          playsInline
+          controlsList="nodownload noplaybackrate noremoteplayback"
+          disablePictureInPicture
+          disableRemotePlayback
+          tabIndex={-1}
+          className="absolute inset-0 h-full w-full bg-black object-contain"
+        />
 
-          {/* Swallows clicks / taps / double-taps on the picture itself. */}
-          <div aria-hidden="true" className="absolute inset-0" />
+        {/* Swallows clicks / taps / double-taps on the picture itself. */}
+        <div aria-hidden="true" className="absolute inset-0" />
 
-          {phase === "idle" && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/35">
-              <button
-                type="button"
-                onClick={handlePlayClick}
-                aria-label="Play video"
-                className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-[#3b82f6] to-[#2563eb] pl-1 text-white shadow-xl shadow-blue-900/40 transition hover:scale-110 sm:h-24 sm:w-24"
-              >
-                <PlayIcon className="h-7 w-7 sm:h-10 sm:w-10" />
-              </button>
-
-              <p className="mt-3 text-xs font-medium text-white [text-shadow:0_1px_4px_rgb(0_0_0/0.8)] sm:mt-4 sm:text-sm">
-                {currentTime > 0
-                  ? `Continue where you left off (${formatTime(currentTime)})`
-                  : "Press Play to watch the video"}
-              </p>
-            </div>
-          )}
-
-          {phase === "playing" && (
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent px-3 pb-2 pt-6 sm:px-5 sm:pb-3">
-              <div
-                role="progressbar"
-                aria-label="Video progress"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={Math.round(progressPercent)}
-                className="pointer-events-none h-1 w-full overflow-hidden rounded-full bg-white/25"
-              >
-                <div
-                  className="h-full rounded-full bg-[#3b82f6]"
-                  style={{ width: `${progressPercent}%` }}
-                />
-              </div>
-
-              <div className="mt-2 flex items-center justify-between gap-3 text-white">
-                <span className="text-xs font-medium tabular-nums sm:text-sm">
-                  {formatTime(currentTime)} / {formatTime(duration)}
-                </span>
-
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <button
-                    type="button"
-                    onClick={toggleMute}
-                    aria-label={isMuted ? "Unmute" : "Mute"}
-                    className="rounded-md p-1.5 transition hover:bg-white/15"
-                  >
-                    <VolumeIcon muted={isMuted} />
-                  </button>
-
-                  <input
-                    type="range"
-                    min={0}
-                    max={1}
-                    step={0.05}
-                    value={isMuted ? 0 : volume}
-                    onChange={(event) =>
-                      handleVolumeChange(Number(event.target.value))
-                    }
-                    aria-label="Volume"
-                    data-volume-slider="true"
-                    className="hidden w-20 accent-[#3b82f6] sm:block"
-                  />
-
-                  <button
-                    type="button"
-                    onClick={toggleFullscreen}
-                    aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-                    className="rounded-md p-1.5 transition hover:bg-white/15"
-                  >
-                    <FullscreenIcon active={isFullscreen} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {phase === "ended" && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center overflow-y-auto bg-neutral-950/90 px-4 py-3 text-center text-white">
-              <p className="font-serif text-base sm:text-3xl">Your next step</p>
-
-              <p className="mt-1 hidden max-w-md text-sm text-white/70 sm:block">
-                Take the next step towards a system-driven business.
-              </p>
-
-              <div className="mt-3 flex w-full flex-col items-center justify-center gap-2 sm:mt-6 sm:flex-row sm:gap-4">
-                <ApplyButton className="w-full max-w-xs text-balance rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-2 text-sm font-bold text-white transition hover:scale-105 sm:w-auto sm:max-w-md sm:px-9 sm:py-4 sm:text-base">
-                  Start Your Business Transformation Today
-                </ApplyButton>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleReplay}
-                className="mt-2 text-xs text-white/60 underline underline-offset-4 hover:text-white sm:mt-5 sm:text-sm"
-              >
-                Watch again
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {isFormOpen &&
-        createPortal(
-          <div
-            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-            onClick={() => setIsFormOpen(false)}
-          >
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="video-gate-title"
-              onClick={(event) => event.stopPropagation()}
-              className="relative max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl bg-white p-6 text-left shadow-2xl sm:p-8"
+        {phase === "idle" && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/35">
+            <button
+              type="button"
+              onClick={handlePlayClick}
+              aria-label="Play video"
+              className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-[#3b82f6] to-[#2563eb] pl-1 text-white shadow-xl shadow-blue-900/40 transition hover:scale-110 sm:h-24 sm:w-24"
             >
-              <button
-                type="button"
-                onClick={() => setIsFormOpen(false)}
-                aria-label="Close"
-                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-xl text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
-              >
-                ×
-              </button>
+              <PlayIcon className="h-7 w-7 sm:h-10 sm:w-10" />
+            </button>
 
-              <h3
-                id="video-gate-title"
-                className="pr-8 font-serif text-2xl font-bold leading-snug text-gray-900"
-              >
-                Enter your details below to watch the full video
-              </h3>
+            <p className="mt-3 text-xs font-medium text-white [text-shadow:0_1px_4px_rgb(0_0_0/0.8)] sm:mt-4 sm:text-sm">
+              {currentTime > 0
+                ? `Continue where you left off (${formatTime(currentTime)})`
+                : "Press Play to watch the video"}
+            </p>
+          </div>
+        )}
 
-              <ViewerDetailsForm
-                idPrefix="video-gate"
-                viewer={formData}
-                errors={formErrors}
-                onFieldChange={updateField}
-                onSubmit={handleFormSubmit}
-                submitLabel="Register for the Free Training Now"
-                submitIcon={<PlayIcon className="h-5 w-5 shrink-0" />}
+        {phase === "playing" && (
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent px-3 pb-2 pt-6 sm:px-5 sm:pb-3">
+            <div
+              role="progressbar"
+              aria-label="Video progress"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={Math.round(progressPercent)}
+              className="pointer-events-none h-1 w-full overflow-hidden rounded-full bg-white/25"
+            >
+              <div
+                className="h-full rounded-full bg-[#3b82f6]"
+                style={{ width: `${progressPercent}%` }}
               />
             </div>
-          </div>,
-          document.body,
+
+            <div className="mt-2 flex items-center justify-between gap-3 text-white">
+              <span className="text-xs font-medium tabular-nums sm:text-sm">
+                {formatTime(currentTime)} / {formatTime(duration)}
+              </span>
+
+              <div className="flex items-center gap-2 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={toggleMute}
+                  aria-label={isMuted ? "Unmute" : "Mute"}
+                  className="rounded-md p-1.5 transition hover:bg-white/15"
+                >
+                  <VolumeIcon muted={isMuted} />
+                </button>
+
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={isMuted ? 0 : volume}
+                  onChange={(event) =>
+                    handleVolumeChange(Number(event.target.value))
+                  }
+                  aria-label="Volume"
+                  data-volume-slider="true"
+                  className="hidden w-20 accent-[#3b82f6] sm:block"
+                />
+
+                <button
+                  type="button"
+                  onClick={toggleFullscreen}
+                  aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+                  className="rounded-md p-1.5 transition hover:bg-white/15"
+                >
+                  <FullscreenIcon active={isFullscreen} />
+                </button>
+              </div>
+            </div>
+          </div>
         )}
-    </>
+
+        {phase === "ended" && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center overflow-y-auto bg-neutral-950/90 px-4 py-3 text-center text-white">
+            <p className="font-serif text-base sm:text-3xl">Your next step</p>
+
+            <p className="mt-1 hidden max-w-md text-sm text-white/70 sm:block">
+              Take the next step towards a system-driven business.
+            </p>
+
+            <div className="mt-3 flex w-full flex-col items-center justify-center gap-2 sm:mt-6 sm:flex-row sm:gap-4">
+              <ApplyButton className="w-full max-w-xs text-balance rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-2 text-sm font-bold text-white transition hover:scale-105 sm:w-auto sm:max-w-md sm:px-9 sm:py-4 sm:text-base">
+                Start Your Business Transformation Today
+              </ApplyButton>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleReplay}
+              className="mt-2 text-xs text-white/60 underline underline-offset-4 hover:text-white sm:mt-5 sm:text-sm"
+            >
+              Watch again
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
