@@ -80,8 +80,6 @@ export async function POST(request: Request) {
           email: note(customer?.email),
           phone: note(customer?.phone),
           companyName: note(customer?.companyName),
-          bookingDate: note(customer?.bookingDate),
-          bookingTime: note(customer?.bookingTime),
           source: note(customer?.source),
         },
       }),

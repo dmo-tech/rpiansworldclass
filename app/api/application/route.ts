@@ -16,12 +16,11 @@ import {
   type RazorpayPayment,
 } from "@/app/razorpay";
 
-// The application form after payment (/application?payment=pay_…).
+// The application form for a paid booking (/application?payment=pay_…), no
+// longer part of the booking flow but kept for links customers already have.
 // GET tells the page whether that payment is real and paid, so the form only
-// opens after a payment (also from a link opened later, e.g. on WhatsApp),
-// and whether its call was booked before paying (/book-call, /register): if
-// not (Book a Call under the /watch video), the form asks for the call time.
-// POST saves the answers to the "application form data" tab.
+// opens after a payment. POST saves the answers to the "application form
+// data" tab.
 
 export async function GET(request: Request) {
   const paymentId = new URL(request.url).searchParams.get("payment") ?? "";
@@ -32,15 +31,8 @@ export async function GET(request: Request) {
 
   try {
     const payment = await fetchRazorpayPayment(paymentId);
-    const paid = isPaymentPaid(payment);
-    const order =
-      paid && payment?.order_id ? await fetchRazorpayOrder(payment.order_id) : null;
 
-    return NextResponse.json({
-      success: true,
-      paid,
-      callBooked: orderNote(order, "bookingDate") !== "",
-    });
+    return NextResponse.json({ success: true, paid: isPaymentPaid(payment) });
   } catch (error) {
     console.error(`Application: payment ${paymentId} could not be checked:`, error);
 
@@ -51,20 +43,17 @@ export async function GET(request: Request) {
   }
 }
 
-// Order ID and plan come from Razorpay, not the browser, and so does the call
-// time when it was booked before paying (call holds the one picked in the
-// form otherwise). If Razorpay can't be reached the answers are still saved
-// (without them); a payment Razorpay says isn't paid is not saved.
+// Order ID and plan come from Razorpay, not the browser. If Razorpay can't be
+// reached the answers are still saved (without them); a payment Razorpay says
+// isn't paid is not saved.
 // Never throws: it runs after the response.
 async function saveApplication(
   paymentId: string,
   contact: Record<string, string>,
-  call: { bookingDate: string; bookingTime: string },
   answers: Record<string, string>,
 ) {
   let payment: RazorpayPayment | null = null;
   let planSelected = "";
-  let { bookingDate, bookingTime } = call;
 
   try {
     payment = await fetchRazorpayPayment(paymentId);
@@ -80,11 +69,6 @@ async function saveApplication(
       const order = await fetchRazorpayOrder(payment.order_id);
 
       planSelected = orderNote(order, "plan");
-
-      if (!bookingDate) {
-        bookingDate = orderNote(order, "bookingDate");
-        bookingTime = orderNote(order, "bookingTime");
-      }
     }
   } catch (error) {
     console.error(
@@ -101,8 +85,6 @@ async function saveApplication(
       paymentId,
       orderId: payment?.order_id ?? "",
       planSelected,
-      bookingDate,
-      bookingTime,
       ...answers,
     });
   } catch (error) {
@@ -164,15 +146,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, message: error }, { status: 400 });
   }
 
-  // The call time picked in the form, e.g. "Monday, 20 October 2026" and
-  // "11:00 AM IST"; empty when it was booked before paying.
-  const call = {
-    bookingDate: read(body, "bookingDate").slice(0, 100),
-    bookingTime: read(body, "bookingTime").slice(0, 100),
-  };
-
   // After the response, so a slow Google Sheet never keeps the visitor waiting.
-  after(() => saveApplication(paymentId, contact, call, answers));
+  after(() => saveApplication(paymentId, contact, answers));
 
   return NextResponse.json({ success: true });
 }

@@ -15,7 +15,7 @@ import {
   WATCH_VIDEO_ID,
   watchVideoHref,
 } from "./applyFlow";
-import { CalendarIcon } from "./BookCallButton";
+import { CalendarIcon } from "./CalendarIcon";
 import { saveStrategyCallBooking } from "./strategyCallBooking";
 import { linkVideoViewToViewer } from "./videoViews";
 import ViewerDetailsForm, {
@@ -39,8 +39,8 @@ import WatchedVideoQuestion from "./WatchedVideoQuestion";
 //    browser), saved as a lead in "video form data" and put on this
 //    browser's latest /watch viewing in "video watch data". Then straight to
 //    /payment for the ₹999 strategy call, with the name, WhatsApp and email
-//    filled in; the call time and the application form come after paying.
-//    Without storage it opens /book-call instead.
+//    filled in, then /thank-you; the team schedules the call after paying.
+//    If storage is blocked it says the team will follow up instead.
 //    "No": /watch?from=… — the video, ready to play. Already on /watch, it
 //    just closes and scrolls to the video.
 //
@@ -65,6 +65,8 @@ export default function ApplyCheckPopup() {
   const [formData, setFormData] = useState<Viewer>(EMPTY_VIEWER);
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // This browser blocks storage, so /payment can't open with the details.
+  const [isStorageBlocked, setIsStorageBlocked] = useState(false);
   const [shownPathname, setShownPathname] = useState(pathname);
 
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -86,6 +88,7 @@ export default function ApplyCheckPopup() {
     setStep("question");
     setFormErrors({});
     setIsSubmitting(false);
+    setIsStorageBlocked(false);
     setFrom(nextFrom);
   };
 
@@ -252,8 +255,9 @@ export default function ApplyCheckPopup() {
     if (saveStrategyCallBooking(cleaned, source)) {
       router.push(PAYMENT_HREF);
     } else {
-      setFrom(null);
-      router.push(`/book-call?from=${encodeURIComponent(from)}`);
+      // /payment can't read the booking; the lead above is saved, so the
+      // team follows up.
+      setIsStorageBlocked(true);
     }
   };
 
@@ -321,6 +325,17 @@ export default function ApplyCheckPopup() {
               submitIcon={<CalendarIcon className="h-5 w-5 shrink-0" />}
               isSubmitting={isSubmitting}
             />
+
+            {isStorageBlocked && (
+              <p
+                role="alert"
+                className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800"
+              >
+                Your details are saved, but this browser blocked the payment
+                page. Our team will call or WhatsApp you within 24 hours to
+                schedule your call.
+              </p>
+            )}
           </>
         )}
       </div>

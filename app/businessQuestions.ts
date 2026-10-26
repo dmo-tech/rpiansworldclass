@@ -1,7 +1,6 @@
 // Questions for the one-question-at-a-time forms (QuestionFlow): the business
-// details on /register and the application form after payment
-// (/application). Validation lives here so the browser and /api/application
-// check answers the same way.
+// details on /register and the application form (/application). Validation
+// lives here so the browser and /api/application check answers the same way.
 
 export type Question<Id extends string = string> = {
   id: Id;
@@ -24,38 +23,12 @@ export type Question<Id extends string = string> = {
   | {
       kind: "textarea";
     }
-  | {
-      // The call date and time, picked on the /book-call calendar
-      // (CallSlotPicker). Value: "YYYY-MM-DD|11:00 AM".
-      kind: "slot";
-    }
 );
-
-export const callSlotValue = (date: Date | null, slot: string) =>
-  date
-    ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}|${slot}`
-    : "";
-
-export function parseCallSlot(value: string): { date: Date | null; slot: string } {
-  const [day = "", slot = ""] = value.split("|");
-  const [year, month, date] = day.split("-").map(Number);
-
-  return {
-    date: year && month && date ? new Date(year, month - 1, date) : null,
-    slot,
-  };
-}
 
 export const questionName = (question: Question) =>
   question.column ?? question.label;
 
 export function validateAnswer(question: Question, value: string): string {
-  if (question.kind === "slot") {
-    const { date, slot } = parseCallSlot(value);
-
-    return date && slot ? "" : "Please select a date and time for your call.";
-  }
-
   if (question.kind === "input" && question.type === "tel") {
     if (value.replace(/\D/g, "").length < 10) {
       return "Please enter a valid WhatsApp number.";
@@ -102,9 +75,10 @@ export const ANNUAL_TURNOVER_OPTIONS = [
   "₹50 Crore+",
 ];
 
-// The application form after payment. The first four come pre-filled from
-// the booking (sessionStorage) for the visitor to check; then the call time
-// (CALL_QUESTION, only if not booked yet) and the application questions. Each answer goes to the "application form data"
+// The application form (/application, no longer part of the booking flow,
+// kept for links customers already have). The first four come pre-filled
+// from the booking (sessionStorage) for the visitor to check; then the
+// application questions. Each answer goes to the "application form data"
 // sheet under its column name, so renaming a column starts a new one there.
 export const CONTACT_QUESTIONS = [
   {
@@ -146,14 +120,6 @@ export const CONTACT_QUESTIONS = [
 ] as const satisfies Question[];
 
 export type ContactId = (typeof CONTACT_QUESTIONS)[number]["id"];
-
-// Asked after the contact details when the call wasn't booked before paying
-// (Book a Call under the /watch video pays first).
-export const CALL_QUESTION: Question = {
-  id: "callSlot",
-  label: "Pick your call date & time",
-  kind: "slot",
-};
 
 export const APPLICATION_QUESTIONS: Question[] = [
   {

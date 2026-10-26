@@ -9,13 +9,7 @@ import {
   useState,
 } from "react";
 
-import {
-  callSlotValue,
-  parseCallSlot,
-  type Question,
-  validateAnswer,
-} from "./businessQuestions";
-import CallSlotPicker, { formatBookingDate } from "./CallSlotPicker";
+import { type Question, validateAnswer } from "./businessQuestions";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 
@@ -43,7 +37,7 @@ type QuestionFlowProps<Id extends string> = {
 // Typeform-style form: one question at a time ("1 Full Name *", "Type your
 // answer here...", OK or Enter for the next), a progress bar under the
 // header, ↑ / ↓ buttons, and the site header and footer. Used by /register
-// (business details) and /application (after payment).
+// (business details) and /application.
 export default function QuestionFlow<Id extends string>({
   questions,
   values,
@@ -73,8 +67,6 @@ export default function QuestionFlow<Id extends string>({
   };
 
   const currentField = questions[fieldIndex];
-  // The date and time picked on a call-slot question.
-  const slotChoice = parseCallSlot(values[currentField.id] ?? "");
   const isLastField = fieldIndex === questions.length - 1;
   const isActiveField = () => activeFieldIndexRef.current === fieldIndex;
 
@@ -242,34 +234,6 @@ export default function QuestionFlow<Id extends string>({
                   <p className="mt-2 text-xs font-medium text-gray-400">
                     Shift + Enter for a new line
                   </p>
-
-                  {okButton}
-                </form>
-              ) : currentField.kind === "slot" ? (
-                <form onSubmit={handleFieldSubmit} className="mt-8 sm:pl-10">
-                  <div className="rounded-2xl border border-black/10 bg-white p-4 shadow-[0_20px_60px_rgba(15,23,42,0.08)] sm:max-w-md sm:p-6">
-                    <CallSlotPicker
-                      selectedDate={slotChoice.date}
-                      selectedSlot={slotChoice.slot}
-                      onSelectDate={(day) =>
-                        updateField(currentField.id, callSlotValue(day, ""))
-                      }
-                      onSelectSlot={(time) =>
-                        updateField(
-                          currentField.id,
-                          callSlotValue(slotChoice.date, time),
-                        )
-                      }
-                    />
-
-                    {slotChoice.date && slotChoice.slot && (
-                      <p className="mt-6 rounded-xl bg-[#3b82f6]/10 px-4 py-3 text-sm text-[#1d4ed8]">
-                        Selected:{" "}
-                        <strong>{formatBookingDate(slotChoice.date)}</strong> at{" "}
-                        <strong>{slotChoice.slot} IST</strong>
-                      </p>
-                    )}
-                  </div>
 
                   {okButton}
                 </form>

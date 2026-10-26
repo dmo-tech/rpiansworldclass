@@ -9,10 +9,11 @@ import {
 } from "@/app/razorpay";
 
 // Adds a verified payment to the "payment data" tab. Name, phone, email,
-// plan, call date / time and source come from the Razorpay order's notes
-// (written by create-order) and the amount from the order itself, so the row
-// shows what was really paid, not what the browser says. If the order can't
-// be loaded, the row still has the payment and order IDs.
+// plan and source come from the Razorpay order's notes (written by
+// create-order) and the amount from the order itself, so the row shows what
+// was really paid, not what the browser says. No call time is picked on the
+// site any more, so the sheet's Call Date / Call Time stay empty. If the
+// order can't be loaded, the row still has the payment and order IDs.
 // Never throws: the visitor already has their success screen.
 async function recordPayment(orderId: string, paymentId: string) {
   let order: RazorpayOrder | null = null;
@@ -44,8 +45,6 @@ async function recordPayment(orderId: string, paymentId: string) {
       amount: typeof order?.amount === "number" ? order.amount / 100 : "",
       paymentId,
       orderId,
-      bookingDate: note("bookingDate"),
-      bookingTime: note("bookingTime"),
       source: note("source"),
     });
   } catch (error) {

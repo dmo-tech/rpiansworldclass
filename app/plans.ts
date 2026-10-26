@@ -102,11 +102,12 @@ export function endsOnWhatsApp(plan: Plan): boolean {
   return Boolean(plan.waitlist || plan.bookOnWhatsApp);
 }
 
-// WhatsApp chat that ends /register for those plans, opened from the call
-// step with the applicant's name, company and chosen call time.
+// WhatsApp chat that ends /register for those plans, opened from its last
+// step with the applicant's name and company. The team then schedules the
+// call.
 export function planWhatsAppUrl(
   plan: Plan,
-  applicant: { fullName: string; companyName: string; callTime: string },
+  applicant: { fullName: string; companyName: string },
 ): string {
   const request = plan.waitlist
     ? `join the waitlist for ${plan.label} (${plan.waitlist.price} ${plan.waitlist.extra})`
@@ -115,7 +116,6 @@ export function planWhatsAppUrl(
   return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(
     `Hi RPIANS Team, I want to ${request}.\n` +
       `Name: ${applicant.fullName}\n` +
-      `Company: ${applicant.companyName}\n` +
-      `Preferred call: ${applicant.callTime}`,
+      `Company: ${applicant.companyName}`,
   )}`;
 }

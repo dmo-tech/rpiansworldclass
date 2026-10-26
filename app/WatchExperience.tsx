@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { openApplyCheck, WATCH_VIDEO_ID } from "./applyFlow";
-import { CalendarIcon } from "./BookCallButton";
+import { CalendarIcon } from "./CalendarIcon";
 import GatedVideoPlayer from "./GatedVideoPlayer";
 
 // The Book a Call button below the video appears once the viewer has
@@ -23,12 +22,11 @@ const BOOK_CALL_FROM = "Watch - Below Video";
 // BOOK_CALL_REVEAL_SECONDS of watching.
 //
 // Book a Call opens the "One Important Thing" popup (ApplyCheckPopup): "Yes"
-// asks for the details, then /payment for the strategy call; the call time
-// and the application form come after paying. "No" closes it and scrolls
-// back up to the video.
+// asks for the details, then /payment for the strategy call, then
+// /thank-you; the team schedules the call after paying. "No" closes it and
+// scrolls back up to the video.
 
 export default function WatchExperience() {
-  const router = useRouter();
   const bookCallRef = useRef<HTMLDivElement>(null);
   const isBookCallShownRef = useRef(false);
   const [isBookCallShown, setIsBookCallShown] = useState(false);
@@ -74,13 +72,6 @@ export default function WatchExperience() {
     }
   };
 
-  // Without the popup (never expected) the calendar page books the call.
-  const handleBookCall = () => {
-    if (!openApplyCheck(BOOK_CALL_FROM)) {
-      router.push(`/book-call?from=${encodeURIComponent(BOOK_CALL_FROM)}`);
-    }
-  };
-
   useEffect(() => {
     try {
       if (localStorage.getItem(BOOK_CALL_UNLOCKED_KEY)) {
@@ -122,7 +113,7 @@ export default function WatchExperience() {
 
         <button
           type="button"
-          onClick={handleBookCall}
+          onClick={() => openApplyCheck(BOOK_CALL_FROM)}
           aria-haspopup="dialog"
           className="mt-4 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-12 py-5 text-xl font-bold text-white shadow-xl shadow-blue-600/30 transition hover:scale-105 sm:w-auto"
         >

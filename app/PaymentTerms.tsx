@@ -15,7 +15,6 @@ const STRATEGY_CALL_TERMS = [
   `Please note that the application fee of ${FEE} is necessary to reserve your spot and book a call.`,
   `If your application is not accepted, we will refund your ${FEE}.`,
   "Please note that we will not refund the application fee if you fail to show up for the scheduled call or cancel without providing at least 24 hours' notice.",
-  "After payment, please fill the short application form on the next page.",
 ];
 
 const linkClass = "font-bold text-[#1d4ed8]! hover:underline";

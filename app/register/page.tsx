@@ -12,7 +12,6 @@ import {
 import QuestionFlow from "../QuestionFlow";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
-import CallSlotPicker, { formatBookingDate } from "../CallSlotPicker";
 import {
   endsOnWhatsApp,
   formatPlanAmount,
@@ -96,6 +95,11 @@ const businessFields: Question<keyof RegistrationData>[] = [
   },
 ];
 
+// Select Your Plan → business details → payment (/payment), or for WhatsApp
+// plans → send the details on WhatsApp. No call time is picked: the team
+// calls or WhatsApps within 24 hours to schedule the call.
+const STEP_COUNT = 3;
+
 export default function RegisterPage() {
   return (
     <Suspense fallback={null}>
@@ -116,9 +120,6 @@ function RegisterForm() {
   // Exclusive Mentorship" and start at the questions; Back from the first
   // question still shows the plan step.
   const [step, setStep] = useState<1 | 2 | 3>(planFromQuery?.waitlist ? 2 : 1);
-  const [callDate, setCallDate] = useState<Date | null>(null);
-  const [callSlot, setCallSlot] = useState("");
-  const [callError, setCallError] = useState("");
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(
     planFromQuery?.id ?? null,
   );
@@ -132,9 +133,8 @@ function RegisterForm() {
   const selectedPlan =
     plans.find((plan) => plan.id === selectedPlanId) ?? null;
 
-  // Waitlist plans and 10 Month end at the call step, on WhatsApp.
+  // Waitlist plans and 10 Month end at step 3, on WhatsApp.
   const isWhatsAppPlan = selectedPlan ? endsOnWhatsApp(selectedPlan) : false;
-  const stepCount = isWhatsAppPlan ? 3 : 4;
 
   const visiblePlans =
     showAllPlans || !selectedPlan ? plans : [selectedPlan];
@@ -142,7 +142,8 @@ function RegisterForm() {
   const [formData, setFormData] =
     useState<RegistrationData>(initialData);
 
-  // The question QuestionFlow is on, so Back from the call step returns to it.
+  // The question QuestionFlow is on, so Back from the WhatsApp step returns
+  // to it.
   const [questionIndex, setQuestionIndex] = useState(0);
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -169,15 +170,8 @@ function RegisterForm() {
   };
 
   // The lead that goes to the Google Sheet (and, for checkout, sessionStorage).
-  const buildApplication = (
-    data: RegistrationData,
-    date: Date,
-    slot: string,
-    source: string,
-  ) => ({
+  const buildApplication = (data: RegistrationData, source: string) => ({
     ...data,
-    bookingDate: formatBookingDate(date),
-    bookingTime: `${slot} IST`,
     planSelected: selectedPlan?.label ?? "",
     bookingAmount: selectedPlan?.amount ?? null,
     gstApplicable: selectedPlan?.gstApplicable ?? false,
@@ -185,28 +179,21 @@ function RegisterForm() {
     source,
   });
 
+  // Paid plans: from the last business question straight to /payment.
   const submitApplication = (data: RegistrationData) => {
-    if (!callDate || !callSlot) {
-      setCallError("Please select a date and time for your call.");
-      return;
-    }
-
     setIsSubmitting(true);
     setErrorMessage("");
 
-    const applicationData = buildApplication(
-      data,
-      callDate,
-      callSlot,
-      "RPIANS Website",
-    );
+    const applicationData = buildApplication(data, "RPIANS Website");
 
-    // planId is only needed by checkout, so it stays out of the Google Sheet lead.
+    // planId and stepCount are only needed by checkout, so they stay out of
+    // the Google Sheet lead.
     sessionStorage.setItem(
       "rpiansApplicationData",
       JSON.stringify({
         ...applicationData,
         planId: selectedPlan?.id ?? "",
+        stepCount: STEP_COUNT,
       }),
     );
 
@@ -226,8 +213,8 @@ function RegisterForm() {
     router.push("/payment");
   };
 
-  // WhatsApp plans end at the call step: "Join the Waitlist" / "Book Call on
-  // WhatsApp" saves the lead (once per chosen call time) and opens WhatsApp
+  // WhatsApp plans end at step 3: "Join the Waitlist" / "Book Call on
+  // WhatsApp" saves the lead (once per set of details) and opens WhatsApp
   // with the details. The tab opens inside the click itself, so pop-up
   // blockers allow it; a link to open it again is shown below in case it
   // didn't.
@@ -235,21 +222,19 @@ function RegisterForm() {
   const whatsAppLeadKeyRef = useRef("");
 
   const whatsAppUrl =
-    selectedPlan && isWhatsAppPlan && callDate && callSlot
+    selectedPlan && isWhatsAppPlan
       ? planWhatsAppUrl(selectedPlan, {
           fullName: formData.fullName.trim(),
           companyName: formData.companyName.trim(),
-          callTime: `${formatBookingDate(callDate)} at ${callSlot} IST`,
         })
       : "";
 
   const sendOnWhatsApp = () => {
-    if (!callDate || !callSlot || !whatsAppUrl) {
-      setCallError("Please select a date and time for your call.");
+    if (!whatsAppUrl) {
       return;
     }
 
-    const leadKey = `${callDate.toDateString()}|${callSlot}`;
+    const leadKey = `${selectedPlanId}|${JSON.stringify(formData)}`;
 
     if (whatsAppLeadKeyRef.current !== leadKey) {
       whatsAppLeadKeyRef.current = leadKey;
@@ -262,8 +247,6 @@ function RegisterForm() {
         body: JSON.stringify(
           buildApplication(
             formData,
-            callDate,
-            callSlot,
             selectedPlan?.waitlist
               ? "RPIANS Website - Waitlist"
               : "RPIANS Website - WhatsApp Booking",
@@ -289,7 +272,9 @@ function RegisterForm() {
       : "Discuss custom pricing with our team"
     : "Complete your booking payment";
 
-  if (step === 3) {
+  // Step 3 for WhatsApp plans only; paid plans go from the details straight
+  // to /payment (step 3 there).
+  if (step === 3 && selectedPlan && isWhatsAppPlan) {
     return (
       <main className="relative flex min-h-screen flex-col bg-white px-6 text-[#0f172a] md:px-16">
         <SiteHeader />
@@ -303,96 +288,60 @@ function RegisterForm() {
             className="w-full max-w-2xl"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-              Step 3 of {stepCount}
+              Step 3 of {STEP_COUNT}
             </p>
 
             <h1 className="mt-3 font-serif text-3xl md:text-5xl">
-              Book Your Call With the RPIANS Team
+              {selectedPlan.waitlist
+                ? "Join the Waitlist on WhatsApp"
+                : "Book Your Call on WhatsApp"}
             </h1>
 
             <p className="mt-4 leading-7 text-gray-600">
-              {selectedPlan?.waitlist
-                ? "Pick a date and time that suits you, then join the waitlist on WhatsApp. Our team will call you at this time."
-                : isWhatsAppPlan
-                ? "Pick a date and time that suits you, then send your booking to our team on WhatsApp. Our team will call you at this time."
-                : "Pick a date and time that suits you. After booking your call, you will continue to the payment page."}
+              {selectedPlan.waitlist
+                ? "Send your details to our team on WhatsApp to join the waitlist."
+                : "Send your details to our team on WhatsApp."}{" "}
+              Our team will call or WhatsApp you within 24 hours to schedule
+              your call.
             </p>
 
             <div className="mt-8 rounded-2xl border border-black/10 bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:p-8">
-              <CallSlotPicker
-                selectedDate={callDate}
-                selectedSlot={callSlot}
-                onSelectDate={(date) => {
-                  setCallDate(date);
-                  setCallSlot("");
-                  setCallError("");
-                  setWhatsAppOpened(false);
-                }}
-                onSelectSlot={(slot) => {
-                  setCallSlot(slot);
-                  setCallError("");
-                  setWhatsAppOpened(false);
-                }}
-              />
+              <dl className="grid gap-4 sm:grid-cols-3">
+                {[
+                  ["Plan", selectedPlan.label],
+                  ["Name", formData.fullName.trim()],
+                  ["Company", formData.companyName.trim()],
+                ].map(([label, value]) => (
+                  <div key={label} className="min-w-0">
+                    <dt className="text-xs uppercase tracking-[0.15em] text-gray-500">
+                      {label}
+                    </dt>
 
-              {callDate && callSlot && (
-                <p className="mt-6 rounded-xl bg-[#3b82f6]/10 px-4 py-3 text-sm text-[#1d4ed8]">
-                  Selected: <strong>{formatBookingDate(callDate)}</strong> at{" "}
-                  <strong>{callSlot} IST</strong>
-                </p>
-              )}
-
-              <AnimatePresence>
-                {callError && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
-                  >
-                    {callError}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    <dd className="mt-1 break-words font-semibold">{value}</dd>
+                  </div>
+                ))}
+              </dl>
 
               <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row">
                 <button
                   type="button"
-                  onClick={() => {
-                    setCallError("");
-                    setStep(2);
-                  }}
+                  onClick={() => setStep(2)}
                   className="rounded-xl border border-black/10 px-6 py-4 font-semibold text-gray-600 transition hover:border-[#3b82f6] hover:text-[#1d4ed8]"
                 >
                   ← Back
                 </button>
 
-                {isWhatsAppPlan ? (
-                  <motion.button
-                    type="button"
-                    onClick={sendOnWhatsApp}
-                    whileHover={{ scale: 1.015 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="flex-1 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(59,130,246,0.22)] transition"
-                  >
-                    {selectedPlan?.waitlist
-                      ? "Join the Waitlist"
-                      : "Book Call on WhatsApp"}
-                  </motion.button>
-                ) : (
-                  <motion.button
-                    type="button"
-                    onClick={() => submitApplication(formData)}
-                    disabled={isSubmitting}
-                    whileHover={isSubmitting ? undefined : { scale: 1.015 }}
-                    whileTap={isSubmitting ? undefined : { scale: 0.98 }}
-                    className="flex-1 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(59,130,246,0.22)] transition disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    {isSubmitting
-                      ? "Booking Your Call..."
-                      : "Book Call & Continue to Payment"}
-                  </motion.button>
-                )}
+                <motion.button
+                  type="button"
+                  onClick={sendOnWhatsApp}
+                  whileHover={{ scale: 1.015 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex-1 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-7 py-4 font-bold text-white shadow-[0_15px_50px_rgba(59,130,246,0.22)] transition"
+                >
+                  {selectedPlan.waitlist
+                    ? "Join the Waitlist"
+                    : "Book Call on WhatsApp"}
+                </motion.button>
               </div>
 
               {whatsAppOpened && whatsAppUrl && (
@@ -401,7 +350,7 @@ function RegisterForm() {
                   className="mt-5 rounded-xl border border-[#22c55e]/30 bg-[#22c55e]/10 px-4 py-3 text-sm text-[#15803d]"
                 >
                   <p className="font-bold">
-                    Thank you! Your details and call time are saved.
+                    Thank you! Your details are saved.
                   </p>
 
                   <p className="mt-1">
@@ -439,9 +388,11 @@ function RegisterForm() {
         questions={businessFields}
         values={formData}
         onChange={updateField}
-        onComplete={() => setStep(3)}
+        onComplete={(data) =>
+          isWhatsAppPlan ? setStep(3) : submitApplication(data)
+        }
         onBackFromFirst={() => setStep(1)}
-        finishLabel="Continue to Book a Call"
+        finishLabel={isWhatsAppPlan ? "Continue" : "Continue to Payment"}
         isSubmitting={isSubmitting}
         submittingText="Saving your application..."
         errorMessage={errorMessage}
@@ -499,7 +450,6 @@ function RegisterForm() {
               {[
                 "Select your plan",
                 "Share your business details",
-                "Book a call with our team",
                 paymentStepLabel,
                 "Application reviewed by RPIANS team",
                 "Receive confirmation on WhatsApp",
@@ -591,7 +541,7 @@ function RegisterForm() {
             <div>
                 <div className="border-b border-black/10 pb-7">
                   <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-                    Step 1 of {stepCount}
+                    Step 1 of {STEP_COUNT}
                   </p>
 
                   <h2 className="mt-3 text-2xl font-bold md:text-3xl">
@@ -699,8 +649,7 @@ function RegisterForm() {
 
                     <p className="mt-1">
                       Waitlist till {selectedPlan.waitlist.until}. Share your
-                      details and pick a call time, then join the waitlist on
-                      WhatsApp.
+                      details, then join the waitlist on WhatsApp.
                     </p>
                   </div>
                 )}

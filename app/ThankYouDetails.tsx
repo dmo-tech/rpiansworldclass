@@ -5,8 +5,6 @@ import Link from "next/link";
 import { useSyncExternalStore } from "react";
 
 import {
-  applicationPath,
-  isApplicationSubmitted,
   PAYMENT_RECEIPT_STORAGE_KEY,
   parsePaymentReceipt,
 } from "./paymentReceipt";
@@ -31,16 +29,6 @@ const readStoredReceipt = () => {
 // undefined during the server render, so "not read yet" differs from "no receipt".
 const readNothingOnServer = () => undefined;
 
-// Whether the application form for this receipt's payment was sent from this
-// browser (/application remembers it).
-const readApplicationSubmitted = () => {
-  const receipt = parsePaymentReceipt(readStoredReceipt());
-
-  return receipt ? isApplicationSubmitted(receipt.paymentId) : true;
-};
-
-const readSubmittedOnServer = () => true;
-
 const NEXT_STEPS = [
   "Our team will review your application form. Based on your answers your application will be selected or rejected.",
   "Please keep an eye on your WhatsApp and email (also check the spam folder). If you don't hear from us, let us know.",
@@ -57,17 +45,6 @@ export default function ThankYouDetails() {
   const isReady = storedReceipt !== undefined;
   const receipt = parsePaymentReceipt(storedReceipt ?? null);
 
-  const isApplicationDone = useSyncExternalStore(
-    subscribeToNothing,
-    readApplicationSubmitted,
-    readSubmittedOnServer,
-  );
-
-  // Paid but the application form isn't sent yet (e.g. left /application):
-  // a button back to it, and its link in the WhatsApp message.
-  const pendingApplicationPath =
-    receipt && !isApplicationDone ? applicationPath(receipt.paymentId) : null;
-
   const whatsappUrl = receipt
     ? `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(
         [
@@ -75,10 +52,6 @@ export default function ThankYouDetails() {
           "",
           `I have paid for ${receipt.planName}.`,
           `Payment ID: ${receipt.paymentId}`,
-          "",
-          pendingApplicationPath
-            ? `My application form: ${window.location.origin}${pendingApplicationPath}`
-            : "I have filled the application form.",
           "",
           "Thank you.",
         ].join("\n"),
@@ -151,36 +124,13 @@ export default function ThankYouDetails() {
                   {receipt.paymentId}
                 </dd>
               </div>
-
-              {receipt.callDate && (
-                <div className="sm:col-span-3">
-                  <dt className="text-xs uppercase tracking-[0.15em] text-gray-500">
-                    Call Booked
-                  </dt>
-
-                  <dd className="mt-1 font-semibold">
-                    {receipt.callDate}
-                    {receipt.callTime && ` at ${receipt.callTime}`}
-                  </dd>
-                </div>
-              )}
             </dl>
 
-            {pendingApplicationPath && (
-              <div className="mt-5 rounded-xl border border-[#3b82f6]/30 bg-[#3b82f6]/5 p-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
-                <p className="text-sm font-semibold leading-6 text-[#1e3a8a]">
-                  Your application form isn&apos;t complete yet. It takes about
-                  2 minutes.
-                </p>
-
-                <Link
-                  href={pendingApplicationPath}
-                  className="mt-3 inline-block shrink-0 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-5 py-3 text-center text-sm font-bold text-white! shadow-[0_10px_24px_rgba(37,99,235,0.3)] transition hover:scale-[1.02] sm:mt-0"
-                >
-                  Complete your application
-                </Link>
-              </div>
-            )}
+            {/* No call time is picked on the site; the team schedules it. */}
+            <p className="mt-5 rounded-xl border border-[#3b82f6]/30 bg-[#3b82f6]/5 p-4 text-sm font-semibold leading-6 text-[#1e3a8a] sm:text-base">
+              Our team will call or WhatsApp you within 24 hours to schedule
+              your call.
+            </p>
           </div>
         ) : (
           <p className="rounded-2xl border border-[#3b82f6]/25 bg-white/80 p-5 text-base leading-7 text-gray-600 sm:p-6">

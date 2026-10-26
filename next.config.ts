@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
       // The Journey page was removed; old links land on Reviews (/results).
       { source: "/journey", destination: "/results", permanent: false },
       { source: "/reviews", destination: "/results", permanent: false },
+      // The Book a Call calendar page was removed (no call times are picked
+      // any more); old links land on the video.
+      { source: "/book-call", destination: "/watch", permanent: false },
       // Short link worldclassbc.com/training: the homepage with the "One
       // Important Thing" popup open (ApplyCheckPopup), like the Start Your
       // Business Transformation Today buttons. "Yes" books the call (source

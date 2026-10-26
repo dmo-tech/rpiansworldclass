@@ -6,14 +6,9 @@ import { type ReactNode, useEffect, useState } from "react";
 
 import {
   APPLICATION_QUESTIONS,
-  CALL_QUESTION,
   CONTACT_QUESTIONS,
-  parseCallSlot,
 } from "./businessQuestions";
-import { formatBookingDate } from "./CallSlotPicker";
 import {
-  addCallToPaymentReceipt,
-  markApplicationSubmitted,
   parsePaymentReceipt,
   PAYMENT_RECEIPT_STORAGE_KEY,
   RAZORPAY_PAYMENT_ID_PATTERN,
@@ -23,12 +18,7 @@ import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 import { WHATSAPP_BASE_URL } from "./siteConfig";
 
-// The call time is asked only when it wasn't booked before paying.
-const questionsFor = (askCall: boolean) => [
-  ...CONTACT_QUESTIONS,
-  ...(askCall ? [CALL_QUESTION] : []),
-  ...APPLICATION_QUESTIONS,
-];
+const QUESTIONS = [...CONTACT_QUESTIONS, ...APPLICATION_QUESTIONS];
 
 const SUBMIT_TIMEOUT_MS = 15000;
 
@@ -42,7 +32,7 @@ const readSession = (key: string) => {
   }
 };
 
-// The booking this browser made before paying (/watch, /book-call,
+// The booking this browser made before paying (the strategy-call form,
 // /register); empty when the link was opened on another device.
 function readBooking(): Record<string, unknown> {
   try {
@@ -56,7 +46,7 @@ function readBooking(): Record<string, unknown> {
 // answers too, after /register), for the visitor to check.
 function prefilledValues(booking: Record<string, unknown>): Record<string, string> {
   return Object.fromEntries(
-    questionsFor(true).map((question) => {
+    QUESTIONS.map((question) => {
       const value = booking[question.id];
 
       return [
@@ -85,24 +75,25 @@ function PageShell({ children }: { children: ReactNode }) {
   );
 }
 
-// /application?payment=pay_…: the application form after a paid booking.
-// It opens only for a payment Razorpay confirms (or, if Razorpay can't be
-// reached, the one this browser just paid); without a payment id it sends the
-// visitor to /book-call. Submitting always continues to /thank-you, even if
-// the answers couldn't be saved (that is logged).
+// /application?payment=pay_…: the application form for a paid booking. No
+// longer part of the booking flow (payment goes straight to /thank-you); kept
+// for links customers already have. It opens only for a payment Razorpay
+// confirms (or, if Razorpay can't be reached, the one this browser just
+// paid); without a payment id it sends the visitor home. Submitting always
+// continues to /thank-you, even if the answers couldn't be saved (that is
+// logged).
 export default function ApplicationForm() {
   const router = useRouter();
   const paymentId = useSearchParams().get("payment") ?? "";
   const hasPaymentId = RAZORPAY_PAYMENT_ID_PATTERN.test(paymentId);
 
   const [status, setStatus] = useState<Status>("checking");
-  const [askCall, setAskCall] = useState(false);
   const [values, setValues] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (!hasPaymentId) {
-      router.replace("/book-call");
+      router.replace("/");
       return;
     }
 
@@ -111,7 +102,6 @@ export default function ApplicationForm() {
     const checkPayment = async () => {
       const booking = readBooking();
       let paid: boolean | null = null;
-      let callBooked = Boolean(booking.bookingDate);
 
       try {
         const response = await fetch(
@@ -122,7 +112,6 @@ export default function ApplicationForm() {
 
         if (response.ok && result.success) {
           paid = result.paid === true;
-          callBooked = result.callBooked === true;
         }
       } catch {
         // Checked below.
@@ -143,7 +132,6 @@ export default function ApplicationForm() {
       if (isCancelled) return;
 
       setValues(prefilledValues(booking));
-      setAskCall(!callBooked);
       setStatus(paid === true ? "ready" : paid === false ? "not-paid" : "unconfirmed");
     };
 
@@ -159,19 +147,6 @@ export default function ApplicationForm() {
 
     setIsSubmitting(true);
 
-    // The call picked in the form, written like the other bookings
-    // ("Monday, 20 October 2026", "11:00 AM IST"), for the sheet and the
-    // receipt on /thank-you.
-    const { date, slot } = parseCallSlot(answers[CALL_QUESTION.id] ?? "");
-    const call =
-      askCall && date && slot
-        ? { bookingDate: formatBookingDate(date), bookingTime: `${slot} IST` }
-        : { bookingDate: "", bookingTime: "" };
-
-    if (call.bookingDate) {
-      addCallToPaymentReceipt(paymentId, call.bookingDate, call.bookingTime);
-    }
-
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
 
@@ -186,7 +161,6 @@ export default function ApplicationForm() {
           ...Object.fromEntries(
             CONTACT_QUESTIONS.map((question) => [question.id, answers[question.id]]),
           ),
-          ...call,
           answers: Object.fromEntries(
             APPLICATION_QUESTIONS.map((question) => [question.id, answers[question.id]]),
           ),
@@ -195,9 +169,7 @@ export default function ApplicationForm() {
       });
       const result = await response.json();
 
-      if (response.ok && result.success) {
-        markApplicationSubmitted(paymentId);
-      } else {
+      if (!response.ok || !result.success) {
         console.error("Application save error:", result.message);
       }
     } catch (error) {
@@ -239,17 +211,17 @@ export default function ApplicationForm() {
 
         <p className="mt-4 font-medium leading-7 text-gray-600">
           {status === "not-paid"
-            ? "Book your call and complete the payment first; the application form opens right after."
+            ? "This payment hasn't gone through. If you have paid, message us on WhatsApp with your Payment ID and we will help you."
             : "Please try again in a minute. If you have paid, message us on WhatsApp with your Payment ID and we will help you."}
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           {status === "not-paid" ? (
             <Link
-              href="/book-call"
+              href="/"
               className="rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-8 py-4 font-bold text-white! shadow-[0_15px_40px_rgba(37,99,235,0.25)] transition hover:scale-[1.02]"
             >
-              Book a Call
+              Back to Home
             </Link>
           ) : (
             <button
@@ -276,7 +248,7 @@ export default function ApplicationForm() {
 
   return (
     <QuestionFlow
-      questions={questionsFor(askCall)}
+      questions={QUESTIONS}
       values={values}
       onChange={(id, value) =>
         setValues((current) => ({ ...current, [id]: value }))

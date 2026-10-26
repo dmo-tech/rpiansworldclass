@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import {
-  applicationPath,
   PAYMENT_RECEIPT_STORAGE_KEY,
   type PaymentReceipt,
 } from "../paymentReceipt";
@@ -24,11 +23,12 @@ type ApplicationData = {
   annualTurnover: string;
   planId?: string;
   planSelected?: string;
-  bookingDate?: string;
-  bookingTime?: string;
   bookingAmount: number | null;
   gstApplicable?: boolean;
   source?: string;
+  // Payment is the last step of the form that led here: 3 after /register,
+  // 2 after the strategy-call form. Missing on older bookings.
+  stepCount?: number;
 };
 
 const DEFAULT_PAYMENT_AMOUNT = 999;
@@ -249,8 +249,6 @@ export default function PaymentPage() {
             email: applicationData.email,
             phone: applicationData.phone,
             companyName: applicationData.companyName,
-            bookingDate: applicationData.bookingDate,
-            bookingTime: applicationData.bookingTime,
             source: applicationData.source,
           },
         }),
@@ -310,15 +308,13 @@ export default function PaymentPage() {
               planName,
               amount: orderData.amount / 100,
               paymentId: response.razorpay_payment_id,
-              callDate: applicationData.bookingDate,
-              callTime: applicationData.bookingTime,
             });
 
             updatePayment({ status: "success" });
 
-            // On to the application form, then /thank-you (which shows the
-            // receipt). replace, so Back doesn't return to the payment step.
-            router.replace(applicationPath(response.razorpay_payment_id));
+            // Straight to /thank-you, which shows the receipt. replace, so
+            // Back doesn't return to the payment step.
+            router.replace("/thank-you");
           } catch (error) {
             console.error("Payment verification failed:", error);
 
@@ -376,7 +372,6 @@ Phone: ${applicationData?.phone ?? ""}
 Business: ${applicationData?.businessCategory ?? ""}
 Annual Turnover: ${applicationData?.annualTurnover ?? ""}
 Plan Selected: ${applicationData?.planSelected ?? ""}
-Call Booked: ${applicationData?.bookingDate ?? ""} ${applicationData?.bookingTime ?? ""}
 
 ${
   paymentAmount != null
@@ -489,16 +484,16 @@ ${
           className="relative z-10 rounded-2xl border border-black/10 bg-white p-7 shadow-[0_30px_100px_rgba(0,0,0,0.2)] md:p-9 lg:sticky lg:top-8"
         >
           <div className="border-b border-black/10 pb-6">
-            {/* Book a Call under the /watch video pays first and picks the
-                call in the application form after (2 steps); /register and
-                /book-call book the call before paying. */}
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
-              {applicationData && !applicationData.bookingDate
-                ? "Step 1 of 2"
-                : "Step 4 of 4"}
-            </p>
+            {/* Payment is the last step: 3 of 3 after /register, 2 of 2
+                after the strategy-call form. The team schedules the call
+                after payment. */}
+            {applicationData?.stepCount ? (
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6]">
+                Step {applicationData.stepCount} of {applicationData.stepCount}
+              </p>
+            ) : null}
 
-            <p className="mt-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#1d4ed8]">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1d4ed8]">
               Payment Details
             </p>
 
@@ -539,7 +534,7 @@ ${
                 </p>
               </div>
 
-              {/* None yet after the /watch video: asked in the application form. */}
+              {/* None from the strategy-call form, which doesn't ask. */}
               {applicationData.companyName && (
                 <div>
                   <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
@@ -548,29 +543,6 @@ ${
 
                   <p className="mt-2 font-semibold">
                     {applicationData.companyName}
-                  </p>
-                </div>
-              )}
-
-              {applicationData.bookingDate ? (
-                <div>
-                  <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
-                    Call Booked
-                  </p>
-
-                  <p className="mt-2 font-semibold text-[#1d4ed8]">
-                    {applicationData.bookingDate} at{" "}
-                    {applicationData.bookingTime}
-                  </p>
-                </div>
-              ) : (
-                <div>
-                  <p className="text-xs uppercase tracking-[0.15em] text-gray-600">
-                    Call
-                  </p>
-
-                  <p className="mt-2 font-semibold text-[#1d4ed8]">
-                    You&apos;ll pick your call date &amp; time after payment
                   </p>
                 </div>
               )}
@@ -697,7 +669,7 @@ ${
             <p className="mt-2 text-sm text-gray-500">
               {payment.status === "verifying"
                 ? "This usually takes a few seconds."
-                : "Taking you to the application form..."}
+                : "Taking you to your confirmation..."}
             </p>
           </div>
         </div>
