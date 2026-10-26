@@ -2,13 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 
+import { openApplyCheck, WATCH_VIDEO_ID } from "./applyFlow";
 import { CalendarIcon } from "./BookCallButton";
 import GatedVideoPlayer from "./GatedVideoPlayer";
-import { saveStrategyCallBooking } from "./strategyCallBooking";
-import { readSavedViewer } from "./ViewerDetailsForm";
-import WatchedVideoQuestion from "./WatchedVideoQuestion";
 
 // The Book a Call button below the video appears once the viewer has
 // actually watched this many seconds of it (real watch time, not page time).
@@ -22,23 +19,21 @@ const BOOK_CALL_FROM = "Watch - Below Video";
 
 // /watch (the homepage video card links here): the player with its details
 // form already open, on every visit. Submitting the form starts the video,
-// from where the viewer last stopped. The Book a Call button below the video
-// appears after BOOK_CALL_REVEAL_SECONDS of watching.
+// from where the viewer last stopped. Through the "One Important Thing"
+// popup's "No" (/watch?from=…) there is no form; Play starts the video. The
+// Book a Call button below the video appears after BOOK_CALL_REVEAL_SECONDS
+// of watching.
 //
-// Book a Call first asks whether the viewer has watched the full video. "Yes"
-// goes straight to /payment with the name, WhatsApp and email from the video
-// form (the booking /payment reads from sessionStorage); the company and the
-// call time are asked in the application form after paying. Without those
-// details (storage blocked) it opens /book-call as before. "No" closes the
-// popup and scrolls back up to the video.
+// Book a Call opens the "One Important Thing" popup (ApplyCheckPopup): "Yes"
+// asks for the details, then /payment for the strategy call; the call time
+// and the application form come after paying. "No" closes it and scrolls
+// back up to the video.
 
 export default function WatchExperience() {
   const router = useRouter();
-  const videoRef = useRef<HTMLDivElement>(null);
   const bookCallRef = useRef<HTMLDivElement>(null);
   const isBookCallShownRef = useRef(false);
   const [isBookCallShown, setIsBookCallShown] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const showBookCall = () => {
     isBookCallShownRef.current = true;
@@ -81,60 +76,12 @@ export default function WatchExperience() {
     }
   };
 
-  // Saves the booking for /payment; false if the video form details are
-  // missing or storage is blocked.
-  const saveBooking = () => {
-    const viewer = readSavedViewer();
-
-    return (
-      viewer !== null &&
-      saveStrategyCallBooking(viewer, `RPIANS Website - ${BOOK_CALL_FROM}`)
-    );
-  };
-
-  const continueToBooking = () => {
-    router.push(
-      saveBooking()
-        ? "/payment"
-        : `/book-call?from=${encodeURIComponent(BOOK_CALL_FROM)}`,
-    );
-  };
-
-  const backToVideo = () => {
-    setIsConfirmOpen(false);
-
-    // On the next frame, once the popup has closed and the page can scroll.
-    requestAnimationFrame(() => {
-      videoRef.current?.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
-          .matches
-          ? "auto"
-          : "smooth",
-        block: "center",
-      });
-    });
-  };
-
-  useEffect(() => {
-    if (!isConfirmOpen) {
-      return;
+  // Without the popup (never expected) the calendar page books the call.
+  const handleBookCall = () => {
+    if (!openApplyCheck(BOOK_CALL_FROM)) {
+      router.push(`/book-call?from=${encodeURIComponent(BOOK_CALL_FROM)}`);
     }
-
-    document.body.style.overflow = "hidden";
-
-    const closeWithEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsConfirmOpen(false);
-      }
-    };
-
-    window.addEventListener("keydown", closeWithEscape);
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", closeWithEscape);
-    };
-  }, [isConfirmOpen]);
+  };
 
   useEffect(() => {
     try {
@@ -156,7 +103,7 @@ export default function WatchExperience() {
       {/* On short screens the video shrinks to the screen height so the
           Book a Call button below it is visible without scrolling. */}
       <div
-        ref={videoRef}
+        id={WATCH_VIDEO_ID}
         className="mx-auto max-w-[max(20rem,calc((100dvh-18rem)*16/9))]"
       >
         <GatedVideoPlayer openFormOnLoad onWatchTime={handleWatchTime} />
@@ -177,7 +124,7 @@ export default function WatchExperience() {
 
         <button
           type="button"
-          onClick={() => setIsConfirmOpen(true)}
+          onClick={handleBookCall}
           aria-haspopup="dialog"
           className="mt-4 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-12 py-5 text-xl font-bold text-white shadow-xl shadow-blue-600/30 transition hover:scale-105 sm:w-auto"
         >
@@ -185,31 +132,6 @@ export default function WatchExperience() {
           Book a Call
         </button>
       </div>
-
-      {isConfirmOpen &&
-        createPortal(
-          <div
-            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-            onClick={() => setIsConfirmOpen(false)}
-          >
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="watch-confirm-title"
-              aria-describedby="watch-confirm-text"
-              onClick={(event) => event.stopPropagation()}
-              className="max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl bg-white p-6 text-center shadow-2xl sm:p-8"
-            >
-              <WatchedVideoQuestion
-                titleId="watch-confirm-title"
-                textId="watch-confirm-text"
-                onYes={continueToBooking}
-                onNo={backToVideo}
-              />
-            </div>
-          </div>,
-          document.body,
-        )}
     </section>
   );
 }

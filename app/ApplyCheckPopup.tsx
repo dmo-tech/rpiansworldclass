@@ -12,7 +12,8 @@ import {
 import {
   OPEN_APPLY_CHECK_EVENT,
   type OpenApplyCheckDetail,
-  watchApplyHref,
+  WATCH_VIDEO_ID,
+  watchVideoHref,
 } from "./applyFlow";
 import { CalendarIcon } from "./BookCallButton";
 import { saveStrategyCallBooking } from "./strategyCallBooking";
@@ -28,17 +29,18 @@ import ViewerDetailsForm, {
 import WatchedVideoQuestion from "./WatchedVideoQuestion";
 
 // The popup behind every "Start Your Business Transformation Today" and
-// "Enquire Now" button (WatchApplyButton), mounted once for the whole site in
-// the root layout so it stays open when the mobile menu closes.
+// "Enquire Now" button (WatchApplyButton) and Book a Call below the /watch
+// video, mounted once for the whole site in the root layout so it stays open
+// when the mobile menu closes.
 //
 // 1. "One Important Thing": has the visitor watched the full video?
 // 2. "Yes": the /watch details form (prefilled from the last details saved
 //    on this browser), saved as a lead in "video form data". Then straight to
 //    /payment for the ₹999 strategy call, with the name, WhatsApp and email
-//    filled in; the call time and the application form come after paying,
-//    as after Book a Call below the video. Without storage it opens
-//    /book-call instead.
-//    "No": /watch?apply=1 — the details form, then the video, as before.
+//    filled in; the call time and the application form come after paying.
+//    Without storage it opens /book-call instead.
+//    "No": /watch?from=… — the video, ready to play without the details
+//    form. Already on /watch, it just closes and scrolls to the video.
 //
 // A page opened with ?enquire=1&from=… opens it on load (worldclassbc.com/
 // training lands on the homepage this way, see next.config.ts).
@@ -87,7 +89,7 @@ export default function ApplyCheckPopup() {
 
   const close = () => {
     setFrom(null);
-    returnFocusRef.current?.focus();
+    returnFocusRef.current?.focus({ preventScroll: true });
   };
 
   const onOpenEvent = useEffectEvent((event: Event) => {
@@ -175,15 +177,23 @@ export default function ApplyCheckPopup() {
       return;
     }
 
-    const href = watchApplyHref(from);
-
-    // On /watch itself a client-side push would only change the URL (see
-    // WatchApplyLink); load it again so its form opens with the new `from`.
-    if (pathname === "/watch") {
-      window.location.assign(href);
-    } else {
-      router.push(href);
+    if (pathname !== "/watch") {
+      router.push(watchVideoHref(from));
+      return;
     }
+
+    close();
+
+    // On the next frame, once the popup has closed and the page can scroll.
+    requestAnimationFrame(() => {
+      document.getElementById(WATCH_VIDEO_ID)?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
+          .matches
+          ? "auto"
+          : "smooth",
+        block: "center",
+      });
+    });
   };
 
   // Typing in a field clears that field's error straight away.

@@ -1,8 +1,8 @@
 // "One Important Thing": asks whether the visitor has watched the full video
-// before booking. Shown by Book a Call below the /watch video
-// (WatchExperience) and by every "Start Your Business Transformation Today" /
-// "Enquire Now" button (ApplyCheckPopup). The dialog around it is the
-// caller's; titleId and textId label it.
+// before booking. The first step of ApplyCheckPopup, which every "Start Your
+// Business Transformation Today" / "Enquire Now" button and Book a Call below
+// the /watch video open. The dialog around it is the caller's; titleId and
+// textId label it.
 
 function WarningIcon() {
   return (

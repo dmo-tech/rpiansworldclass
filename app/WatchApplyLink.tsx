@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import type { MouseEvent, MouseEventHandler, ReactNode } from "react";
 
 import { openApplyCheck } from "./applyFlow";
@@ -16,13 +15,8 @@ type WatchApplyLinkProps = {
 
 // The link inside WatchApplyButton. A click opens the "One Important Thing"
 // popup (ApplyCheckPopup) on this page, after the page's own onClick (the
-// mobile menu closes itself). The href, /watch?apply=1, is only followed when
-// the link is opened in a new tab or the popup isn't there.
-// On /watch itself it is a plain link that loads the page again: the details
-// form opens and the new `from` goes into the lead source, the same as
-// arriving from another page. A client-side link would only change the URL
-// there. The player saves the video position when the page unloads, so the
-// visitor still resumes.
+// mobile menu closes itself). The href, the video on /watch, is only followed
+// when the link is opened in a new tab or the popup isn't there.
 export default function WatchApplyLink({
   href,
   from,
@@ -30,8 +24,6 @@ export default function WatchApplyLink({
   onClick,
   children,
 }: WatchApplyLinkProps) {
-  const pathname = usePathname();
-
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     onClick?.(event);
 
@@ -46,19 +38,6 @@ export default function WatchApplyLink({
       event.preventDefault();
     }
   };
-
-  if (pathname === "/watch") {
-    return (
-      <a
-        href={href}
-        onClick={handleClick}
-        aria-haspopup="dialog"
-        className={className}
-      >
-        {children}
-      </a>
-    );
-  }
 
   return (
     <Link

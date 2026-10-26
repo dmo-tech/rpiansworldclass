@@ -3,6 +3,7 @@
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import ApplyButton from "./ApplyButton";
+import { isVideoOnlyVisit } from "./applyFlow";
 import { VIDEO_POSTER_URL, VIDEO_URL } from "./siteConfig";
 import ViewerDetailsForm, {
   cleanViewer,
@@ -20,6 +21,9 @@ import ViewerDetailsForm, {
 // watched to the "video watch data" tab of the Google Sheet (/api/video-views).
 // The details form itself (ViewerDetailsForm) is saved as a lead in "video
 // form data" (/api/leads).
+// A video-only visit (the "One Important Thing" popup's "No", see applyFlow)
+// skips the form: Play starts the video straight away, and watch time is
+// tracked under the details saved on this browser, or without name / phone.
 
 // Used for the time label until the browser has read the real duration.
 const FALLBACK_DURATION = 1375;
@@ -37,9 +41,10 @@ const RESTART_NEAR_END_SECONDS = 5;
 // Versioned so progress saved on an older video doesn't resume the new one.
 const PROGRESS_KEY = "rpiansVideoProgressV20";
 
-// Progress is saved per email, so each viewer resumes their own position.
+// Progress is saved per email, so each viewer resumes their own position
+// (one shared position for viewers without details on a video-only visit).
 const progressKey = (email: string) =>
-  `${PROGRESS_KEY}:${email.trim().toLowerCase()}`;
+  `${PROGRESS_KEY}:${email.trim().toLowerCase() || "anonymous"}`;
 
 const MILESTONES = [25, 50, 75];
 
@@ -231,6 +236,8 @@ export default function GatedVideoPlayer({
   const videoRef = useRef<WebkitVideo>(null);
 
   const [phase, setPhase] = useState<Phase>("idle");
+  // False on a video-only visit: no details form at all.
+  const [asksDetails, setAsksDetails] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState<Viewer>(EMPTY_VIEWER);
   const [formErrors, setFormErrors] = useState<FormErrors>({});
@@ -244,7 +251,9 @@ export default function GatedVideoPlayer({
   // Refs mirror the state the media event listeners need, so the listeners
   // can be attached once and never read stale values.
   const phaseRef = useRef<Phase>("idle");
-  // Whoever submitted the form on this visit (tracking and progress use it).
+  // Whoever submitted the form on this visit, or on a video-only visit the
+  // details saved on this browser (empty if none); tracking and progress use
+  // it.
   const viewerRef = useRef<Viewer | null>(null);
   const sessionIdRef = useRef<string | null>(null);
   const maxWatchedRef = useRef(0);
@@ -274,12 +283,12 @@ export default function GatedVideoPlayer({
 
   const saveProgress = useCallback(() => {
     const video = videoRef.current;
-    const email = viewerRef.current?.email;
+    const viewer = viewerRef.current;
 
     if (
       !sessionIdRef.current ||
       !video ||
-      !email ||
+      !viewer ||
       phaseRef.current !== "playing"
     ) {
       return;
@@ -293,7 +302,7 @@ export default function GatedVideoPlayer({
       milestones: [...milestonesRef.current],
     };
 
-    writeStorage(progressKey(email), progress);
+    writeStorage(progressKey(viewer.email), progress);
   }, []);
 
   // Picks up the saved position for this email; none means a fresh start.
@@ -376,9 +385,10 @@ export default function GatedVideoPlayer({
 
   // Prefill the form with the last details entered on this browser and show
   // that email's saved position on the Play button. Nothing plays until the
-  // form is submitted.
+  // form is submitted, except on a video-only visit.
   useEffect(() => {
     const savedViewer = readSavedViewer();
+    const isVideoOnly = isVideoOnlyVisit(window.location.search);
 
     if (savedViewer) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is only readable after mount
@@ -393,16 +403,20 @@ export default function GatedVideoPlayer({
         }
         removeStorage(PROGRESS_KEY);
       }
-
-      if (loadProgress(savedViewer.email)?.sessionId) {
-        onWatchTimeRef.current?.(
-          Math.min(watchedSecondsRef.current, maxWatchedRef.current),
-          true,
-        );
-      }
     }
 
-    if (openFormOnLoad) {
+    const viewer = savedViewer ?? (isVideoOnly ? EMPTY_VIEWER : null);
+
+    if (viewer && loadProgress(viewer.email)?.sessionId) {
+      onWatchTimeRef.current?.(
+        Math.min(watchedSecondsRef.current, maxWatchedRef.current),
+        true,
+      );
+    }
+
+    if (isVideoOnly) {
+      setAsksDetails(false);
+    } else if (openFormOnLoad) {
       setIsFormOpen(true);
     }
   }, [loadProgress, openFormOnLoad]);
@@ -453,9 +467,30 @@ export default function GatedVideoPlayer({
     sendUpdate("start");
   };
 
-  // Play always asks for the details first (prefilled for a returning
-  // viewer); the video starts when the form is submitted.
+  // Plays from where this email last stopped (an email with no saved progress
+  // starts from 0:00, with its own tracking session). A position saved right
+  // at the end starts the video over.
+  const beginWatching = (viewer: Viewer) => {
+    viewerRef.current = viewer;
+    loadProgress(viewer.email);
+
+    if (resumeAtRef.current >= getDuration() - RESTART_NEAR_END_SECONDS) {
+      resetSession();
+      setCurrentTime(0);
+    }
+
+    startPlayback();
+  };
+
+  // Play asks for the details first (prefilled for a returning viewer); the
+  // video starts when the form is submitted. On a video-only visit it plays
+  // straight away.
   const handlePlayClick = () => {
+    if (!asksDetails) {
+      beginWatching(readSavedViewer() ?? EMPTY_VIEWER);
+      return;
+    }
+
     setFormErrors({});
     setIsFormOpen(true);
   };
@@ -478,25 +513,14 @@ export default function GatedVideoPlayer({
       return;
     }
 
-    // Resume where this email last stopped (an email with no saved progress
-    // starts from 0:00, with its own tracking session). A position saved
-    // right at the end starts the video over.
-    viewerRef.current = cleaned;
-    loadProgress(cleaned.email);
-
-    if (resumeAtRef.current >= getDuration() - RESTART_NEAR_END_SECONDS) {
-      resetSession();
-      setCurrentTime(0);
-    }
-
     writeStorage(VIEWER_KEY, cleaned);
     setIsFormOpen(false);
 
-    startPlayback();
+    beginWatching(cleaned);
 
-    // Arrived from a "Start Your Business Transformation Today" button
-    // (/watch?apply=1&from=…):
-    // the button's page or place is added to the lead source.
+    // Arrived by an older "Start Your Business Transformation Today" link
+    // (/watch?apply=1&from=…): the button's page or place is added to the
+    // lead source.
     const params = new URLSearchParams(window.location.search);
     const applyFrom =
       params.get("apply") === "1"
@@ -522,7 +546,8 @@ export default function GatedVideoPlayer({
     });
   };
 
-  // "Watch again" also goes through the form, then starts from 0:00.
+  // "Watch again" also goes through the form (if asked), then starts from
+  // 0:00.
   const handleReplay = () => {
     resetSession();
     setCurrentTime(0);
