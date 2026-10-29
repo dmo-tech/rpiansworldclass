@@ -69,3 +69,8 @@ your account → Allow), that's normal: the script needs access to edit this she
   new script is deployed, these rows land in the **Leads** tab instead.
 - Two submissions at the same moment are handled one after the other
   (LockService), so rows never overwrite each other.
+- **WhatsApp alerts (Maytapi) and LeadGridd contacts are not sent by this
+  script.** The website server sends them (`app/leadAlerts.ts`), so the
+  script's daily UrlFetch limit no longer matters for them. If your live
+  script still has Maytapi / LeadGridd code or triggers, remove them, or every
+  lead is sent twice.

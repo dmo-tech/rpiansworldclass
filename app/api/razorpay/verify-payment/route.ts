@@ -2,13 +2,15 @@ import { after, NextResponse } from "next/server";
 import { createHmac, timingSafeEqual } from "crypto";
 
 import { saveToGoogleSheet, SHEET_TABS } from "@/app/googleSheet";
+import { alertNewPayment } from "@/app/leadAlerts";
 import {
   fetchRazorpayOrder,
   orderNote,
   type RazorpayOrder,
 } from "@/app/razorpay";
 
-// Adds a verified payment to the "payment data" tab. Name, phone, email,
+// Adds a verified payment to the "payment data" tab and sends its WhatsApp
+// alert / LeadGridd contact (app/leadAlerts.ts). Name, phone, email,
 // plan and source come from the Razorpay order's notes (written by
 // create-order) and the amount from the order itself, so the row shows what
 // was really paid, not what the browser says. No call time is picked on the
@@ -33,26 +35,33 @@ async function recordPayment(orderId: string, paymentId: string) {
 
   const note = (key: string) => orderNote(order, key);
 
-  try {
-    await saveToGoogleSheet({
+  const payment = {
+    fullName: note("fullName"),
+    phone: note("phone"),
+    email: note("email"),
+    planSelected: note("plan"),
+    // Razorpay amounts are in paise.
+    amount: typeof order?.amount === "number" ? order.amount / 100 : "",
+    paymentId,
+    orderId,
+    source: note("source"),
+  };
+
+  // The WhatsApp alert (and, for ₹999, the LeadGridd contact) goes out
+  // whether or not the Sheet saves.
+  await Promise.all([
+    saveToGoogleSheet({
       sheetName: SHEET_TABS.payment,
       formType: "Payment",
-      fullName: note("fullName"),
-      phone: note("phone"),
-      email: note("email"),
-      planSelected: note("plan"),
-      // Razorpay amounts are in paise.
-      amount: typeof order?.amount === "number" ? order.amount / 100 : "",
-      paymentId,
-      orderId,
-      source: note("source"),
-    });
-  } catch (error) {
-    console.error(
-      `Payment sheet error (payment ${paymentId}, order ${orderId}):`,
-      error,
-    );
-  }
+      ...payment,
+    }).catch((error) => {
+      console.error(
+        `Payment sheet error (payment ${paymentId}, order ${orderId}):`,
+        error,
+      );
+    }),
+    alertNewPayment(payment),
+  ]);
 }
 
 export async function POST(request: Request) {

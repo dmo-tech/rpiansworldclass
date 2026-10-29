@@ -1,6 +1,6 @@
 import { after, NextResponse } from "next/server";
 import { saveToGoogleSheet, sheetNameForLead } from "../../googleSheet";
-import { sendToLeadGridd } from "../../leadGridd";
+import { alertNewLead } from "../../leadAlerts";
 
 export async function POST(request: Request) {
   try {
@@ -17,17 +17,13 @@ export async function POST(request: Request) {
     const fields = { ...(body as Record<string, unknown>) };
     delete fields.sheetName;
 
-    const formData = {
-      ...fields,
-      sheetName: sheetNameForLead(fields.formType),
-    };
+    const sheetName = sheetNameForLead(fields.formType);
+    const formData = { ...fields, sheetName };
 
-    // The strategy-call form ("Video Form", "video form data" tab) is also a
-    // LeadGridd contact. After the response, and whether or not the Sheet
-    // saves, so neither one holds up or breaks the other.
-    if (fields.formType === "Video Form") {
-      after(() => sendToLeadGridd(fields));
-    }
+    // WhatsApp alert to the team; the strategy-call form ("video form data"
+    // tab) is also a LeadGridd contact. After the response, and whether or
+    // not the Sheet saves, so neither one holds up or breaks the other.
+    after(() => alertNewLead(sheetName, fields));
 
     await saveToGoogleSheet(formData);
 
