@@ -2,8 +2,10 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
+import { useCookieConsent } from "./cookieConsent";
+import { trackPurchase } from "./metaPixel";
 import {
   PAYMENT_RECEIPT_STORAGE_KEY,
   parsePaymentReceipt,
@@ -44,6 +46,16 @@ export default function ThankYouDetails() {
 
   const isReady = storedReceipt !== undefined;
   const receipt = parsePaymentReceipt(storedReceipt ?? null);
+  const marketingAccepted = useCookieConsent()?.marketing === true;
+
+  // /payment saves the receipt only after the server verified the payment.
+  // Meta Pixel "Purchase", once per payment ID; runs again if Marketing is
+  // accepted on this page, so the pixel that then loads still gets it.
+  useEffect(() => {
+    const verified = parsePaymentReceipt(storedReceipt ?? null);
+
+    if (verified && marketingAccepted) trackPurchase(verified);
+  }, [storedReceipt, marketingAccepted]);
 
   const whatsappUrl = receipt
     ? `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(

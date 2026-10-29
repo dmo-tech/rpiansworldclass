@@ -9,6 +9,7 @@ import {
   BUSINESS_CATEGORY_OPTIONS,
   type Question,
 } from "../businessQuestions";
+import { trackContact, trackLeadIfSaved } from "../metaPixel";
 import QuestionFlow from "../QuestionFlow";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
@@ -206,9 +207,11 @@ function RegisterForm() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(applicationData),
-    }).catch((error) => {
-      console.error("Lead save error (non-blocking):", error);
-    });
+    })
+      .then(trackLeadIfSaved)
+      .catch((error) => {
+        console.error("Lead save error (non-blocking):", error);
+      });
 
     router.push("/payment");
   };
@@ -253,11 +256,15 @@ function RegisterForm() {
           ),
         ),
         keepalive: true,
-      }).catch((error) => {
-        console.error("WhatsApp lead save error (non-blocking):", error);
-      });
+      })
+        .then(trackLeadIfSaved)
+        .catch((error) => {
+          console.error("WhatsApp lead save error (non-blocking):", error);
+        });
     }
 
+    // A button, not a link, so the site-wide WhatsApp click listener misses it.
+    trackContact();
     window.open(whatsAppUrl, "_blank", "noopener,noreferrer");
     setWhatsAppOpened(true);
   };

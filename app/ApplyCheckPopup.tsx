@@ -16,6 +16,7 @@ import {
   watchVideoHref,
 } from "./applyFlow";
 import { CalendarIcon } from "./CalendarIcon";
+import { trackLeadIfSaved } from "./metaPixel";
 import { saveStrategyCallBooking } from "./strategyCallBooking";
 import { linkVideoViewToViewer } from "./videoViews";
 import ViewerDetailsForm, {
@@ -248,9 +249,11 @@ export default function ApplyCheckPopup() {
         source,
       }),
       keepalive: true,
-    }).catch((error) => {
-      console.error("Apply form lead error (non-blocking):", error);
-    });
+    })
+      .then(trackLeadIfSaved)
+      .catch((error) => {
+        console.error("Apply form lead error (non-blocking):", error);
+      });
 
     if (saveStrategyCallBooking(cleaned, source)) {
       router.push(PAYMENT_HREF);

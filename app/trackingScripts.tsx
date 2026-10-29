@@ -2,6 +2,7 @@ import Script from "next/script";
 import type { ReactNode } from "react";
 
 import type { ConsentCategory, CookieConsent } from "./cookieConsent";
+import { META_PIXEL_READY_EVENT } from "./metaPixel";
 
 // Every analytics / marketing script on the site, in one list. ConsentScripts
 // loads an entry only after the visitor accepts its category, and only when
@@ -86,10 +87,14 @@ export const TRACKERS: Tracker[] = [
     id: cleanId(process.env.NEXT_PUBLIC_META_PIXEL_ID),
     cookiePrefixes: ["_fbp", "_fbc"],
     // The pixel sends a PageView on in-site navigation by itself (it follows
-    // history changes), so only the first one is sent here.
+    // history changes), so only the first one is sent here. Lead, Purchase
+    // and Contact come from metaPixel.ts, which waits for the ready event.
+    // autoConfig off: the pixel's automatic button-click events can send a
+    // clicked link's address, and the WhatsApp links carry the visitor's
+    // name, phone and company in their message.
     script: (id) => (
       <Script id="meta-pixel" strategy="afterInteractive">
-        {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init",${JSON.stringify(id)});fbq("track","PageView");`}
+        {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("set","autoConfig",false,${JSON.stringify(id)});fbq("init",${JSON.stringify(id)});fbq("track","PageView");window.dispatchEvent(new Event(${JSON.stringify(META_PIXEL_READY_EVENT)}));`}
       </Script>
     ),
   },

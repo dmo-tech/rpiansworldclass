@@ -8,6 +8,7 @@ import {
   deleteCookiesStartingWith,
   useCookieConsent,
 } from "./cookieConsent";
+import { listenForWhatsAppClicks } from "./metaPixel";
 import { googleConsentState, TRACKERS } from "./trackingScripts";
 
 // Loads each tracking script from trackingScripts.tsx once its category is
@@ -15,6 +16,9 @@ import { googleConsentState, TRACKERS } from "./trackingScripts";
 export default function ConsentScripts() {
   const consent = useCookieConsent();
   const previousConsent = useRef<CookieConsent | null | undefined>(undefined);
+
+  // Meta Pixel "Contact" on WhatsApp clicks (sent only with Marketing accepted).
+  useEffect(() => listenForWhatsAppClicks(), []);
 
   useEffect(() => {
     const before = previousConsent.current;

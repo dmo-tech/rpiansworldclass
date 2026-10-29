@@ -55,7 +55,8 @@ const parseConsent = (raw: string | null): CookieConsent | null => {
 let cachedRaw: string | null = null;
 let cachedConsent: CookieConsent | null = null;
 
-const getConsentSnapshot = () => {
+// Also read outside React (metaPixel.ts): the choice saved right now.
+export const getConsentSnapshot = () => {
   const raw = readCookie(CONSENT_COOKIE);
 
   if (raw !== cachedRaw) {
