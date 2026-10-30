@@ -7,7 +7,9 @@ import SessionTicker from "./SessionTicker";
 
 export default function SiteHeader() {
   return (
-    <header className="fixed left-0 top-0 z-50 w-full border-b border-black/10 bg-white/90 backdrop-blur-xl">
+    // Solid white: see-through white with a blur showed the text scrolling
+    // underneath as a faded, smudged strip.
+    <header className="fixed left-0 top-0 z-50 w-full border-b border-black/10 bg-white">
       <div className="site-container relative flex items-center justify-between py-4">
         <Link href="/" className="flex shrink-0 items-center gap-3">
           <Image

@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import CookieSettingsButton from "../CookieSettingsButton";
-import Reveal from "../Reveal";
 import { CONTACT_PHONE, CONTACT_PHONE_TEL } from "../siteConfig";
 
 export const metadata: Metadata = {
@@ -167,157 +166,143 @@ export default function CookiePolicyPage() {
         </CookieSettingsButton>
 
         <div className="mt-12 space-y-10 leading-8 text-gray-600">
-          <Reveal direction="up">
-            <section>
-              <h2 className="text-2xl font-bold text-[#0f172a]">
-                1. What Are Cookies?
-              </h2>
+          <section>
+            <h2 className="text-2xl font-bold text-[#0f172a]">
+              1. What Are Cookies?
+            </h2>
 
-              <p className="mt-4">
-                Cookies are small text files that a website saves in your
-                browser. Some are needed for the website to work. Others help
-                us understand how people use the website, or measure our ads.
-              </p>
+            <p className="mt-4">
+              Cookies are small text files that a website saves in your
+              browser. Some are needed for the website to work. Others help
+              us understand how people use the website, or measure our ads.
+            </p>
 
-              <p className="mt-4">
-                For a few essential features we also use your browser&rsquo;s
-                own storage (called local storage and session storage). It
-                works like a cookie, so we list it on this page too.
-              </p>
-            </section>
-          </Reveal>
+            <p className="mt-4">
+              For a few essential features we also use your browser&rsquo;s
+              own storage (called local storage and session storage). It
+              works like a cookie, so we list it on this page too.
+            </p>
+          </section>
 
-          <Reveal direction="up">
-            <section>
-              <h2 className="text-2xl font-bold text-[#0f172a]">
-                2. Your Choice
-              </h2>
+          <section>
+            <h2 className="text-2xl font-bold text-[#0f172a]">
+              2. Your Choice
+            </h2>
 
-              <p className="mt-4">
-                On your first visit, a banner at the bottom of the page lets
-                you choose <strong>Accept All</strong>,{" "}
-                <strong>Reject Non-Essential</strong> or{" "}
-                <strong>Customize</strong>.
-              </p>
+            <p className="mt-4">
+              On your first visit, a banner at the bottom of the page lets
+              you choose <strong>Accept All</strong>,{" "}
+              <strong>Reject Non-Essential</strong> or{" "}
+              <strong>Customize</strong>.
+            </p>
 
-              <ul className="mt-4 list-disc space-y-1 list-inside">
-                <li>
-                  Analytics and marketing tools do not load until you allow
-                  them.
-                </li>
-                <li>
-                  We save your choice in a cookie called{" "}
-                  <strong>cookie_consent</strong> for 6 months. After that we
-                  ask again.
-                </li>
-                <li>
-                  You can change your choice at any time with &ldquo;Cookie
-                  Settings&rdquo; at the bottom of the website, or the
-                  &ldquo;Change Cookie Settings&rdquo; button on this page.
-                </li>
-                <li>
-                  If you turn a category off, we delete its cookies from our
-                  website and reload the page without those tools.
-                </li>
-              </ul>
-            </section>
-          </Reveal>
+            <ul className="mt-4 list-disc space-y-1 list-inside">
+              <li>
+                Analytics and marketing tools do not load until you allow
+                them.
+              </li>
+              <li>
+                We save your choice in a cookie called{" "}
+                <strong>cookie_consent</strong> for 6 months. After that we
+                ask again.
+              </li>
+              <li>
+                You can change your choice at any time with &ldquo;Cookie
+                Settings&rdquo; at the bottom of the website, or the
+                &ldquo;Change Cookie Settings&rdquo; button on this page.
+              </li>
+              <li>
+                If you turn a category off, we delete its cookies from our
+                website and reload the page without those tools.
+              </li>
+            </ul>
+          </section>
 
-          <Reveal direction="up">
-            <section>
-              <h2 className="text-2xl font-bold text-[#0f172a]">
-                3. Essential Cookies (Always On)
-              </h2>
+          <section>
+            <h2 className="text-2xl font-bold text-[#0f172a]">
+              3. Essential Cookies (Always On)
+            </h2>
 
-              <p className="mt-4">
-                These are needed for login, secure payments, our forms and
-                the training video. They do not track you for ads, and they
-                can&rsquo;t be turned off.
-              </p>
+            <p className="mt-4">
+              These are needed for login, secure payments, our forms and
+              the training video. They do not track you for ads, and they
+              can&rsquo;t be turned off.
+            </p>
 
-              <CookieList rows={ESSENTIAL_COOKIES} />
-            </section>
-          </Reveal>
+            <CookieList rows={ESSENTIAL_COOKIES} />
+          </section>
 
-          <Reveal direction="up">
-            <section>
-              <h2 className="text-2xl font-bold text-[#0f172a]">
-                4. Analytics Cookies (Only If You Allow Them)
-              </h2>
+          <section>
+            <h2 className="text-2xl font-bold text-[#0f172a]">
+              4. Analytics Cookies (Only If You Allow Them)
+            </h2>
 
-              <p className="mt-4">
-                These help us understand how visitors find and use the
-                website, so we can make it better. They are used only if you
-                turn on &ldquo;Analytics&rdquo;.
-              </p>
+            <p className="mt-4">
+              These help us understand how visitors find and use the
+              website, so we can make it better. They are used only if you
+              turn on &ldquo;Analytics&rdquo;.
+            </p>
 
-              <CookieList rows={ANALYTICS_COOKIES} />
-            </section>
-          </Reveal>
+            <CookieList rows={ANALYTICS_COOKIES} />
+          </section>
 
-          <Reveal direction="up">
-            <section>
-              <h2 className="text-2xl font-bold text-[#0f172a]">
-                5. Marketing Cookies (Only If You Allow Them)
-              </h2>
+          <section>
+            <h2 className="text-2xl font-bold text-[#0f172a]">
+              5. Marketing Cookies (Only If You Allow Them)
+            </h2>
 
-              <p className="mt-4">
-                These measure how our ads perform and help show our ads to
-                people who have visited our website. They are used only if
-                you turn on &ldquo;Marketing&rdquo;.
-              </p>
+            <p className="mt-4">
+              These measure how our ads perform and help show our ads to
+              people who have visited our website. They are used only if
+              you turn on &ldquo;Marketing&rdquo;.
+            </p>
 
-              <CookieList rows={MARKETING_COOKIES} />
-            </section>
-          </Reveal>
+            <CookieList rows={MARKETING_COOKIES} />
+          </section>
 
-          <Reveal direction="up">
-            <section>
-              <h2 className="text-2xl font-bold text-[#0f172a]">
-                6. Controlling Cookies in Your Browser
-              </h2>
+          <section>
+            <h2 className="text-2xl font-bold text-[#0f172a]">
+              6. Controlling Cookies in Your Browser
+            </h2>
 
-              <p className="mt-4">
-                You can also block or delete cookies in your browser settings.
-                If you block essential cookies or browser storage, some parts
-                of the website (such as resuming the video or the payment
-                page) may not work properly.
-              </p>
-            </section>
-          </Reveal>
+            <p className="mt-4">
+              You can also block or delete cookies in your browser settings.
+              If you block essential cookies or browser storage, some parts
+              of the website (such as resuming the video or the payment
+              page) may not work properly.
+            </p>
+          </section>
 
-          <Reveal direction="up">
-            <section>
-              <h2 className="text-2xl font-bold text-[#0f172a]">
-                7. More Information
-              </h2>
+          <section>
+            <h2 className="text-2xl font-bold text-[#0f172a]">
+              7. More Information
+            </h2>
 
-              <p className="mt-4">
-                To learn how we handle your personal information, read our{" "}
-                <Link href="/privacy-policy" className="text-[#3b82f6]!">
-                  Privacy Policy
-                </Link>
-                . We may update this Cookie Policy when we add or remove a
-                tool; the date at the top shows the latest change.
-              </p>
+            <p className="mt-4">
+              To learn how we handle your personal information, read our{" "}
+              <Link href="/privacy-policy" className="text-[#3b82f6]!">
+                Privacy Policy
+              </Link>
+              . We may update this Cookie Policy when we add or remove a
+              tool; the date at the top shows the latest change.
+            </p>
 
-              <p className="mt-4">For any questions about cookies, contact us:</p>
+            <p className="mt-4">For any questions about cookies, contact us:</p>
 
-              <p className="mt-4">RPIANS World Class Business Coaching LLP</p>
-              <p>
-                Email:{" "}
-                <a href="mailto:info@worldclassbc.com" className="text-[#3b82f6]!">
-                  info@worldclassbc.com
-                </a>
-              </p>
-              <p>
-                Contact Number:{" "}
-                <a href={CONTACT_PHONE_TEL} className="text-[#3b82f6]!">
-                  {CONTACT_PHONE}
-                </a>
-              </p>
-            </section>
-          </Reveal>
+            <p className="mt-4">RPIANS World Class Business Coaching LLP</p>
+            <p>
+              Email:{" "}
+              <a href="mailto:info@worldclassbc.com" className="text-[#3b82f6]!">
+                info@worldclassbc.com
+              </a>
+            </p>
+            <p>
+              Contact Number:{" "}
+              <a href={CONTACT_PHONE_TEL} className="text-[#3b82f6]!">
+                {CONTACT_PHONE}
+              </a>
+            </p>
+          </section>
         </div>
       </div>
     </main>

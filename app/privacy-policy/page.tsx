@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import Reveal from "../Reveal";
 import { CONTACT_PHONE, CONTACT_PHONE_TEL } from "../siteConfig";
 
 export default function PrivacyPolicyPage() {
@@ -32,7 +31,6 @@ export default function PrivacyPolicyPage() {
         </p>
 
         <div className="mt-12 space-y-10 leading-8 text-gray-600">
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               1. Personally Identifiable Information
@@ -69,9 +67,7 @@ export default function PrivacyPolicyPage() {
               communication channel.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               2. When Do We Collect Information?
@@ -94,9 +90,7 @@ export default function PrivacyPolicyPage() {
               </li>
             </ul>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               3. How Do We Use Your Information?
@@ -128,9 +122,7 @@ export default function PrivacyPolicyPage() {
               <li>To prevent fraud, misuse, or unauthorized activity</li>
             </ul>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               4. Confidentiality of Your Data
@@ -154,9 +146,7 @@ export default function PrivacyPolicyPage() {
               delivery, and internal business purposes.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               5. Non-Personal Information
@@ -192,9 +182,7 @@ export default function PrivacyPolicyPage() {
               and marketing performance.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               6. Cookies and Tracking Technologies
@@ -233,9 +221,7 @@ export default function PrivacyPolicyPage() {
               website, landing page, or funnel may not function properly.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               7. Third-Party Disclosure
@@ -282,9 +268,7 @@ export default function PrivacyPolicyPage() {
               prevent fraud, or ensure the safety of our users and business.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               8. Payment Information
@@ -306,9 +290,7 @@ export default function PrivacyPolicyPage() {
               to their own privacy policies and terms of service.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               9. Video Sales Letter and Lead Registration
@@ -341,9 +323,7 @@ export default function PrivacyPolicyPage() {
               communication channels.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               10. Google, Meta, and Advertising Platforms
@@ -377,9 +357,7 @@ export default function PrivacyPolicyPage() {
               the settings provided by Google, Meta, or your browser.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               11. Third-Party Links
@@ -403,9 +381,7 @@ export default function PrivacyPolicyPage() {
               your information.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               12. How Do We Protect Your Information?
@@ -430,9 +406,7 @@ export default function PrivacyPolicyPage() {
               channels secure.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               13. Data Retention
@@ -457,9 +431,7 @@ export default function PrivacyPolicyPage() {
               archive, or anonymize it as per our internal process.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               14. Children&rsquo;s Privacy
@@ -477,9 +449,7 @@ export default function PrivacyPolicyPage() {
               delete such information.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               15. Your Rights
@@ -502,9 +472,7 @@ export default function PrivacyPolicyPage() {
 
             <p className="mt-2 text-[#3b82f6]">info@worldclassbusinesscoaching.in</p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               16. Email Communication and Unsubscribe
@@ -528,9 +496,7 @@ export default function PrivacyPolicyPage() {
               marketing communication list.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               17. Data Breach Notification
@@ -544,9 +510,7 @@ export default function PrivacyPolicyPage() {
               period, wherever required by applicable law.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               18. Testimonials and Case Studies
@@ -564,9 +528,7 @@ export default function PrivacyPolicyPage() {
               without consent.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               19. Changes to This Privacy Policy
@@ -585,9 +547,7 @@ export default function PrivacyPolicyPage() {
               Policy.
             </p>
           </section>
-          </Reveal>
 
-          <Reveal direction="up">
           <section>
             <h2 className="text-2xl font-bold text-[#0f172a]">
               20. Contact Information
@@ -619,7 +579,6 @@ export default function PrivacyPolicyPage() {
               </a>
             </p>
           </section>
-          </Reveal>
         </div>
       </div>
     </main>

@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
+import { revealMotion } from "./revealMotion";
 import { WHATSAPP_BASE_URL } from "./siteConfig";
 
 const questions = [
@@ -142,47 +143,15 @@ I would like to discuss my business diagnostic.`,
       <div className="site-container relative">
         <div className="mx-auto max-w-4xl text-center">
           <motion.p
-            initial={{
-              opacity: 0,
-              y: 25,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: false,
-              amount: 0.7,
-            }}
-            transition={{
-              duration: 0.7,
-            }}
-            className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
+            {...revealMotion()}
+            className="reveal text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
           >
             60-Second Business Health Quiz
           </motion.p>
 
           <motion.h2
-            initial={{
-              opacity: 0,
-              y: 45,
-              filter: "blur(8px)",
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-            }}
-            viewport={{
-              once: false,
-              amount: 0.5,
-            }}
-            transition={{
-              duration: 0.9,
-              delay: 0.1,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="mt-5 font-serif text-4xl md:text-6xl"
+            {...revealMotion(0.1)}
+            className="reveal mt-5 font-serif text-4xl md:text-6xl"
           >
             How System-Driven Is
             <span className="mt-2 block text-[#1d4ed8]">
@@ -191,23 +160,8 @@ I would like to discuss my business diagnostic.`,
           </motion.h2>
 
           <motion.p
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: false,
-              amount: 0.7,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.2,
-            }}
-            className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600"
+            {...revealMotion(0.2)}
+            className="reveal mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600"
           >
             Answer eight practical questions and discover your current business
             health score.

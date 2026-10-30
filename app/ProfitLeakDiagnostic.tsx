@@ -10,6 +10,7 @@ import {
 } from "motion/react";
 
 import { useRef, useState } from "react";
+import { revealMotion } from "./revealMotion";
 import WatchApplyButton from "./WatchApplyButton";
 
 const leakStages = [
@@ -198,47 +199,15 @@ export default function ProfitLeakDiagnostic() {
       <div className="site-container relative">
         <div className="mx-auto max-w-4xl text-center">
           <motion.p
-            initial={{
-              opacity: 0,
-              y: 25,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: false,
-              amount: 0.7,
-            }}
-            transition={{
-              duration: 0.7,
-            }}
-            className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
+            {...revealMotion()}
+            className="reveal text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
           >
             Business Profit Leak Diagnostic
           </motion.p>
 
           <motion.h2
-            initial={{
-              opacity: 0,
-              y: 45,
-              filter: "blur(8px)",
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-            }}
-            viewport={{
-              once: false,
-              amount: 0.5,
-            }}
-            transition={{
-              duration: 0.9,
-              delay: 0.1,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="mt-5 font-serif text-4xl md:text-6xl"
+            {...revealMotion(0.1)}
+            className="reveal mt-5 font-serif text-4xl md:text-6xl"
           >
             Where Is Your Business
 
@@ -248,23 +217,8 @@ export default function ProfitLeakDiagnostic() {
           </motion.h2>
 
           <motion.p
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: false,
-              amount: 0.7,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.2,
-            }}
-            className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600"
+            {...revealMotion(0.2)}
+            className="reveal mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600"
           >
             Scroll through the five major profit leaks that silently reduce
             cash flow, team productivity and business profitability.
@@ -278,26 +232,8 @@ export default function ProfitLeakDiagnostic() {
             {leakStages.map((stage, index) => (
               <motion.article
                 key={stage.number}
-                initial={{
-                  opacity: 0,
-                  y: 40,
-                  filter: "blur(6px)",
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                  filter: "blur(0px)",
-                }}
-                viewport={{
-                  once: false,
-                  amount: 0.45,
-                }}
-                transition={{
-                  duration: 0.9,
-                  delay: index * 0.04,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="group relative min-h-[260px] overflow-hidden rounded-3xl border border-black/10 bg-black/[0.03] p-8 transition-colors duration-300 hover:border-[#3b82f6]/50 md:p-10"
+                {...revealMotion(index * 0.04)}
+                className="reveal group relative min-h-[260px] overflow-hidden rounded-3xl border border-black/10 bg-black/[0.03] p-8 transition-colors duration-300 hover:border-[#3b82f6]/50 md:p-10"
               >
                 <div className="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-[#3b82f6]/0 blur-3xl transition duration-500 group-hover:bg-[#3b82f6]/12" />
 
@@ -366,23 +302,8 @@ export default function ProfitLeakDiagnostic() {
           <div className="relative">
             <div className="sticky top-28">
               <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 60,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: false,
-                  amount: 0.3,
-                }}
-                transition={{
-                  duration: 0.9,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-white p-7 shadow-[0_30px_80px_rgba(0,0,0,0.45)] md:p-9"
+                {...revealMotion()}
+                className="reveal relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/10 to-white p-7 shadow-[0_30px_80px_rgba(0,0,0,0.45)] md:p-9"
               >
                 <div className="pointer-events-none absolute left-1/2 top-0 h-48 w-80 -translate-x-1/2 bg-[#3b82f6]/10 blur-3xl" />
 

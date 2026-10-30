@@ -9,7 +9,7 @@ import "./globals.css";
 // Full page loads (reload, opening a URL, Back to a page the browser had
 // unloaded) start at the top. Chrome's own scroll restore lines up an element
 // near the top, but the server sends the heroes still shifted down for their
-// slide-up animation (Reveal: translateY(90px)), so the page landed 90px low
+// slide-up animation (Reveal, then translateY(90px)), so the page landed low
 // with the hero's first line under the fixed header.
 // - Restore is off while the page loads, and back on at the visitor's first
 //   pointer / key / touch / wheel, so in-site Back/Forward (every in-site

@@ -224,3 +224,14 @@ body {
     animation: none;
   }
 }
+
+/* Scroll-in animations (app/revealMotion.ts). The server sends them faded
+   out, so this shows them straight away for visitors who ask for less
+   motion, even before the page's script runs. !important beats the
+   animation's inline style. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

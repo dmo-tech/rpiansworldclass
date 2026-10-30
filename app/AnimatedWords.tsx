@@ -1,6 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+
+import { REVEAL_RISE, REVEAL_TRANSITION, REVEAL_VIEWPORT } from "./revealMotion";
 
 type AnimatedWordsProps = {
   text: string;
@@ -8,18 +10,17 @@ type AnimatedWordsProps = {
   wordClassName?: string;
   delay?: number;
   stagger?: number;
-  once?: boolean;
 };
 
+// Words fade in one after another as the heading nears the screen
+// (see revealMotion.ts).
 export default function AnimatedWords({
   text,
   className = "",
   wordClassName = "",
   delay = 0,
   stagger = 0.09,
-  once = false,
 }: AnimatedWordsProps) {
-  const reduceMotion = useReducedMotion();
   const words = text.trim().split(/\s+/);
 
   const container = {
@@ -35,35 +36,21 @@ export default function AnimatedWords({
   const word = {
     hidden: {
       opacity: 0,
-      y: 45,
-      rotateX: 70,
-      filter: "blur(8px)",
+      y: REVEAL_RISE,
     },
     visible: {
       opacity: 1,
       y: 0,
-      rotateX: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.75,
-        ease: [0.22, 1, 0.36, 1] as const,
-      },
+      transition: REVEAL_TRANSITION,
     },
   };
-
-  if (reduceMotion) {
-    return <span className={className}>{text}</span>;
-  }
 
   return (
     <motion.span
       variants={container}
       initial="hidden"
       whileInView="visible"
-      viewport={{
-        once,
-        amount: 0.7,
-      }}
+      viewport={REVEAL_VIEWPORT}
       className={`inline-flex flex-wrap justify-center gap-x-[0.24em] gap-y-2 ${className}`}
       aria-label={text}
     >
@@ -71,7 +58,7 @@ export default function AnimatedWords({
         <motion.span
           key={`${item}-${index}`}
           variants={word}
-          className={`inline-block origin-bottom ${wordClassName}`}
+          className={`reveal inline-block ${wordClassName}`}
           aria-hidden="true"
         >
           {item}

@@ -2,6 +2,8 @@
 
 import { motion } from "motion/react";
 
+import { revealMotion } from "./revealMotion";
+
 const beforePoints = [
   "Owner involved in every small decision",
   "Team has no clear KRA and KPI",
@@ -26,33 +28,15 @@ export default function BeforeAfter() {
       <div className="site-container">
         <div className="mx-auto max-w-4xl text-center">
           <motion.p
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.7 }}
-            transition={{ duration: 0.7 }}
-            className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
+            {...revealMotion()}
+            className="reveal text-xs uppercase tracking-[0.35em] text-[#3b82f6]"
           >
             Business Transformation Comparison
           </motion.p>
 
           <motion.h2
-            initial={{
-              opacity: 0,
-              y: 45,
-              filter: "blur(8px)",
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-            }}
-            viewport={{ once: false, amount: 0.5 }}
-            transition={{
-              duration: 0.9,
-              delay: 0.1,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="mt-5 font-serif text-4xl md:text-6xl"
+            {...revealMotion(0.1)}
+            className="reveal mt-5 font-serif text-4xl md:text-6xl"
           >
             Before RPIANS
             <span className="mx-3 text-gray-600">vs</span>
@@ -60,11 +44,8 @@ export default function BeforeAfter() {
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.7 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600"
+            {...revealMotion(0.2)}
+            className="reveal mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600"
           >
             See how an owner-dependent business transforms into a structured,
             automated and profitable organisation.
@@ -73,20 +54,8 @@ export default function BeforeAfter() {
 
         <div className="mt-16 grid gap-8 lg:grid-cols-2">
           <motion.div
-            initial={{
-              opacity: 0,
-              y: 60,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{
-              duration: 0.9,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="relative overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-b from-red-500/10 to-white p-8 md:p-10"
+            {...revealMotion()}
+            className="reveal relative overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-b from-red-500/10 to-white p-8 md:p-10"
           >
             <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-red-500/10 blur-3xl" />
 
@@ -103,14 +72,8 @@ export default function BeforeAfter() {
                 {beforePoints.map((point, index) => (
                   <motion.div
                     key={point}
-                    initial={{ opacity: 0, x: -25 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, amount: 0.7 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: index * 0.08,
-                    }}
-                    className="flex items-start gap-4"
+                    {...revealMotion(index * 0.05)}
+                    className="reveal flex items-start gap-4"
                   >
                     <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-red-400/40 bg-red-500/10 text-sm text-red-600">
                       ×
@@ -124,21 +87,8 @@ export default function BeforeAfter() {
           </motion.div>
 
           <motion.div
-            initial={{
-              opacity: 0,
-              y: 60,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{
-              duration: 0.9,
-              delay: 0.1,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-white p-8 md:p-10"
+            {...revealMotion(0.1)}
+            className="reveal relative overflow-hidden rounded-3xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/12 to-white p-8 md:p-10"
           >
             <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#3b82f6]/15 blur-3xl" />
 
@@ -155,14 +105,8 @@ export default function BeforeAfter() {
                 {afterPoints.map((point, index) => (
                   <motion.div
                     key={point}
-                    initial={{ opacity: 0, x: 25 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, amount: 0.7 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: index * 0.08,
-                    }}
-                    className="flex items-start gap-4"
+                    {...revealMotion(index * 0.05)}
+                    className="reveal flex items-start gap-4"
                   >
                     <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/50 bg-[#3b82f6]/10 text-sm text-[#22c55e]">
                       ✓
@@ -177,14 +121,8 @@ export default function BeforeAfter() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.6 }}
-          transition={{
-            duration: 0.8,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="mt-10 rounded-2xl border border-black/10 bg-black/[0.03] p-7 text-center"
+          {...revealMotion()}
+          className="reveal mt-10 rounded-2xl border border-black/10 bg-black/[0.03] p-7 text-center"
         >
           <p className="text-lg leading-8 text-gray-600">
             RPIANS helps business owners move from
