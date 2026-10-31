@@ -308,6 +308,7 @@ export default function PaymentPage() {
               planName,
               amount: orderData.amount / 100,
               paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
             });
 
             updatePayment({ status: "success" });

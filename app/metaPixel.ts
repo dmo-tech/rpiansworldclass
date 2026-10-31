@@ -8,7 +8,8 @@ import type { PaymentReceipt } from "./paymentReceipt";
 // the visitor's name, phone, email or any other personal detail.
 //
 //   Lead      a form sent to /api/leads was saved (trackLeadIfSaved)
-//   Purchase  a payment the server verified, once per payment ID (/thank-you)
+//   Purchase  a payment the server verified, once per payment ID (/thank-you);
+//             eventID is the payment ID, order_id the Razorpay order ID
 //   Contact   a click on any WhatsApp link (listenForWhatsAppClicks), or the
 //             /register WhatsApp button
 
@@ -75,7 +76,12 @@ const readSentPurchases = (): string[] => {
 const isPurchaseSent = (paymentId: string) =>
   sentPurchases.has(paymentId) || readSentPurchases().includes(paymentId);
 
-export function trackPurchase({ paymentId, amount, planName }: PaymentReceipt) {
+export function trackPurchase({
+  paymentId,
+  orderId,
+  amount,
+  planName,
+}: PaymentReceipt) {
   if (isPurchaseSent(paymentId)) return;
 
   whenPixelReady((fbq) => {
@@ -93,11 +99,18 @@ export function trackPurchase({ paymentId, amount, planName }: PaymentReceipt) {
       // Private mode: only this page remembers it.
     }
 
-    fbq("track", "Purchase", {
-      value: amount,
-      currency: "INR",
-      content_name: planName,
-    });
+    // eventID: the payment ID, so Meta counts one payment once.
+    fbq(
+      "track",
+      "Purchase",
+      {
+        value: amount,
+        currency: "INR",
+        content_name: planName,
+        ...(orderId ? { order_id: orderId } : {}),
+      },
+      { eventID: paymentId },
+    );
   });
 }
 

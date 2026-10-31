@@ -7,9 +7,12 @@ export type PaymentReceipt = {
   planName: string;
   amount: number;
   paymentId: string;
+  // Missing on receipts saved before it was added.
+  orderId?: string;
 };
 
 export const RAZORPAY_PAYMENT_ID_PATTERN = /^pay_[A-Za-z0-9]{1,40}$/;
+const RAZORPAY_ORDER_ID_PATTERN = /^order_[A-Za-z0-9]{1,40}$/;
 
 export function parsePaymentReceipt(raw: string | null): PaymentReceipt | null {
   if (!raw) return null;
@@ -30,6 +33,10 @@ export function parsePaymentReceipt(raw: string | null): PaymentReceipt | null {
         planName: data.planName,
         amount: data.amount,
         paymentId: data.paymentId,
+        ...(typeof data.orderId === "string" &&
+        RAZORPAY_ORDER_ID_PATTERN.test(data.orderId)
+          ? { orderId: data.orderId }
+          : {}),
       };
     }
   } catch {
