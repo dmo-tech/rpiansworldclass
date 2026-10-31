@@ -73,7 +73,7 @@ const jostCyrillic = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rpiansworld.com"),
+  metadataBase: new URL("https://worldclassbc.com"),
 
   title: {
     default:
@@ -116,7 +116,7 @@ export const metadata: Metadata = {
       "RPIANS World Class Business Coaching | Business Automation and Profit Growth",
     description:
       "Run your business on autopilot mode, build an accountable team and multiply profit every year with proven business systems.",
-    url: "https://rpiansworld.com",
+    url: "https://worldclassbc.com",
     siteName: "RPIANS World Class Business Coaching",
     locale: "en_IN",
     type: "website",
