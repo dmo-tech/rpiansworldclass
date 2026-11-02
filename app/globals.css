@@ -8,6 +8,9 @@
 /* md and taller than a landscape phone (used by the Enquire Now tab). */
 @custom-variant md-tall (@media (width >= 48rem) and (height > 500px));
 
+/* Below md and taller than a landscape phone (used by the Enquire Now tab). */
+@custom-variant phone-tall (@media (width < 48rem) and (height > 500px));
+
 /* Arial sized like Jost while the font loads (the same metrics next/font
    generated when Jost came from Google Fonts), so text doesn't jump. */
 @font-face {

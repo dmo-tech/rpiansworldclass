@@ -8,7 +8,7 @@ import {
 } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useSyncExternalStore } from "react";
+import { useRef } from "react";
 
 import { VIDEO_POSTER_URL } from "./siteConfig";
 
@@ -20,32 +20,21 @@ import { VIDEO_POSTER_URL } from "./siteConfig";
 // the page. Nothing is pinned. It never plays here; clicking it opens the
 // gated player on /watch.
 //
+// Below md the card is already on the first screen, so it stays at full size:
+// the !important classes beat Motion's inline styles from the first paint,
+// which a JavaScript check would only do after the page loads.
+//
 // Every value is computed in JavaScript from scroll progress (function
 // transforms) on purpose: Motion can hand range-mapped values to the
 // browser's native scroll timeline, which got this section's range wrong.
 
-const MOBILE_QUERY = "(max-width: 767px)";
-
 const START_SCALE = 0.6;
-const CORNER_RADIUS = { desktop: 24, mobile: 18 };
+const CORNER_RADIUS = 24;
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 
 // Ease-out so the growth feels quick at first and settles gently.
 const easeOut = (value: number) => 1 - (1 - value) ** 3;
-
-const subscribeToMobile = (callback: () => void) => {
-  const query = window.matchMedia(MOBILE_QUERY);
-  query.addEventListener("change", callback);
-  return () => query.removeEventListener("change", callback);
-};
-
-const useIsMobile = () =>
-  useSyncExternalStore(
-    subscribeToMobile,
-    () => window.matchMedia(MOBILE_QUERY).matches,
-    () => false,
-  );
 
 function PlayIcon({ className }: { className: string }) {
   return (
@@ -85,7 +74,7 @@ function VideoCard({ className = "" }: { className?: string }) {
       </div>
 
       <div className="absolute inset-x-0 bottom-0 p-4 text-left text-white sm:p-8">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-[#93c5fd] sm:text-xs sm:tracking-[0.3em]">
+        <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-[#93c5fd] max-[374px]:tracking-[0.1em] sm:text-xs sm:tracking-[0.3em]">
           Business Automation And Profit Mastery Strategy
         </p>
         <p className="mt-1 font-serif text-lg font-semibold leading-tight sm:mt-2 sm:text-3xl md:text-4xl">
@@ -99,7 +88,6 @@ function VideoCard({ className = "" }: { className?: string }) {
 export default function HomeVideoShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
-  const isMobile = useIsMobile();
 
   // Grow: 0 = section top at the bottom of the screen (page load, hero
   // filling the screen), 1 = section top just under the fixed header.
@@ -114,11 +102,7 @@ export default function HomeVideoShowcase() {
   );
 
   // Divided by the scale so the corners look the same size the whole time.
-  const borderRadius = useTransform(
-    scale,
-    (value) =>
-      (isMobile ? CORNER_RADIUS.mobile : CORNER_RADIUS.desktop) / value,
-  );
+  const borderRadius = useTransform(scale, (value) => CORNER_RADIUS / value);
 
   // A small extra lift on top of the normal scroll, so the card "rises".
   const y = useTransform(grow, (progress) => 24 * (1 - clamp01(progress)));
@@ -128,9 +112,9 @@ export default function HomeVideoShowcase() {
       <section
         ref={sectionRef}
         aria-label="Transformation video"
-        className="relative py-16 md:py-24"
+        className="relative pb-8 pt-2 md:py-24"
       >
-        <div className="mx-auto w-[92vw] overflow-hidden rounded-[18px] md:w-[min(75vw,1100px)] md:rounded-[24px]">
+        <div className="mx-auto w-[calc(100%-2rem)] overflow-hidden rounded-2xl md:w-[min(75vw,1100px)] md:rounded-[24px]">
           <VideoCard />
         </div>
       </section>
@@ -141,11 +125,11 @@ export default function HomeVideoShowcase() {
     <section
       ref={sectionRef}
       aria-label="Transformation video"
-      className="relative py-8 md:py-14"
+      className="relative pb-8 pt-2 md:py-14"
     >
       <motion.div
         style={{ scale, y, borderRadius, transformOrigin: "50% 0%" }}
-        className="relative z-10 mx-auto w-[92vw] overflow-hidden shadow-2xl shadow-blue-900/20 will-change-transform md:w-[min(75vw,1100px)]"
+        className="relative z-10 mx-auto w-[calc(100%-2rem)] overflow-hidden shadow-2xl shadow-blue-900/20 will-change-transform max-md:rounded-2xl! max-md:transform-none! md:w-[min(75vw,1100px)]"
       >
         <VideoCard />
       </motion.div>

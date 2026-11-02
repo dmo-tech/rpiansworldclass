@@ -192,7 +192,7 @@ export default function ProfitLeakDiagnostic() {
     <section
       ref={sectionRef}
       id="profit-leak"
-      className="relative overflow-visible border-y border-black/10 bg-white py-28"
+      className="relative overflow-visible border-y border-black/10 bg-white py-10 md:py-28"
     >
       <div className="pointer-events-none absolute left-1/2 top-1/3 h-[550px] w-[550px] -translate-x-1/2 rounded-full bg-[#3b82f6]/5 blur-[160px]" />
 

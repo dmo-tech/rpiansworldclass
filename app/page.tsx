@@ -70,27 +70,31 @@ export default function Home() {
       <SiteHeader />
       <EnquireNowTab from="Home - Enquire Now" />
 
-      {/* HERO + VIDEO share one background, so there is no seam between them */}
+      {/* HERO + VIDEO share one background, so there is no seam between them.
+          Below md the hero is only as tall as its content and starts 24px under
+          the 77px fixed header, so the video shows on the first screen. Sizes
+          are the small end on purpose: half the video still clears the cookie
+          banner on a first visit. */}
 
       <div className="luxury-background">
         <section
           id="home"
-          className="relative flex min-h-[100dvh] flex-col justify-center pb-10 pt-24 md:pt-28"
+          className="relative pb-3 pt-[101px] md:flex md:min-h-[100dvh] md:flex-col md:justify-center md:pb-10 md:pt-28"
         >
-          <div className="site-container relative z-10">
+          <div className="site-container relative z-10 max-md:px-4">
             <Reveal direction="up" className="text-center">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-[#3b82f6] md:mb-6 md:tracking-[0.4em]">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[2px] text-[#3b82f6] md:mb-6 md:tracking-[0.4em]">
                 India’s Business Automation and Profit Coaching Movement
               </p>
 
-              <h1 className="font-serif text-3xl font-semibold leading-tight sm:text-5xl md:text-6xl">
+              <h1 className="font-serif text-[26px] font-semibold leading-tight md:text-6xl">
                 <AnimatedWords
                   text="Business Automation And"
                   stagger={0.12}
                   className="justify-center"
                 />
 
-                <span className="mt-2 block md:mt-3">
+                <span className="block md:mt-3">
                   <AnimatedWords
                     text="Profit Mastery Strategy"
                     delay={0.35}
@@ -101,16 +105,16 @@ export default function Home() {
               </h1>
 
               <Reveal direction="up" delay={0.5}>
-                <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-gray-600 sm:text-base md:mt-7 md:text-lg md:leading-8">
+                <p className="mx-auto mt-3 max-w-xl text-sm leading-[1.6] text-gray-600 md:mt-7 md:text-lg md:leading-8">
                   Run your business on autopilot mode, build an accountable
                   team, control inventory and cash flow, and multiply your
                   profit every year with proven business systems.
                 </p>
 
-                <div className="mt-6 flex justify-center md:mt-9">
+                <div className="mt-4 flex justify-center md:mt-9">
                   <WatchApplyButton
                     from="Home - Hero"
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-10 py-4 font-bold text-white! transition hover:scale-105 sm:w-auto"
+                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-2 text-[15px] font-bold text-white! transition hover:scale-105 max-[374px]:text-sm md:h-auto md:w-auto md:rounded-lg md:px-10 md:py-4 md:text-base"
                   />
                 </div>
               </Reveal>
@@ -125,7 +129,7 @@ export default function Home() {
 
       {/* STATS */}
 
-      <section className="relative pb-20 pt-12 md:pt-16">
+      <section className="relative py-10 md:pb-20 md:pt-16">
         <div className="site-container relative z-10">
           <div className="grid gap-5 text-left md:grid-cols-3">
             {stats.map((item, index) => (
@@ -174,7 +178,7 @@ export default function Home() {
 
       {/* MOVEMENT */}
 
-      <section className="relative overflow-hidden border-y border-black/10 py-28">
+      <section className="relative overflow-hidden border-y border-black/10 py-10 md:py-28">
         <Reveal
           direction="up"
           className="site-container relative text-center"
@@ -207,7 +211,7 @@ export default function Home() {
 
       {/* FAQ */}
 
-      <section className="border-y border-black/10 bg-black/[0.02] py-28">
+      <section className="border-y border-black/10 bg-black/[0.02] py-10 md:py-28">
         <div className="site-container">
           <Reveal direction="up" className="text-center">
             <p className="text-xs uppercase tracking-[0.35em] text-[#3b82f6]">
@@ -251,9 +255,9 @@ export default function Home() {
 
       {/* FINAL CTA */}
 
-      <section className="py-28">
+      <section className="py-10 md:py-28">
         <Reveal direction="up" className="site-container">
-          <div className="rounded-3xl border border-black/10 px-7 py-20 text-center">
+          <div className="rounded-3xl border border-black/10 px-7 py-10 text-center md:py-20">
             <h2 className="font-serif text-4xl md:text-6xl">
               <AnimatedWords
                 text="Ready to Build a System-Driven Business?"

@@ -136,7 +136,7 @@ I would like to discuss my business diagnostic.`,
   return (
     <section
       id="business-health-quiz"
-      className="relative overflow-hidden border-y border-black/10 bg-black/[0.02] py-28"
+      className="relative overflow-hidden border-y border-black/10 bg-black/[0.02] py-10 md:py-28"
     >
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#3b82f6]/5 blur-[150px]" />
 

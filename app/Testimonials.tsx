@@ -28,7 +28,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="border-y border-black/10 bg-black/[0.02] py-28"
+      className="border-y border-black/10 bg-black/[0.02] py-10 md:py-28"
     >
       <div className="site-container">
         <div className="mx-auto max-w-4xl text-center">

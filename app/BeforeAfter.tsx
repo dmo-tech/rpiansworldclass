@@ -24,7 +24,7 @@ const afterPoints = [
 
 export default function BeforeAfter() {
   return (
-    <section className="relative overflow-hidden py-28">
+    <section className="relative overflow-hidden py-10 md:py-28">
       <div className="site-container">
         <div className="mx-auto max-w-4xl text-center">
           <motion.p
