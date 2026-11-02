@@ -1,40 +1,11 @@
-"use client";
-
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
 
 import { VIDEO_POSTER_URL } from "./siteConfig";
 
-// Homepage video card, placed right after the hero so the first screen shows
-// the hero text and the top edge of the card. It starts at about
-// three-quarters size, grows to its final size over roughly one screen of
-// scrolling (on the hero's light theme background, which the page wraps
-// around both), then scrolls away with
-// the page. Nothing is pinned. It never plays here; clicking it opens the
-// gated player on /watch.
-//
-// Below md the card is already on the first screen, so it stays at full size:
-// the !important classes beat Motion's inline styles from the first paint,
-// which a JavaScript check would only do after the page loads.
-//
-// Every value is computed in JavaScript from scroll progress (function
-// transforms) on purpose: Motion can hand range-mapped values to the
-// browser's native scroll timeline, which got this section's range wrong.
-
-const START_SCALE = 0.6;
-const CORNER_RADIUS = 24;
-
-const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
-
-// Ease-out so the growth feels quick at first and settles gently.
-const easeOut = (value: number) => 1 - (1 - value) ** 3;
+// Homepage video card, placed right after the hero so it shows on the first
+// screen, on the hero's light theme background (the page wraps it around both).
+// It never plays here; clicking it opens the gated player on /watch.
 
 function PlayIcon({ className }: { className: string }) {
   return (
@@ -60,7 +31,7 @@ function VideoCard({ className = "" }: { className?: string }) {
         src={VIDEO_POSTER_URL}
         alt="Rajesh Kumar Kare explaining the RPIANS business system"
         fill
-        sizes="(max-width: 768px) 92vw, 1100px"
+        sizes="(max-width: 768px) 92vw, 960px"
         className="object-cover transition duration-700 group-hover:scale-[1.03]"
       />
 
@@ -86,53 +57,16 @@ function VideoCard({ className = "" }: { className?: string }) {
 }
 
 export default function HomeVideoShowcase() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
-
-  // Grow: 0 = section top at the bottom of the screen, 1 = section top just
-  // under the fixed header.
-  const { scrollYProgress: grow } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "start 0.1"],
-  });
-
-  const scale = useTransform(
-    grow,
-    (progress) => START_SCALE + (1 - START_SCALE) * easeOut(clamp01(progress)),
-  );
-
-  // Divided by the scale so the corners look the same size the whole time.
-  const borderRadius = useTransform(scale, (value) => CORNER_RADIUS / value);
-
-  // A small extra lift on top of the normal scroll, so the card "rises".
-  const y = useTransform(grow, (progress) => 24 * (1 - clamp01(progress)));
-
-  if (reduceMotion) {
-    return (
-      <section
-        ref={sectionRef}
-        aria-label="Transformation video"
-        className="relative pb-8 pt-2 md:py-24"
-      >
-        <div className="mx-auto w-[calc(100%-2rem)] overflow-hidden rounded-2xl md:w-[min(75vw,1100px)] md:rounded-[24px]">
-          <VideoCard />
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section
-      ref={sectionRef}
       aria-label="Transformation video"
-      className="relative pb-8 pt-2 md:py-14"
+      className="relative pb-8 pt-2 md:pb-14"
     >
-      <motion.div
-        style={{ scale, y, borderRadius, transformOrigin: "50% 0%" }}
-        className="relative z-10 mx-auto w-[calc(100%-2rem)] overflow-hidden shadow-2xl shadow-blue-900/20 will-change-transform max-md:rounded-2xl! max-md:transform-none! md:w-[min(75vw,1100px)]"
-      >
+      {/* will-change only keeps the phone card on its own layer, as it has
+          always been; without it the colours render very slightly differently. */}
+      <div className="relative z-10 mx-auto w-[calc(100%-2rem)] overflow-hidden rounded-2xl shadow-2xl shadow-blue-900/20 max-md:will-change-transform md:w-[min(75vw,960px)] md:rounded-[20px]">
         <VideoCard />
-      </motion.div>
+      </div>
     </section>
   );
 }

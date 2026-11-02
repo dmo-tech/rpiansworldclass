@@ -74,31 +74,30 @@ export default function Home() {
       <EnquireNowTab from="Home - Enquire Now" />
 
       {/* HERO + VIDEO share one background, so there is no seam between them.
-          Below md the hero is only as tall as its content and starts 24px under
-          the 77px fixed header, so the video shows on the first screen. Sizes
-          are the small end on purpose, so more of the video clears the cookie
-          banner on a first visit. From md the text is centred in a block 124px
-          shorter than the screen, so the top of the video shows below it. */}
+          The hero is only as tall as its content and sits under the 77px fixed
+          header (24px below it on phones, 48px from md), so the video shows on
+          the first screen. Phone sizes are the small end on purpose, so more of
+          the video clears the cookie banner on a first visit. */}
 
       <div className="luxury-background">
         <section
           id="home"
-          className="relative pb-3 pt-[101px] md:flex md:min-h-[calc(100dvh-124px)] md:flex-col md:justify-center md:pb-10 md:pt-28"
+          className="relative pb-3 pt-[101px] md:pb-6 md:pt-[125px]"
         >
           <div className="site-container relative z-10 max-md:px-4">
             <Reveal direction="up" className="text-center">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[2px] text-[#3b82f6] md:mb-6 md:tracking-[0.4em]">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[2px] text-[#3b82f6] md:mb-5 md:tracking-[0.4em] lg:text-[13px]">
                 India’s Business Automation and Profit Coaching Movement
               </p>
 
-              <h1 className="font-serif text-[26px] font-semibold leading-tight md:text-6xl">
+              <h1 className="font-serif text-[26px] font-semibold leading-tight md:text-[clamp(44px,2.5vw+22px,60px)] md:leading-[1.15]">
                 <AnimatedWords
                   text="Business Automation And"
                   stagger={0.12}
                   className="justify-center"
                 />
 
-                <span className="block md:mt-3">
+                <span className="block">
                   <AnimatedWords
                     text="Profit Mastery Strategy"
                     delay={0.35}
@@ -109,7 +108,7 @@ export default function Home() {
               </h1>
 
               <Reveal direction="up" delay={0.5}>
-                <div className="mt-4 flex justify-center md:mt-9">
+                <div className="mt-4 flex justify-center md:mt-7">
                   {/* Straight to the video, without the "One Important Thing"
                       popup the other buttons open. `from` stays in the URL,
                       which the watch tracking saves. */}
