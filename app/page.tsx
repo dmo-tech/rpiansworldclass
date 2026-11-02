@@ -76,13 +76,14 @@ export default function Home() {
       {/* HERO + VIDEO share one background, so there is no seam between them.
           Below md the hero is only as tall as its content and starts 24px under
           the 77px fixed header, so the video shows on the first screen. Sizes
-          are the small end on purpose: half the video still clears the cookie
-          banner on a first visit. */}
+          are the small end on purpose, so more of the video clears the cookie
+          banner on a first visit. From md the text is centred in a block 124px
+          shorter than the screen, so the top of the video shows below it. */}
 
       <div className="luxury-background">
         <section
           id="home"
-          className="relative pb-3 pt-[101px] md:flex md:min-h-[100dvh] md:flex-col md:justify-center md:pb-10 md:pt-28"
+          className="relative pb-3 pt-[101px] md:flex md:min-h-[calc(100dvh-124px)] md:flex-col md:justify-center md:pb-10 md:pt-28"
         >
           <div className="site-container relative z-10 max-md:px-4">
             <Reveal direction="up" className="text-center">
@@ -108,12 +109,6 @@ export default function Home() {
               </h1>
 
               <Reveal direction="up" delay={0.5}>
-                <p className="mx-auto mt-3 max-w-xl text-sm leading-[1.6] text-gray-600 md:mt-7 md:text-lg md:leading-8">
-                  Run your business on autopilot mode, build an accountable
-                  team, control inventory and cash flow, and multiply your
-                  profit every year with proven business systems.
-                </p>
-
                 <div className="mt-4 flex justify-center md:mt-9">
                   {/* Straight to the video, without the "One Important Thing"
                       popup the other buttons open. `from` stays in the URL,

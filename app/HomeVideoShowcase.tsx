@@ -13,8 +13,8 @@ import { useRef } from "react";
 import { VIDEO_POSTER_URL } from "./siteConfig";
 
 // Homepage video card, placed right after the hero so the first screen shows
-// only the hero text. As soon as the visitor scrolls, the card rises in at
-// about 60% size, grows to its final size over roughly one screen of
+// the hero text and the top edge of the card. It starts at about
+// three-quarters size, grows to its final size over roughly one screen of
 // scrolling (on the hero's light theme background, which the page wraps
 // around both), then scrolls away with
 // the page. Nothing is pinned. It never plays here; clicking it opens the
@@ -89,8 +89,8 @@ export default function HomeVideoShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
 
-  // Grow: 0 = section top at the bottom of the screen (page load, hero
-  // filling the screen), 1 = section top just under the fixed header.
+  // Grow: 0 = section top at the bottom of the screen, 1 = section top just
+  // under the fixed header.
   const { scrollYProgress: grow } = useScroll({
     target: sectionRef,
     offset: ["start end", "start 0.1"],
