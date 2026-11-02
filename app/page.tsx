@@ -1,5 +1,8 @@
+import Link from "next/link";
+
 import AnimatedCounter from "./AnimatedCounter";
 import AnimatedWords from "./AnimatedWords";
+import { watchVideoHref } from "./applyFlow";
 import BeforeAfter from "./BeforeAfter";
 import BusinessHealthQuiz from "./BusinessHealthQuiz";
 import EnquireNowTab from "./EnquireNowTab";
@@ -12,7 +15,7 @@ import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 import Testimonials from "./Testimonials";
 import TiltCard from "./TiltCard";
-import WatchApplyButton from "./WatchApplyButton";
+import WatchApplyButton, { PlayCircleIcon } from "./WatchApplyButton";
 
 
 const stats = [
@@ -112,12 +115,18 @@ export default function Home() {
                 </p>
 
                 <div className="mt-4 flex justify-center md:mt-9">
-                  {/* As wide as its label. 24px side padding only fits from
-                      395px; below that it shrinks so the label stays on one line. */}
-                  <WatchApplyButton
-                    from="Home - Hero"
-                    className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-3 text-[15px] font-bold text-white! transition hover:scale-105 max-[394px]:px-4 max-[389px]:px-3 max-[374px]:text-sm md:h-auto md:rounded-lg md:px-10 md:py-4 md:text-base"
-                  />
+                  {/* Straight to the video, without the "One Important Thing"
+                      popup the other buttons open. `from` stays in the URL,
+                      which the watch tracking saves. */}
+                  <Link
+                    href={watchVideoHref("Home - Hero")}
+                    className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-3 text-[15px] font-bold text-white! transition hover:scale-105 md:h-auto md:rounded-lg md:px-10 md:py-4 md:text-base"
+                  >
+                    <PlayCircleIcon />
+                    <span className="text-balance text-center">
+                      Watch Free Training Now
+                    </span>
+                  </Link>
                 </div>
               </Reveal>
             </Reveal>
