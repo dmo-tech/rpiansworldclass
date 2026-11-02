@@ -67,6 +67,15 @@ export default function HomeVideoShowcase() {
       <div className="relative z-10 mx-auto w-[calc(100%-2rem)] overflow-hidden rounded-2xl shadow-2xl shadow-blue-900/20 max-md:will-change-transform md:w-[min(75vw,960px)] md:rounded-[20px]">
         <VideoCard />
       </div>
+
+      {/* Not a link: only the card above opens the video. */}
+      <p className="relative z-10 mt-3 flex items-center justify-center gap-1 px-4 text-center text-[13px] font-normal tracking-wide text-gray-600 md:mt-4 md:gap-1.5 md:text-[15px]">
+        <PlayIcon className="h-3 w-3 shrink-0 text-[#1d4ed8] md:h-3.5 md:w-3.5" />
+        <span>
+          <span className="font-semibold text-[#1d4ed8]">Watch this video</span>{" "}
+          before you book a call
+        </span>
+      </p>
     </section>
   );
 }
