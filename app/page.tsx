@@ -112,9 +112,11 @@ export default function Home() {
                 </p>
 
                 <div className="mt-4 flex justify-center md:mt-9">
+                  {/* As wide as its label. 24px side padding only fits from
+                      395px; below that it shrinks so the label stays on one line. */}
                   <WatchApplyButton
                     from="Home - Hero"
-                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-2 text-[15px] font-bold text-white! transition hover:scale-105 max-[374px]:text-sm md:h-auto md:w-auto md:rounded-lg md:px-10 md:py-4 md:text-base"
+                    className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#3b82f6] to-[#2563eb] px-6 py-3 text-[15px] font-bold text-white! transition hover:scale-105 max-[394px]:px-4 max-[389px]:px-3 max-[374px]:text-sm md:h-auto md:rounded-lg md:px-10 md:py-4 md:text-base"
                   />
                 </div>
               </Reveal>
